@@ -1,0 +1,108 @@
+@startuml MetaMapa
+
+class Usuario {
+    nombre
+    contribuyente
+    --
+    visualizarHechos(coleccion, filtro)
+    crearSolicitud()
+}
+
+class Administrador {
+    crearColeccion()
+    verSolicitudes()
+    crearFuenteEstatica(pathArchivo)
+    aceptarSolicitud(solicitud)
+    rechazarSolicitud(solicitud)
+
+}
+
+class Solicitud {
+    hecho
+    texto
+    estado
+    coleccion
+    --
+    setEstado(estado)
+}
+
+class Coleccion {
+    titulo
+    descripcion
+    criterioDePertenencia
+    fuentes
+    solicitudes
+    --
+    hechos(filtro)
+    solicitudesPendientes()
+}
+
+interface Fuente {
+    --
+    obetenerHechos(criterio)
+}
+
+class FuenteEstatica {
+
+}
+
+class FuenteDinamica {
+
+}
+
+class FuenteProxy{
+
+}
+
+abstract class Hecho {
+    titulo
+    descripcion
+    categoria
+    ubicacion
+    fecha
+    origen
+}
+
+class HechoTexto {
+
+}
+
+class HechoMultimedia {
+
+}
+
+enum Estado {
+    PENDIENTE
+    ACEPTADA
+    RECHAZADA
+}
+
+
+Administrador -u-|> Usuario
+
+Administrador ..> Coleccion
+Administrador ..> Solicitud
+Administrador ..> FuenteEstatica
+
+
+Coleccion --> "*" Fuente
+Coleccion --> "*" Solicitud
+
+Fuente -> "*" Hecho
+
+FuenteEstatica -u-|> Fuente
+FuenteProxy -u-|> Fuente
+FuenteDinamica -u-|> Fuente
+
+FuenteEstatica -[hidden]r- FuenteDinamica
+
+HechoTexto -u-|> Hecho
+HechoMultimedia -u-|> Hecho
+
+Solicitud -> Coleccion
+Solicitud -> Estado
+
+' TODO preguntar Etiqueta
+
+
+@enduml
