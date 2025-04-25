@@ -1,0 +1,38 @@
+@startuml
+
+skinparam componentStyle uml1
+
+left to right direction
+
+node "Agregador" {
+
+    database Colecciones
+    database Solicitudes
+
+    interface "Contribuir(hecho)"
+    interface "VerHechos(coleccion, filtro)"
+
+    [Dominio] -- Colecciones
+    [Dominio] -- Solicitudes
+    
+    "VerHechos(coleccion, filtro)" -- [Dominio]
+    "Contribuir(hecho)" -- [Dominio]
+}
+
+node "FuenteEstatica" {
+
+    interface "ObtenerHechos(criterio)" as InterfazEstaticos
+
+    database Archivo
+
+    InterfazEstaticos -- Archivo
+
+    [Dominio] -- InterfazEstaticos
+}
+
+ actor "Usuario"
+ "Usuario" -- "Contribuir(hecho)"
+ "Usuario" -- "VerHechos(coleccion, filtro)"
+
+
+@enduml
