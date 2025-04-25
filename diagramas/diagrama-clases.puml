@@ -1,10 +1,13 @@
 @startuml MetaMapa
 
 class Usuario {
-    nombre
-    contribuyente
+    (nombre)
+    (apellido)
+    (edad)
+    esContribuyente: bool
     --
-    visualizarHechos(coleccion, filtro)
+    verHechos(coleccion, filtro)
+    contribuir(hecho)
     crearSolicitud()
 }
 
@@ -19,19 +22,25 @@ class Administrador {
 
 class Solicitud {
     hecho
-    texto
+    fundamentacion
     estado
-    coleccion
     --
     setEstado(estado)
+}
+
+class Solicitudes{
+    pendientes[]
+    aceptadas[]
+    rechazadas[]
+    --
+    hechosEliminados()
 }
 
 class Coleccion {
     titulo
     descripcion
     criterioDePertenencia
-    fuentes
-    solicitudes
+    fuentes[]
     --
     hechos(filtro)
     solicitudesPendientes()
@@ -43,32 +52,26 @@ interface Fuente {
 }
 
 class FuenteEstatica {
-
+    pathArchivo
+    --
 }
 
 class FuenteDinamica {
-
+    --
+    agregarHecho(hecho)
 }
 
-class FuenteProxy{
-
-}
-
-abstract class Hecho {
+class Hecho {
     titulo
     descripcion
     categoria
     ubicacion
-    fecha
+    fechaAcontecimiento
+    fechaCarga
     origen
-}
-
-class HechoTexto {
-
-}
-
-class HechoMultimedia {
-
+    (multimedia)
+    (contribuyente)
+    --
 }
 
 enum Estado {
@@ -77,32 +80,47 @@ enum Estado {
     RECHAZADA
 }
 
+enum Origen {
+    MANUAL
+    DATASET
+    CONTRIBUYENTE
+}
 
-Administrador -u-|> Usuario
+
+Administrador -r-|> Usuario
 
 Administrador ..> Coleccion
-Administrador ..> Solicitud
+Administrador .l.> Solicitudes
 Administrador ..> FuenteEstatica
+
+Usuario ..> FuenteDinamica
+Usuario ..> Coleccion
 
 
 Coleccion --> "*" Fuente
-Coleccion --> "*" Solicitud
+Coleccion .l.> Solicitudes
 
-Fuente -> "*" Hecho
+Fuente -l-> "*" Hecho
 
-FuenteEstatica -u-|> Fuente
-FuenteProxy -u-|> Fuente
-FuenteDinamica -u-|> Fuente
+FuenteEstatica .u.|> Fuente
+FuenteDinamica .u.|> Fuente
 
-FuenteEstatica -[hidden]r- FuenteDinamica
+Hecho -l-> Origen
 
-HechoTexto -u-|> Hecho
-HechoMultimedia -u-|> Hecho
+Solicitud -l-> Estado
+Solicitud --> Hecho
 
-Solicitud -> Coleccion
-Solicitud -> Estado
+Solicitudes -->"*" Solicitud
 
-' TODO preguntar Etiqueta
+' TODO Preguntas:
 
+'   Implementacion de las etiquetas
+
+'   Una coleccion puede tener mas de una fuente?
+
+'   Las fuentes van a buscar los datos cada vez que se les hace una consulta
+'   o guardan los datos de manera local?
+
+'   Tiene sentido inlucluir clases en el diagrama que no se van a aplicar en esta entrega?
 
 @enduml
