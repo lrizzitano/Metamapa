@@ -1,0 +1,39 @@
+package ar.edu.utn.frba.dds;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+public class SolicitudesTest {
+  private Solicitudes solicitudes;
+  private Solicitud solicitud;
+
+  @BeforeEach
+  public void setUp() {
+    solicitudes = Solicitudes.instance();
+    solicitud = new Solicitud("hecho 1", "porque sí");
+  }
+  @Test
+  void contieneSolicitudPendiente(){
+    Assertions.assertTrue(solicitudes.getPendientes().contains(solicitud));
+  }
+
+  @Test
+  void aceptoSolicitud(){;
+    solicitud.aceptar();
+    Assertions.assertTrue(solicitudes.getAceptadas().contains(solicitud));
+  }
+
+  @Test
+  void rechazoSolicitud(){
+    solicitud.rechazar();
+    Assertions.assertTrue(solicitudes.getRechazadas().contains(solicitud));
+  }
+
+  @Test
+  void seEliminaElHecho(){
+    solicitud.aceptar();
+    Assertions.assertTrue(solicitudes.hechosEliminados().contains(solicitud.getTitulo()));
+  }
+}
