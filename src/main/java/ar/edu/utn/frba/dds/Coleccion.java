@@ -4,10 +4,10 @@ import java.util.Set;
 import static java.util.Objects.requireNonNull;
 
 public class Coleccion {
-  private String titulo;
-  private String descripcion;
-  private Filtro criterioDePertenencia;
-  private Fuente fuente;
+  private final String titulo;
+  private final String descripcion;
+  private final Filtro criterioDePertenencia;
+  private final Fuente fuente;
 
   public Coleccion(String titulo, String descripcion, Filtro criterioDePertenencia, Fuente fuente) {
     this.titulo = requireNonNull(titulo);
@@ -16,10 +16,14 @@ public class Coleccion {
     this.fuente = requireNonNull(fuente);
   }
 
+  public String getTitulo() { return titulo; }
+
+  public String getDescripcion() { return descripcion; }
+
   public Set<Hecho> hechos(Filtro filtro) {
     return fuente.obtenerHechos(
         (Hecho hecho) ->(
-            !Solicitudes.instance().hechosEliminados().contains(hecho)
+            !Solicitudes.instance().hechosEliminados().contains(hecho.getTitulo())
             && criterioDePertenencia.aplicar(hecho)
             && filtro.aplicar(hecho)
         )
