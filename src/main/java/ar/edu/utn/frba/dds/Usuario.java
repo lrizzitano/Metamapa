@@ -9,9 +9,9 @@ public class Usuario {
   private int edad;
   private boolean esContribuyente;
 
-   public Set<Hecho> verHechosDeCollecion(Coleccion unaColecion,Filtro unFiltro)
+   public Set<Hecho> verHechos(Coleccion unaColeccion, Filtro unFiltro)
   {
-    return unFiltro.filtrarHechos(unaColecion);
+    return unaColeccion.hechos(unFiltro);
   }
 
   public void crearSolicitud(Hecho unHecho,String fundamentacion){
