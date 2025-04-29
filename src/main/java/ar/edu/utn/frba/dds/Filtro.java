@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds;
-import java.util.Set;
 
-public class Filtro {
-  public Set<Hecho> filtrarHechos(Coleccion unaColecion){
-  }
+@FunctionalInterface
+public interface Filtro {
+  boolean aplicar(Hecho hecho);
 }
