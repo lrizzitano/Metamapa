@@ -40,10 +40,9 @@ class Coleccion {
     titulo
     descripcion
     criterioDePertenencia
-    fuentes[]
+    fuente
     --
     hechos(filtro)
-    solicitudesPendientes()
 }
 
 interface Fuente {
@@ -97,7 +96,7 @@ Usuario ..> FuenteDinamica
 Usuario ..> Coleccion
 
 
-Coleccion --> "*" Fuente
+Coleccion --> Fuente
 Coleccion .l.> Solicitudes
 
 Fuente -l-> "*" Hecho
