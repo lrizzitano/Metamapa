@@ -21,19 +21,26 @@ public class SolicitudesTest {
 
   @Test
   void aceptoSolicitud(){;
-    solicitud.aceptar();
+    solicitud.aceptar(null);
     Assertions.assertTrue(solicitudes.getAceptadas().contains(solicitud));
   }
 
   @Test
   void rechazoSolicitud(){
-    solicitud.rechazar();
+    solicitud.rechazar(null);
     Assertions.assertTrue(solicitudes.getRechazadas().contains(solicitud));
   }
 
   @Test
   void seEliminaElHecho(){
-    solicitud.aceptar();
+    solicitud.aceptar(null);
     Assertions.assertTrue(solicitudes.hechosEliminados().contains(solicitud.getTitulo()));
+  }
+
+  @Test
+  void seAcuerdaQuienLaAcepto(){
+    Administrador admin = new Administrador();
+    solicitud.aceptar(admin);
+    Assertions.assertEquals(solicitud.getResponsable(), admin);
   }
 }
