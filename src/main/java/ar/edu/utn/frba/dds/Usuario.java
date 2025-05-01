@@ -9,7 +9,7 @@ public class Usuario {
   private int edad;
   private boolean esContribuyente;
 
-   public Set<Hecho> verHechos(Coleccion unaColeccion, Filtro unFiltro)
+   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Filtro unFiltro)
   {
     return unaColeccion.hechos(unFiltro);
   }
@@ -20,6 +20,11 @@ public class Usuario {
     if(unHecho==null){throw new SolicitudInvalidaException("No se asigno ningu hecho");}
 
      new Solicitud(unHecho.getTitulo(),fundamentacion);
+  }
+
+  public Set<Hecho> verHechos(Coleccion unaColeccion)
+  {
+    return unaColeccion.hechos(Hecho -> true);
   }
 
   void contribur(Hecho unHecho) {
