@@ -21,7 +21,7 @@ public class FuenteEstatica implements Fuente {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
-        if (filtro.aplicar(hecho)) {
+        if (filtro.aplicar(hecho) && !this.estaRepetido(hecho, hechos)) {
           hechos.add(hecho);
         }
       }
@@ -42,5 +42,9 @@ public class FuenteEstatica implements Fuente {
       LocalDate.parse(fila.get("fecha")), //TODO: ver tema formato
       Origen.valueOf(fila.get("origen").toUpperCase())
     );
+  }
+
+  public Boolean estaRepetido(Hecho unHecho, Set<Hecho> hechos) {
+    return hechos.stream().anyMatch(hecho -> hecho.getTitulo().equals(unHecho.getTitulo()));
   }
 }
