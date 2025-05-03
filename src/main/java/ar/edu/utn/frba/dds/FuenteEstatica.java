@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Map;
 
 public class FuenteEstatica implements Fuente {
-  private String pathArchivo;
+  private final String pathArchivo;
 
   public FuenteEstatica(String pathArchivo) {
     this.pathArchivo = pathArchivo;
@@ -17,7 +17,7 @@ public class FuenteEstatica implements Fuente {
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro){
     Set<Hecho> hechos = new HashSet<>();
-    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("datos.csv"))) {
+    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(this.pathArchivo))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);

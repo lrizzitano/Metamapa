@@ -2,10 +2,9 @@ package ar.edu.utn.frba.dds;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class SolicitudesTest {
+class SolicitudesTest {
   private Solicitudes solicitudes;
   private Solicitud solicitud;
 
