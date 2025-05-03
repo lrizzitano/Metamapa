@@ -1,0 +1,46 @@
+package ar.edu.utn.frba.dds;
+
+import com.opencsv.CSVReaderHeaderAware;
+import java.io.FileReader;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Map;
+
+public class FuenteEstatica implements Fuente {
+  private String pathArchivo;
+
+  public FuenteEstatica(String pathArchivo) {
+    this.pathArchivo = pathArchivo;
+  }
+
+  @Override
+  public Set<Hecho> obtenerHechos(Filtro filtro){
+    Set<Hecho> hechos = new HashSet<>();
+    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("datos.csv"))) {
+      Map<String, String> fila;
+      while ((fila = reader.readMap()) != null) {
+        Hecho hecho = this.crearHechoDesdeFila(fila);
+        if (filtro.aplicar(hecho)) {
+          hechos.add(hecho);
+        }
+      }
+    } catch (Exception e) {
+      throw new NoSePudoLeerArchivoException(e.getMessage());
+    }
+    return hechos;
+  }
+
+  public Hecho crearHechoDesdeFila(Map<String, String> fila) {
+    return new Hecho(
+      fila.get("titulo"),
+      fila.get("descripcion"),
+      fila.get("categoria"),
+      Double.parseDouble(fila.get("latitud")),
+      Double.parseDouble(fila.get("longitud")),
+      LocalDate.now(),
+      LocalDate.parse(fila.get("fecha")), //TODO: ver tema formato
+      Origen.valueOf(fila.get("origen").toUpperCase())
+    );
+  }
+}
