@@ -1,19 +1,19 @@
 package ar.edu.utn.frba.dds;
 
 public class Solicitud {
-  private final String titulo;
+  private final Hecho hecho;
   private final String fundamento;
   private final Solicitudes solicitudes = Solicitudes.instance();
   private Administrador responsable;
 
-  public Solicitud(String titulo, String fundamento) {
-    this.titulo = titulo;
+  public Solicitud(Hecho hecho, String fundamento) {
+    this.hecho = hecho;
     this.fundamento = fundamento;
     solicitudes.nuevaSolicitud(this);
   }
 
-  public String getTitulo() {
-    return titulo;
+  public Hecho getHecho() {
+    return hecho;
   }
 
   public String getFundamento() {

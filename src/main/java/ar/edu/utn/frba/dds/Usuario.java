@@ -19,7 +19,7 @@ public class Usuario {
     if(fundamentacion==null){throw new SolicitudInvalidaException("La fundamentacion esta vacia");}
     if(unHecho==null){throw new SolicitudInvalidaException("No se asigno ningu hecho");}
 
-     new Solicitud(unHecho.getTitulo(),fundamentacion);
+     new Solicitud(unHecho,fundamentacion);
   }
 
   public Set<Hecho> verHechos(Coleccion unaColeccion)
