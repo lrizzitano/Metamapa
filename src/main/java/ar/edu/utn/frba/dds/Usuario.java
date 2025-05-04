@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds;
 import java.util.Set;
+import java.util.function.Predicate;
 
 
 public class Usuario {
@@ -9,7 +10,7 @@ public class Usuario {
   private int edad;
   private boolean esContribuyente;
 
-   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Filtro unFiltro)
+   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro)
   {
     return unaColeccion.hechos(unFiltro);
   }
@@ -19,7 +20,7 @@ public class Usuario {
     if(fundamentacion==null){throw new SolicitudInvalidaException("La fundamentacion esta vacia");}
     if(unHecho==null){throw new SolicitudInvalidaException("No se asigno ningu hecho");}
 
-     new Solicitud(unHecho.getTitulo(),fundamentacion);
+     new Solicitud(unHecho,fundamentacion);
   }
 
   public Set<Hecho> verHechos(Coleccion unaColeccion)

@@ -44,7 +44,11 @@ public class Solicitudes {
     return new HashSet<>(rechazadas);
   }
 
-  public Set<String> hechosEliminados() {
-    return new HashSet<>(aceptadas.stream().map(Solicitud::getTitulo).toList());
+  public boolean estaEliminado(Hecho hecho) {
+    return this.hechosEliminados().contains(hecho);
+  }
+
+  public Set<Hecho> hechosEliminados() {
+    return new HashSet<>(aceptadas.stream().map(Solicitud::getHecho).toList());
   }
 }

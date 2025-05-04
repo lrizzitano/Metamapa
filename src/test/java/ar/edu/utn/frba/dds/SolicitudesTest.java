@@ -3,16 +3,13 @@ package ar.edu.utn.frba.dds;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
 
 class SolicitudesTest {
-  private Solicitudes solicitudes;
-  private Solicitud solicitud;
+  private final Hecho hecho = mock(Hecho.class);
+  private final Solicitudes solicitudes = Solicitudes.instance();
+  private final Solicitud solicitud = new Solicitud(hecho, null);
 
-  @BeforeEach
-  public void setUp() {
-    solicitudes = Solicitudes.instance();
-    solicitud = new Solicitud("hecho 1", "porque sí");
-  }
   @Test
   void contieneSolicitudPendiente(){
     Assertions.assertTrue(solicitudes.getPendientes().contains(solicitud));
@@ -33,7 +30,13 @@ class SolicitudesTest {
   @Test
   void seEliminaElHecho(){
     solicitud.aceptar(null);
-    Assertions.assertTrue(solicitudes.hechosEliminados().contains(solicitud.getTitulo()));
+    Assertions.assertTrue(solicitudes.hechosEliminados().contains(solicitud.getHecho()));
+  }
+
+  @Test
+  void seEliminaElSolicitud(){
+    solicitud.aceptar(null);
+    Assertions.assertTrue(solicitudes.estaEliminado(hecho));
   }
 
   @Test

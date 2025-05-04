@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 
-class FiltroTest {
+class FiltroBuilderTest {
   private final FiltroBuilder builder = new FiltroBuilder();
   private final Predicate<Hecho> siempreTrue = hecho -> true;
   private final Predicate<Hecho> siempreFalse = hecho -> false;
