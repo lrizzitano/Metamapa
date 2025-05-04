@@ -1,15 +1,17 @@
 package ar.edu.utn.frba.dds;
 
 import java.util.Set;
+import java.util.function.Predicate;
+
 import static java.util.Objects.requireNonNull;
 
 public class Coleccion {
   private final String titulo;
   private final String descripcion;
-  private final Filtro criterioDePertenencia;
+  private final Predicate<Hecho> criterioDePertenencia;
   private final Fuente fuente;
 
-  public Coleccion(String titulo, String descripcion, Filtro criterioDePertenencia, Fuente fuente) {
+  public Coleccion(String titulo, String descripcion, Predicate<Hecho> criterioDePertenencia, Fuente fuente) {
     this.titulo = requireNonNull(titulo);
     this.descripcion = requireNonNull(descripcion);
     this.criterioDePertenencia = requireNonNull(criterioDePertenencia);
@@ -20,13 +22,11 @@ public class Coleccion {
 
   public String getDescripcion() { return descripcion; }
 
-  public Set<Hecho> hechos(Filtro filtro) {
-    return fuente.obtenerHechos(
-        (Hecho hecho) ->(
-            !Solicitudes.instance().hechosEliminados().contains(hecho.getTitulo())
-            && criterioDePertenencia.aplicar(hecho)
-            && filtro.aplicar(hecho)
-        )
-    );
+  public Set<Hecho> hechos(Predicate<Hecho> filtro) {
+    return fuente.obtenerHechos(filtro.and(criterioDePertenencia).and(condicionNoEliminado()));
+  }
+
+  private Predicate<Hecho> condicionNoEliminado(){
+    return hecho -> !Solicitudes.instance().estaEliminado(hecho);
   }
 }

@@ -1,10 +1,12 @@
 package ar.edu.utn.frba.dds;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class Administrador extends Usuario {
 
-  public Coleccion crearColeccion(String titulo, String descripcion, Filtro criterioDePertenencia, Fuente fuente) {
+  public Coleccion crearColeccion(String titulo, String descripcion, Predicate<Hecho>
+      criterioDePertenencia, Fuente fuente) {
 
     return new Coleccion(titulo, descripcion, criterioDePertenencia, fuente);
   }

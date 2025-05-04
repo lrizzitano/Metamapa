@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class FuenteEstatica implements Fuente {
   private final String pathArchivo;
@@ -15,13 +16,13 @@ public class FuenteEstatica implements Fuente {
   }
 
   @Override
-  public Set<Hecho> obtenerHechos(Filtro filtro){
+  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro){
     Set<Hecho> hechos = new HashSet<>();
     try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(this.pathArchivo))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
-        if (filtro.aplicar(hecho) && !this.estaRepetido(hecho, hechos)) {
+        if (filtro.test(hecho) && !this.estaRepetido(hecho, hechos)) {
           hechos.add(hecho);
         }
       }
@@ -45,6 +46,6 @@ public class FuenteEstatica implements Fuente {
   }
 
   public Boolean estaRepetido(Hecho unHecho, Set<Hecho> hechos) {
-    return hechos.stream().anyMatch(hecho -> hecho.getTitulo().equals(unHecho.getTitulo()));
+    return hechos.stream().anyMatch(hecho -> hecho.titulo().equals(unHecho.titulo()));
   }
 }
