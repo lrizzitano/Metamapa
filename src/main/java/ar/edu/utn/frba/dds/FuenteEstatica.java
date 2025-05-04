@@ -41,7 +41,7 @@ public class FuenteEstatica implements Fuente {
       Double.parseDouble(fila.get("longitud")),
       LocalDate.now(),
       LocalDate.parse(fila.get("fecha")), //TODO: ver tema formato
-      Origen.valueOf(fila.get("origen").toUpperCase())
+      Origen.DATASET
     );
   }
 
