@@ -8,6 +8,11 @@ import java.util.Set;
 import java.util.Map;
 
 public class FuenteEstatica implements Fuente {
+  /*
+  Como precondicion para funcionar correctamente, se asume que el archivo CSV ingresado
+  tiene 6 columnas: titulo, descripcion, categoria, latitud, longitud, fecha
+  Ademas no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
+  */
   private final String pathArchivo;
 
   public FuenteEstatica(String pathArchivo) {
@@ -39,7 +44,7 @@ public class FuenteEstatica implements Fuente {
       Double.parseDouble(fila.get("latitud")),
       Double.parseDouble(fila.get("longitud")),
       LocalDate.now(),
-      LocalDate.parse(fila.get("fecha")), //TODO: ver tema formato
+      LocalDate.parse(fila.get("fecha")),
       Origen.valueOf(fila.get("origen").toUpperCase())
     );
   }
