@@ -15,6 +15,7 @@ public class UsuarioTest {
   private final Hecho unHecho = mock(Hecho.class);
   private final Solicitudes solicitudes = Solicitudes.instance();
 
+  private final FuenteEstatica unaFuente = new FuenteEstatica("fires-all-formateado.csv");
   private final Coleccion unaColeccion = new Coleccion("Incencios forestales","Una Descripcion"
                                                         , Filtro.CATEOGIRA.crearFiltro("Incendio") ,unaFuente);
   private final Predicate<Hecho> filtroFechaCarga = Filtro.CATEOGIRA.crearFiltro("2023-01-01");
