@@ -16,8 +16,8 @@ public class UsuarioTest {
   private final Solicitudes solicitudes = Solicitudes.instance();
 
   private final Coleccion unaColeccion = new Coleccion("Incencios forestales","Una Descripcion"
-                                                        , unHecho -> unHecho.categoria().equals("Incendio")  ,unaFuente);
-  Predicate<Hecho> filtroFechaCarga = Filtro.FECHA_CARGA_DESPUES.crearFiltro("2023-01-01");
+                                                        , Filtro.CATEOGIRA.crearFiltro("Incendio") ,unaFuente);
+  private final Predicate<Hecho> filtroFechaCarga = Filtro.CATEOGIRA.crearFiltro("2023-01-01");
   @Test
   void SeVenTodosLosHechosDeLaColeccion() {
 
