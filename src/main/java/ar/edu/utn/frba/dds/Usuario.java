@@ -5,38 +5,34 @@ import java.util.function.Predicate;
 
 public class Usuario {
 
-  private String nombre;
-  private String apellido;
+  private final String nombre;
+  private final String apellido;
   private int edad;
-  private boolean esContribuyente;
+  private boolean esContribuyente = false;
+
+  public Usuario(String nombre, String apellido, int edad) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
+  }
 
    public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro)
   {
     return unaColeccion.hechos(unFiltro);
   }
 
-  public void crearSolicitud(Hecho unHecho,String fundamentacion){
+  public Solicitud crearSolicitud(Hecho unHecho,String fundamentacion){
 
     if(fundamentacion==null){throw new SolicitudInvalidaException("La fundamentacion esta vacia");}
     if(unHecho==null){throw new SolicitudInvalidaException("No se asigno ningu hecho");}
 
-     new Solicitud(unHecho,fundamentacion);
+
+     return new Solicitud(unHecho,fundamentacion);
   }
 
   public Set<Hecho> verHechos(Coleccion unaColeccion)
   {
     return unaColeccion.hechos(Hecho -> true);
   }
-
-  void contribur(Hecho unHecho) {
-
-    /*busca en las collecion, se agrega a las que tengan el mismo criterioDePertenencia=Categoria
-
-    colecciones.stream()
-        .filter(unaColecCion -> unaColecCion.getCriterio().equals(unHecho.getCategoria()))
-        .forEach(unaColeccion -> unaColeccion.agregarHecho(unHecho));
-        */
-  }
-
 
 }
