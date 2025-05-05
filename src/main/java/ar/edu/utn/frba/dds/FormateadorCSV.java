@@ -37,11 +37,11 @@ public class FormateadorCSV {
         String time_ctrl = fila.get("time_ctrl");
         String time_ext = fila.get("time_ext");
 
-        if (fecha == null ||
-            lat == null ||
-            lng == null ||
-            municipio == null || municipio.equals("INDETERMINADO") ||
-            id == null) {
+        if (fecha == null || fecha.isBlank() ||
+            lat == null || lat.isBlank() ||
+            lng == null || lng.isBlank() ||
+            municipio == null || municipio.isBlank() || municipio.equals("INDETERMINADO") ||
+            id == null || id.isBlank()) {
           continue;
         }
         List<String> filaSalida = new ArrayList<>();
