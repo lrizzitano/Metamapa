@@ -15,7 +15,6 @@ public class UsuarioTest {
   private final Hecho unHecho = mock(Hecho.class);
   private final Solicitudes solicitudes = Solicitudes.instance();
 
-  private final FuenteEstatica unaFuente = new FuenteEstatica("fires-all.csv");
   private final Coleccion unaColeccion = new Coleccion("Incencios forestales","Una Descripcion"
                                                         , unHecho -> unHecho.categoria().equals("Incendio")  ,unaFuente);
   Predicate<Hecho> filtroFechaCarga = Filtro.FECHA_CARGA_DESPUES.crearFiltro("2023-01-01");
