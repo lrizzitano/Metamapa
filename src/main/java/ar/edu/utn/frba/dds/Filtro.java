@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 public enum Filtro {
   TITULO(valor -> contiene(Hecho::titulo, valor)),
   DESCRIPCION(valor -> contiene(Hecho::descripcion, valor)),
-  CATEOGIRA(valor -> contiene(Hecho::categoria, valor)),
+  CATEGORIA(valor -> contiene(Hecho::categoria, valor)),
   LATITUD_MAYOR(valor -> compararDouble(Hecho::latitud, valor, Comparar.MAYOR)),
   LATITUD_MENOR(valor -> compararDouble(Hecho::latitud, valor, Comparar.MENOR)),
   LONGITUD_MAYOR(valor -> compararDouble(Hecho::longitud, valor, Comparar.MAYOR)),

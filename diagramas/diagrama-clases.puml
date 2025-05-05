@@ -6,13 +6,14 @@ class Usuario {
     (edad)
     esContribuyente: bool
     --
-    verHechos(coleccion, filtro)
-    contribuir(hecho)
-    crearSolicitud()
+    verHechosFiltrados(coleccion, filtro)
+    crearSolicitud(hecho,fundamentacion)
+    verHechos(Coleccion)
 }
 
 class Administrador {
-    crearColeccion()
+--
+    crearColeccion(titulo,descripcion,criterio,fuente)
     verSolicitudes()
     crearFuenteEstatica(pathArchivo)
     aceptarSolicitud(solicitud)
@@ -23,9 +24,12 @@ class Administrador {
 class Solicitud {
     hecho
     fundamentacion
-    estado
+    solicitudes
+    responsable
     --
-    setEstado(estado)
+    aceptar(admin)
+    rechhazar(admin)
+
 }
 
 class Solicitudes{
@@ -33,6 +37,7 @@ class Solicitudes{
     aceptadas[]
     rechazadas[]
     --
+    estaEliminado(hecho)
     hechosEliminados()
 }
 
@@ -43,40 +48,31 @@ class Coleccion {
     fuente
     --
     hechos(filtro)
+    condicionNoEliminados()
 }
 
 interface Fuente {
     --
-    obetenerHechos(criterio)
+    obetenerHechos(filtro)
 }
 
 class FuenteEstatica {
     pathArchivo
     --
-}
-
-class FuenteDinamica {
-    --
-    agregarHecho(hecho)
+    crearHechoDesdeFila()
+    estaRepetido(unHecho, hechos)
 }
 
 class Hecho {
     titulo
     descripcion
     categoria
-    ubicacion
+    latitud
+    longitud
     fechaAcontecimiento
     fechaCarga
     origen
-    (multimedia)
-    (contribuyente)
     --
-}
-
-enum Estado {
-    PENDIENTE
-    ACEPTADA
-    RECHAZADA
 }
 
 enum Origen {
@@ -85,31 +81,56 @@ enum Origen {
     CONTRIBUYENTE
 }
 
+enum Filtro {
+  TITULO
+  DESCRIPCION
+  CATEGORIA
+  LATITUD_MAYOR
+  LATITUD_MENOR
+  LONGITUD_MAYOR
+  LONGITUD_MENOR
+  FECHA_CARGA_ANTES
+  FECHA_CARGA_DESPUES
+  FECHA_HECHO_ANTES
+  FECHA_HECHO_DESPUES
+  --
+  crearFiltro(valor)
+  contiene(Function<hecho, getter, valor)
+  compararDouble(Function<Hecho,getter,valor,cmp)
+  compararFecha(Function<Hecho,getter,valor,cmp)
+}
 
 Administrador -r-|> Usuario
 
 Administrador ..> Coleccion
 Administrador .l.> Solicitudes
 Administrador ..> FuenteEstatica
+Administrador ..>Solicitud
 
-Usuario ..> FuenteDinamica
 Usuario ..> Coleccion
+Usuario ..>Filtro
 
 
 Coleccion --> Fuente
 Coleccion .l.> Solicitudes
+Coleccion .r.> Filtro
 
 Fuente -l-> "*" Hecho
+Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
-FuenteDinamica .u.|> Fuente
+FuenteEstatica .u.> Hecho
 
-Hecho -l-> Origen
 
-Solicitud -l-> Estado
+Hecho --> Origen
+
 Solicitud --> Hecho
+Solicitud -u-> Administrador
 
 Solicitudes -->"*" Solicitud
+Solicitudes ..> Hecho
+
+
 
 ' TODO Preguntas:
 

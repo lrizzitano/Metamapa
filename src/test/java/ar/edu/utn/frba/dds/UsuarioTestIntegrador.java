@@ -8,52 +8,63 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+//En este archivo se testea la funcionalidad completa de COLECCION, FUENTE ESTATICA, USUARIO y FORMATEADORCSV
 
-public class UsuarioTest {
+public class UsuarioTestIntegrador {
 
   private final Usuario unUsuario = new Usuario("Pablo", "Gabarini",21);
+  private final Administrador unAdministrador = new Administrador("PabloCrack", "GabariniCrack",88);
+
   private final Hecho unHecho = mock(Hecho.class);
   private final Solicitudes solicitudes = Solicitudes.instance();
 
   private final FuenteEstatica unaFuente = new FuenteEstatica("fires-all-formateado.csv");
   private final Coleccion unaColeccion = new Coleccion("Incencios forestales","Una Descripcion"
-                                                        , Filtro.CATEOGIRA.crearFiltro("Incendio") ,unaFuente);
-  private final Predicate<Hecho> filtroFechaCarga = Filtro.CATEOGIRA.crearFiltro("2023-01-01");
+                                                        , Filtro.CATEGORIA.crearFiltro("Incendio forestal") ,unaFuente);
+
+  private final Predicate<Hecho>  filtro = Filtro.FECHA_HECHO_DESPUES.crearFiltro("2021-01-01");
+
   @Test
-  void SeVenTodosLosHechosDeLaColeccion() {
+  void UnaColeccion_CreadaPorAdmin_TraeTodosSusHechos_DeSuFuente() {
+
+    unAdministrador.crearColeccion("Incencios forestales","Una Descripcion",
+                                    Filtro.CATEGORIA.crearFiltro("Incendio forestal") ,unaFuente);
 
     Assertions.assertTrue(unUsuario.verHechos(unaColeccion).size() > 10000);
   }
 
   @Test
-  void SeVenHechosLuegoDeAplicadoElFiltro() {
+  void LaColeccion_CreadaPorAdmin_LeTraeAlUsuario_SusHechosFiltrados_DeSuFuente() {
 
-    Assertions.assertTrue(unUsuario.verHechosFiltrados(unaColeccion,filtroFechaCarga).size() < 10000);
+    unAdministrador.crearColeccion("Incencios forestales","Una Descripcion",
+        Filtro.CATEGORIA.crearFiltro("Incendio forestal") ,unaFuente);
+
+    Assertions.assertTrue(unUsuario.verHechosFiltrados(unaColeccion,filtro).size() < 10000);
   }
 
   @Test
-  void cargaSolicitud_SeLlenaLaLista() {
+  void Usuario_CargaSolicitud_SeLlenaLaLista() {
 
     unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
     Assertions.assertTrue(solicitudes.instance().getPendientes().size() > 1);
   }
 
   @Test
-  void cargaSolicitud_LaCargaEsCorrectaDelFundamento() {
+  void Usuario_CargaSolicitud_LaCargaEsCorrectaDelFundamento() {
 
     Solicitud miSolicitud = unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
     Assertions.assertEquals("La informacion es falsa",miSolicitud.getFundamento());
   }
 
   @Test
-  void cargaSolicitud_LaCargaEsCorrectaDelHecho() {
+  void Usuario_CargaSolicitud_LaCargaEsCorrectaDelHecho() {
 
     Solicitud miSolicitud = unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
     Assertions.assertEquals(unHecho,miSolicitud.getHecho());
   }
 
   @Test
-  void cargaSolicitud_LaCargaEsCorrectaDeLaSolicitud() {
+  void Usuario_CargaSolicitud_LaCargaEsCorrectaDeLaSolicitud() {
 
     Solicitud miSolicitud = unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
     Assertions.assertTrue(solicitudes.instance().getPendientes().contains(miSolicitud));

@@ -4,5 +4,5 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public interface Fuente {
-  Set<Hecho> obtenerHechos(Predicate<Hecho> criterio);
+  Set<Hecho> obtenerHechos(Predicate<Hecho> filtro);
 }

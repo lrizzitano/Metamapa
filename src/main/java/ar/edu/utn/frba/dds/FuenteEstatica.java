@@ -27,7 +27,8 @@ public class FuenteEstatica implements Fuente {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
-        if (filtro.test(hecho) && !this.estaRepetido(hecho, hechos)) {
+        if (filtro.test(hecho) /* && !this.estaRepetido(hecho, hechos)*/ )
+        {
           hechos.add(hecho);
         }
       }

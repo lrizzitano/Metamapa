@@ -32,7 +32,7 @@ class FiltroTest {
 
   @Test
   void categoriaContieneTexto() {
-    Predicate<Hecho> filtro = Filtro.CATEOGIRA.crearFiltro("desastre");
+    Predicate<Hecho> filtro = Filtro.CATEGORIA.crearFiltro("desastre");
     assertTrue(filtro.test(hecho));
   }
 
