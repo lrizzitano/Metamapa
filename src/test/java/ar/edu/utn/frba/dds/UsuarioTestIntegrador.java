@@ -46,7 +46,7 @@ public class UsuarioTestIntegrador {
   void Usuario_CargaSolicitud_SeLlenaLaLista() {
 
     unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
-    Assertions.assertTrue(solicitudes.instance().getPendientes().size() > 1);
+    Assertions.assertTrue(solicitudes.getPendientes().size() > 1);
   }
 
   @Test
@@ -67,6 +67,6 @@ public class UsuarioTestIntegrador {
   void Usuario_CargaSolicitud_LaCargaEsCorrectaDeLaSolicitud() {
 
     Solicitud miSolicitud = unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
-    Assertions.assertTrue(solicitudes.instance().getPendientes().contains(miSolicitud));
+    Assertions.assertTrue(solicitudes.getPendientes().contains(miSolicitud));
   }
 }
