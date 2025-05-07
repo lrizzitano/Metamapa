@@ -26,14 +26,14 @@ public class Solicitud {
 
   public void aceptar(Administrador admin) {
     if(this.responsable!=null)
-        return;
+        throw new SolicitudYaResueltaException();
     this.responsable = admin;
     solicitudes.aceptarSolicitud(this);
   }
 
   public void rechazar(Administrador admin) {
     if(this.responsable!=null)
-      return;
+      throw new SolicitudYaResueltaException();;
     this.responsable = admin;
     solicitudes.rechazarSolicitud(this);
   }
