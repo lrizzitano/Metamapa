@@ -1,9 +1,9 @@
 @startuml MetaMapa
 
 class Usuario {
-    (nombre)
-    (apellido)
-    (edad)
+    nombre
+    apellido
+    edad
     esContribuyente: bool
     --
     verHechosFiltrados(coleccion, filtro)

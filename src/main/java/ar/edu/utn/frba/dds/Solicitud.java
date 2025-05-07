@@ -33,7 +33,7 @@ public class Solicitud {
 
   public void rechazar(Administrador admin) {
     if(this.responsable!=null)
-      throw new SolicitudYaResueltaException();;
+      throw new SolicitudYaResueltaException();
     this.responsable = admin;
     solicitudes.rechazarSolicitud(this);
   }
