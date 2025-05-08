@@ -63,26 +63,38 @@ Entendemos que esta solución dada por un singleton es temporal, ya que cambiar�
 
 ## Filtros
 
-Se utiliza el Predicate para los filtros, proveido por el lenguaje. Su uso se basa en 2 auxiliares.\
+Definimos un Filtro como un Predicate<Hecho>, funcionalidad provista por el lenguaje. Su uso se basa en 2 auxiliares.\
 Esto permite que todo filtro tome un hecho y retorne un valor booleano que determina si ese hecho en particular "pasa" o no el filtro.
 
-### Fábrica
+### Fábrica de filtros
 
 Se creó un ENUM con ~~casi~~ todos los filtros que se pueden querer a utilizar, simplificando el proceso a un llamado con un único parámetro.
+Cada opcion de filtro tiene asociada una ```funcionCreadora``` que es una funcion que toma un String (que representa el valor a comparar) y devuelve
+(a traves del llamado a una funcion auxiliar) el Filtro. \
+El metodo ```crearFiltro``` recibe la String con el valor a utilizar y aplica la funcion creadora con la misma para armar el Filtro  \
+con la siguiente sintaxis: \
+    ```Predicate<Hecho> filtro = Filtro.TIPO_DE_FILTRO.crearFiltro(valorComparado);``` \
+    Ej: \
+    ```Predicate<Hecho> filtro = Filtro.LONGITUD_MENOR.crearFiltro("-50");```
 
-### Builder
 
-Para poder mezclar filtros también tenemos un builder que va acumulando filtros a una lista para después reducirlos en AND u OR. Aunque no lo estamos utilizando directamente en ningún lado, y creemos que puede ser implementada directamente en el usuario.\
-Este builder representa la posibilidad del usuario de crear sus propios filtro paso por paso, mediante el uso de los ENUMS, para luego aplicarlos en su busqueda.
+### Builder de Filtros Compuestos
+
+Para poder mezclar filtros también tenemos un builder que va acumulando filtros a una lista para después reducirlos con AND. \
+Este builder representa la posibilidad del usuario de crear sus filtros compuestos paso por paso, mediante la conjuncion de filtros simples (provenientes del ENUM), para luego aplicarlos en su busqueda.
 
 ## Fuente Estática
 
-Ante cada consulta de hechos, se lee desde 0 el CSV, actualmente línea a línea aunque existiría la posibilidad de hacerlo todo de una, lo que consumiría más memoria a cambio de una ejecución más rápida. \
-La fecha de carga del hecho siempre va a quedara con alguna inconsistencia ante las diferentes opciones que nos planteamos. Si le asignamos su fecha de carga como la fecha en la que se cargó la fuente al sistema, la misma quedará mal asignada para aquellos hechos que sean cargados posteriormente en una actualizacion del csv. Por otro lado, si la fecha toma la del momento en que se extrae de la fuente, esto no tendrá mucho sentido ya que podria generar inconsistencias entre un suceso pasado pero "cargado hoy". Fuimos por la segunda porque al menos siempre es un resultado posible, ya que la primera podría darnos un hecho de 2025 cargado en 2024 si actualizamos el CSV.
+Ante cada consulta de hechos, se lee desde 0 el CSV, actualmente línea a línea aunque existe la posibilidad de hacerlo todo de una, lo que consumiría más memoria a cambio de una ejecución más rápida. Actualmente priorizamos no traer todo a memoria de una ya que las optimizaciones del Sistema Operativo y la biblioteca de lectura CSV optimizan bastante la ejecucion. \
+La fecha de carga se toma como la fecha de ultima modificacion del archivo CSV, lo que resuelve las incosistencias que podia dejar usar el LocalDate.now() al cargar (nos da siempre la fecha de la consulta pues el parseo se hace cada vez que se requiere) y el hecho de usar una fecha fija de subida original del archivo (esto podia generar que al modificar el csv pudieran existir hechos con una fecha posterior a la de carga).
 
 ### Lectura del CSV
 
-Una de las dificultades más grandes presentadas fue el formato de los CSV, el cual rara vez seá ideal. Ante esto se nos presentan 2 opciones. Por un lado, cargar a la fuente estática con una función de parseo, única a cada CSV. La otra opcion fue pre-procesar los archivos para que tengan el formato deseado. Actualmente implementamos la segunda opción. \
+Una de las dificultades más grandes presentadas fue el esquema de los CSV, el cual rara vez seá ideal. Ante esto se nos presentan 2 opciones. Por un lado, cargar a la fuente estática con una función de parseo (que tomaria una linea del csv y devolveria un hecho armado), única a cada CSV. \
+La otra opcion fue pre-procesar los archivos para que tengan el esquema deseado. Actualmente implementamos la segunda opción ya que esto permite desacoplar el codigo de formateo del CSV dado y no le impone a la fuente estatica la responsabilidad de encargarse de los diferentes esquemas de CSV. \
+Este pre-proceso es una precondicion para la fuente estatica. Para cumplirlo, hay un componente que es el formateador, un script que crea un nuevo CSV y lo deja en el esquema que requiere la fuente estatica.
+Este script solo ha de ser corrido una vez y ya deja el CSV listo para la fuente estatica (a diferencia de la primer opcion que requiere de parsear el csv original ante cada consulta), y podria volver a correrse cada cierto tiempo para incorporar eventuales cambios en el CSV. 
+
 Sin importar la opcion elegida, los campos no serán 1 a 1 con el CSV, varios se fusionan para crear, por ejemplo, el título y descripción, mientras que las coordenadas podrían ser estimadas con otra información presente (una Api de google maps para ir de localidad a coordenadas).
 
 #### Ejempo de Procesamiento
