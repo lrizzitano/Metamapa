@@ -5,14 +5,14 @@ import java.util.function.Predicate;
 
 public class Usuario {
 
-  private final String nombre;
-  private final String apellido;
+  private  String nombre;
+  private  String apellido;
   private int edad;
   private boolean esContribuyente = false;
 
   public Usuario(String nombre, String apellido, int edad) {
-    this.nombre = nombre;
-    this.apellido = apellido;
+    this.nombre = nombre == null ? "Usuario" : nombre;
+    this.apellido = apellido == null ? "Anonimo" : apellido;
     this.edad = edad;
   }
 

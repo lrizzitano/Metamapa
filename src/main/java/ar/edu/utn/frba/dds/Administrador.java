@@ -2,11 +2,12 @@ package ar.edu.utn.frba.dds;
 
 import java.util.Set;
 import java.util.function.Predicate;
+import static java.util.Objects.requireNonNull;
 
 public class Administrador extends Usuario {
 
   public Administrador(String nombre, String apellido, int edad) {
-    super(nombre, apellido, edad);
+    super(requireNonNull(nombre), requireNonNull(apellido), requireNonNull(edad));
   }
 
   public Coleccion crearColeccion(String titulo, String descripcion, Predicate<Hecho>
