@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds;
 import com.opencsv.CSVReaderHeaderAware;
 import java.io.FileReader;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Map;
@@ -22,20 +23,19 @@ public class FuenteEstatica implements Fuente {
 
   @Override
   public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro){
-    Set<Hecho> hechos = new HashSet<>();
+    Map<String, Hecho> hechosPorTitulo = new HashMap<>();
     try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(this.pathArchivo))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
-        if (filtro.test(hecho) /* && !this.estaRepetido(hecho, hechos)*/ )
-        {
-          hechos.add(hecho);
+        if (filtro.test(hecho)) {
+          hechosPorTitulo.put(hecho.titulo(), hecho);
         }
       }
     } catch (Exception e) {
       throw new NoSePudoLeerArchivoException(e.getMessage());
     }
-    return hechos;
+    return new HashSet<>(hechosPorTitulo.values());
   }
 
   public Hecho crearHechoDesdeFila(Map<String, String> fila) {
@@ -49,9 +49,5 @@ public class FuenteEstatica implements Fuente {
       LocalDate.parse(fila.get("fecha")),
       Origen.DATASET
     );
-  }
-
-  public Boolean estaRepetido(Hecho unHecho, Set<Hecho> hechos) {
-    return hechos.stream().anyMatch(hecho -> hecho.titulo().equals(unHecho.titulo()));
   }
 }
