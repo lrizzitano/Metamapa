@@ -11,13 +11,13 @@ public class AdministradorTest {
   private final Solicitud unaSolicitud = new Solicitud(mock(Hecho.class), null);
 
   @Test
-  public void AdminRechazaSolicitud_EsResonsable(){
+  public void AdminRechazaSolicitud_EsResponsable(){
     unAdministrador.aceptarSolicitud(unaSolicitud);
     Assertions.assertEquals(unAdministrador,unaSolicitud.getResponsable());
   }
 
   @Test
-  public void AdminAceotaSolicitud_EsResonsable(){
+  public void AdminAceptaSolicitud_EsResponsable(){
     unAdministrador.rechazarSolicitud(unaSolicitud);
     Assertions.assertEquals(unAdministrador,unaSolicitud.getResponsable());
   }
