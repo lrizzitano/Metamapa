@@ -31,6 +31,14 @@ public class UsuarioIT {
   }
 
   @Test
+  void hola() {
+    unAdministrador.crearColeccion("Incendios forestales","Una Descripcion",
+        Filtro.CATEGORIA.crearFiltro("Incendio forestal") ,unaFuente);
+
+    Assertions.assertEquals(230141, unUsuario.verHechos(unaColeccion).size());
+  }
+
+  @Test
   void LaColeccion_CreadaPorAdmin_LeTraeAlUsuario_SusHechosFiltrados_DeSuFuente() {
     final Predicate<Hecho>  unFiltro = Filtro.FECHA_HECHO_DESPUES.crearFiltro("2021-01-01");
     unAdministrador.crearColeccion("Incencios forestales","Una Descripcion",
@@ -47,5 +55,6 @@ public class UsuarioIT {
     Solicitud miSolicitud = unUsuario.crearSolicitud(unHecho,"La informacion es falsa");
     unAdministrador.aceptarSolicitud(miSolicitud);
     assertFalse(unUsuario.verHechos(unaColeccion).contains(unHecho));
+    Solicitudes.instance().reset();
   }
 }

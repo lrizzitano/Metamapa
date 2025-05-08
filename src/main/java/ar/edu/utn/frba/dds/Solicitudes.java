@@ -51,4 +51,11 @@ public class Solicitudes {
   public Set<Hecho> hechosEliminados() {
     return new HashSet<>(aceptadas.stream().map(Solicitud::getHecho).toList());
   }
+
+  void reset(){
+    pendientes.clear();
+    aceptadas.clear();
+    rechazadas.clear();
+  }
+
 }
