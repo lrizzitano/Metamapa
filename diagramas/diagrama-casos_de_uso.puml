@@ -9,7 +9,7 @@ usecase "Evaluar solicitudes" as UC2
 usecase "Crear colección" as UC3
 usecase "Crear fuente" as UC4
 
-usecase "Generas solicitud" as UC1.1
+usecase "Generar solicitud" as UC1.1
 
 Visualizador -- UC1
 Administrador -- UC1

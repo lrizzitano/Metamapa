@@ -1,9 +1,9 @@
 @startuml MetaMapa
 
 class Usuario {
-    nombre
-    apellido
-    edad
+    (nombre)
+    (apellido)
+    (edad)
     esContribuyente: bool
     --
     verHechosFiltrados(coleccion, filtro)
@@ -21,40 +21,52 @@ class Administrador {
 
 }
 
-class Solicitud {
-    hecho
-    fundamentacion
-    solicitudes
-    responsable
-    --
-    aceptar(admin)
-    rechhazar(admin)
+together {
+    class Solicitud {
+        hecho
+        fundamentacion
+        solicitudes
+        responsable
+        --
+        aceptar(admin)
+        rechhazar(admin)
 
+    }
+
+    class Coleccion {
+        titulo
+        descripcion
+        criterioDePertenencia
+        fuente
+        --
+        hechos(filtro)
+    }
+
+    interface Fuente {
+        --
+        obetenerHechos(filtro)
+    }
+
+    class Hecho {
+        titulo
+        descripcion
+        categoria
+        latitud
+        longitud
+        fechaAcontecimiento
+        fechaCarga
+        origen
+        --
+    }
+
+    enum Origen {
+        MANUAL
+        DATASET
+        CONTRIBUYENTE
+    }
 }
 
-class Solicitudes{
-    pendientes[]
-    aceptadas[]
-    rechazadas[]
-    --
-    estaEliminado(hecho)
-    hechosEliminados()
-}
 
-class Coleccion {
-    titulo
-    descripcion
-    criterioDePertenencia
-    fuente
-    --
-    hechos(filtro)
-    condicionNoEliminados()
-}
-
-interface Fuente {
-    --
-    obetenerHechos(filtro)
-}
 
 class FuenteEstatica {
     pathArchivo
@@ -63,23 +75,7 @@ class FuenteEstatica {
     estaRepetido(unHecho, hechos)
 }
 
-class Hecho {
-    titulo
-    descripcion
-    categoria
-    latitud
-    longitud
-    fechaAcontecimiento
-    fechaCarga
-    origen
-    --
-}
 
-enum Origen {
-    MANUAL
-    DATASET
-    CONTRIBUYENTE
-}
 
 enum Filtro {
   TITULO
@@ -95,15 +91,11 @@ enum Filtro {
   FECHA_HECHO_DESPUES
   --
   crearFiltro(valor)
-  contiene(Function<hecho, getter, valor)
-  compararDouble(Function<Hecho,getter,valor,cmp)
-  compararFecha(Function<Hecho,getter,valor,cmp)
 }
 
 Administrador -r-|> Usuario
 
 Administrador ..> Coleccion
-Administrador .l.> Solicitudes
 Administrador ..> FuenteEstatica
 Administrador ..>Solicitud
 
@@ -112,35 +104,19 @@ Usuario ..>Filtro
 
 
 Coleccion --> Fuente
-Coleccion .l.> Solicitudes
 Coleccion .r.> Filtro
 
 Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
-FuenteEstatica .u.> Hecho
 
 
-Hecho --> Origen
+Hecho -l-> Origen
 
 Solicitud --> Hecho
 Solicitud -u-> Administrador
 
-Solicitudes -->"*" Solicitud
-Solicitudes ..> Hecho
-
-
-
-' TODO Preguntas:
-
-'   Implementacion de las etiquetas
-
-'   Una coleccion puede tener mas de una fuente?
-
-'   Las fuentes van a buscar los datos cada vez que se les hace una consulta
-'   o guardan los datos de manera local?
-
-'   Tiene sentido inlucluir clases en el diagrama que no se van a aplicar en esta entrega?
+Solicitud -[hidden] Coleccion
 
 @enduml

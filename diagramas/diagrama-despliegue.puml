@@ -10,12 +10,12 @@ node "Agregador" {
     database Solicitudes
 
     interface "Contribuir(hecho)"
-    interface "VerHechos(coleccion, filtro)"
+    interface "VerHechosFiltrados(coleccion, filtro)"
 
     [Dominio] -- Colecciones
     [Dominio] -- Solicitudes
     
-    "VerHechos(coleccion, filtro)" -- [Dominio]
+    "VerHechosFiltrados(coleccion, filtro)" -- [Dominio]
     "Contribuir(hecho)" -- [Dominio]
 }
 
@@ -25,14 +25,15 @@ node "FuenteEstatica" {
 
     database Archivo
 
-    InterfazEstaticos -- Archivo
+    InterfazEstaticos -- [Procesador]
+    [Procesador]  -- Archivo
 
     [Dominio] -- InterfazEstaticos
 }
 
  actor "Usuario"
  "Usuario" -- "Contribuir(hecho)"
- "Usuario" -- "VerHechos(coleccion, filtro)"
+ "Usuario" -- "VerHechosFiltrados(coleccion, filtro)"
 
 
 @enduml
