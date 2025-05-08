@@ -2,107 +2,105 @@ package ar.edu.utn.frba.dds;
 
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FormateadorCSV {
 
-  public static void main(String[] args) {
-    String archivoEntrada = "fires-all.csv";
-    String archivoSalida = "fires-all-formateado.csv";
+  private static final String ARCHIVO_ENTRADA = "fires-all.csv"; // podria hacerse por parametro, para demo usamos estos
+  private static final String ARCHIVO_SALIDA = "fires-all-formateado.csv";
 
+  public static void main(String[] args) {
+    int filasInvalidas = 0;
+    int filasValidas = 0;
     try (
-        CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(archivoEntrada));
-        CSVWriter writer = new CSVWriter(new FileWriter(archivoSalida))
+        CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(ARCHIVO_ENTRADA));
+        CSVWriter writer = new CSVWriter(new FileWriter(ARCHIVO_SALIDA))
     ) {
-      // Escribimos cabeceras en el archivo de salida
       writer.writeNext(new String[]{"titulo", "descripcion", "categoria", "latitud", "longitud", "fecha"});
 
       Map<String, String> fila;
-
       while ((fila = reader.readMap()) != null) {
-
-        String fecha = fila.get("fecha");
-        String lat = fila.get("lat");
-        String lng = fila.get("lng");
-        String superficie = fila.get("superficie");
-        String municipio = fila.get("municipio");
-        String id = fila.get("id");
-        String muertos = fila.get("muertos");
-        String heridos = fila.get("heridos");
-        String time_ctrl = fila.get("time_ctrl");
-        String time_ext = fila.get("time_ext");
-
-        if (fecha == null || fecha.isBlank() ||
-            lat == null || lat.isBlank() ||
-            lng == null || lng.isBlank() ||
-            municipio == null || municipio.isBlank() || municipio.equals("INDETERMINADO") ||
-            id == null || id.isBlank()) {
+        if (filaInvalida(fila)) {
+          filasInvalidas++;
           continue;
         }
-        List<String> filaSalida = new ArrayList<>();
+        filasValidas++;
 
-        String titulo = String.format("Incendio Forestal en %s de %s hectareas - id: %s",
-            municipio, superficie, id);
+        String titulo = generarTitulo(fila);
+        String descripcion = generarDescripcion(fila);
 
-        filaSalida.add(titulo);
-
-        StringBuilder descripcion = new StringBuilder();
-
-        descripcion.append(String.format("""
-        En la fecha %s se genero un incendio forestal en el municipio de %s de una magnitud de %s hectareas.
-        """, fecha, municipio, superficie));
-
-        if (muertos != null) {
-          if (muertos.equals("0")) {
-            descripcion.append("No se registraron muertos. ");
-          } else {
-            descripcion.append(String.format("Se registraron %s muertos. ", muertos));
-          }
-        }
-
-        if (heridos != null) {
-          if (heridos.equals("0")) {
-            descripcion.append("No se registraron heridos. ");
-          } else {
-            descripcion.append(String.format("Se registraron %s heridos. ", heridos));
-          }
-        }
-
-        if (time_ctrl != null) {
-          if (!time_ctrl.equals("0")) {
-            descripcion.append(String.format("""
-                Se registro un tiempo hasta tener el fuego bajo control de %s minutos
-                """, time_ctrl));
-          }
-        }
-
-        if (time_ext != null) {
-          if (!time_ext.equals("0")) {
-            descripcion.append(String.format("""
-                Se registro un tiempo hasta tener el fuego extinto de %s minutos
-                """, time_ext));
-          }
-        }
-
-        String descripcionFinal = descripcion.toString();
-
-        filaSalida.add(descripcionFinal);
-
-        filaSalida.add("Incendio forestal");
-        filaSalida.add(lat);
-        filaSalida.add(lng);
-        filaSalida.add(fecha);
+        List<String> filaSalida = Arrays.asList(
+            titulo,
+            descripcion,
+            "Incendio forestal", //categoria
+            fila.get("lat"),
+            fila.get("lng"),
+            fila.get("fecha")
+        );
 
         writer.writeNext(filaSalida.toArray(new String[0]));
       }
-
-    } catch (Exception e) {
-      throw new RuntimeException("Error al procesar archivos CSV", e);
+    } catch (IOException | CsvValidationException e) {
+      throw new NoSePudoLeerArchivoException(e.getMessage());
     }
+
+    System.out.printf("Se leyeron %d filas validas%n", filasValidas);
+    System.out.printf("Se ignoraron %d filas por tener campos invalidos%n", filasInvalidas);
+  }
+
+  private static boolean filaInvalida(Map<String, String> fila) {
+    return esInvalido(fila.get("fecha")) ||
+        esInvalido(fila.get("lat")) ||
+        esInvalido(fila.get("lng")) ||
+        esInvalido(fila.get("municipio")) ||
+        fila.get("municipio").equalsIgnoreCase("INDETERMINADO") ||
+        esInvalido(fila.get("id"));
+  }
+
+  private static boolean esInvalido(String campo) {
+    return campo == null || campo.isBlank();
+  }
+
+  private static String generarTitulo(Map<String, String> fila) {
+    return String.format(
+        "Incendio Forestal en %s de %s hectareas - id: %s",
+        fila.get("municipio"),
+        fila.getOrDefault("superficie", "?"),
+        fila.get("id")
+    );
+  }
+
+  private static String generarDescripcion(Map<String, String> fila) {
+    String fecha = fila.get("fecha");
+    String municipio = fila.get("municipio");
+    String superficie = fila.getOrDefault("superficie", "?");
+
+    String desc = String.format("""
+        En la fecha %s se generó un incendio forestal en el municipio de %s de una magnitud de %s hectáreas.
+        """, fecha, municipio, superficie) +
+        parsearCampoCondicional(fila.get("muertos"), "muertos") +
+        parsearCampoCondicional(fila.get("heridos"), "heridos") +
+        parsearTiempo("control", fila.get("time_ctrl")) +
+        parsearTiempo("extinción", fila.get("time_ext"));
+
+    return desc.trim();
+  }
+
+  private static String parsearCampoCondicional(String valor, String palabra) {
+    if (valor == null) return "";
+    if (valor.equals("0")) return "No se registraron " + palabra + ". ";
+    return String.format("Se registraron %s %s. ", valor, palabra);
+  }
+
+  private static String parsearTiempo(String tipo, String valor) {
+    if (valor == null || valor.equals("0")) return "";
+    return String.format("Se registró un tiempo hasta tener el fuego bajo %s de %s minutos. ", tipo, valor);
   }
 }
