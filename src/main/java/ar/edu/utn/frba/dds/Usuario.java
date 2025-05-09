@@ -11,10 +11,10 @@ public class Usuario {
   private int edad;
   private boolean esContribuyente = false;
 
-  public Usuario(String nombre, String apellido, int edad) {
+  public Usuario(String nombre, String apellido, Integer edad) {
     this.nombre = nombre == null ? "Usuario" : nombre;
     this.apellido = apellido == null ? "Anonimo" : apellido;
-    this.edad = edad;
+    this.edad = edad == null ? 0 : edad;
   }
 
   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro) {

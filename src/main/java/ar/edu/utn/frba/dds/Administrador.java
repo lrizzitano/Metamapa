@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 public class Administrador extends Usuario {
 
   public Administrador(String nombre, String apellido, int edad) {
-    super(requireNonNull(nombre), requireNonNull(apellido), requireNonNull(edad));
+    super(requireNonNull(nombre), requireNonNull(apellido), edad);
   }
 
   public Coleccion crearColeccion(String titulo, String descripcion, Predicate<Hecho>
