@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class FormateadorCSV {
+public class FormateadorCsv {
 
   private static final String ARCHIVO_ENTRADA = "fires-all.csv";
   // podria hacerse por parametro, para demo usamos estos
@@ -84,7 +84,8 @@ public class FormateadorCSV {
     String superficie = fila.getOrDefault("superficie", "?");
 
     String desc = String.format("""
-        En la fecha %s se generó un incendio forestal en el municipio de %s de una magnitud de %s hectáreas.
+        En la fecha %s se generó un incendio forestal \
+        en el municipio de %s de una magnitud de %s hectáreas.
         """, fecha, municipio, superficie)
         + parsearCampoCondicional(fila.get("muertos"), "muertos")
         + parsearCampoCondicional(fila.get("heridos"), "heridos")
@@ -108,6 +109,8 @@ public class FormateadorCSV {
     if (valor == null || valor.equals("0")) {
       return "";
     }
-    return String.format("Se registró un tiempo hasta tener el fuego bajo %s de %s minutos. ", tipo, valor);
+    return String.format(
+        "Se registró un tiempo hasta tener el fuego bajo %s de %s minutos. ",
+        tipo, valor);
   }
 }

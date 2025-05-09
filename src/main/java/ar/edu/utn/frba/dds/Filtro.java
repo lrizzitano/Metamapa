@@ -5,17 +5,28 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public enum Filtro {
-  TITULO(valor -> contiene(Hecho::titulo, valor)),
-  DESCRIPCION(valor -> contiene(Hecho::descripcion, valor)),
-  CATEGORIA(valor -> contiene(Hecho::categoria, valor)),
-  LATITUD_MAYOR(valor -> compararDouble(Hecho::latitud, valor, TipoComparacion.MAYOR)),
-  LATITUD_MENOR(valor -> compararDouble(Hecho::latitud, valor, TipoComparacion.MENOR)),
-  LONGITUD_MAYOR(valor -> compararDouble(Hecho::longitud, valor, TipoComparacion.MAYOR)),
-  LONGITUD_MENOR(valor -> compararDouble(Hecho::longitud, valor, TipoComparacion.MENOR)),
-  FECHA_CARGA_ANTES(valor -> compararFecha(Hecho::fechaCarga, valor, TipoComparacion.MENOR)),
-  FECHA_CARGA_DESPUES(valor -> compararFecha(Hecho::fechaCarga, valor, TipoComparacion.MAYOR)),
-  FECHA_HECHO_ANTES(valor -> compararFecha(Hecho::fechaAcontecimiento, valor, TipoComparacion.MENOR)),
-  FECHA_HECHO_DESPUES(valor -> compararFecha(Hecho::fechaAcontecimiento, valor, TipoComparacion.MAYOR));
+  TITULO(valor ->
+      contiene(Hecho::titulo, valor)),
+  DESCRIPCION(valor ->
+      contiene(Hecho::descripcion, valor)),
+  CATEGORIA(valor ->
+      contiene(Hecho::categoria, valor)),
+  LATITUD_MAYOR(valor ->
+      compararDouble(Hecho::latitud, valor, TipoComparacion.MAYOR)),
+  LATITUD_MENOR(valor ->
+      compararDouble(Hecho::latitud, valor, TipoComparacion.MENOR)),
+  LONGITUD_MAYOR(valor ->
+      compararDouble(Hecho::longitud, valor, TipoComparacion.MAYOR)),
+  LONGITUD_MENOR(valor ->
+      compararDouble(Hecho::longitud, valor, TipoComparacion.MENOR)),
+  FECHA_CARGA_ANTES(valor ->
+      compararFecha(Hecho::fechaCarga, valor, TipoComparacion.MENOR)),
+  FECHA_CARGA_DESPUES(valor ->
+      compararFecha(Hecho::fechaCarga, valor, TipoComparacion.MAYOR)),
+  FECHA_HECHO_ANTES(valor ->
+      compararFecha(Hecho::fechaAcontecimiento, valor, TipoComparacion.MENOR)),
+  FECHA_HECHO_DESPUES(valor ->
+      compararFecha(Hecho::fechaAcontecimiento, valor, TipoComparacion.MAYOR));
   //ORIGEN_ES(valor -> contiene(Hecho::origen, valor)),
   //ORIGEN_NO_ES(valor -> hecho -> !hecho.origen().toLowerCase().contains(valor.toLowerCase()));
 
