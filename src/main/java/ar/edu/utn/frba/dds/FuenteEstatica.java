@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds;
 
 import com.opencsv.CSVReaderHeaderAware;
-import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+
 
 public class FuenteEstatica implements Fuente {
   /*
@@ -39,14 +39,15 @@ public class FuenteEstatica implements Fuente {
     } catch (Exception e) {
       throw new NoSePudoLeerArchivoException(
           "Error al obtener la fecha de modificación del archivo "
-          + path + " : " + e.getMessage());
+              + path + " : " + e.getMessage());
     }
   }
 
   public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro) {
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
     this.actualizarFechaModificacion();
-    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(path.toFile()))) {
+    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(
+        Files.newBufferedReader(path, java.nio.charset.StandardCharsets.UTF_8))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);

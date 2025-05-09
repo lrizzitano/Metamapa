@@ -17,6 +17,22 @@ public class Usuario {
     this.edad = edad == null ? 0 : edad;
   }
 
+  public String getNombre() {
+    return nombre;
+  }
+
+  public String getApellido() {
+    return apellido;
+  }
+
+  public int getEdad() {
+    return edad;
+  }
+
+  public boolean esContribuyente() {
+    return esContribuyente;
+  }
+
   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro) {
     return unaColeccion.hechos(unFiltro);
   }

@@ -3,9 +3,8 @@ package ar.edu.utn.frba.dds;
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +19,15 @@ public class FormateadorCsv {
     int filasInvalidas = 0;
     int filasValidas = 0;
     try (
-        CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(ARCHIVO_ENTRADA));
-        CSVWriter writer = new CSVWriter(new FileWriter(ARCHIVO_SALIDA))
+        CSVReaderHeaderAware reader = new CSVReaderHeaderAware(
+            java.nio.file.Files.newBufferedReader(
+                java.nio.file.Paths.get(ARCHIVO_ENTRADA), StandardCharsets.UTF_8)
+        );
+        CSVWriter writer = new CSVWriter(
+            java.nio.file.Files.newBufferedWriter(
+                java.nio.file.Paths.get(ARCHIVO_SALIDA), StandardCharsets.UTF_8)
+        );
+
     ) {
       writer.writeNext(new String[]{"titulo", "descripcion", "categoria",
           "latitud", "longitud", "fecha"});
@@ -83,10 +89,10 @@ public class FormateadorCsv {
     String municipio = fila.get("municipio");
     String superficie = fila.getOrDefault("superficie", "?");
 
-    String desc = String.format("""
-        En la fecha %s se generó un incendio forestal \
-        en el municipio de %s de una magnitud de %s hectáreas.
-        """, fecha, municipio, superficie)
+    String desc = String.format(
+        "En la fecha %s se generó un incendio forestal"
+            + "en el municipio de %s de una magnitud de %s hectáreas.",
+        fecha, municipio, superficie)
         + parsearCampoCondicional(fila.get("muertos"), "muertos")
         + parsearCampoCondicional(fila.get("heridos"), "heridos")
         + parsearTiempo("control", fila.get("time_ctrl"))
