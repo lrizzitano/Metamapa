@@ -11,9 +11,9 @@ import java.util.function.Predicate;
 
 public class FuenteEstatica implements Fuente {
   /*
-  Como precondicion para funcionar correctamente, se asume que el archivo CSV ingresado
-  tiene 6 columnas: titulo, descripcion, categoria, latitud, longitud, fecha
-  Ademas no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
+  Como pre-condición para funcionar correctamente, se asume que el archivo CSV ingresado
+  tiene 6 columnas: título, descripción, categoría, latitud, longitud, fecha
+  Además no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
   */
   private final String pathArchivo;
 
