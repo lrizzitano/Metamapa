@@ -30,6 +30,11 @@ public class FuenteEstaticaTest{
   }
 
   @Test
+  public void noSePuedeCrearUnaFuenteDeUnArchivoInvalido(){
+    Assertions.assertThrows(NoSePudoLeerArchivoException.class, () -> new FuenteEstatica("nada"));
+  }
+
+  @Test
   public void devuelveLosHechos() throws IOException {
     Files.write(tempFile, List.of(
         "\"titulo\",\"descripcion\",\"categoria\",\"latitud\",\"longitud\",\"fecha\"",

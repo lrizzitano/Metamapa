@@ -2,7 +2,11 @@ package ar.edu.utn.frba.dds;
 
 import com.opencsv.CSVReaderHeaderAware;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,16 +19,33 @@ public class FuenteEstatica implements Fuente {
   tiene 6 columnas: título, descripción, categoría, latitud, longitud, fecha
   Además no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
   */
-  private final String pathArchivo;
+  private final Path path;
+  private  LocalDate ultimaModificacion;
 
-  public FuenteEstatica(String pathArchivo) {
-    this.pathArchivo = pathArchivo;
+  public FuenteEstatica(String path) {
+    this.path = Paths.get(path);
+    if (!Files.exists(this.path)) {
+      throw new NoSePudoLeerArchivoException("Archivo no encontrado");
+    }
+    this.actualizarFechaModificacion();
   }
 
-  @Override
-  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro){
+  private void actualizarFechaModificacion() {
+    try {
+          ultimaModificacion = Files.getLastModifiedTime(path)
+          .toInstant()
+          .atZone(ZoneId.systemDefault())
+          .toLocalDate();
+    } catch (Exception e) {
+      throw new NoSePudoLeerArchivoException("Error al obtener la fecha de modificación del archivo "
+          + path + " : " + e.getMessage());
+    }
+  }
+
+  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro) {
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
-    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(this.pathArchivo))) {
+    this.actualizarFechaModificacion();
+    try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(path.toFile()))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
@@ -33,7 +54,8 @@ public class FuenteEstatica implements Fuente {
         }
       }
     } catch (Exception e) {
-      throw new NoSePudoLeerArchivoException(e.getMessage());
+      throw new NoSePudoLeerArchivoException("Error al leer el archivo " + path + " : "
+          + e.getMessage());
     }
     return new HashSet<>(hechosPorTitulo.values());
   }
@@ -45,7 +67,7 @@ public class FuenteEstatica implements Fuente {
       fila.get("categoria"),
       Double.parseDouble(fila.get("latitud")),
       Double.parseDouble(fila.get("longitud")),
-      LocalDate.now(),
+      ultimaModificacion,
       LocalDate.parse(fila.get("fecha")),
       Origen.DATASET
     );
