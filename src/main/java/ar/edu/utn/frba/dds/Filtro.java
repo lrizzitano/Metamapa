@@ -30,7 +30,9 @@ public enum Filtro {
   }
 
   //Auxiliares
-  private enum TipoComparacion { MAYOR, MENOR }
+  private enum TipoComparacion {
+    MAYOR, MENOR
+  }
 
   private static Predicate<Hecho> contiene(Function<Hecho, String> getter, String valor) {
     String lowered = valor.toLowerCase();
@@ -46,8 +48,8 @@ public enum Filtro {
 
   private static Predicate<Hecho> compararFecha(Function<Hecho, LocalDate> getter, String valor,
                                                 TipoComparacion tipoComparacion) {
-    return hecho -> getter.apply(hecho).equals(LocalDate.parse(valor)) ||
-        tipoComparacion == TipoComparacion.MAYOR
+    return hecho -> getter.apply(hecho).equals(LocalDate.parse(valor))
+        || tipoComparacion == TipoComparacion.MAYOR
         ? getter.apply(hecho).isAfter(LocalDate.parse(valor))
         : getter.apply(hecho).isBefore(LocalDate.parse(valor));
   }

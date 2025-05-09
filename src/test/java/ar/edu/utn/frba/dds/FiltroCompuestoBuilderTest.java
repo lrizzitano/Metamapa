@@ -27,14 +27,14 @@ class FiltroCompuestoBuilderTest {
 
   @Test
   void trueMasFalseNoCumpleAnd(){
-    builder.añadirFiltro(siempreTrue).añadirFiltro(siempreFalse);
+    builder.agregarFiltro(siempreTrue).agregarFiltro(siempreFalse);
     Predicate<Hecho>  filtro = builder.componerFiltros();
     Assertions.assertFalse(filtro.test(hecho));
   }
 
   @Test
   void trueMasTrueCumpleAnd(){
-    builder.añadirFiltro(siempreTrue).añadirFiltro(siempreTrue);
+    builder.agregarFiltro(siempreTrue).agregarFiltro(siempreTrue);
     Predicate<Hecho>  filtro = builder.componerFiltros();
     Assertions.assertTrue(filtro.test(hecho));
   }

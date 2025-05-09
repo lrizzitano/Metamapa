@@ -10,7 +10,8 @@ public class Solicitudes {
   private final Set<Solicitud> aceptadas = new HashSet<>();
   private final Set<Solicitud> rechazadas = new HashSet<>();
 
-  private Solicitudes() {} // private constructor
+  private Solicitudes() {
+  } // private constructor
 
   public static Solicitudes instance() {
     return instance;
@@ -52,7 +53,7 @@ public class Solicitudes {
     return new HashSet<>(aceptadas.stream().map(Solicitud::getHecho).toList());
   }
 
-  void reset(){
+  void reset() {
     pendientes.clear();
     aceptadas.clear();
     rechazadas.clear();

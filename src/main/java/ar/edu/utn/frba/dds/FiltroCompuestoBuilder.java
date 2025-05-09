@@ -10,11 +10,11 @@ public class FiltroCompuestoBuilder {
   public FiltroCompuestoBuilder() {
   }
 
-  public void reset(){
+  public void reset() {
     filtros.clear();
   }
 
-  public FiltroCompuestoBuilder añadirFiltro(Predicate<Hecho> filtro) {
+  public FiltroCompuestoBuilder agregarFiltro(Predicate<Hecho> filtro) {
     filtros.add(filtro);
     return this;
   }

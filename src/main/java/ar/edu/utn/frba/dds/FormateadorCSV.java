@@ -3,17 +3,17 @@ package ar.edu.utn.frba.dds;
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class FormateadorCSV {
 
-  private static final String ARCHIVO_ENTRADA = "fires-all.csv"; // podria hacerse por parametro, para demo usamos estos
+  private static final String ARCHIVO_ENTRADA = "fires-all.csv";
+  // podria hacerse por parametro, para demo usamos estos
   private static final String ARCHIVO_SALIDA = "fires-all-formateado.csv";
 
   public static void main(String[] args) {
@@ -23,7 +23,8 @@ public class FormateadorCSV {
         CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(ARCHIVO_ENTRADA));
         CSVWriter writer = new CSVWriter(new FileWriter(ARCHIVO_SALIDA))
     ) {
-      writer.writeNext(new String[]{"titulo", "descripcion", "categoria", "latitud", "longitud", "fecha"});
+      writer.writeNext(new String[]{"titulo", "descripcion", "categoria",
+          "latitud", "longitud", "fecha"});
 
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
@@ -56,12 +57,12 @@ public class FormateadorCSV {
   }
 
   private static boolean filaInvalida(Map<String, String> fila) {
-    return esInvalido(fila.get("fecha")) ||
-        esInvalido(fila.get("lat")) ||
-        esInvalido(fila.get("lng")) ||
-        esInvalido(fila.get("municipio")) ||
-        fila.get("municipio").equalsIgnoreCase("INDETERMINADO") ||
-        esInvalido(fila.get("id"));
+    return esInvalido(fila.get("fecha"))
+        || esInvalido(fila.get("lat"))
+        || esInvalido(fila.get("lng"))
+        || esInvalido(fila.get("municipio"))
+        || fila.get("municipio").equalsIgnoreCase("INDETERMINADO")
+        || esInvalido(fila.get("id"));
   }
 
   private static boolean esInvalido(String campo) {
@@ -84,23 +85,29 @@ public class FormateadorCSV {
 
     String desc = String.format("""
         En la fecha %s se generó un incendio forestal en el municipio de %s de una magnitud de %s hectáreas.
-        """, fecha, municipio, superficie) +
-        parsearCampoCondicional(fila.get("muertos"), "muertos") +
-        parsearCampoCondicional(fila.get("heridos"), "heridos") +
-        parsearTiempo("control", fila.get("time_ctrl")) +
-        parsearTiempo("extinción", fila.get("time_ext"));
+        """, fecha, municipio, superficie)
+        + parsearCampoCondicional(fila.get("muertos"), "muertos")
+        + parsearCampoCondicional(fila.get("heridos"), "heridos")
+        + parsearTiempo("control", fila.get("time_ctrl"))
+        + parsearTiempo("extinción", fila.get("time_ext"));
 
     return desc.trim();
   }
 
   private static String parsearCampoCondicional(String valor, String palabra) {
-    if (valor == null) return "";
-    if (valor.equals("0")) return "No se registraron " + palabra + ". ";
+    if (valor == null) {
+      return "";
+    }
+    if (valor.equals("0")) {
+      return "No se registraron " + palabra + ". ";
+    }
     return String.format("Se registraron %s %s. ", valor, palabra);
   }
 
   private static String parsearTiempo(String tipo, String valor) {
-    if (valor == null || valor.equals("0")) return "";
+    if (valor == null || valor.equals("0")) {
+      return "";
+    }
     return String.format("Se registró un tiempo hasta tener el fuego bajo %s de %s minutos. ", tipo, valor);
   }
 }

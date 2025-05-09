@@ -3,8 +3,8 @@ package ar.edu.utn.frba.dds;
 import java.time.LocalDate;
 
 public record Hecho(String titulo, String descripcion, String categoria, Double latitud,
-                    Double longitud,LocalDate fechaCarga, LocalDate fechaAcontecimiento,
-                    Origen origen){
+                    Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
+                    Origen origen) {
   //private TipoHecho tipo; MULTIMEDIA o CONTRIBUYENTE
 
   public Hecho {
@@ -18,8 +18,9 @@ public record Hecho(String titulo, String descripcion, String categoria, Double 
     this.isNull(origen, "origen");
   }
 
-  private <T> void isNull(T valor, String parametro){
-    if (valor == null)
+  private <T> void isNull(T valor, String parametro) {
+    if (valor == null) {
       throw new HechoInvalidoException("No se asigno " + parametro);
+    }
   }
 }

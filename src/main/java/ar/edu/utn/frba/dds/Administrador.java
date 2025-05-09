@@ -1,8 +1,9 @@
 package ar.edu.utn.frba.dds;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Set;
 import java.util.function.Predicate;
-import static java.util.Objects.requireNonNull;
 
 public class Administrador extends Usuario {
 

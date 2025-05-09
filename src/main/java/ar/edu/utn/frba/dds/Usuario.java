@@ -1,12 +1,13 @@
 package ar.edu.utn.frba.dds;
+
 import java.util.Set;
 import java.util.function.Predicate;
 
 
 public class Usuario {
 
-  private  String nombre;
-  private  String apellido;
+  private String nombre;
+  private String apellido;
   private int edad;
   private boolean esContribuyente = false;
 
@@ -16,23 +17,25 @@ public class Usuario {
     this.edad = edad;
   }
 
-   public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro)
-  {
+  public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro) {
     return unaColeccion.hechos(unFiltro);
   }
 
-  public Solicitud crearSolicitud(Hecho unHecho,String fundamentacion){
+  public Solicitud crearSolicitud(Hecho unHecho, String fundamentacion) {
 
-    if(fundamentacion==null){throw new SolicitudInvalidaException("La fundamentacion esta vacia");}
-    if(unHecho==null){throw new SolicitudInvalidaException("No se asigno ningu hecho");}
+    if (fundamentacion == null) {
+      throw new SolicitudInvalidaException("La fundamentacion esta vacia");
+    }
+    if (unHecho == null) {
+      throw new SolicitudInvalidaException("No se asigno ningu hecho");
+    }
 
 
-     return new Solicitud(unHecho,fundamentacion);
+    return new Solicitud(unHecho, fundamentacion);
   }
 
-  public Set<Hecho> verHechos(Coleccion unaColeccion)
-  {
-    return unaColeccion.hechos(Hecho -> true);
+  public Set<Hecho> verHechos(Coleccion unaColeccion) {
+    return unaColeccion.hechos(hecho -> true);
   }
 
 }

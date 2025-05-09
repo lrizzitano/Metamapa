@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class FuenteEstatica implements Fuente {
@@ -20,7 +20,7 @@ public class FuenteEstatica implements Fuente {
   Además no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
   */
   private final Path path;
-  private  LocalDate ultimaModificacion;
+  private LocalDate ultimaModificacion;
 
   public FuenteEstatica(String path) {
     this.path = Paths.get(path);
@@ -32,12 +32,13 @@ public class FuenteEstatica implements Fuente {
 
   private void actualizarFechaModificacion() {
     try {
-          ultimaModificacion = Files.getLastModifiedTime(path)
+      ultimaModificacion = Files.getLastModifiedTime(path)
           .toInstant()
           .atZone(ZoneId.systemDefault())
           .toLocalDate();
     } catch (Exception e) {
-      throw new NoSePudoLeerArchivoException("Error al obtener la fecha de modificación del archivo "
+      throw new NoSePudoLeerArchivoException(
+          "Error al obtener la fecha de modificación del archivo "
           + path + " : " + e.getMessage());
     }
   }
@@ -62,14 +63,14 @@ public class FuenteEstatica implements Fuente {
 
   public Hecho crearHechoDesdeFila(Map<String, String> fila) {
     return new Hecho(
-      fila.get("titulo"),
-      fila.get("descripcion"),
-      fila.get("categoria"),
-      Double.parseDouble(fila.get("latitud")),
-      Double.parseDouble(fila.get("longitud")),
-      ultimaModificacion,
-      LocalDate.parse(fila.get("fecha")),
-      Origen.DATASET
+        fila.get("titulo"),
+        fila.get("descripcion"),
+        fila.get("categoria"),
+        Double.parseDouble(fila.get("latitud")),
+        Double.parseDouble(fila.get("longitud")),
+        ultimaModificacion,
+        LocalDate.parse(fila.get("fecha")),
+        Origen.DATASET
     );
   }
 }

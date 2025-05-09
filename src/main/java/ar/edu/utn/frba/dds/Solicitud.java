@@ -20,20 +20,22 @@ public class Solicitud {
     return fundamento;
   }
 
-  public Administrador getResponsable(){
+  public Administrador getResponsable() {
     return responsable;
   }
 
   public void aceptar(Administrador admin) {
-    if(this.responsable!=null)
-        throw new SolicitudYaResueltaException();
+    if (this.responsable != null) {
+      throw new SolicitudYaResueltaException();
+    }
     this.responsable = admin;
     solicitudes.aceptarSolicitud(this);
   }
 
   public void rechazar(Administrador admin) {
-    if(this.responsable!=null)
+    if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
+    }
     this.responsable = admin;
     solicitudes.rechazarSolicitud(this);
   }
