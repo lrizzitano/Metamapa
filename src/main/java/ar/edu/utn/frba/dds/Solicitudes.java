@@ -13,7 +13,7 @@ public class Solicitudes {
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
 
   private Solicitudes() {
-  } // private constructor
+  }
 
   public static Solicitudes instance() {
     return instance;
