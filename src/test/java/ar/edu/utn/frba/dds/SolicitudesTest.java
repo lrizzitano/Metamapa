@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 class SolicitudesTest {
   private final Hecho hecho = mock(Hecho.class);
   private final Solicitudes solicitudes = Solicitudes.instance();
-  private final Solicitud solicitud = new Solicitud(hecho, null);
+  private final Solicitud solicitud = new Solicitud(hecho, "null");
 
   @Test
   void contieneSolicitudPendiente(){
