@@ -46,7 +46,7 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho("hecho2", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(hecho -> true);
-    Assertions.assertEquals(hechos, new HashSet<>(Arrays.asList(esperado1, esperado2)));
+    Assertions.assertEquals(hechos, Set.of(esperado1, esperado2));
   }
 
   @Test
@@ -61,7 +61,7 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho("hecho2", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(Filtro.LATITUD_MAYOR.crearFiltro("2"));
-    Assertions.assertEquals(hechos, new HashSet<>(List.of(esperado2)));
+    Assertions.assertEquals(hechos, Set.of(esperado2));
   }
 
   @Test
@@ -76,7 +76,7 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho("hecho1", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(hecho -> true);
-    Assertions.assertEquals(hechos, new HashSet<>(List.of(esperado2)));
+    Assertions.assertEquals(hechos, Set.of(esperado2));
   }
 
 
