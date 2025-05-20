@@ -24,9 +24,8 @@ public class Solicitudes {
   }
 
   public void aceptarSolicitud(Solicitud solicitud) {
-    if (pendientes.remove(solicitud)) {
-      aceptadas.add(solicitud);
-    }
+    pendientes.remove(solicitud);
+    aceptadas.add(solicitud);
   }
 
   public void rechazarSolicitud(Solicitud solicitud) {
