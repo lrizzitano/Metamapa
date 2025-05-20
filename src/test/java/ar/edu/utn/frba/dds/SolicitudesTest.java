@@ -24,7 +24,9 @@ class SolicitudesTest {
   @Test
   void rechazoSolicitud(){
     solicitud.rechazar(null);
-    Assertions.assertTrue(solicitudes.getRechazadas().contains(solicitud));
+    Solicitud solicitud2 = new Solicitud(hecho, "null");
+    solicitud2.rechazar(null);
+    Assertions.assertEquals(2, solicitudes.getRechazadas().get(solicitud.getHecho()));
   }
 
   @Test
