@@ -12,7 +12,6 @@ usecase "Crear fuente" as UC4
 usecase "Generar solicitud" as UC1.1
 
 Visualizador -- UC1
-Administrador -- UC1
 Administrador -- UC2
 Administrador -- UC3
 Administrador -- UC4
