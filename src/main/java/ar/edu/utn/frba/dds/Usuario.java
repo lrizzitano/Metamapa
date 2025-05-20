@@ -33,25 +33,4 @@ public class Usuario {
     return esContribuyente;
   }
 
-  public Set<Hecho> verHechosFiltrados(Coleccion unaColeccion, Predicate<Hecho> unFiltro) {
-    return unaColeccion.hechos(unFiltro);
-  }
-
-  public Solicitud crearSolicitud(Hecho unHecho, String fundamentacion) {
-
-    if (fundamentacion == null) {
-      throw new SolicitudInvalidaException("La fundamentacion esta vacia");
-    }
-    if (unHecho == null) {
-      throw new SolicitudInvalidaException("No se asigno ningu hecho");
-    }
-
-
-    return new Solicitud(unHecho, fundamentacion);
-  }
-
-  public Set<Hecho> verHechos(Coleccion unaColeccion) {
-    return unaColeccion.hechos(hecho -> true);
-  }
-
 }
