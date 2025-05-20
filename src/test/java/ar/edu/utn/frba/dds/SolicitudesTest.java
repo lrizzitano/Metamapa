@@ -43,7 +43,7 @@ class SolicitudesTest {
 
   @Test
   void seAcuerdaQuienLaAcepto(){
-    Administrador admin = new Administrador("Pablo","Gabarini",21);
+    Administrador admin = mock(Administrador.class);
     solicitud.aceptar(admin);
     Assertions.assertEquals(solicitud.getResponsable(), admin);
   }
