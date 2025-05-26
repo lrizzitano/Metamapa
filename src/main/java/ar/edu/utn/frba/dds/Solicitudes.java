@@ -11,6 +11,7 @@ public class Solicitudes {
   private final Set<Solicitud> pendientes = new HashSet<>();
   private final Set<Solicitud> aceptadas = new HashSet<>();
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
+  private DetectorDeSpam detectorDeSpam;
 
   private Solicitudes() {
   }
@@ -19,7 +20,15 @@ public class Solicitudes {
     return instance;
   }
 
+  public void setDetectorDeSpam(DetectorDeSpam detectorDeSpam) {
+    this.detectorDeSpam = detectorDeSpam;
+  }
+
   public void nuevaSolicitud(Solicitud solicitud) {
+    if(detectorDeSpam != null && detectorDeSpam.esSpam(solicitud.getFundamento())) {
+      this.rechazarSolicitud(solicitud);
+      return;
+    }
     pendientes.add(solicitud);
   }
 
