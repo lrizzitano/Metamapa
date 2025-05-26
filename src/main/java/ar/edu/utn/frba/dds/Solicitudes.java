@@ -25,7 +25,7 @@ public class Solicitudes {
   }
 
   public void nuevaSolicitud(Solicitud solicitud) {
-    if(detectorDeSpam != null && detectorDeSpam.esSpam(solicitud.getFundamento())) {
+    if (detectorDeSpam != null && detectorDeSpam.esSpam(solicitud.getFundamento())) {
       this.rechazarSolicitud(solicitud);
       return;
     }
