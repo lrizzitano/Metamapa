@@ -105,3 +105,21 @@ Para hacer una demostración de funcionamiento en la primera entrega, se eligió
 - Latitud: "latitud”
 - Longitud:  “longitud”
 - Fecha del hecho: “fecha”
+
+## Fuente Proxy
+
+Como existen fuertes diferencias entre cada fuente proxy, ya sea porque protocolo de comunicación usan, si son sincrónicas o no, etc. no existe una interfaz común que las unifique. Sin embargo, se diseñaron abstracciones que buscan reducir al mínimo la lógica que debe implementarse en cada adapter específico.
+
+### Fuente Proxy Asincrónica
+
+Esta clase representa una fuente proxy genérica que se actualiza de forma periódica y automática. Recibe una URL y un intervalo de actualización (Duration) al ser construida, y mantiene internamente un Set \<Hecho> que va enriqueciendo con nuevos datos obtenidos desde la fuente remota. Si no hay nuevos datos disponibles, la fuente espera el tiempo estipulado antes de volver a intentar. \
+Se define como una clase abstracta, y para utilizarla se debe implementar un único método abstracto:
+
+```protected abstract List<Hecho> getNextHecho(Instant ultimaLlamada);```
+
+Este método debe retornar una lista de hechos nuevos desde el momento de la última consulta. Si no hay más elementos, debe retornar null o una lista vacía.
+
+#### Fuente Demo
+
+Simula una fuente conectada a una API ficticia llamada Conexión. Esta API devuelve hechos en forma de Map\<String, Object>, los cuales son transformados a objetos Hecho. \
+A diferencia de otras posibles implementaciones, FuenteDemo tiene un tiempo de espera fijo de 60 minutos, por lo que no se permite configurarlo por constructor. Sin embargo, sí recibe por inyección la dependencia Conexión, lo que permite desacoplar la lógica de obtención de datos del mecanismo de actualización automática.
