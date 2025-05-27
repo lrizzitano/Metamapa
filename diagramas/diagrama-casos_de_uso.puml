@@ -4,15 +4,16 @@ left to right direction
 actor Visualizador
 actor Administrador
 
-usecase "Ver colección" as UC1
-usecase "Evaluar solicitudes" as UC2
-usecase "Crear colección" as UC3
-usecase "Crear fuente" as UC4
+rectangle {
+ usecase "Ver colección" as UC1
+ usecase "Evaluar solicitudes" as UC2
+ usecase "Crear colección" as UC3
+ usecase "Crear fuente" as UC4
 
-usecase "Generar solicitud" as UC1.1
+ usecase "Generar solicitud" as UC1.1
+}
 
 Visualizador -- UC1
-Administrador -- UC1
 Administrador -- UC2
 Administrador -- UC3
 Administrador -- UC4

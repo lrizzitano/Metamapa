@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class FiltroCompuestoBuilder {
-  private final List<Predicate<Hecho>> filtros = new ArrayList<>();
+  private List<Predicate<Hecho>> filtros = new ArrayList<>();
 
   public FiltroCompuestoBuilder() {
   }
@@ -19,7 +19,17 @@ public class FiltroCompuestoBuilder {
     return this;
   }
 
-  public Predicate<Hecho> componerFiltros() {
+  public FiltroCompuestoBuilder negarFiltros() {
+    filtros = filtros.stream().map(Predicate::negate).toList();
+    return this;
+  }
+
+  public Predicate<Hecho> componerFiltrosAnd() {
     return filtros.stream().reduce(Predicate::and).orElse(hecho -> true);
   }
+
+  public Predicate<Hecho> componerFiltrosOr() {
+    return filtros.stream().reduce(Predicate::or).orElse(hecho -> true);
+  }
+
 }

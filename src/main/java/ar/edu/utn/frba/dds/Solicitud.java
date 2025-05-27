@@ -7,6 +7,12 @@ public class Solicitud {
   private Administrador responsable;
 
   public Solicitud(Hecho hecho, String fundamento) {
+    if (hecho == null) {
+      throw new SolicitudInvalidaException("Falta hecho");
+    }
+    if (fundamento == null) {
+      throw new SolicitudInvalidaException("Falta fundamento");
+    }
     this.hecho = hecho;
     this.fundamento = fundamento;
     solicitudes.nuevaSolicitud(this);

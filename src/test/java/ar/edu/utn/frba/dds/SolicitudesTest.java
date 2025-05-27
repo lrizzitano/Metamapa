@@ -3,12 +3,21 @@ package ar.edu.utn.frba.dds;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SolicitudesTest {
   private final Hecho hecho = mock(Hecho.class);
   private final Solicitudes solicitudes = Solicitudes.instance();
-  private final Solicitud solicitud = new Solicitud(hecho, null);
+  private Solicitud solicitud;
+
+  @BeforeEach
+  void setUp() {
+    solicitudes.reset();
+    solicitud = new Solicitud(hecho, "null");
+  }
 
   @Test
   void contieneSolicitudPendiente(){
@@ -24,7 +33,9 @@ class SolicitudesTest {
   @Test
   void rechazoSolicitud(){
     solicitud.rechazar(null);
-    Assertions.assertTrue(solicitudes.getRechazadas().contains(solicitud));
+    Solicitud solicitud2 = new Solicitud(hecho, "null");
+    solicitud2.rechazar(null);
+    Assertions.assertEquals(2, solicitudes.getRechazadas().get(solicitud.getHecho()));
   }
 
   @Test
@@ -41,8 +52,18 @@ class SolicitudesTest {
 
   @Test
   void seAcuerdaQuienLaAcepto(){
-    Administrador admin = new Administrador("Pablo","Gabarini",21);
+    Administrador admin = mock(Administrador.class);
     solicitud.aceptar(admin);
     Assertions.assertEquals(solicitud.getResponsable(), admin);
+  }
+
+  @Test
+  void seRechazaElSpam() {
+    DetectorDeSpam detectorDeSpam = mock(DetectorDeSpam.class);
+    when(detectorDeSpam.esSpam(any())).thenReturn(true);
+    solicitudes.setDetectorDeSpam(detectorDeSpam);
+    new Solicitud(hecho, "spam spam");
+    Assertions.assertEquals(1, solicitudes.getRechazos(hecho));
+    solicitudes.setDetectorDeSpam(null);
   }
 }

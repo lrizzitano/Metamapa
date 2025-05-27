@@ -1,10 +1,11 @@
 package ar.edu.utn.frba.dds;
 
+import java.nio.file.Path;
 import java.time.LocalDate;
 
 public record Hecho(String titulo, String descripcion, String categoria, Double latitud,
                     Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
-                    Origen origen) {
+                    Origen origen, Path multimedia, Usuario contribuyente) {
   //private TipoHecho tipo; MULTIMEDIA o CONTRIBUYENTE
 
   public Hecho {
@@ -16,6 +17,13 @@ public record Hecho(String titulo, String descripcion, String categoria, Double 
     this.isNull(fechaCarga, "fecha de carga");
     this.isNull(fechaAcontecimiento, "fecha del acontecimiento");
     this.isNull(origen, "origen");
+  }
+
+  public Hecho(String titulo, String descripcion, String categoria, Double latitud,
+               Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
+               Origen origen) {
+    this(titulo, descripcion, categoria, latitud, longitud, fechaCarga, fechaAcontecimiento,
+        origen, null, null);
   }
 
   private <T> void isNull(T valor, String parametro) {

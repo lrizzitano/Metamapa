@@ -1,0 +1,74 @@
+package ar.edu.utn.frba.dds;
+
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class FuenteProxyAsincronicaTest {
+
+  static class TestFuente extends FuenteProxyAsincronica {
+    private final Queue<Hecho> hechosQueue = new LinkedList<>();
+
+    public TestFuente(URL url, Duration refreshTime) {
+      super(url, refreshTime);
+    }
+
+    public void addHecho(Hecho hecho) {
+      hechosQueue.add(hecho);
+    }
+
+    @Override
+    protected List<Hecho> getNextHecho(Instant ultimaLlamada) {
+      Hecho hecho = hechosQueue.poll();
+      return hecho == null ? null : Collections.singletonList(hecho);
+    }
+  }
+
+  @Test
+  void acumulaHechos() throws InterruptedException {
+    Hecho hecho = mock(Hecho.class);
+    TestFuente fuente = new TestFuente(null, Duration.ofMillis(10*1000));
+    fuente.addHecho(hecho);
+    fuente.init();
+    Thread.sleep(200);
+    Assertions.assertEquals(Collections.singleton(hecho), fuente.obtenerHechos(h -> true));
+  }
+
+  @Test
+  void filtrahecho() throws InterruptedException {
+    Hecho hecho1 = mock(Hecho.class);
+    Hecho hecho2 = mock(Hecho.class);
+    when(hecho1.titulo()).thenReturn("hola");
+    when(hecho2.titulo()).thenReturn("NotHola");
+    TestFuente fuente = new TestFuente(null, Duration.ofMillis(10*1000));
+    fuente.addHecho(hecho1);
+    fuente.addHecho(hecho2);
+    fuente.init();
+    Thread.sleep(200);
+    Assertions.assertEquals(Collections.singleton(hecho1),
+        fuente.obtenerHechos(hecho -> hecho.titulo().equals("hola")));
+  }
+
+
+  @Test
+  void noAcumulaAntesDeTiempo() throws InterruptedException {
+    Hecho hecho = mock(Hecho.class);
+    TestFuente fuente = new TestFuente(null, Duration.ofMillis(1000000));
+    fuente.addHecho(hecho);
+    fuente.init();
+    Thread.sleep(200);
+    fuente.addHecho(mock(Hecho.class));
+    Assertions.assertEquals(Collections.singleton(hecho), fuente.obtenerHechos(h -> true));
+  }
+
+
+}

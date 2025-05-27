@@ -9,33 +9,63 @@ import static org.mockito.Mockito.mock;
 
 
 class FiltroCompuestoBuilderTest {
-  private final FiltroCompuestoBuilder builder = new FiltroCompuestoBuilder();
+  private FiltroCompuestoBuilder builder;
   private final Predicate<Hecho> siempreTrue = hecho -> true;
   private final Predicate<Hecho> siempreFalse = hecho -> false;
   private final Hecho hecho = mock(Hecho.class);
 
   @BeforeEach
   void setUp() {
-    builder.reset();
+    builder = new FiltroCompuestoBuilder();
   }
 
   @Test
-  void filtroVacioSiempreCumpleParaAnd(){
-    Predicate<Hecho> filtro = builder.componerFiltros();
-    Assertions.assertTrue(filtro.test(hecho));
+  void filtroVacioSiempreCumple(){
+    Predicate<Hecho> filtroAnd = builder.componerFiltrosAnd();
+    Predicate<Hecho> filtroOr = builder.componerFiltrosOr();
+    Assertions.assertTrue(filtroAnd.test(hecho));
+    Assertions.assertTrue(filtroOr.test(hecho));
   }
 
   @Test
   void trueMasFalseNoCumpleAnd(){
     builder.agregarFiltro(siempreTrue).agregarFiltro(siempreFalse);
-    Predicate<Hecho>  filtro = builder.componerFiltros();
+    Predicate<Hecho>  filtro = builder.componerFiltrosAnd();
     Assertions.assertFalse(filtro.test(hecho));
   }
 
   @Test
   void trueMasTrueCumpleAnd(){
     builder.agregarFiltro(siempreTrue).agregarFiltro(siempreTrue);
-    Predicate<Hecho>  filtro = builder.componerFiltros();
+    Predicate<Hecho>  filtro = builder.componerFiltrosAnd();
     Assertions.assertTrue(filtro.test(hecho));
+  }
+
+  @Test
+  void falseMasFalseNoCumpleOr() {
+    builder.agregarFiltro(siempreFalse).agregarFiltro(siempreFalse);
+    Predicate<Hecho> filtro = builder.componerFiltrosOr();
+    Assertions.assertFalse(filtro.test(hecho));
+  }
+
+  @Test
+  void trueMasFalseCumpleOr() {
+    builder.agregarFiltro(siempreTrue).agregarFiltro(siempreFalse);
+    Predicate<Hecho> filtro = builder.componerFiltrosOr();
+    Assertions.assertTrue(filtro.test(hecho));
+  }
+
+  @Test
+  void trueMasTrueCumpleOr() {
+    builder.agregarFiltro(siempreTrue).agregarFiltro(siempreTrue);
+    Predicate<Hecho> filtro = builder.componerFiltrosOr();
+    Assertions.assertTrue(filtro.test(hecho));
+  }
+
+  @Test
+  void seNiegaElFiltro(){
+    builder.agregarFiltro(siempreTrue).negarFiltros();
+    Predicate<Hecho> filtro = builder.componerFiltrosAnd();
+    Assertions.assertFalse(filtro.test(hecho));
   }
 }
