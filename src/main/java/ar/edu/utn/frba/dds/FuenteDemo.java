@@ -4,23 +4,25 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class FuenteDemo extends FuenteProxyAsincronica {
-
+  private final URL url;
   private final Conexion conexion;
 
-  public FuenteDemo(Conexion conexion, URL url, Duration refreshTime) {
-    super(url, refreshTime);
+  public FuenteDemo(Conexion conexion, URL url) {
+    super(Duration.ofHours(1));
     this.conexion = conexion;
+    this.url = url;
     this.init();
   }
 
 
   @Override
   protected List<Hecho> getNextHecho(Instant ultimaLlamada) {
-    return List.of(this.parseHecho(conexion.siguienteHecho(url, ultimaLlamada)));
+    return Collections.singletonList(this.parseHecho(conexion.siguienteHecho(url, ultimaLlamada)));
   }
 
   private Hecho parseHecho(Map<String, Object> fila) {

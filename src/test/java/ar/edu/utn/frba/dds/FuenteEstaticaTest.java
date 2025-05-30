@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho("hecho2", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(Filtro.LATITUD_MAYOR.crearFiltro("2"));
-    Assertions.assertEquals(hechos, Set.of(esperado2));
+    Assertions.assertEquals(hechos, Collections.singleton(esperado2));
   }
 
   @Test
@@ -69,12 +70,10 @@ public class FuenteEstaticaTest{
         "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
         "\"hecho1\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
-    Hecho esperado1 = new Hecho("hecho1", "desc1", "cat1", 1.0,
-        2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     Hecho esperado2 = new Hecho("hecho1", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(hecho -> true);
-    Assertions.assertEquals(hechos, Set.of(esperado2));
+    Assertions.assertEquals(hechos, Collections.singleton(esperado2));
   }
 
 

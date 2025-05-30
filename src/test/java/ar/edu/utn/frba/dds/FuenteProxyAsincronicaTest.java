@@ -18,8 +18,8 @@ public class FuenteProxyAsincronicaTest {
   static class TestFuente extends FuenteProxyAsincronica {
     private final Queue<Hecho> hechosQueue = new LinkedList<>();
 
-    public TestFuente(URL url, Duration refreshTime) {
-      super(url, refreshTime);
+    public TestFuente(Duration refreshTime) {
+      super(refreshTime);
     }
 
     public void addHecho(Hecho hecho) {
@@ -36,7 +36,7 @@ public class FuenteProxyAsincronicaTest {
   @Test
   void acumulaHechos() throws InterruptedException {
     Hecho hecho = mock(Hecho.class);
-    TestFuente fuente = new TestFuente(null, Duration.ofMillis(10*1000));
+    TestFuente fuente = new TestFuente(Duration.ofMillis(10*1000));
     fuente.addHecho(hecho);
     fuente.init();
     Thread.sleep(200);
@@ -49,7 +49,7 @@ public class FuenteProxyAsincronicaTest {
     Hecho hecho2 = mock(Hecho.class);
     when(hecho1.titulo()).thenReturn("hola");
     when(hecho2.titulo()).thenReturn("NotHola");
-    TestFuente fuente = new TestFuente(null, Duration.ofMillis(10*1000));
+    TestFuente fuente = new TestFuente(Duration.ofMillis(10*1000));
     fuente.addHecho(hecho1);
     fuente.addHecho(hecho2);
     fuente.init();
@@ -62,7 +62,7 @@ public class FuenteProxyAsincronicaTest {
   @Test
   void noAcumulaAntesDeTiempo() throws InterruptedException {
     Hecho hecho = mock(Hecho.class);
-    TestFuente fuente = new TestFuente(null, Duration.ofMillis(1000000));
+    TestFuente fuente = new TestFuente(Duration.ofMillis(1000000));
     fuente.addHecho(hecho);
     fuente.init();
     Thread.sleep(200);
