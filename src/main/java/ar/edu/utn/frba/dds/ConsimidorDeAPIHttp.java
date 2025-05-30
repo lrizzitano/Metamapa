@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
 
-public class ConsimidorDeAPI {
+public class ConsimidorDeAPIHttp {
 
-  public ConsimidorDeAPI() {}
+  public ConsimidorDeAPIHttp() {}
 
   public Object enviarRequest(HttpClient cliente, HttpRequest request) {
 
@@ -23,14 +22,7 @@ public class ConsimidorDeAPI {
     }
   }
 
-  public Object enviarRequestAsincronica(HttpClient cliente, HttpRequest request) {
-
-    CompletableFuture<HttpResponse<String>> response = cliente.sendAsync(request, HttpResponse.BodyHandlers.ofString()); // sincronica o asincronica?
-    // Completar
-    return validarStatusCode(response);
-  }
-
-  public Object validarStatusCode(HttpResponse<String> response) {
+  private Object validarStatusCode(HttpResponse<String> response) {
 
     if (200 <= response.statusCode() && response.statusCode() < 300) {
       Gson gson = new Gson();

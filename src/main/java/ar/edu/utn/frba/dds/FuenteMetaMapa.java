@@ -12,12 +12,12 @@ public class FuenteMetaMapa implements Fuente {
 
   String pathInicial;
   HttpClient cliente;
-  ConsimidorDeAPI conexionMetaMapa;
+  ConsimidorDeAPIHttp conexionMetaMapa;
 
   void FunteMetaMapa(String pathIncial) {
     this.pathInicial = pathIncial;
     cliente = HttpClient.newHttpClient();
-    conexionMetaMapa = new ConsimidorDeAPI();
+    conexionMetaMapa = new ConsimidorDeAPIHttp();
   }
 
   @Override
@@ -25,7 +25,6 @@ public class FuenteMetaMapa implements Fuente {
 
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
                                      .uri(URI.create(pathInicial + "/hechos" + this.filtroAQueryParameter(filtro))) // como pasamos los filtros a query?
-                                     .header("Content-Type", "application/json") // Envio json en el body
                                      .header("Accept", "application/json")       // Recibo json
                                      .GET()
                                      .build();
