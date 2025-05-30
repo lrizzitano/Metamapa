@@ -1,5 +1,7 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Fuentes;
 
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import Solicitud;
 import com.google.gson.Gson;
 
 import java.net.URI;

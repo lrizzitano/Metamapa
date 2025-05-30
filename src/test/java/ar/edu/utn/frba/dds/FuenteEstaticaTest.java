@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import ar.edu.utn.frba.dds.Filtros.Filtro;
+import ar.edu.utn.frba.dds.Execpciones.NoSePudoLeerArchivoException;
+import ar.edu.utn.frba.dds.Fuentes.FuenteEstatica;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Hechos.Origen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

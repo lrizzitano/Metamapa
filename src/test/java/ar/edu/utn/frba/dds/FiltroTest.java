@@ -1,4 +1,7 @@
 package ar.edu.utn.frba.dds;
+import ar.edu.utn.frba.dds.Filtros.Filtro;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Hechos.Origen;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

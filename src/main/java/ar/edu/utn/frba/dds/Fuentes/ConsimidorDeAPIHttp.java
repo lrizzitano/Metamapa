@@ -1,5 +1,6 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Fuentes;
 
+import ar.edu.utn.frba.dds.Execpciones.AccesoARecursoFallidoException;
 import com.google.gson.Gson;
 
 import java.io.IOException;

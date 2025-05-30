@@ -9,6 +9,14 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import ar.edu.utn.frba.dds.Filtros.Filtro;
+import ar.edu.utn.frba.dds.Fuentes.Fuente;
+import ar.edu.utn.frba.dds.Hechos.Coleccion;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Hechos.Origen;
+import ar.edu.utn.frba.dds.Solicitudes.Solicitudes;
+import ar.edu.utn.frba.dds.Usuarios.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,7 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Hechos;
+
+import ar.edu.utn.frba.dds.Fuentes.Fuente;
+import ar.edu.utn.frba.dds.Solicitudes.Solicitudes;
 
 import static java.util.Objects.requireNonNull;
 

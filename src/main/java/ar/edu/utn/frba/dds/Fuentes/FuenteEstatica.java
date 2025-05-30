@@ -1,5 +1,8 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Fuentes;
 
+import ar.edu.utn.frba.dds.Execpciones.NoSePudoLeerArchivoException;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Hechos.Origen;
 import com.opencsv.CSVReaderHeaderAware;
 import java.nio.file.Files;
 import java.nio.file.Path;

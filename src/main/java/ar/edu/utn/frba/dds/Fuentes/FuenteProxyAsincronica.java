@@ -1,4 +1,6 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Fuentes;
+
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 
 import static java.lang.Thread.sleep;
 
@@ -21,7 +23,7 @@ public abstract class FuenteProxyAsincronica implements Fuente {
     this.refreshTime = refreshTime;
   }
 
-  protected void init() {
+  public void init() {
     new Thread(this::acumularHechos).start();
   }
 

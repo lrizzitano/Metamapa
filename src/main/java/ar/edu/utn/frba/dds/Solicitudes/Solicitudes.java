@@ -1,4 +1,6 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Solicitudes;
+
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -67,7 +69,7 @@ public class Solicitudes {
     return new HashSet<>(aceptadas.stream().map(Solicitud::getHecho).toList());
   }
 
-  void reset() {
+  public void reset() {
     pendientes.clear();
     aceptadas.clear();
     rechazadas.clear();

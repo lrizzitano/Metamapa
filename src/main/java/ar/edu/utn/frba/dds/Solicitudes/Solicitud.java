@@ -1,4 +1,9 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Solicitudes;
+
+import ar.edu.utn.frba.dds.Usuarios.Administrador;
+import ar.edu.utn.frba.dds.Execpciones.SolicitudInvalidaException;
+import ar.edu.utn.frba.dds.Execpciones.SolicitudYaResueltaException;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 
 public class Solicitud {
   private final Hecho hecho;

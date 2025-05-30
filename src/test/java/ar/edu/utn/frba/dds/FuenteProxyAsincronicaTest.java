@@ -1,12 +1,14 @@
 package ar.edu.utn.frba.dds;
 
-import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import ar.edu.utn.frba.dds.Fuentes.FuenteProxyAsincronica;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

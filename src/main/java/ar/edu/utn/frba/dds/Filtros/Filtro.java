@@ -1,4 +1,6 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Filtros;
+
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 
 import java.time.LocalDate;
 import java.util.function.Function;

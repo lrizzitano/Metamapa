@@ -1,4 +1,7 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.Fuentes;
+
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Hechos.Origen;
 
 import java.net.URL;
 import java.time.Duration;

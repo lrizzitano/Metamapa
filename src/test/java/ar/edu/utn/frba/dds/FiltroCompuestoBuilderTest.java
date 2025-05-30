@@ -1,6 +1,9 @@
 package ar.edu.utn.frba.dds;
 
 import java.util.function.Predicate;
+
+import ar.edu.utn.frba.dds.Filtros.FiltroCompuestoBuilder;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
