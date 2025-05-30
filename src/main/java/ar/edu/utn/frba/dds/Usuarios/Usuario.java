@@ -1,9 +1,8 @@
 package ar.edu.utn.frba.dds.Usuarios;
 
 
-import ar.edu.utn.frba.dds.Fuentes.FuenteDinamica;
-import ar.edu.utn.frba.dds.Hechos.Hecho;
-import ar.edu.utn.frba.dds.Solicitudes.SolicitudDeCambio;
+import ar.edu.utn.frba.dds.fuentes.FuenteDinamica;
+import ar.edu.utn.frba.dds.hechos.Hecho;
 
 public class Usuario {
 
