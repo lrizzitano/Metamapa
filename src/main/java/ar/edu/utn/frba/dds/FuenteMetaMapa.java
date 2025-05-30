@@ -14,7 +14,7 @@ public class FuenteMetaMapa implements Fuente {
   HttpClient cliente;
   ConsimidorDeAPIHttp conexionMetaMapa;
 
-  void FunteMetaMapa(String pathIncial) {
+  public FuenteMetaMapa(String pathIncial) {
     this.pathInicial = pathIncial;
     cliente = HttpClient.newHttpClient();
     conexionMetaMapa = new ConsimidorDeAPIHttp();
@@ -36,15 +36,14 @@ public class FuenteMetaMapa implements Fuente {
 
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
         .uri(URI.create(pathInicial + "/hechos/:" + identificadorColeccion + "/" + this.filtroAQueryParameter(filtro))) // como pasamos los filtros a query?
-        .header("Content-Type", "application/json") // Envio json en el body
-        .header("Accept", "application/json")       // Recibo json
+        .header("Accept", "application/json") // Recibo json
         .GET()
         .build();
 
     return (Set<Hecho>) conexionMetaMapa.enviarRequest(cliente, request);
   }
 
-  public void enviarSolicitudDeEliminacion() {
+  public void enviarSolicitudDeEliminacion(Solicitud solicitud) {
 
     // Recive por parametro el objeto solicitud, o recibe por parametro los atributos y la instanciamos aca?
     Gson gson = new Gson();
@@ -53,7 +52,7 @@ public class FuenteMetaMapa implements Fuente {
         .uri(URI.create(pathInicial + "/solicitudes"))// como pasamos los filtros a query?
         .header("Content-Type", "application/json") // Envio json en el body
         .header("Accept", "application/json")       // Recibo json
-        .POST(HttpRequest.BodyPublishers.ofString(gson.toString()))
+        .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(solicitud)))
         .build();
 
     conexionMetaMapa.enviarRequest(cliente, request);
