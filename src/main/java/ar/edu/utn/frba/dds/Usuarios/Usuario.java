@@ -1,6 +1,10 @@
 package ar.edu.utn.frba.dds.Usuarios;
 
 
+import ar.edu.utn.frba.dds.Fuentes.FuenteDinamica;
+import ar.edu.utn.frba.dds.Hechos.Hecho;
+import ar.edu.utn.frba.dds.Solicitudes.SolicitudDeCambio;
+
 public class Usuario {
 
   private String nombre;
@@ -28,6 +32,14 @@ public class Usuario {
 
   public boolean esContribuyente() {
     return esContribuyente;
+  }
+
+  //Podria ir en la fuente pero CREO QUE HAY razones para que este aca
+  public void agregarHecho(Hecho hecho)
+  {
+    //hecho.setContribuyente(this); ESTO DEBE FUNCIONAR, O SE ASUME QUE SE LLAMA CON UN HECHO CON ESE USUARIO
+    FuenteDinamica.instance().agregarHecho(hecho);
+    this.esContribuyente = true;
   }
 
 }
