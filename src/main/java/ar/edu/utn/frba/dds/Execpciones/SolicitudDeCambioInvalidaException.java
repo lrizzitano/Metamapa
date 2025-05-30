@@ -2,6 +2,6 @@ package ar.edu.utn.frba.dds.Execpciones;
 
 public class SolicitudDeCambioInvalidaException extends RuntimeException {
   public SolicitudDeCambioInvalidaException(String message) {
-    super(message);
+    super("No se pudo generar la solicitud de cambio porque: " + message);
   }
 }
