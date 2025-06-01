@@ -33,12 +33,19 @@ public class Usuario {
     return esContribuyente;
   }
 
-  //Podria ir en la fuente pero CREO QUE HAY razones para que este aca
-  public void agregarHecho(Hecho hecho)
-  {
-    //hecho.setContribuyente(this); ESTO DEBE FUNCIONAR, O SE ASUME QUE SE LLAMA CON UN HECHO CON ESE USUARIO
-    FuenteDinamica.instance().agregarHecho(hecho);
+  public void contribuir() {
     this.esContribuyente = true;
   }
 
+  public boolean estaRegistrado(){
+    return (this.edad != 0 || !this.nombre.equals("Usuario") || !this.apellido.equals("Anonimo"));
+  }
+
+  /*PODRIA IR AQUI, EN LUGAR DE EN LA FUENTE DINAMICA, no expongo contribuir() a ser llamado libremente
+  public void agregarHecho(Hecho hecho)
+  {
+    this.esContribuyente = true;
+    FuenteDinamica.instance().agregarHecho(hecho);
+  }
+   */
 }
