@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.Usuarios.Usuario;
 import java.time.LocalDate;
 
 public class SolicitudDeCambio {
+
   public Hecho hechoACambiar;
   public Hecho hechoModificado;
   public Hecho sugerencias;
@@ -17,20 +18,21 @@ public class SolicitudDeCambio {
   private final FuenteDinamica fuente = FuenteDinamica.instance();
 
   public SolicitudDeCambio(Hecho hechoACambiar, Hecho hechoModificado,Usuario usuario) {
-    if(hechoACambiar.fechaCarga().isEqual(LocalDate.now())){
+    if(hechoACambiar.fechaCarga().isBefore(LocalDate.now().minusDays(7))){
       throw new SolicitudDeCambioInvalidaException("Se supero el margen de 7 dias para modificar.");
+    }
+    else if(!usuario.estaRegistrado()){
+      throw new SolicitudDeCambioInvalidaException("El usuario que solicita el cambio no esta registrado. No tiene permisos de edicion");
     }
     else if(hechoACambiar.contribuyente() != usuario){
       throw new SolicitudDeCambioInvalidaException("El usuario que solicita el cambio no es quien subio el hecho");
     }
-    else{
-      this.hechoACambiar = hechoACambiar;
-      this.hechoModificado = hechoModificado;
-      this.sugerencias =null;
-      this.responsable = null;
-      this.usuario = usuario;
-      fuente.nuevaSolicitudDeCambio(this);
-    }
+    this.hechoACambiar = hechoACambiar;
+    this.hechoModificado = hechoModificado;
+    this.sugerencias =null;
+    this.responsable = null;
+    this.usuario = usuario;
+    fuente.nuevaSolicitudDeCambio(this);
   }
 
   public Hecho getHechoACambiar() {
@@ -57,4 +59,5 @@ public class SolicitudDeCambio {
     this.responsable = administrador;
     fuente.rechazarSolicitudDeCambio(this);
   }
+
 }
