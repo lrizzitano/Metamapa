@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.Usuarios.Usuario;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 
 public class FuenteDinamica implements Fuente{
 
@@ -57,16 +59,16 @@ public class FuenteDinamica implements Fuente{
 
   public void eliminarHecho(Hecho hecho)
   {
-    if(hechos.contains(hecho)){
-
-    this.hechos.remove(hecho);
+    if(!hechos.contains(hecho)) {
+      throw new NoSePuedeEliminarUnHechoQueNoExisteException();
     }
+    this.hechos.remove(hecho);
   }
-  /*
+
   public void agregarHecho(Hecho hecho, Usuario usuario){
-    usuario.setContribuyente(true);
-    hecho.setContribuyente(usuario);
+    //hecho.setContribuyente(usuario); Deberia existir, o el Hecho viene con este Usuario asignado
+    usuario.contribuir();
     this.hechos.add(hecho);
   }
-   */
+
 }
