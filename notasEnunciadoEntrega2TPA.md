@@ -34,7 +34,7 @@ Componente que detecta y rechaza automáticamente los hechos spam
 
 ---
 ---
-# Reunión 
+# Reunión 26/5
 
 ## Preguntas
   - Timer de fuente Demo con hilo con sleep cada 1 hora vs biblioteca de scheduler
@@ -63,3 +63,34 @@ Componente que detecta y rechaza automáticamente los hechos spam
 
 ## Detector de Spam
 - Filtrar spam suponiendo la interfaz implementada
+
+# Reunion 2/6
+
+## Fuente Dinámica
+
+- Los hechos se suben automaticamente sin necesidad de ser aprobados por un admin
+- **TODO:** Distinguir los hechos ya revisados de los pendientes de revision (flag en hecho o listas diferentes)
+  - Subtipo HechoDinamico? (Depende de cuantos campos extra, además del flag de revision, tenga un hecho solo por ser de fuente dinamica)
+- **TODO:** La eliminacion un hecho de fuente dinamica deberia eliminarse de la DB de la fuente (cada hecho conoce su fuente y permite llamar a un metodo de eliminar?)
+- **TODO:** Se separa en la fuente que implementa la interfaz `Fuente` y se comunica con el repository que persiste los hechos y las solicitudes de cambio
+
+## Fuente Proxy Demo
+
+- Clase abstracta para las fuentes proxy calendarizadas
+  - **TODO:** Uso de eventos para calendarizar las fuentes asincronicas 
+
+## Fuente proxy metamapa
+
+- Para pasar un filtro por la url se componen uniendo con "&" y se meten como query param
+- Para hace el post de solicitud se le pasa la instancia de solicitud y se pasa como DTO
+  - **TODO:** Para eso hay que sacar el llamado al metodo `nuevaSolicitud()` del constructor de las solicitudes
+- **TODO:** Usar biblioteca para los request http
+
+
+## Filtros
+
+- Muere el enum de filtros, ahora cada filtro es una instancia de la clase correspondiente con los datos especificos
+
+## Solicitudes
+
+- **TODO:** Revisar inyeccion de detector de spam a Solicitudes
