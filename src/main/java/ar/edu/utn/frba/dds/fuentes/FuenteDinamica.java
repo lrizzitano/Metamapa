@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.Usuarios.Usuario;
+import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
@@ -40,10 +42,10 @@ public class FuenteDinamica implements Fuente{
     rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
   }
 
-  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro){
+  public Set<Hecho> obtenerHechos(Filtro filtro){
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
     this.hechos.stream()
-        .filter(filtro)
+        .filter(filtro.getAsPredicate())
         .forEach(hecho -> hechosPorTitulo.put(hecho.titulo(), hecho));
     return new HashSet<>(hechosPorTitulo.values());
   }
