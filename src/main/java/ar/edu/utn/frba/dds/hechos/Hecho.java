@@ -9,8 +9,6 @@ import java.time.LocalDate;
 public record Hecho(String titulo, String descripcion, String categoria, Double latitud,
                     Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
                     Origen origen, Path multimedia, Usuario contribuyente) {
-  //private TipoHecho tipo; MULTIMEDIA o CONTRIBUYENTE
-
   public Hecho {
     this.isNull(titulo, "titulo");
     this.isNull(descripcion, "descripción");
