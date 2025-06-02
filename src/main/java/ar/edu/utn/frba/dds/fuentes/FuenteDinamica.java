@@ -1,10 +1,10 @@
 package ar.edu.utn.frba.dds.fuentes;
 
-import ar.edu.utn.frba.dds.Usuarios.Usuario;
-import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.HechoRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambioRepository;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,58 +15,53 @@ public class FuenteDinamica implements Fuente{
   private FuenteDinamica() {}
 
   private static final FuenteDinamica instance = new FuenteDinamica();
-  private Set<Hecho> hechos;
+  private HechoRepository hechos;
+  private SolicitudDeCambioRepository solicitudes;
 
-  private final Set<SolicitudDeCambio> pendientes = new HashSet<>();
-  private final Set<SolicitudDeCambio> aceptadas = new HashSet<>();
-  private final Map<Hecho, Integer> rechazadas = new HashMap<>();
+  // inyecto por setter porque es singleton (no puedo inyectar en constructor)
+  // -> podria dejar de serlo e inyecto por constructor
+  void setHechoRepository(HechoRepository repository) {
+    this.hechos = repository;
+  }
+
+  void setSolicitudesRepository(SolicitudDeCambioRepository repository) {
+    this.solicitudes = repository;
+  }
 
   public static FuenteDinamica instance() {
     return instance;
   }
 
   public void nuevaSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.pendientes.add(solicitudDeCambio);
+    this.solicitudes.crear(solicitudDeCambio);
   }
 
   public void aceptarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.eliminarHecho(solicitudDeCambio.getHechoACambiar());
-    this.agregarHecho(solicitudDeCambio.getHechoModificado());
-    this.pendientes.remove(solicitudDeCambio);
-    this.aceptadas.add(solicitudDeCambio);
+    this.hechos.actualizar(solicitudDeCambio.getHechoACambiar(), solicitudDeCambio.getHechoModificado());
+    this.solicitudes.aceptar(solicitudDeCambio);
   }
 
   public void rechazarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.pendientes.remove(solicitudDeCambio);
-    Hecho hecho = solicitudDeCambio.getHechoACambiar();
-    rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
+    this.solicitudes.rechazar(solicitudDeCambio);
   }
 
   public Set<Hecho> obtenerHechos(Filtro filtro){
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
-    this.hechos.stream()
+
+    this.hechos.obtenerTodos()
+        .stream()
         .filter(filtro.getAsPredicate())
         .forEach(hecho -> hechosPorTitulo.put(hecho.titulo(), hecho));
+
     return new HashSet<>(hechosPorTitulo.values());
   }
 
-  public void agregarHecho(Hecho hecho)
-  {
-    this.hechos.add(hecho);
+  public void agregarHecho(Hecho hecho) {
+    hecho.contribuyente().contribuir();
+    this.hechos.agregar(hecho);
   }
 
-  public void eliminarHecho(Hecho hecho)
-  {
-    if(!hechos.contains(hecho)) {
-      throw new NoSePuedeEliminarUnHechoQueNoExisteException();
-    }
-    this.hechos.remove(hecho);
+  public void eliminarHecho(Hecho hecho) {
+    this.hechos.eliminar(hecho);
   }
-
-  public void agregarHecho(Hecho hecho, Usuario usuario){
-    //hecho.setContribuyente(usuario); Deberia existir, o el Hecho viene con este Usuario asignado
-    usuario.contribuir();
-    this.hechos.add(hecho);
-  }
-
 }
