@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.hechos;
 
 import ar.edu.utn.frba.dds.execpciones.HechoInvalidoException;
-import ar.edu.utn.frba.dds.Usuarios.Usuario;
+import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import java.nio.file.Path;
 import java.time.LocalDate;

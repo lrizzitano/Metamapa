@@ -4,8 +4,8 @@ import ar.edu.utn.frba.dds.execpciones.SolicitudDeCambioInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.fuentes.FuenteDinamica;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.Usuarios.Administrador;
-import ar.edu.utn.frba.dds.Usuarios.Usuario;
+import ar.edu.utn.frba.dds.usuarios.Administrador;
+import ar.edu.utn.frba.dds.usuarios.Usuario;
 import java.time.LocalDate;
 
 public class SolicitudDeCambio {

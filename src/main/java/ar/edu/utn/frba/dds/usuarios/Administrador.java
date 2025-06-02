@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.Usuarios;
+package ar.edu.utn.frba.dds.usuarios;
 
 import static java.util.Objects.requireNonNull;
 
