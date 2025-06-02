@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.solicitudes.Solicitud;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import com.google.gson.Gson;
 
 import java.net.URI;
@@ -44,7 +44,7 @@ public class FuenteMetaMapa implements Fuente {
     return (Set<Hecho>) conexionMetaMapa.enviarRequest(cliente, request);
   }
 
-  public void enviarSolicitudDeEliminacion(Solicitud solicitud) {
+  public void enviarSolicitudDeEliminacion(SolicitudDeEliminacion solicitud) {
 
     // Recive por parametro el objeto solicitud, o recibe por parametro los atributos y la instanciamos aca?
     Gson gson = new Gson();

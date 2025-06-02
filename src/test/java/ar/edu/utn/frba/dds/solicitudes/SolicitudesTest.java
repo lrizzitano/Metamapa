@@ -12,13 +12,13 @@ import static org.mockito.Mockito.when;
 
 class SolicitudesTest {
   private final Hecho hecho = mock(Hecho.class);
-  private final Solicitudes solicitudes = Solicitudes.instance();
-  private Solicitud solicitud;
+  private final SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
+  private SolicitudDeEliminacion solicitud;
 
   @BeforeEach
   void setUp() {
     solicitudes.reset();
-    solicitud = new Solicitud(hecho, "null");
+    solicitud = new SolicitudDeEliminacion(hecho, "null");
   }
 
   @Test
@@ -35,7 +35,7 @@ class SolicitudesTest {
   @Test
   void rechazoSolicitud(){
     solicitud.rechazar(null);
-    Solicitud solicitud2 = new Solicitud(hecho, "null");
+    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho, "null");
     solicitud2.rechazar(null);
     Assertions.assertEquals(2, solicitudes.getRechazadas().get(solicitud.getHecho()));
   }
@@ -64,7 +64,7 @@ class SolicitudesTest {
     DetectorDeSpam detectorDeSpam = mock(DetectorDeSpam.class);
     when(detectorDeSpam.esSpam(any())).thenReturn(true);
     solicitudes.setDetectorDeSpam(detectorDeSpam);
-    new Solicitud(hecho, "spam spam");
+    new SolicitudDeEliminacion(hecho, "spam spam");
     Assertions.assertEquals(1, solicitudes.getRechazos(hecho));
     solicitudes.setDetectorDeSpam(null);
   }

@@ -7,18 +7,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Solicitudes {
-  private static final Solicitudes instance = new Solicitudes();
+public class SolicitudesDeEliminacion {
+  private static final SolicitudesDeEliminacion instance = new SolicitudesDeEliminacion();
 
-  private final Set<Solicitud> pendientes = new HashSet<>();
-  private final Set<Solicitud> aceptadas = new HashSet<>();
+  private final Set<SolicitudDeEliminacion> pendientes = new HashSet<>();
+  private final Set<SolicitudDeEliminacion> aceptadas = new HashSet<>();
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
   private DetectorDeSpam detectorDeSpam;
 
-  private Solicitudes() {
+  private SolicitudesDeEliminacion() {
   }
 
-  public static Solicitudes instance() {
+  public static SolicitudesDeEliminacion instance() {
     return instance;
   }
 
@@ -26,7 +26,7 @@ public class Solicitudes {
     this.detectorDeSpam = detectorDeSpam;
   }
 
-  public void nuevaSolicitud(Solicitud solicitud) {
+  public void nuevaSolicitud(SolicitudDeEliminacion solicitud) {
     if (detectorDeSpam != null && detectorDeSpam.esSpam(solicitud.getFundamento())) {
       this.rechazarSolicitud(solicitud);
       return;
@@ -34,22 +34,22 @@ public class Solicitudes {
     pendientes.add(solicitud);
   }
 
-  public void aceptarSolicitud(Solicitud solicitud) {
+  public void aceptarSolicitud(SolicitudDeEliminacion solicitud) {
     pendientes.remove(solicitud);
     aceptadas.add(solicitud);
   }
 
-  public void rechazarSolicitud(Solicitud solicitud) {
+  public void rechazarSolicitud(SolicitudDeEliminacion solicitud) {
     pendientes.remove(solicitud);
     Hecho hecho = solicitud.getHecho();
     rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
   }
 
-  public Set<Solicitud> getPendientes() {
+  public Set<SolicitudDeEliminacion> getPendientes() {
     return new HashSet<>(pendientes);
   }
 
-  public Set<Solicitud> getAceptadas() {
+  public Set<SolicitudDeEliminacion> getAceptadas() {
     return new HashSet<>(aceptadas);
   }
 
@@ -66,7 +66,7 @@ public class Solicitudes {
   }
 
   public Set<Hecho> hechosEliminados() {
-    return new HashSet<>(aceptadas.stream().map(Solicitud::getHecho).toList());
+    return new HashSet<>(aceptadas.stream().map(ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion::getHecho).toList());
   }
 
   public void reset() {

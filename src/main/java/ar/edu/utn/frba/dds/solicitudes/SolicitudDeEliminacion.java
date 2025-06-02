@@ -5,13 +5,13 @@ import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 
-public class Solicitud {
+public class SolicitudDeEliminacion {
   private final Hecho hecho;
   private final String fundamento;
-  private final Solicitudes solicitudes = Solicitudes.instance();
+  private final SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
   private Administrador responsable;
 
-  public Solicitud(Hecho hecho, String fundamento) {
+  public SolicitudDeEliminacion(Hecho hecho, String fundamento) {
     if (hecho == null) {
       throw new SolicitudInvalidaException("Falta hecho");
     }

@@ -4,14 +4,12 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.filtros.FiltroEliminados;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.solicitudes.Solicitudes;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class Coleccion {
   private final String titulo;
@@ -41,6 +39,6 @@ public class Coleccion {
   }
 
   private Filtro condicionNoEliminado() {
-    return new FiltroEliminados(Solicitudes.instance());
+    return new FiltroEliminados(SolicitudesDeEliminacion.instance());
   }
 }

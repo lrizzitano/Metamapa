@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import ar.edu.utn.frba.dds.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.solicitudes.Solicitud;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -15,7 +14,8 @@ import java.util.stream.Collectors;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.solicitudes.Solicitudes;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
 import ar.edu.utn.frba.dds.Usuarios.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -44,7 +44,7 @@ public class ColeccionTest {
 
   @AfterEach
   void tearDown() {
-    Solicitudes.instance().reset();
+    SolicitudesDeEliminacion.instance().reset();
   }
 
   @Test
@@ -63,7 +63,7 @@ public class ColeccionTest {
 
   @Test
   void CollecionFiltraHechosEliminados() {
-    Solicitud unaSolicitud = new Solicitud(hecho1, "");
+    SolicitudDeEliminacion unaSolicitud = new SolicitudDeEliminacion(hecho1, "");
     unaSolicitud.aceptar(mock(Administrador.class));
     Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente);
     Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
