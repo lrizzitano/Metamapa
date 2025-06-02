@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
+import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import com.opencsv.CSVReaderHeaderAware;
@@ -46,15 +47,16 @@ public class FuenteEstatica implements Fuente {
     }
   }
 
-  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro) {
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
+    Predicate<Hecho> filtroPredicate = filtro.getAsPredicate();
     this.actualizarFechaModificacion();
     try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(
         Files.newBufferedReader(path, java.nio.charset.StandardCharsets.UTF_8))) {
       Map<String, String> fila;
       while ((fila = reader.readMap()) != null) {
         Hecho hecho = this.crearHechoDesdeFila(fila);
-        if (filtro.test(hecho)) {
+        if (filtroPredicate.test(hecho)) {
           hechosPorTitulo.put(hecho.titulo(), hecho);
         }
       }

@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.filtros.FiltroFechaHasta;
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,7 +51,7 @@ public class FuenteEstaticaTest{
         2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     Hecho esperado2 = new Hecho("hecho2", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
-    Set<Hecho> hechos = fuente.obtenerHechos(hecho -> true);
+    Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
     Assertions.assertEquals(hechos, Set.of(esperado1, esperado2));
   }
 
@@ -60,10 +62,10 @@ public class FuenteEstaticaTest{
         "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
         "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
-    Hecho esperado2 = new Hecho("hecho2", "desc2", "cat2", 3.0,
-        4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
-    Set<Hecho> hechos = fuente.obtenerHechos(Filtro.LATITUD_MAYOR.crearFiltro("2"));
-    Assertions.assertEquals(hechos, Collections.singleton(esperado2));
+    Hecho esperado1 = new Hecho("hecho1", "desc1", "cat1", 1.0,
+        2.0, LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+    Set<Hecho> hechos = fuente.obtenerHechos(new FiltroFechaHasta(LocalDate.parse("2024-01-02")));
+    Assertions.assertEquals(hechos, Collections.singleton(esperado1));
   }
 
   @Test
@@ -75,7 +77,7 @@ public class FuenteEstaticaTest{
     ));
     Hecho esperado2 = new Hecho("hecho1", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
-    Set<Hecho> hechos = fuente.obtenerHechos(hecho -> true);
+    Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
     Assertions.assertEquals(hechos, Collections.singleton(esperado2));
   }
 
