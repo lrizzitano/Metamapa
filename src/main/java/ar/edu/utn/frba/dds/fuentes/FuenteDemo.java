@@ -7,11 +7,11 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-public class FuenteDemo extends FuenteProxyAsincronica {
+public class FuenteDemo extends FuenteProxyCalendarizada {
   private final URL url;
   private final Conexion conexion;
 
@@ -24,8 +24,13 @@ public class FuenteDemo extends FuenteProxyAsincronica {
 
 
   @Override
-  protected List<Hecho> getNextHecho(Instant ultimaLlamada) {
-    return Collections.singletonList(this.parseHecho(conexion.siguienteHecho(url, ultimaLlamada)));
+  protected Set<Hecho> getNewHechos(Instant ultimaLlamada) {
+    Set<Hecho> hechos = new HashSet<>();
+    Map<String, Object> fila;
+    while((fila=conexion.siguienteHecho(url, ultimaLlamada))!=null) {
+      hechos.add(this.parseHecho(fila));
+    }
+    return hechos;
   }
 
   private Hecho parseHecho(Map<String, Object> fila) {

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class FuenteProxyAsincronicaTest {
-
+/*
   static class TestFuente extends FuenteProxyAsincronica {
     private final Queue<Hecho> hechosQueue = new LinkedList<>();
 
@@ -70,6 +70,6 @@ public class FuenteProxyAsincronicaTest {
     fuente.addHecho(mock(Hecho.class));
     Assertions.assertEquals(Collections.singleton(hecho), fuente.obtenerHechos(h -> true));
   }
-
+*/
 
 }

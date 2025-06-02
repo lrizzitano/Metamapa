@@ -1,22 +1,21 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 
 import static java.lang.Thread.sleep;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class FuenteProxyAsincronica implements Fuente {
+public abstract class FuenteProxyCalendarizada implements Fuente {
   private final Duration refreshTime;
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
 
-  public FuenteProxyAsincronica(Duration refreshTime) {
+  public FuenteProxyCalendarizada(Duration refreshTime) {
     this.refreshTime = refreshTime;
   }
 
@@ -24,17 +23,14 @@ public abstract class FuenteProxyAsincronica implements Fuente {
     new Thread(this::acumularHechos).start();
   }
 
-  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro) {
-    return this.hechos.stream().filter(filtro).collect(Collectors.toSet());
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
+    return this.hechos.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
   }
 
   private void acumularHechos() {
-    List<Hecho> hechosNuevos;
     Instant ultimaLlamada = null;
-    while (true) {
-      while ((hechosNuevos = this.getNextHecho(ultimaLlamada)) != null) {
-        hechos.addAll(hechosNuevos);
-      }
+    while (true){
+      hechos.addAll(getNewHechos(ultimaLlamada));
       ultimaLlamada = Instant.now();
       try {
         //noinspection BusyWait
@@ -45,6 +41,6 @@ public abstract class FuenteProxyAsincronica implements Fuente {
     }
   }
 
-  protected abstract List<Hecho> getNextHecho(Instant ultimaLlamada);
+  protected abstract Set<Hecho> getNewHechos(Instant ultimaLlamada);
 
 }

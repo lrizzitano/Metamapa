@@ -1,14 +1,14 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import Solicitud;
+import ar.edu.utn.frba.dds.solicitudes.Solicitud;
 import com.google.gson.Gson;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class FuenteMetaMapa implements Fuente {
 
@@ -23,10 +23,9 @@ public class FuenteMetaMapa implements Fuente {
   }
 
   @Override
-  public Set<Hecho> obtenerHechos(Predicate<Hecho> filtro) {
-
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
-                                     .uri(URI.create(pathInicial + "/hechos" + this.filtroAQueryParameter(filtro))) // como pasamos los filtros a query?
+                                     .uri(URI.create(pathInicial + "/hechos" + filtro.toHttp())) // como pasamos los filtros a query?
                                      .header("Accept", "application/json")       // Recibo json
                                      .GET()
                                      .build();
@@ -34,10 +33,10 @@ public class FuenteMetaMapa implements Fuente {
     return (Set<Hecho>) conexionMetaMapa.enviarRequest(cliente, request);
   }
 
-  public Set<Hecho> obtenerHechosDeColeccion(Predicate<Hecho> filtro, String identificadorColeccion) {
+  public Set<Hecho> obtenerHechosDeColeccion(Filtro filtro, String identificadorColeccion) {
 
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
-        .uri(URI.create(pathInicial + "/hechos/:" + identificadorColeccion + "/" + this.filtroAQueryParameter(filtro))) // como pasamos los filtros a query?
+        .uri(URI.create(pathInicial + "/hechos/:" + identificadorColeccion + "/" + filtro.toHttp())) // como pasamos los filtros a query?
         .header("Accept", "application/json") // Recibo json
         .GET()
         .build();

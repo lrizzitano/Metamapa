@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ar.edu.utn.frba.dds.filtros.FiltroFechaHasta;
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.solicitudes.Solicitud;
 import java.time.LocalDate;
 import java.util.Set;
@@ -26,14 +28,17 @@ public class ColeccionTest {
   private final Hecho hecho2 = new Hecho("hecho2", "desc2", "cat2",
       3.0,4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
   private final Fuente unaFuente = mock(Fuente.class);
+  private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02"));
+  private final Filtro filtroTrue = new NullFiltro();
 
 
   @BeforeEach
   void setUp() {
     Set<Hecho> hechos = Set.of(hecho1, hecho2);
     when(unaFuente.obtenerHechos(any())).thenAnswer(invocation -> {
-      Predicate<Hecho> filtro = invocation.getArgument(0);
-      return hechos.stream().filter(filtro).collect(Collectors.toSet());
+      Filtro filtro = invocation.getArgument(0);
+      Predicate<Hecho> f1 = filtro.getAsPredicate();
+      return hechos.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
     });
   }
 
@@ -45,14 +50,14 @@ public class ColeccionTest {
   @Test
   void ColeccionFiltraPorCriterioDePertenencia() {
     Coleccion unaColeccion = new Coleccion("", "",
-        Filtro.CATEGORIA.crearFiltro("cat1"), unaFuente);
-    Assertions.assertEquals(unaColeccion.hechos(hecho -> true), Set.of(hecho1));
+        filtroFecha, unaFuente);
+    Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue));
   }
 
   @Test
   void ColeccionFiltraPorParametro() {
-    Coleccion unaColeccion = new Coleccion("", "", hecho -> true, unaFuente);
-    Assertions.assertEquals(unaColeccion.hechos(Filtro.CATEGORIA.crearFiltro("cat1")),
+    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente);
+    Assertions.assertEquals(unaColeccion.hechos(filtroFecha),
         Set.of(hecho1));
   }
 
@@ -60,7 +65,7 @@ public class ColeccionTest {
   void CollecionFiltraHechosEliminados() {
     Solicitud unaSolicitud = new Solicitud(hecho1, "");
     unaSolicitud.aceptar(mock(Administrador.class));
-    Coleccion unaColeccion = new Coleccion("", "", hecho -> true, unaFuente);
-    Assertions.assertEquals(unaColeccion.hechos(hecho -> true), Set.of(hecho2));
+    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente);
+    Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
   }
 }
