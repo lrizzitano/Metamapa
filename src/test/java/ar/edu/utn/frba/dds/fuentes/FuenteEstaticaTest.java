@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
