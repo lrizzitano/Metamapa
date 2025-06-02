@@ -1,0 +1,22 @@
+package ar.edu.utn.frba.dds.filtros;
+
+
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import java.util.function.Predicate;
+
+public class FiltroCategoria implements Filtro {
+  private final String categoria;
+
+  public FiltroCategoria(String categoria) {
+    this.categoria = categoria;
+  }
+
+
+  public Predicate<Hecho> getAsPredicate() {
+    return hecho -> hecho.categoria().equals(categoria);
+  }
+
+  public String toHttp() {
+    return "categoria=" + categoria;
+  }
+}

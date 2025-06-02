@@ -16,7 +16,7 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
-import ar.edu.utn.frba.dds.Usuarios.Administrador;
+import ar.edu.utn.frba.dds.usuarios.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

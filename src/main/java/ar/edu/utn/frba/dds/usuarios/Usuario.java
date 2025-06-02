@@ -1,8 +1,5 @@
-package ar.edu.utn.frba.dds.Usuarios;
+package ar.edu.utn.frba.dds.usuarios;
 
-
-import ar.edu.utn.frba.dds.fuentes.FuenteDinamica;
-import ar.edu.utn.frba.dds.hechos.Hecho;
 
 public class Usuario {
 
