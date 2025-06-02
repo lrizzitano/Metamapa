@@ -25,7 +25,8 @@ public class FuenteMetaMapa implements Fuente {
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
-                                     .uri(URI.create(pathInicial + "/hechos" + filtro.toHttp())) // como pasamos los filtros a query?
+                                     .uri(URI.create(pathInicial + "/hechos"
+                                         + this.toQuery(filtro)))
                                      .header("Accept", "application/json")       // Recibo json
                                      .GET()
                                      .build();
@@ -36,7 +37,8 @@ public class FuenteMetaMapa implements Fuente {
   public Set<Hecho> obtenerHechosDeColeccion(Filtro filtro, String identificadorColeccion) {
 
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout
-        .uri(URI.create(pathInicial + "/hechos/:" + identificadorColeccion + "/" + filtro.toHttp())) // como pasamos los filtros a query?
+        .uri(URI.create(pathInicial + "/hechos/:" + identificadorColeccion + "/"
+            + this.toQuery(filtro)))
         .header("Accept", "application/json") // Recibo json
         .GET()
         .build();
@@ -57,5 +59,9 @@ public class FuenteMetaMapa implements Fuente {
         .build();
 
     conexionMetaMapa.enviarRequest(cliente, request);
+  }
+
+  private String toQuery(Filtro filtro){
+    return filtro.toHttp().isEmpty() ? "" : "?" + filtro.toHttp();
   }
 }
