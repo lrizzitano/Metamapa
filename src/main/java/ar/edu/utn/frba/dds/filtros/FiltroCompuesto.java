@@ -28,6 +28,7 @@ public class FiltroCompuesto implements Filtro {
   }
 
   public String toHttp() {
-    return filtros.stream().map(Filtro::toHttp).collect(Collectors.joining("&"));
+    return filtros.stream().map(Filtro::toHttp).filter(s -> !s.isBlank())
+        .collect(Collectors.joining("&"));
   }
 }
