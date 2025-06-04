@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class FuenteDinamica implements Fuente{
+public class FuenteDinamica implements Fuente {
 
   private FuenteDinamica() {}
 
@@ -37,7 +37,8 @@ public class FuenteDinamica implements Fuente{
   }
 
   public void aceptarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.hechos.actualizar(solicitudDeCambio.getHechoACambiar(), solicitudDeCambio.getHechoModificado());
+    this.hechos.actualizar(solicitudDeCambio.getHechoParacambiar(),
+        solicitudDeCambio.getHechoModificado());
     this.solicitudes.aceptar(solicitudDeCambio);
   }
 
@@ -45,7 +46,7 @@ public class FuenteDinamica implements Fuente{
     this.solicitudes.rechazar(solicitudDeCambio);
   }
 
-  public Set<Hecho> obtenerHechos(Filtro filtro){
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
 
     this.hechos.obtenerTodos()

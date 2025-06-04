@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -66,7 +65,7 @@ public class SolicitudesDeEliminacion {
   }
 
   public Set<Hecho> hechosEliminados() {
-    return new HashSet<>(aceptadas.stream().map(ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion::getHecho).toList());
+    return new HashSet<>(aceptadas.stream().map(SolicitudDeEliminacion::getHecho).toList());
   }
 
   public void reset() {

@@ -12,16 +12,19 @@ public class SolicitudesFuenteDinamica implements SolicitudDeCambioRepository {
   private final Set<SolicitudDeCambio> aceptadas = new HashSet<>();
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
 
-  public SolicitudesFuenteDinamica() {}
+  public SolicitudesFuenteDinamica() {
+  }
 
   public Set<SolicitudDeCambio> getPendientes() {
-    return pendientes;
+    return new HashSet<>(pendientes);
   }
+
   public Set<SolicitudDeCambio> getAceptadas() {
-    return aceptadas;
+    return new HashSet<>(aceptadas);
   }
+
   public Map<Hecho, Integer> getRechazadas() {
-    return rechazadas;
+    return new HashMap<>(rechazadas);
   }
 
   @Override
@@ -38,7 +41,7 @@ public class SolicitudesFuenteDinamica implements SolicitudDeCambioRepository {
   @Override
   public void rechazar(SolicitudDeCambio solicitudDeCambio) {
     this.pendientes.remove(solicitudDeCambio);
-    Hecho hecho = solicitudDeCambio.getHechoACambiar();
+    Hecho hecho = solicitudDeCambio.getHechoParacambiar();
     rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
   }
 }

@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
-
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class FuenteDemo extends FuenteProxyCalendarizada {
   protected Set<Hecho> getNewHechos(Instant ultimaLlamada) {
     Set<Hecho> hechos = new HashSet<>();
     Map<String, Object> fila;
-    while((fila=conexion.siguienteHecho(url, ultimaLlamada))!=null) {
+    while ((fila = conexion.siguienteHecho(url, ultimaLlamada)) != null) {
       hechos.add(this.parseHecho(fila));
     }
     return hechos;

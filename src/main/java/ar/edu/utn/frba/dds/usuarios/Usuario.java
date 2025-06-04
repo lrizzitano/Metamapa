@@ -34,15 +34,7 @@ public class Usuario {
     this.esContribuyente = true;
   }
 
-  public boolean estaRegistrado(){
-    return nombre!=null;
+  public boolean estaRegistrado() {
+    return nombre != null;
   }
-
-  /*PODRIA IR AQUI, EN LUGAR DE EN LA FUENTE DINAMICA, no expongo contribuir() a ser llamado libremente
-  public void agregarHecho(Hecho hecho)
-  {
-    this.esContribuyente = true;
-    FuenteDinamica.instance().agregarHecho(hecho);
-  }
-   */
 }

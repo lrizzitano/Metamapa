@@ -1,9 +1,9 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
-import ar.edu.utn.frba.dds.usuarios.Administrador;
 import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.usuarios.Administrador;
 
 public class SolicitudDeEliminacion {
   private final Hecho hecho;
@@ -50,5 +50,4 @@ public class SolicitudDeEliminacion {
     this.responsable = admin;
     solicitudes.rechazarSolicitud(this);
   }
-
 }

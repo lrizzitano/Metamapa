@@ -1,13 +1,12 @@
 package ar.edu.utn.frba.dds.hechos;
 
+import static java.util.Objects.requireNonNull;
+
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.filtros.FiltroEliminados;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
-
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
@@ -24,7 +23,8 @@ public class Coleccion {
     this.titulo = requireNonNull(titulo);
     this.descripcion = requireNonNull(descripcion);
     requireNonNull(criterioDePertenencia);
-    this.criterioDePertenencia = new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+    this.criterioDePertenencia =
+        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
     this.fuente = requireNonNull(fuente);
   }
 
