@@ -12,33 +12,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public abstract class FuenteProxyCalendarizada implements Fuente {
-  private final Duration refreshTime;
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
 
-  public FuenteProxyCalendarizada(Duration refreshTime) {
-    this.refreshTime = refreshTime;
+  public FuenteProxyCalendarizada() {}
+
+  public void iniciar() {
+    ActualizadorFuentesCalendarizadas.instance().suscribir(this);
   }
 
-  public void init() {
-    new Thread(this::acumularHechos).start();
+  public void detener() {
+    ActualizadorFuentesCalendarizadas.instance().desuscribir(this);
+  }
+
+  public void actualizarHechos(Instant ultimaLlamada) {
+    hechos.addAll(getNewHechos(ultimaLlamada));
   }
 
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     return this.hechos.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
-  }
-
-  private void acumularHechos() {
-    Instant ultimaLlamada = null;
-    while (true){
-      hechos.addAll(getNewHechos(ultimaLlamada));
-      ultimaLlamada = Instant.now();
-      try {
-        //noinspection BusyWait
-        sleep(refreshTime.toMillis());
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    }
   }
 
   protected abstract Set<Hecho> getNewHechos(Instant ultimaLlamada);
