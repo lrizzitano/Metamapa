@@ -7,6 +7,8 @@ import java.util.Set;
 public class HechosFuenteDinamica implements HechoRepository {
   private final Set<Hecho> hechos = new HashSet<>();
 
+  public HechosFuenteDinamica() {}
+
   @Override
   public void actualizar(Hecho hechoACambiar, Hecho hechoModificado) {
     this.eliminar(hechoACambiar);

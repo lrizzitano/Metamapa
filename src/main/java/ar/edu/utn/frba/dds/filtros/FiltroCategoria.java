@@ -16,7 +16,7 @@ public class FiltroCategoria implements Filtro {
     return hecho -> hecho.categoria().equals(categoria);
   }
 
-  public String toHttp() {
-    return "categoria=" + categoria;
+  public String toQueryParam(String prefix, String delimiter, String suffix) {
+    return prefix + "categoria=" + categoria + suffix;
   }
 }

@@ -17,7 +17,7 @@ public class FiltroEliminados implements Filtro {
     return hecho -> !hechosEliminados.contains(hecho);
   }
 
-  public String toHttp() {
+  public String toQueryParam(String prefix, String delimiter, String suffix) {
     return "";
   }
 }

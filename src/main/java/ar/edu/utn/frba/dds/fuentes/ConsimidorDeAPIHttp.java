@@ -19,7 +19,8 @@ public class ConsimidorDeAPIHttp {
       return validarStatusCode(response);
 
     } catch (IOException | InterruptedException e) {
-      throw new AccesoARecursoFallidoException("Error al realizar la solicitud " + request.method() + " a la ruta " + request.uri(), e);
+      throw new AccesoARecursoFallidoException("Error al realizar la solicitud " + request.method()
+          + " a la ruta " + request.uri(), e);
     }
   }
 
@@ -29,7 +30,8 @@ public class ConsimidorDeAPIHttp {
       Gson gson = new Gson();
       return gson.fromJson(response.body(), Object.class);
     } else {
-      throw new AccesoARecursoFallidoException("Acceso a recurso fallido con codigo: " + response.statusCode(), null); // no se si sacarle o dejarle el segundo parametro a la excepcion
+      throw new AccesoARecursoFallidoException("Acceso a recurso fallido con codigo: "
+          + response.statusCode(), null); // no se si sacarle o dejarle el segundo parametro a la excepcion
     }
   }
 }

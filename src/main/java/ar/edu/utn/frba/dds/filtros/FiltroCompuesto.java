@@ -27,8 +27,9 @@ public class FiltroCompuesto implements Filtro {
         .reduce(Predicate::and).orElse(hecho -> true);
   }
 
-  public String toHttp() {
-    return filtros.stream().map(Filtro::toHttp).filter(s -> !s.isBlank())
-        .collect(Collectors.joining("&"));
+  public String toQueryParam(String prefix, String delimiter, String suffix) {
+    return filtros.stream().map(filtro -> filtro.toQueryParam("", "", ""))
+        .filter(s -> !s.isBlank())
+        .collect(Collectors.joining(delimiter, prefix, suffix));
   }
 }
