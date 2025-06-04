@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 
 import java.util.HashMap;
 import java.util.HashSet;
