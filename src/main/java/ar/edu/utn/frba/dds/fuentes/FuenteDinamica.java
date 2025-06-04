@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FuenteDinamica implements Fuente {
 
@@ -47,14 +48,8 @@ public class FuenteDinamica implements Fuente {
   }
 
   public Set<Hecho> obtenerHechos(Filtro filtro) {
-    Map<String, Hecho> hechosPorTitulo = new HashMap<>();
-
-    this.hechos.obtenerTodos()
-        .stream()
-        .filter(filtro.getAsPredicate())
-        .forEach(hecho -> hechosPorTitulo.put(hecho.titulo(), hecho));
-
-    return new HashSet<>(hechosPorTitulo.values());
+    return this.hechos.obtenerTodos().stream()
+        .filter(filtro.getAsPredicate()).collect(Collectors.toSet());
   }
 
   public void agregarHecho(Hecho hecho) {

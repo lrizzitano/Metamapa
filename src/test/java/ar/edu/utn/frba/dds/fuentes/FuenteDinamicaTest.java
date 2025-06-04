@@ -55,25 +55,4 @@ public class FuenteDinamicaTest {
     verify(solicitudesFuenteDinamica).aceptar(unaSolicitudDeCambio);
 
   }
-/*
-  @Test
-  void obtenerHechosRetornaLosHechosDeSuRepositorioFiltrados()
-  {
-    Hecho otroHecho = mock(Hecho.class);
-    Hecho otroHechoRepetido = mock(Hecho.class);
-    when(unHecho.titulo()).thenReturn("AccidenteFatal");
-    when(otroHecho.titulo()).thenReturn("Accidente");
-    when(otroHechoRepetido.titulo()).thenReturn("Accidente");
-
-    Set<Hecho> hechosSimulados = new HashSet<>(Set.of(unHecho, otroHecho, otroHechoRepetido));
-    Set<Hecho> hechosSimuladosFiltrados = new HashSet<>(Set.of(unHecho, otroHecho));
-    when(hochosFuenteDinamica.obtenerTodos()).thenReturn(hechosSimulados);
-    Filtro filtroSiempreVerdadero = new NullFiltro();
-
-    Assertions.assertEquals(hechosSimuladosFiltrados,fuenteDinamica.obtenerHechos( filtroSiempreVerdadero));
-
-  }*/
-
-
-
 }
