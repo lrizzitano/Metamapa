@@ -10,12 +10,14 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 public class Coleccion {
   private final String titulo;
   private final String descripcion;
   private final FiltroCompuesto criterioDePertenencia;
   private final Fuente fuente;
+  private final String id = UUID.randomUUID().toString();
 
   public Coleccion(String titulo, String descripcion,
                    Filtro criterioDePertenencia, Fuente fuente) {
@@ -32,6 +34,10 @@ public class Coleccion {
 
   public String getDescripcion() {
     return descripcion;
+  }
+
+  public String getId() {
+    return id;
   }
 
   public Set<Hecho> hechos(Filtro filtro) {
