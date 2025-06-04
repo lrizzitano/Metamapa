@@ -1,106 +1,116 @@
 @startuml MetaMapa
 
 class Usuario {
-    (nombre)
-    (apellido)
-    (edad)
-    esContribuyente: bool
+    +(nombre)
+    +(apellido)
+    +(edad)
+    +esContribuyente
     --
-    verHechosFiltrados(coleccion, filtro)
-    crearSolicitud(hecho,fundamentacion)
-    verHechos(Coleccion)
+    +contribuir()
 }
 
 class Administrador {
---
-    crearColeccion(titulo,descripcion,criterio,fuente)
-    verSolicitudes()
-    crearFuenteEstatica(pathArchivo)
-    aceptarSolicitud(solicitud)
-    rechazarSolicitud(solicitud)
-
+    +nombre
+    +apellido
+    +edad
 }
 
-together {
-    class Solicitud {
-        hecho
-        fundamentacion
-        solicitudes
-        responsable
-        --
-        aceptar(admin)
-        rechhazar(admin)
+class SolicitudDeEliminacion {
+    +hecho
+    +fundamentacion
+    +responsable
+    -solicitudesDeEliminacionRepo
+    --
+    +aceptar(admin)
+    +rechhazar(admin)
+}
 
-    }
+interface SolicitudDeEliminacionRepo {
+    --
+    +getPendientes()
+    +getRechazadas()
+    +getRechazos(hecho)
+    +hechosEliminados()
+}
 
-    class Coleccion {
-        titulo
-        descripcion
-        criterioDePertenencia
-        fuente
-        --
-        hechos(filtro)
-    }
-
-    interface Fuente {
-        --
-        obetenerHechos(filtro)
-    }
-
-    class Hecho {
-        titulo
-        descripcion
-        categoria
-        latitud
-        longitud
-        fechaAcontecimiento
-        fechaCarga
-        origen
-        --
-    }
-
-    enum Origen {
-        MANUAL
-        DATASET
-        CONTRIBUYENTE
-    }
+interface DetectorDeSpam {
+    --
+    +esSpam(solicitud)
 }
 
 
+class Coleccion {
+    +titulo
+    +descripcion
+    +id
+    -criterioDePertenencia
+    -fuente
+    --
+    +hechos(filtro)
+}
+
+interface Fuente {
+    --
+    +obetenerHechos(filtro)
+}
+
+class Hecho {
+    +titulo
+    +descripcion
+    +categoria
+    +latitud
+    +longitud
+    +fechaAcontecimiento
+    +fechaCarga
+    +origen
+    +(usuario)
+    +(multimedia)
+    --
+}
+
+enum Origen {
+    MANUAL
+    DATASET
+    CONTRIBUYENTE
+}
 
 class FuenteEstatica {
-    pathArchivo
+    -pathArchivo
     --
-    crearHechoDesdeFila()
-    estaRepetido(unHecho, hechos)
+    -crearHechoDesdeFila()
 }
 
-
-
-enum Filtro {
-  TITULO
-  DESCRIPCION
-  CATEGORIA
-  LATITUD_MAYOR
-  LATITUD_MENOR
-  LONGITUD_MAYOR
-  LONGITUD_MENOR
-  FECHA_CARGA_ANTES
-  FECHA_CARGA_DESPUES
-  FECHA_HECHO_ANTES
-  FECHA_HECHO_DESPUES
-  --
-  crearFiltro(valor)
+interface Filtro {
+    +asPredicate()
+    +toQueryParam(prefix, delimiter, suffix)
 }
+
+abstract class fuenteProxyCalendarizada {
+    -refreshTime
+    +hechos
+    --
+    +init()
+    -acumularHechos()
+    #getNewHechos(ultimaLlamada) {abstract}
+}
+
+class fuenteDemo {
+    -url
+    -conexionDemo
+    --
+    -parseHehco(fila)
+}
+
+class fuenteMetaMapa {
+    -path
+    -conexionMetaMapa
+    --
+    +obetenerHechosDeColeccion(coleccion, filtro)
+    +enviarSolicitudDeEliminacion(solicitud)
+}
+
 
 Administrador -r-|> Usuario
-
-Administrador ..> Coleccion
-Administrador ..> FuenteEstatica
-Administrador ..>Solicitud
-
-Usuario ..> Coleccion
-Usuario ..>Filtro
 
 
 Coleccion --> Fuente
@@ -110,13 +120,19 @@ Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
+fuenteProxyCalendarizada .u.|> Fuente
+fuenteMetaMapa .u.|> Fuente
+fuenteDemo -u-|> fuenteProxyCalendarizada
 
 
 Hecho -l-> Origen
 
-Solicitud --> Hecho
-Solicitud -u-> Administrador
+SolicitudDeEliminacion --> Hecho
+SolicitudDeEliminacion -u-> Administrador
 
-Solicitud -[hidden] Coleccion
+SolicitudDeEliminacionRepo *-- SolicitudDeEliminacion
+DetectorDeSpam <-- SolicitudDeEliminacionRepo
+SolicitudDeEliminacionRepo <-- Coleccion
+
 
 @enduml
