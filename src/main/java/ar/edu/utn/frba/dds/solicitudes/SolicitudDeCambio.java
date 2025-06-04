@@ -41,12 +41,16 @@ public class SolicitudDeCambio {
   public Hecho getHechoModificado() {
     return hechoModificado;
   }
+  public Administrador getResponsable()
+  {
+    return responsable;
+  }
 
   public void aceptarCambio(Administrador administrador,Hecho sugerencias) {
     if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
     }
-    this.sugerencias =sugerencias
+    this.sugerencias =sugerencias;
 
     this.responsable = administrador;
     fuente.aceptarSolicitudDeCambio(this);
