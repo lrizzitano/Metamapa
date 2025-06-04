@@ -12,7 +12,6 @@ import java.util.Queue;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

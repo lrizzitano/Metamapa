@@ -4,7 +4,6 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 
 import java.net.URL;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;

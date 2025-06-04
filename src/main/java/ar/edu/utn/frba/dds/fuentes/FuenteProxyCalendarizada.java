@@ -3,9 +3,6 @@ package ar.edu.utn.frba.dds.fuentes;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 
-import static java.lang.Thread.sleep;
-
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
