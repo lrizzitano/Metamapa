@@ -13,7 +13,7 @@ public class FiltroCompuestoTest {
       return hecho -> false;
     }
 
-    public String toQueryParam(String prefix, String deliimiter, String suffix) {
+    public String toQueryParam(String prefix, String delimiter, String suffix) {
       return "";
     }
   }

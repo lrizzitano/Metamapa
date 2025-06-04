@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 public interface Filtro {
   public Predicate<Hecho> getAsPredicate();
 
-  public String toQueryParam(String prefix, String deliimiter, String suffix);
+  public String toQueryParam(String prefix, String delimiter, String suffix);
 }
 
 

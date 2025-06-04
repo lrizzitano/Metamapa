@@ -15,7 +15,7 @@ public class FiltroFechaHasta implements Filtro {
     return hecho -> hecho.fechaAcontecimiento().isBefore(fecha);
   }
 
-  public String toQueryParam(String prefix, String deliimiter, String suffix) {
+  public String toQueryParam(String prefix, String delimiter, String suffix) {
     return prefix + "fecha_acontecimiento_hasta=" + fecha.toString() + suffix;
   }
 }
