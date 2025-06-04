@@ -1,0 +1,11 @@
+texto,etiqueta
+"Por favor eliminen este post, contiene datos personales",no_spam
+"Oferta especial, gana dinero rápido haciendo clic aquí",spam
+"Solicito la eliminación de un comentario ofensivo",no_spam
+"Haz clic y gana premios gratis ahora",spam
+"Este contenido viola las normas, elimínenlo por favor",no_spam
+"Compra seguidores para tu perfil, promoción limitada",spam
+"Solicito borrar mi publicación, contiene información privada",no_spam
+"Gana dinero desde casa con este este método exclusivo",spam
+"Por favor borren un post que me afecta personalmente",no_spam
+"Promoción especial para nuevos clientes, entra ya",spam
