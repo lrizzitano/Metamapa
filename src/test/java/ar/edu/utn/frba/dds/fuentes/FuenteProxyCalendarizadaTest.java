@@ -12,6 +12,8 @@ import java.util.Queue;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
@@ -22,8 +24,8 @@ public class FuenteProxyCalendarizadaTest {
   static class TestFuente extends FuenteProxyCalendarizada {
     private final Queue<Hecho> hechosQueue = new LinkedList<>();
 
-    public TestFuente(Duration refreshTime) {
-      super(refreshTime);
+    public TestFuente() {
+
     }
 
     public void addHecho(Hecho hecho) {
@@ -41,12 +43,19 @@ public class FuenteProxyCalendarizadaTest {
     }
   }
 
+
+  @BeforeEach
+  void setUp() {
+    ActualizadorFuentesCalendarizadas.instance().reiniciar();
+  }
+
   @Test
   void acumulaHechos() throws InterruptedException {
     Hecho hecho = mock(Hecho.class);
-    TestFuente fuente = new TestFuente(Duration.ofMillis(10*1000));
+    TestFuente fuente = new TestFuente();
+    ActualizadorFuentesCalendarizadas.instance().setIntervalo(Duration.ofSeconds(10));
     fuente.addHecho(hecho);
-    fuente.init();
+    fuente.iniciar();
     Thread.sleep(200);
     Assertions.assertEquals(Collections.singleton(hecho), fuente.obtenerHechos(new NullFiltro()));
   }
@@ -57,10 +66,11 @@ public class FuenteProxyCalendarizadaTest {
     Hecho hecho2 = mock(Hecho.class);
     when(hecho1.categoria()).thenReturn("hola");
     when(hecho2.categoria()).thenReturn("NotHola");
-    TestFuente fuente = new TestFuente(Duration.ofMillis(10*1000));
+    TestFuente fuente = new TestFuente();
+    ActualizadorFuentesCalendarizadas.instance().setIntervalo(Duration.ofSeconds(10));
     fuente.addHecho(hecho1);
     fuente.addHecho(hecho2);
-    fuente.init();
+    fuente.iniciar();
     Thread.sleep(200);
     Assertions.assertEquals(Collections.singleton(hecho1),
         fuente.obtenerHechos(new FiltroCategoria("hola")));
@@ -70,9 +80,10 @@ public class FuenteProxyCalendarizadaTest {
   @Test
   void noAcumulaAntesDeTiempo() throws InterruptedException {
     Hecho hecho = mock(Hecho.class);
-    TestFuente fuente = new TestFuente(Duration.ofMillis(1000000));
+    TestFuente fuente = new TestFuente();
+    ActualizadorFuentesCalendarizadas.instance().setIntervalo(Duration.ofMillis(1000000));
     fuente.addHecho(hecho);
-    fuente.init();
+    fuente.iniciar();
     Thread.sleep(200);
     fuente.addHecho(mock(Hecho.class));
     Assertions.assertEquals(Collections.singleton(hecho), fuente.obtenerHechos(new NullFiltro()));
