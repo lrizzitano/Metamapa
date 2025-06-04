@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
 
 import static java.lang.Math.log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Vectorizador {
-
+  List<String> vocabulario = new ArrayList<>(); // usamos una lista para estandarizar el orden de las palabras
   Map<String, Double> mapaPalabrasAIDF = new HashMap<>();
 
   Vectorizador(List<String> documentos) {
@@ -19,11 +20,11 @@ public class Vectorizador {
     Map<String, Integer> contadorAparicionesPalabra = new HashMap<>();
 
     documentos.forEach(documento -> procesarDocumento(documento, contadorAparicionesPalabra));
-    calcularIDFs(contadorAparicionesPalabra, documentos.size());
+    calcularIDFsCorpus(contadorAparicionesPalabra, documentos.size());
   }
 
   private void procesarDocumento(String documento, Map<String, Integer> contadorAparicionesPalabra) {
-    String[] palabras = eliminarSignosDePuntuacion(documento).split(" ");
+    String[] palabras = parsearPalabras(documento);
     Set<String> palabrasYaContadas = new HashSet<>();
 
     Arrays.stream(palabras)
@@ -32,6 +33,7 @@ public class Vectorizador {
             if (contadorAparicionesPalabra.containsKey(palabra)) {
               contadorAparicionesPalabra.put(palabra, contadorAparicionesPalabra.get(palabra) + 1);
             } else {
+              vocabulario.add(palabra);
               contadorAparicionesPalabra.put(palabra, 1);
             }
           }
@@ -39,13 +41,33 @@ public class Vectorizador {
         });
   }
 
-  private String eliminarSignosDePuntuacion(String texto) {
-    return texto.replaceAll("\\p{Punct}", "");
+  private String[] parsearPalabras(String texto) {
+    return texto.replaceAll("\\p{Punct}", "").split(" ");
   }
 
-  private void calcularIDFs(Map<String, Integer> contadorAparicionesPalabra, int documentosTotales) {
+  private void calcularIDFsCorpus(Map<String, Integer> contadorAparicionesPalabra, int documentosTotales) {
     contadorAparicionesPalabra.forEach((palabra, numeroDeApariciones) -> {
       mapaPalabrasAIDF.put(palabra, log((double) documentosTotales / contadorAparicionesPalabra.get(palabra)));
     });
+  }
+
+  private Map<String, Double> calcularTFsDe(String unDocumento) {
+    Map<String, Double> TFs = new HashMap<>();
+
+    String[] palabrasEnDocumento = parsearPalabras(unDocumento);
+
+    Arrays.stream(palabrasEnDocumento).forEach(palabra -> {
+      if (TFs.containsKey(palabra)) {
+        TFs.put(palabra, TFs.get(palabra) + 1);
+      } else {
+        TFs.put(palabra, 1.0);
+      }
+    });
+
+    TFs.forEach((palabra, cantidadDeAparicionesEnDocumento) -> {
+      TFs.put(palabra, cantidadDeAparicionesEnDocumento / palabrasEnDocumento.length);
+    });
+
+    return TFs;
   }
 }
