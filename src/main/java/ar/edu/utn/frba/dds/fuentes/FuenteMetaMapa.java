@@ -4,7 +4,6 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import com.google.gson.Gson;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -14,12 +13,12 @@ public class FuenteMetaMapa implements Fuente {
 
   String pathInicial;
   HttpClient cliente;
-  ConsimidorDeAPIHttp conexionMetaMapa;
+  ConsimidorDeApiHttp conexionMetaMapa;
 
   public FuenteMetaMapa(String pathIncial) {
     this.pathInicial = pathIncial;
     cliente = HttpClient.newHttpClient();
-    conexionMetaMapa = new ConsimidorDeAPIHttp();
+    conexionMetaMapa = new ConsimidorDeApiHttp();
   }
 
   @Override
@@ -48,7 +47,8 @@ public class FuenteMetaMapa implements Fuente {
 
   public void enviarSolicitudDeEliminacion(SolicitudDeEliminacion solicitud) {
 
-    // Recive por parametro el objeto solicitud, o recibe por parametro los atributos y la instanciamos aca?
+    // Recive por parametro el objeto solicitud,
+    // o recibe por parametro los atributos y la instanciamos aca?
     Gson gson = new Gson();
 
     HttpRequest request = HttpRequest.newBuilder() // Estaria bueno definir un timeout

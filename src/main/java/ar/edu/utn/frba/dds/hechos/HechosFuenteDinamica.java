@@ -7,17 +7,19 @@ import java.util.Set;
 public class HechosFuenteDinamica implements HechoRepository {
   private final Set<Hecho> hechos = new HashSet<>();
 
-  public HechosFuenteDinamica() {}
+  public HechosFuenteDinamica() {
+
+  }
 
   @Override
-  public void actualizar(Hecho hechoACambiar, Hecho hechoModificado) {
-    this.eliminar(hechoACambiar);
+  public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {
+    this.eliminar(hechoParaCambiar);
     this.agregar(hechoModificado);
   }
 
   @Override
   public Set<Hecho> obtenerTodos() {
-    return this.hechos;
+    return new HashSet<>(this.hechos);
   }
 
   @Override
@@ -27,7 +29,7 @@ public class HechosFuenteDinamica implements HechoRepository {
 
   @Override
   public void eliminar(Hecho hecho) {
-    if(!hechos.contains(hecho)) {
+    if (!hechos.contains(hecho)) {
       throw new NoSePuedeEliminarUnHechoQueNoExisteException();
     }
     this.hechos.remove(hecho);

@@ -29,7 +29,7 @@ public class ActualizadorFuentesCalendarizadas {
     iniciarTimer();
   }
 
-  private void iniciarTimer () {
+  private void iniciarTimer() {
     if (timer != null) {
       timer.cancel();
     }
