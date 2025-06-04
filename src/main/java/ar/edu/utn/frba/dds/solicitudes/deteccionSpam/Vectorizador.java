@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Vectorizador {
   List<String> vocabulario = new ArrayList<>(); // usamos una lista para estandarizar el orden de las palabras
-  Map<String, Double> mapaPalabrasAIDF = new HashMap<>();
+  Map<String, Double> IDFs = new HashMap<>();
 
   Vectorizador(List<String> documentos) {
     // el preprocesamiento del corpus de data lo hacemos aca asi se hace al instanciar el vectorizador
@@ -24,7 +24,7 @@ public class Vectorizador {
   }
 
   private void procesarDocumento(String documento, Map<String, Integer> contadorAparicionesPalabra) {
-    String[] palabras = parsearPalabras(documento);
+    String[] palabras = this.parsearPalabras(documento);
     Set<String> palabrasYaContadas = new HashSet<>();
 
     Arrays.stream(palabras)
@@ -47,14 +47,14 @@ public class Vectorizador {
 
   private void calcularIDFsCorpus(Map<String, Integer> contadorAparicionesPalabra, int documentosTotales) {
     contadorAparicionesPalabra.forEach((palabra, numeroDeApariciones) -> {
-      mapaPalabrasAIDF.put(palabra, log((double) documentosTotales / contadorAparicionesPalabra.get(palabra)));
+      IDFs.put(palabra, log((double) documentosTotales / contadorAparicionesPalabra.get(palabra)));
     });
   }
 
   private Map<String, Double> calcularTFsDe(String unDocumento) {
     Map<String, Double> TFs = new HashMap<>();
 
-    String[] palabrasEnDocumento = parsearPalabras(unDocumento);
+    String[] palabrasEnDocumento = this.parsearPalabras(unDocumento);
 
     Arrays.stream(palabrasEnDocumento).forEach(palabra -> {
       if (TFs.containsKey(palabra)) {
@@ -69,5 +69,21 @@ public class Vectorizador {
     });
 
     return TFs;
+  }
+
+  public double[] vectorizar(String documento) {
+    Map<String, Double> TFs = calcularTFsDe(documento);
+    double[] vector = new double[this.vocabulario.size()];
+
+    for (int i = 0; i < vocabulario.size(); i++) {
+      String palabra = vocabulario.get(i);
+      if (!TFs.containsKey(palabra)) {
+        vector[i] = 0;
+      } else {
+        vector[i] = TFs.get(palabra) * this.IDFs.get(palabra);
+      }
+    }
+
+    return vector;
   }
 }
