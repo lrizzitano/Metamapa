@@ -13,7 +13,7 @@ public class FiltroCompuestoTest {
       return hecho -> false;
     }
 
-    public String toHttp() {
+    public String toQueryParam(String prefix, String deliimiter, String suffix) {
       return "";
     }
   }
@@ -31,7 +31,9 @@ public class FiltroCompuestoTest {
     Filtro filtro1 = new FiltroCategoria("hola");
     Filtro filtro2 = new FiltroCategoria("chau");
     compuesto.and(filtro1).and(filtro2);
-    Assertions.assertEquals(filtro1.toHttp()+"&"+filtro2.toHttp(), compuesto.toHttp());
+    Assertions.assertEquals("?" + filtro1.toQueryParam("","", "")
+            + "&" + filtro2.toQueryParam("", "", ""),
+        compuesto.toQueryParam("?", "&", ""));
   }
 
   @Test
@@ -39,6 +41,7 @@ public class FiltroCompuestoTest {
     FiltroCompuesto compuesto = new FiltroCompuesto();
     Filtro filtro = new FiltroCategoria("hola");
     compuesto.and(filtro).and(new siempreFalse());
-    Assertions.assertEquals(filtro.toHttp(), compuesto.toHttp());
+    Assertions.assertEquals(filtro.toQueryParam("", "", ""),
+        compuesto.toQueryParam("", "", ""));
   }
 }

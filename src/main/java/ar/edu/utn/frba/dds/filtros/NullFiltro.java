@@ -8,7 +8,7 @@ public class NullFiltro implements Filtro {
     return hecho -> true;
   }
 
-  public String toHttp() {
+  public String toQueryParam(String prefix, String deliimiter, String suffix) {
     return "";
   }
 }
