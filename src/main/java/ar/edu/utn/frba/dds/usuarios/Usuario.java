@@ -9,9 +9,9 @@ public class Usuario {
   private boolean esContribuyente = false;
 
   public Usuario(String nombre, String apellido, Integer edad) {
-    this.nombre = nombre == null ? "Usuario" : nombre;
-    this.apellido = apellido == null ? "Anonimo" : apellido;
-    this.edad = edad == null ? 0 : edad;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
   }
 
   public String getNombre() {
@@ -35,7 +35,7 @@ public class Usuario {
   }
 
   public boolean estaRegistrado(){
-    return (this.edad != 0 || !this.nombre.equals("Usuario") || !this.apellido.equals("Anonimo"));
+    return nombre!=null;
   }
 
   /*PODRIA IR AQUI, EN LUGAR DE EN LA FUENTE DINAMICA, no expongo contribuir() a ser llamado libremente
