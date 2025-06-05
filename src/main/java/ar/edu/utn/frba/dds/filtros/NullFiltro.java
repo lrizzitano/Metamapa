@@ -1,6 +1,9 @@
 package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class NullFiltro implements Filtro {
@@ -8,7 +11,9 @@ public class NullFiltro implements Filtro {
     return hecho -> true;
   }
 
-  public String toQueryParam(String prefix, String delimiter, String suffix) {
-    return "";
+  public Map<String,String> toQueryParam() {
+    Map<String,String> query = new HashMap<String,String>();
+    query.put(this.toString(), "");
+    return query;
   }
 }

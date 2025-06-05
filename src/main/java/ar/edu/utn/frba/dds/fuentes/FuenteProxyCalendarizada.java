@@ -10,12 +10,7 @@ import java.util.stream.Collectors;
 public abstract class FuenteProxyCalendarizada implements Fuente {
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
 
-  public FuenteProxyCalendarizada(Duration frecuencia) {
-    this.frecuencia = frecuencia;
-  }
-
-  public Duration getFrecuencia() {
-    return frecuencia;
+  public FuenteProxyCalendarizada() {
   }
 
   public void actualizarHechos(Instant ultimaLlamada) {

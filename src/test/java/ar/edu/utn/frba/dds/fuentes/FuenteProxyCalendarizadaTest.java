@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,7 +21,6 @@ public class FuenteProxyCalendarizadaTest {
     private final Set<Hecho> hechos = new HashSet<>();
 
     public TestFuente() {
-
     }
 
     public void addHecho(Hecho hecho) {

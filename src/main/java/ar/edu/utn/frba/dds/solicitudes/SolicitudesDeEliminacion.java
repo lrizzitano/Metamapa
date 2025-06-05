@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SolicitudesDeEliminacion {
+public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepository{
   private static final SolicitudesDeEliminacion instance = new SolicitudesDeEliminacion();
 
   private final Set<SolicitudDeEliminacion> pendientes = new HashSet<>();

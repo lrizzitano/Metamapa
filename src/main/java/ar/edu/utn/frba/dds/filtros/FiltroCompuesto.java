@@ -2,7 +2,9 @@ package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -27,14 +29,11 @@ public class FiltroCompuesto implements Filtro {
         .reduce(Predicate::and).orElse(hecho -> true);
   }
 
-  public String toQueryParam(String prefix, String delimiter, String suffix) {
-    String joined = filtros.stream()
-        .map(filtro -> filtro.toQueryParam("", "", ""))
-        .filter(s -> !s.isBlank())
-        .collect(Collectors.joining(delimiter));
-    if (joined.isBlank()) {
-      return "";
+  public Map<String,String> toQueryParam() {
+    Map<String,String> query = new HashMap<String,String>();
+    for(Filtro filtro : filtros) {
+      query.putAll(filtro.toQueryParam());
     }
-    return prefix + joined + suffix;
+    return query;
   }
 }

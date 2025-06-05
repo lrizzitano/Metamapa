@@ -2,6 +2,9 @@ package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -12,12 +15,13 @@ public class FiltroEliminados implements Filtro {
     hechosEliminados = solicitudes.hechosEliminados();
   }
 
-
   public Predicate<Hecho> getAsPredicate() {
     return hecho -> !hechosEliminados.contains(hecho);
   }
 
-  public String toQueryParam(String prefix, String delimiter, String suffix) {
-    return "";
+  public Map<String,String> toQueryParam() {
+    Map<String,String> query = new HashMap<String,String>();
+    query.put(this.toString(), categoria);
+    return query;
   }
 }
