@@ -138,3 +138,22 @@ De momento, ya que solo tenemos un tipo de fuente calendarizada, el sistema pose
 Simula una fuente conectada a una API ficticia llamada Conexión. Esta API devuelve hechos en forma de `Map<String, Object>`, los cuales son transformados a objetos Hecho. \
 Esta clase hereda de `FuenteProxyCalendarizada`, por lo que es suceptible de ser notificada por el actualizador de fuentes calendarizadas que por defecto esta configurado para actualizar las fuentes una vez por hora.\
 Sin embargo, sí recibe por inyección la dependencia Conexión, lo que permite desacoplar la lógica de obtención de datos del mecanismo de actualización automática.
+
+# BONUS: Detector de Spam
+Implementamos un detector de spam basico propio, sin recurrir a ningun servicio ni biblioteca externa. Este detector toma mensajes que se escriben como justificacion para una solicitud de eliminacion de un hecho \
+y analiza si es spam o es una solicitud genuina. Para lograrlo, se aplica un proceso de vectorizacion de texto (llevar el texto a una repesentacion numerica dentro de un espacio vectorial) siguiendo el algoritmo TF-IDF \
+para asignar a cada palabra dentro del texto un puntaje numerico que mide su importancia dentro del mismo. Luego, tras el proceso de vectorizacion se pasa a una etapa de clasificacion, para la cual previamente se tiene vectorizado \
+un corpus de datos de ejemplo que viene etiquetado. De esa forma, podemos inferir si un mensaje es spam si "se parece" a otros mensajes que ya conocemos como spam. Para hacer esta clasficacion se utiliza el metodo KNN \
+que consiste en, dado un conjunto de puntos categorizados en un espacio vectorial, asignarle a un nuevo punto, que queremos clasificar, la categoria correspondiente a la mayoria de los k puntos (vecinos) mas cercanos.
+
+La decision de implementar un detector propio se basa principalmente en la seguridad de los datos y en la especificidad de la tarea, ademas de evitar dependencias externas que pueden no ser necesarias y que atarian \
+el correcto funcionamiento de nuestro sistema al correcto funcionamiento y mantencion de sistemas externos.
+Primeramente, utilizar un servicio completamente externo implicaria exponer todos los mensajes de las solicitudes de los usuarios lo que podria romper un vinculo de privacidad entre Metamapa y los mismos. Ademas, la \
+tarea que se nos propone es muy especifica (eliminar spam de solicitudes de eliminacion de un hecho), diferentes a las mas clasicas filtraciones de spam en emails o SMS, y al estar aplicando tecnicas de aprendizaje supervisado \
+la pertinencia de los datos que se usan como ejemplo es clave en el correcto funcionamiento del modelo; la utilizacion de un modelo propia permite ajustar estos datos de ejemplo como se quiera, actualmente usando uno de demostracion.
+
+A nivel tecnico, se decidio usar el metodo TF-IDF para ponderar la importancia de las palabras en un texto ya que evalua la frecuencia de las mismas en el texto pero comprensa penalizando a las palabras que son comunes en todos los textos \
+dando un buen resultado para diferenciar palabras importantes de palabras que no lo son. Para la parte de clasificacion se decidio usar el metodo KNN por una cuestion de simplicidad de implementacion ya que es un detector basico, pero podria \
+ser cambiado por otro mas efectivo en proximas iteraciones. Adicionalmente, podria pensarte en otro tipo de clasificadores, como uno probabilitisco, que no solo categorice sino que de un estimado de la probabilidad de cada categoria.
+Si se decidiera a futuro mantener el detector propio, la mayor mejoria vendria de ampliar y curar el corpus de datos de ejemplo pudiendo incluso cruzar ejemplos curados (etiquetados por un administrador, por ejemplo) con otras instancias de Metamapa,
+para generar una suerte de "repositorio de ejemplos de spam en solicitudes a metamapa" general, aplicando la idea de inteligencia colectiva ahora entre instancias de Metamapa.
