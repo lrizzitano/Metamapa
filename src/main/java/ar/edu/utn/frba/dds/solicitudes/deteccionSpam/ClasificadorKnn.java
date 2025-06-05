@@ -4,16 +4,16 @@ import static java.lang.Math.sqrt;
 import java.util.Comparator;
 import java.util.List;
 
-public class ClasificadorKNN {
+public class ClasificadorKnn {
   List<VectorEtiquetado> vectoresDeEntrenamiento;
   int cantidadDeVecinos;
 
-  ClasificadorKNN(List<VectorEtiquetado> vectoresDeEntrenamiento, int cantidadDeVecinos) {
+  ClasificadorKnn(List<VectorEtiquetado> vectoresDeEntrenamiento, int cantidadDeVecinos) {
       this.vectoresDeEntrenamiento = vectoresDeEntrenamiento;
       this.cantidadDeVecinos = cantidadDeVecinos;
   }
 
-  boolean esDeCategoria(double[] vectorAClasificar, Categoria unaCategoria) {
+  boolean esDeCategoria(Categoria unaCategoria, double[] vectorAClasificar) {
      return vectoresDeEntrenamiento.stream()
         .map(v ->
             new Vecino(distanciaEntreVectores(v.vector, vectorAClasificar), v.etiqueta))
