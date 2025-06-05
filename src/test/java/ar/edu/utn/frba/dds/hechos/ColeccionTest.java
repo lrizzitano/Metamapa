@@ -50,13 +50,13 @@ public class ColeccionTest {
   @Test
   void ColeccionFiltraPorCriterioDePertenencia() {
     Coleccion unaColeccion = new Coleccion("", "",
-        filtroFecha, unaFuente);
-    Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue));
+        filtroFecha, unaFuente, SolicitudesDeEliminacion.instance()); // se le inyecta implementacion concreta del
+    Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue)); // repository, se podria mockear
   }
 
   @Test
   void ColeccionFiltraPorParametro() {
-    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente);
+    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente, SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroFecha),
         Set.of(hecho1));
   }
@@ -65,7 +65,7 @@ public class ColeccionTest {
   void CollecionFiltraHechosEliminados() {
     SolicitudDeEliminacion unaSolicitud = new SolicitudDeEliminacion(hecho1, "");
     unaSolicitud.aceptar(mock(Administrador.class));
-    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente);
+    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente, SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
   }
 }
