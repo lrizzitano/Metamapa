@@ -18,7 +18,7 @@ public class LectorDataset {
       for (int i = 1; i < filas.size(); i++) { // saltar encabezado
         String[] fila = filas.get(i);
         if (fila.length >= 2) {
-          Solicitud s = new Solicitud(fila[0].toLowerCase(), fila[1].equals("spam"));
+          Solicitud s = new Solicitud(fila[0].toLowerCase(), fila[1].equals("spam") ? Categoria.SPAM : Categoria.NO_SPAM);
           solicitudes.add(s);
         }
       }
