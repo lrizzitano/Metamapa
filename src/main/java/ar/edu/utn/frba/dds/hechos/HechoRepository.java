@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.hechos;
 
+import java.util.List;
 import java.util.Set;
 
 public interface HechoRepository {
@@ -10,4 +11,8 @@ public interface HechoRepository {
   void agregar(Hecho hecho);
 
   void eliminar(Hecho hecho);
+
+  void marcarHechoComoRevisado(Hecho hecho);
+
+  Set<Hecho> obtenerNoRevisados();
 }
