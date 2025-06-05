@@ -2,10 +2,12 @@ package ar.edu.utn.frba.dds.hechos;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HechosFuenteDinamica implements HechoRepository {
-  private final Set<Hecho> hechos = new HashSet<>();
+  private final Set<Hecho> hechosSinRevisar = new HashSet<>();
+  private final Set<Hecho> hechosRevisados = new HashSet<>();
 
   public HechosFuenteDinamica() {
 
@@ -19,19 +21,32 @@ public class HechosFuenteDinamica implements HechoRepository {
 
   @Override
   public Set<Hecho> obtenerTodos() {
-    return new HashSet<>(this.hechos);
+    Set<Hecho> copia = new HashSet<>(this.hechosRevisados);
+    copia.addAll(this.hechosSinRevisar);
+    return copia;
   }
 
   @Override
   public void agregar(Hecho hecho) {
-    this.hechos.add(hecho);
+    this.hechosSinRevisar.add(hecho);
   }
 
   @Override
   public void eliminar(Hecho hecho) {
-    if (!hechos.contains(hecho)) {
+    if (!hechosRevisados.contains(hecho)) {
       throw new NoSePuedeEliminarUnHechoQueNoExisteException();
     }
-    this.hechos.remove(hecho);
+    this.hechosRevisados.remove(hecho);
+  }
+
+  @Override
+  public void marcarHechoComoRevisado(Hecho hecho) {
+    this.hechosSinRevisar.remove(hecho);
+    this.hechosRevisados.add(hecho);
+  }
+
+  @Override
+  public Set<Hecho> obtenerNoRevisados() {
+    return this.hechosSinRevisar;
   }
 }
