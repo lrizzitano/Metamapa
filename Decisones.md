@@ -156,6 +156,23 @@ requerida.
 Existen por lo tanto la clase HechosFuenteDinamica que implementa la interfaz de HechosRepository, por el momento es donde se almacenan los hechos, de la fuente dinamica en este caso.
 Siguiendo esta logica, existe la clase SolicitudesFuenteDinamica que implementa la interfaz SolicitudesFuenteDinamica, alli se guardaran las solicitudes de cambio correspondientes a la fuente dinamica
 
+### Solicitud de cambio
+Se requirio la posibilidad de solicitar cambios en un hecho subido anteriormente dentro de una fuente dinamica.
+
+Para cunplir este requerimiento se creo la clase SolicitudDeCambio, la cual para ser creada, se debe llamar con un Usuario, un Hecho a modificar y una
+modificacion que representara un nuevo Hecho. Para ser creado se chequea que no hayan pasado 7 dias, que el usuario este registrado y que quien solicita el cambio
+se quien creo el hecho en primer lugar.
+
+Esta solicitud puede ser aceptada, aceptada con sugerencias o rechazada por un administrados, quedando ligado a ella como responsable.
+
+Las sugerencias son modeladas con un String que es guardado en la misma solicitud, la solicitud tambien almacena el Usuario que la creo, asi que de ser necesario
+se podria llegar facilmente a las solicitudes de un usuario especifico y ver las sugerencias que se le realizaron al mismo. La verdad es que no esta especificado el flujo a seguir
+con la sugerencia realizada por el usuario
+
+Las solicitudes tienen como atributo a la fuente dinamica por el momento es la unica fuente que acepta estas solicitudes. Aceptar una solicitud de cambio, eliminara el Hecho a modificar y agregara
+el nuevo. Rechazar la solicitud no realizara el cambio. En cualquier caso las solicitudes se almacen.
+
+
 # BONUS: Detector de Spam
 Implementamos un detector de spam basico propio, sin recurrir a ningun servicio ni biblioteca externa. Este detector toma mensajes que se escriben como justificacion para una solicitud de eliminacion de un hecho \
 y analiza si es spam o es una solicitud genuina. Para lograrlo, se aplica un proceso de vectorizacion de texto (llevar el texto a una repesentacion numerica dentro de un espacio vectorial) siguiendo el algoritmo TF-IDF \
