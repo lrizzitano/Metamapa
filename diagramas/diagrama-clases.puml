@@ -27,9 +27,14 @@ class SolicitudDeEliminacion {
 
 interface SolicitudDeEliminacionRepo {
     --
+    +nuevaSolicitud(solicitud)
+    +aceptarSolicitud(solicitud)
+    +rechazarSolicitud(solicitud)
     +getPendientes()
+    +getAceptadas()
     +getRechazadas()
     +getRechazos(hecho)
+    +estaEliminado(hecho)
     +hechosEliminados()
 }
 
@@ -74,39 +79,72 @@ enum Origen {
     CONTRIBUYENTE
 }
 
+interface Filtro {
+    +asPredicate()
+    +toQueryParam(prefix, delimiter, suffix)
+}
+
 class FuenteEstatica {
     -pathArchivo
     --
     -crearHechoDesdeFila()
 }
 
-interface Filtro {
-    +asPredicate()
-    +toQueryParam(prefix, delimiter, suffix)
+class FuenteDinamica {
+    -hechos
+    -solicitudes
+    --
+    +aceptarSolicitudDeCambio(solicitudDeCambio)
+    +rechazarSolicitudDeCambio(solicitudDeCambio)
+    +agregarHecho(hecho)
+    +eliminarHecho(hecho)
 }
 
-abstract class fuenteProxyCalendarizada {
-    -refreshTime
+interface  HechoRepository {
+    +obtenerTodos()
+    +actualizar(hechoParaCambiar, hechoModificado)
+    +agregar(hecho)
+    +eliminar(hecho)
+}
+
+interface SolicitudDeCambioRepository {
+    +crear(solicitudDeCambio)
+    +aceptar(solicitudDeCambio)
+    +rechazar(solicitudDeCambio)
+}
+
+abstract class FuenteProxyCalendarizada {
     +hechos
     --
-    +init()
-    -acumularHechos()
+    -actualizarHechos(ultimaLlamada)
     #getNewHechos(ultimaLlamada) {abstract}
 }
 
-class fuenteDemo {
+class FuenteDemo {
     -url
     -conexionDemo
     --
     -parseHehco(fila)
 }
 
-class fuenteMetaMapa {
-    -path
-    -conexionMetaMapa
+class ServicioMetaMapa {
+    -urlAPI
     --
     +obetenerHechosDeColeccion(coleccion, filtro)
     +enviarSolicitudDeEliminacion(solicitud)
+}
+
+class ActualizadorFuentesCalendarizadas {
+    -fuentesSuscriptas
+    -ultimaLlamada
+    -timer
+    -intervalo
+    --
+    +setIntervalo(tiempo)
+    +reiniciar()
+    +suscribir(fuente)
+    +desuscribir(fuente)
+    -iniciarTimer()
 }
 
 
@@ -120,9 +158,12 @@ Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
-fuenteProxyCalendarizada .u.|> Fuente
-fuenteMetaMapa .u.|> Fuente
-fuenteDemo -u-|> fuenteProxyCalendarizada
+FuenteProxyCalendarizada .u.|> Fuente
+ServicioMetaMapa .u.|> Fuente
+FuenteDemo -u-|> FuenteProxyCalendarizada
+FuenteDinamica .u.|> Fuente
+FuenteDinamica --> HechoRepository
+FuenteDinamica --> SolicitudDeCambioRepository
 
 
 Hecho -l-> Origen
@@ -131,8 +172,10 @@ SolicitudDeEliminacion --> Hecho
 SolicitudDeEliminacion -u-> Administrador
 
 SolicitudDeEliminacionRepo *-- SolicitudDeEliminacion
-DetectorDeSpam <-- SolicitudDeEliminacionRepo
+DetectorDeSpam <.. SolicitudDeEliminacionRepo
 SolicitudDeEliminacionRepo <-- Coleccion
+
+ActualizadorFuentesCalendarizadas -r->"*" FuenteProxyCalendarizada
 
 
 @enduml
