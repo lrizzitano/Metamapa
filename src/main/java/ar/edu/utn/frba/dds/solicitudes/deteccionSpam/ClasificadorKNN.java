@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
 
 import static java.lang.Math.sqrt;
-
+import java.util.Comparator;
 import java.util.List;
 
 public class ClasificadorKNN {
@@ -11,6 +11,16 @@ public class ClasificadorKNN {
   ClasificadorKNN(List<VectorEtiquetado> vectoresDeEntrenamiento, int cantidadDeVecinos) {
       this.vectoresDeEntrenamiento = vectoresDeEntrenamiento;
       this.cantidadDeVecinos = cantidadDeVecinos;
+  }
+
+  boolean esDeCategoria(double[] vectorAClasificar, Categoria unaCategoria) {
+     return vectoresDeEntrenamiento.stream()
+        .map(v ->
+            new Vecino(distanciaEntreVectores(v.vector, vectorAClasificar), v.etiqueta))
+        .sorted(Comparator.comparingDouble(vecino -> vecino.distancia))
+        .limit(this.cantidadDeVecinos)
+        .filter(vecino -> vecino.etiqueta.equals(unaCategoria))
+        .count() >= (this.cantidadDeVecinos/2 + 1);
   }
 
   // se asume que vector1.length = vector2.length y calcula la distancia Euclidea
