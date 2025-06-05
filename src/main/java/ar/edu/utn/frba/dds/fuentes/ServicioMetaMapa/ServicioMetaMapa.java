@@ -70,4 +70,8 @@ public class ServicioMetaMapa implements Fuente {
       throw new AccesoRecursoFallidoException("Error al enviar una solicitud de eliminacion a la API: " + this.urlAPI, e);
     }
   }
+
+  public String getUrlAPI() {
+    return urlAPI;
+  }
 }

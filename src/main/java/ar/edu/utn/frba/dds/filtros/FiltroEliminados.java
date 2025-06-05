@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,11 @@ public class FiltroEliminados implements Filtro {
 
   public Map<String,String> toQueryParam() {
     Map<String,String> query = new HashMap<String,String>();
-    query.put(this.toString(), categoria);
+
+    Gson gson = new Gson();
+    String json = gson.toJson(hechosEliminados);
+
+    query.put(this.toString(), json);
     return query;
   }
 }

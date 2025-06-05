@@ -12,8 +12,6 @@ public class NullFiltro implements Filtro {
   }
 
   public Map<String,String> toQueryParam() {
-    Map<String,String> query = new HashMap<String,String>();
-    query.put(this.toString(), "");
-    return query;
+    return new HashMap<String,String>();
   }
 }
