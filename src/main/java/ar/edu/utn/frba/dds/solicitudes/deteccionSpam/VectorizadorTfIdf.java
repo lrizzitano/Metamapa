@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Vectorizador {
+public class VectorizadorTfIdf {
   List<String> vocabulario = new ArrayList<>(); // usamos una lista para estandarizar el orden de las palabras
   Map<String, Double> IDFs = new HashMap<>();
 
-  Vectorizador(List<String> documentos) {
+  VectorizadorTfIdf(List<String> documentos) {
     // el preprocesamiento del corpus de data lo hacemos aca asi se hace al instanciar el vectorizador
     // luego al vectorizar un nuevo documento no repetimos este proceso
     Map<String, Integer> contadorAparicionesPalabra = new HashMap<>();
