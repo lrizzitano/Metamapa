@@ -12,7 +12,7 @@ public class SolicitudDeCambio {
 
   private final Hecho hechoParacambiar;
   private final Hecho hechoModificado;
-  private  Hecho sugerencias;
+  private  String sugerencias;
   private final Usuario usuario;
   private Administrador responsable;
   private final FuenteDinamica fuente = FuenteDinamica.instance();
@@ -51,7 +51,7 @@ public class SolicitudDeCambio {
     return usuario;
   }
 
-  public void aceptarCambio(Administrador administrador, Hecho sugerencias) {
+  public void aceptarCambio(Administrador administrador, String sugerencias) {
     if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
     }

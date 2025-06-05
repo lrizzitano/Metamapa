@@ -139,6 +139,23 @@ Simula una fuente conectada a una API ficticia llamada Conexión. Esta API devue
 Esta clase hereda de `FuenteProxyCalendarizada`, por lo que es suceptible de ser notificada por el actualizador de fuentes calendarizadas que por defecto esta configurado para actualizar las fuentes una vez por hora.\
 Sin embargo, sí recibe por inyección la dependencia Conexión, lo que permite desacoplar la lógica de obtención de datos del mecanismo de actualización automática.
 
+### Fuente Dinamica
+En esta entrega se solicito la implementacion de una fuente dinamica en la cual los usuarios podran cargar sus hechos.
+
+Para ello creamos una clase que sera un SINGLETON ya que solo existira una fuente dinamica en todo el sistema.
+
+La fuente dinamica necesitaba poseer una lista de hechos propia y una coleccion de solicitudes de cambio propia. 
+Para resolver este requerimiento podriamos haber tenido en la propia clase la lista de Hechos y sus listas de solicitudes de cambio segun estado.
+Sin embargo optamos por la utilizacion de un patron Repositorio para la implementaciond e ambas. Por ello existen las interfaces: SolicitudDeCambioRepository
+y HechoRepository. De esta forma la fuente dinamica se desacopla y desconoce el lugar donde se almacenan realmente las cosas, 
+esto nos brinda mucha mas extensibilidad ya que a la hora de pasar al uso de la base de datos no habra que cambiar nada del codigo de la FuenteDinamica que ni se 
+enterara de este cambio. 
+Estos repositorios son inyectados por setters, debido a que la fuente es un singleton. Son intercambiables obviamente, por cualquier repositorio que implemente la interfaz
+requerida.
+
+Existen por lo tanto la clase HechosFuenteDinamica que implementa la interfaz de HechosRepository, por el momento es donde se almacenan los hechos, de la fuente dinamica en este caso.
+Siguiendo esta logica, existe la clase SolicitudesFuenteDinamica que implementa la interfaz SolicitudesFuenteDinamica, alli se guardaran las solicitudes de cambio correspondientes a la fuente dinamica
+
 # BONUS: Detector de Spam
 Implementamos un detector de spam basico propio, sin recurrir a ningun servicio ni biblioteca externa. Este detector toma mensajes que se escriben como justificacion para una solicitud de eliminacion de un hecho \
 y analiza si es spam o es una solicitud genuina. Para lograrlo, se aplica un proceso de vectorizacion de texto (llevar el texto a una repesentacion numerica dentro de un espacio vectorial) siguiendo el algoritmo TF-IDF \
@@ -157,3 +174,6 @@ dando un buen resultado para diferenciar palabras importantes de palabras que no
 ser cambiado por otro mas efectivo en proximas iteraciones. Adicionalmente, podria pensarte en otro tipo de clasificadores, como uno probabilitisco, que no solo categorice sino que de un estimado de la probabilidad de cada categoria.
 Si se decidiera a futuro mantener el detector propio, la mayor mejoria vendria de ampliar y curar el corpus de datos de ejemplo pudiendo incluso cruzar ejemplos curados (etiquetados por un administrador, por ejemplo) con otras instancias de Metamapa,
 para generar una suerte de "repositorio de ejemplos de spam en solicitudes a metamapa" general, aplicando la idea de inteligencia colectiva ahora entre instancias de Metamapa.
+
+CAMBIAR SOLICITUDES DE ELIMINACION Y SU REPO
+CAMBIAR LOS FILTROS, BUILDER TMB 
