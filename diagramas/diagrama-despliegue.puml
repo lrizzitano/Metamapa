@@ -7,33 +7,77 @@ left to right direction
 node "Agregador" {
 
     database Colecciones
-    database Solicitudes
+    database SolicitudesDeEliminacion
 
+    interface "Aceptar/RechazarSolicitudDeEliminacion(solicitud)" as interfazSolicitudesEliminacion
     interface "Contribuir(hecho)"
     interface "VerHechosFiltrados(coleccion, filtro)"
 
     [Dominio] -- Colecciones
-    [Dominio] -- Solicitudes
-    
+    [Dominio] -- SolicitudesDeEliminacion
+    interfazSolicitudesEliminacion -- [Dominio]
+
     "VerHechosFiltrados(coleccion, filtro)" -- [Dominio]
     "Contribuir(hecho)" -- [Dominio]
 }
 
 node "FuenteEstatica" {
 
-    interface "ObtenerHechos(criterio)" as InterfazEstaticos
+    interface "ObtenerHechos(filtro)" as InterfazFuenteEstatica
 
     database Archivo
 
-    InterfazEstaticos -- [Procesador]
-    [Procesador]  -- Archivo
+    [Procesador] as procesadorFuenteEstatica
 
-    [Dominio] -- InterfazEstaticos
+    InterfazFuenteEstatica -- procesadorFuenteEstatica
+    procesadorFuenteEstatica  -- Archivo
+
+    [Dominio] -- InterfazFuenteEstatica
 }
 
- actor "Usuario"
- "Usuario" -- "Contribuir(hecho)"
- "Usuario" -- "VerHechosFiltrados(coleccion, filtro)"
+node "FuenteProxy" {
+    interface "ObtenerHechos(filtro)" as InterfazFuenteProxy
+
+    [Procesador] as procesadorFuenteProxy
+
+    InterfazFuenteProxy -- procesadorFuenteProxy
+    [Dominio] -- InterfazFuenteProxy
+
+}
+
+node "FuenteDinamica" {
+    interface "Aceptar/RechazarSolicitudDeCambio(solicitud)" as interfazSolicitudesCambio
+    interface "Agregar/EliminarHecho(hecho)" as interfazHechos
+    interface "ObtenerHechos(filtro)" as interfazFuenteDinamica
+
+    database Hechos
+    database SolicitudesDeCambio
+
+    [Procesador] as procesadorFuenteDinamica
+
+    interfazFuenteDinamica -- procesadorFuenteDinamica
+    interfazSolicitudesCambio -- procesadorFuenteDinamica
+    interfazHechos -- procesadorFuenteDinamica
+    procesadorFuenteDinamica -- Hechos
+    procesadorFuenteDinamica -- SolicitudesDeCambio
+
+    [Dominio] -- interfazFuenteDinamica
+}
+
+
+
+ cloud "Servicio Externo / \n Instancia MetaMapa" as conexion
+ procesadorFuenteProxy -- conexion
+
+ actor "Usuario" as user
+ user -- "Contribuir(hecho)"
+ user -- "VerHechosFiltrados(coleccion, filtro)"
+
+ Actor "Administrador" as admin
+ user <|- admin
+ admin -- interfazSolicitudesEliminacion
+ admin -- interfazSolicitudesCambio
+ admin -- interfazHechos
 
 
 @enduml
