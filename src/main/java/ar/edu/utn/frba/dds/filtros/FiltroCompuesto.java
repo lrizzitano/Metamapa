@@ -28,8 +28,13 @@ public class FiltroCompuesto implements Filtro {
   }
 
   public String toQueryParam(String prefix, String delimiter, String suffix) {
-    return filtros.stream().map(filtro -> filtro.toQueryParam("", "", ""))
+    String joined = filtros.stream()
+        .map(filtro -> filtro.toQueryParam("", "", ""))
         .filter(s -> !s.isBlank())
-        .collect(Collectors.joining(delimiter, prefix, suffix));
+        .collect(Collectors.joining(delimiter));
+    if (joined.isBlank()) {
+      return "";
+    }
+    return prefix + joined + suffix;
   }
 }
