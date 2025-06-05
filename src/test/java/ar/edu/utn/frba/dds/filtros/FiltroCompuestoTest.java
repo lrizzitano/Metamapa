@@ -1,6 +1,9 @@
 package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,8 +16,8 @@ public class FiltroCompuestoTest {
       return hecho -> false;
     }
 
-    public String toQueryParam(String prefix, String delimiter, String suffix) {
-      return "";
+    public Map<String,String> toQueryParam() {
+      return new HashMap<>();
     }
   }
 
@@ -26,29 +29,15 @@ public class FiltroCompuestoTest {
   }
 
   @Test
-  public void concatenaCorrectamente() {
+  public void mapeaCorrectamente() {
     FiltroCompuesto compuesto = new FiltroCompuesto();
     Filtro filtro1 = new FiltroCategoria("hola");
     Filtro filtro2 = new FiltroCategoria("chau");
     compuesto.and(filtro1).and(filtro2);
-    Assertions.assertEquals("?" + filtro1.toQueryParam("","", "")
-            + "&" + filtro2.toQueryParam("", "", ""),
-        compuesto.toQueryParam("?", "&", ""));
-  }
-
-  @Test
-  public void noConcatenaVacios(){
-    FiltroCompuesto compuesto = new FiltroCompuesto();
-    Filtro filtro = new FiltroCategoria("hola");
-    compuesto.and(filtro).and(new siempreFalse());
-    Assertions.assertEquals(filtro.toQueryParam("?", "&", ""),
-        compuesto.toQueryParam("?", "&", ""));
-  }
-
-  @Test
-  public void soloVaciosEsVacio() {
-    FiltroCompuesto compuesto = new FiltroCompuesto();
-    compuesto.and(new NullFiltro()).and(new siempreFalse());
-    Assertions.assertEquals("", compuesto.toQueryParam("?", "&", ""));
+    Map<String,String> mapa = new HashMap<>();
+    mapa.put(filtro1.toString(), "hola");
+    mapa.put(filtro2.toString(), "chau");
+    Assertions.assertEquals(mapa,
+        compuesto.toQueryParam());
   }
 }
