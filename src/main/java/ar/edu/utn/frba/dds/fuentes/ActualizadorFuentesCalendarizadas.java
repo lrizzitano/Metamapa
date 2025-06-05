@@ -14,7 +14,7 @@ public class ActualizadorFuentesCalendarizadas {
   private final Set<FuenteProxyCalendarizada> fuentesSuscriptas = new HashSet<>();
   private Instant ultimaLlamada = Instant.now();
   private Timer timer;
-  private Duration intervalo = Duration.ofSeconds(1);
+  private Duration intervalo = Duration.ofHours(1);
 
   public static ActualizadorFuentesCalendarizadas instance() {
     return instance;

@@ -21,7 +21,6 @@ public class FuenteProxyCalendarizadaTest {
     private final Set<Hecho> hechos = new HashSet<>();
 
     public TestFuente() {
-      super(null);
     }
 
     public void addHecho(Hecho hecho) {

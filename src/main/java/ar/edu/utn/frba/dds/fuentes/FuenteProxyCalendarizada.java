@@ -13,7 +13,6 @@ public abstract class FuenteProxyCalendarizada implements Fuente {
   public FuenteProxyCalendarizada() {
   }
 
-
   public void actualizarHechos(Instant ultimaLlamada) {
     hechos.addAll(getNewHechos(ultimaLlamada));
   }
