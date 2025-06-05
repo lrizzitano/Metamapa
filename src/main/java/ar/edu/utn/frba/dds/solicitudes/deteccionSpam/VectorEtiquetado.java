@@ -2,10 +2,10 @@ package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
 
 public class VectorEtiquetado {
   double[] vector;
-  Categoria categoria;
+  Categoria etiqueta;
 
-  VectorEtiquetado(double[] vector, Categoria categoria) {
+  VectorEtiquetado(double[] vector, Categoria etiqueta) {
     this.vector = vector;
-    this.categoria = categoria;
+    this.etiqueta = etiqueta;
   }
 }

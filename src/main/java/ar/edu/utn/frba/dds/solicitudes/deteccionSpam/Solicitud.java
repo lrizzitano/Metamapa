@@ -2,10 +2,10 @@ package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
 
 public class Solicitud {
   String justificacion;
-  boolean esSpam;
+  Categoria etiqueta;
 
-  Solicitud(String justificacion, boolean esSpam) {
+  Solicitud(String justificacion, Categoria etiqueta) {
     this.justificacion = justificacion;
-    this.esSpam = esSpam;
+    this.etiqueta = etiqueta;
   }
 }
