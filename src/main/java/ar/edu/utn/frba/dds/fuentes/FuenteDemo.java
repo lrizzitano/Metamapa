@@ -16,7 +16,6 @@ public class FuenteDemo extends FuenteProxyCalendarizada {
   public FuenteDemo(Conexion conexion, URL url) {
     this.conexion = conexion;
     this.url = url;
-    this.iniciar();
   }
 
 

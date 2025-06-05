@@ -41,7 +41,14 @@ public class FiltroCompuestoTest {
     FiltroCompuesto compuesto = new FiltroCompuesto();
     Filtro filtro = new FiltroCategoria("hola");
     compuesto.and(filtro).and(new siempreFalse());
-    Assertions.assertEquals(filtro.toQueryParam("", "", ""),
-        compuesto.toQueryParam("", "", ""));
+    Assertions.assertEquals(filtro.toQueryParam("?", "&", ""),
+        compuesto.toQueryParam("?", "&", ""));
+  }
+
+  @Test
+  public void soloVaciosEsVacio() {
+    FiltroCompuesto compuesto = new FiltroCompuesto();
+    compuesto.and(new NullFiltro()).and(new siempreFalse());
+    Assertions.assertEquals("", compuesto.toQueryParam("?", "&", ""));
   }
 }
