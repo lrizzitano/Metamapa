@@ -42,7 +42,7 @@ public class Vectorizador {
   }
 
   private String[] parsearPalabras(String texto) {
-    return texto.replaceAll("\\p{Punct}", "").split(" ");
+    return texto.toLowerCase().replaceAll("\\p{Punct}", "").split(" ");
   }
 
   private void calcularIDFsCorpus(Map<String, Integer> contadorAparicionesPalabra, int documentosTotales) {
