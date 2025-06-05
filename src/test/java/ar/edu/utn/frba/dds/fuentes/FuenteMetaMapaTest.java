@@ -8,6 +8,7 @@ import ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa.ServicioMetaMapa;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
 import com.github.tomakehurst.wiremock.http.Fault;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -60,7 +61,8 @@ public class FuenteMetaMapaTest {
         "Desastres Naturales Relevantes",
         "Incluye hechos relacionados con eventos naturales como incendios, inundaciones, etc.",
         mock(Filtro.class),
-        mock(Fuente.class));
+        mock(Fuente.class),
+        SolicitudesDeEliminacion.instance());
     Gson gsonColeccion = new GsonBuilder()
         .setPrettyPrinting()
         .create();
