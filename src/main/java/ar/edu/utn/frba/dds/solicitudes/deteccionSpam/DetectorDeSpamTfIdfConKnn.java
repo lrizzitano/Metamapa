@@ -1,8 +1,8 @@
 package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
 
-public class DetectorDeSpamTFIDF implements DetectorDeSpam {
+public class DetectorDeSpamTfIdfConKnn implements DetectorDeSpam {
   Vectorizador vectorizador;
-  //Clasificador clasificador;
+  ClasificadorKNN clasificador;
 
   @Override
   public boolean esSpam(String justificacion) {
