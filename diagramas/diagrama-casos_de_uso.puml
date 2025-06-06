@@ -16,7 +16,6 @@ rectangle #line.dashed {
  usecase "Eliminar hecho de Fuente Dinámica" as UC7
 
  usecase "Generar solicitud" as UC1.1
- usecase "Registrarse" as UC0.5
 }
 
 Visualizador -- UC1
@@ -30,7 +29,5 @@ Contribuyente -- UC6
 
 
 UC1 <.. UC1.1 : <extends>
-UC5 <.. UC0.5 : <extends>
-UC6 ..> UC0.5: <includes>
 
 @enduml
