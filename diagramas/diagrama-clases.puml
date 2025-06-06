@@ -124,7 +124,7 @@ class FuenteDemo {
     -url
     -conexionDemo
     --
-    -parseHehco(fila)
+    -parseHecho(fila)
 }
 
 class ServicioMetaMapa {
