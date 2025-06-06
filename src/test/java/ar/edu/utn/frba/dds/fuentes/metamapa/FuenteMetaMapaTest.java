@@ -42,7 +42,7 @@ public class FuenteMetaMapaTest {
     Filtro filtro = new FiltroCategoria("Cualquier categoría");
 
     stubFor(get(urlPathEqualTo("/hechos"))
-        .withQueryParam(filtro.toString(), equalTo("Cualquier categoría"))
+        .withQueryParam("categoria", equalTo("Cualquier categoría"))
         .willReturn(aResponse()
             .withStatus(204)
             .withHeader("Content-Type", "application/json")));
@@ -55,7 +55,7 @@ public class FuenteMetaMapaTest {
     Filtro filtro = new FiltroCategoria("Categoría vacía");
 
     stubFor(get(urlPathEqualTo("/hechos"))
-        .withQueryParam(filtro.toString(), equalTo("Categoría vacía"))
+        .withQueryParam("categoria", equalTo("Categoría vacía"))
         .willReturn(aResponse()
             .withStatus(404)));
 
@@ -81,7 +81,7 @@ public class FuenteMetaMapaTest {
     ));
 
     stubFor(get(urlPathEqualTo("/hechos"))
-        .withQueryParam(filtro.toString(), equalTo("Desastre natural"))
+        .withQueryParam("categoria", equalTo("Desastre natural"))
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "application/json")
