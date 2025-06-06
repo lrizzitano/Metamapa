@@ -127,7 +127,7 @@ class FuenteDemo {
     -parseHecho(fila)
 }
 
-class ServicioMetaMapa {
+class FuenteMetaMapa {
     -urlAPI
     --
     +obetenerHechosDeColeccion(coleccion, filtro)
@@ -159,7 +159,7 @@ Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
 FuenteProxyCalendarizada .u.|> Fuente
-ServicioMetaMapa .u.|> Fuente
+FuenteMetaMapa .u.|> Fuente
 FuenteDemo -u-|> FuenteProxyCalendarizada
 FuenteDinamica .u.|> Fuente
 FuenteDinamica --> HechoRepository

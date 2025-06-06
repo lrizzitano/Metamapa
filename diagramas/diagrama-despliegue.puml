@@ -10,7 +10,7 @@ node "Agregador" {
     database SolicitudesDeEliminacion
 
     interface "Aceptar/RechazarSolicitudDeEliminacion(solicitud)" as interfazSolicitudesEliminacion
-    interface "Contribuir(hecho)"
+    interface "Contribuir(hecho) / \n AgregarSolicitud(solicitud)" as interfazContribucion
     interface "VerHechosFiltrados(coleccion, filtro)"
 
     [Dominio] -- Colecciones
@@ -18,7 +18,7 @@ node "Agregador" {
     interfazSolicitudesEliminacion -- [Dominio]
 
     "VerHechosFiltrados(coleccion, filtro)" -- [Dominio]
-    "Contribuir(hecho)" -- [Dominio]
+    interfazContribucion -- [Dominio]
 }
 
 node "FuenteEstatica" {
@@ -70,7 +70,7 @@ node "FuenteDinamica" {
  procesadorFuenteProxy -- conexion
 
  actor "Usuario" as user
- user -- "Contribuir(hecho)"
+ user -- interfazContribucion
  user -- "VerHechosFiltrados(coleccion, filtro)"
 
  Actor "Administrador" as admin

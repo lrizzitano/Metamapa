@@ -28,9 +28,11 @@ Los hechos cuentan con 8 atributos:
 - Categoría : String
 - Latitud : Double
 - Longitud : Double
-- FechaCarga : LocalDate
 - FechaAcontecimiento : LocalDate
+- FechaCarga : LocalDate
 - Origen : ENUM (Dataset, Manual, Contribuyente)
+- contribuyente: Usuario
+- multimedia: Path
 
 Todos ellos son constantes, y por ahora obligatorios aunque en futuras entregas creemos que eso va a cambiar. \
 Pensamos en añadir un atributo referenciado a la fuente de la que se extrajo con el fin de poder reconocer mismos hechos provenientes de diferentes fuentes, finalmente desistimos porque no nos pareció importante, al menos para esta entrega.
@@ -49,13 +51,13 @@ Cómo los hechos no permanecerán en el sistema, sino que cada llamado a la fuen
 En las colecciones se define un criterio de pertenencia que se aplica como filtro a los hechos devueltos por las fuentes asociadas a la misma. Este filtro de pertenencia se “compone” con los filtros especificados por el usuario al hacer la consulta y con los hechos eliminados. Más información en la sección de Filtros \
 No existe almacenamiento para estas colecciones, la referencia debe ser guardada manualmente
 
-# Solicitudes
+# Solicitudes de Eliminación
 
 El usuario emite una solicitud sobre un hecho, la misma guarda una referencia al hecho, y tiene un estado (pendiente, aceptado o rechazado) aunque veremos que eso es más conceptual. \
 La solicitud se acuerda qué administrador la aceptó/rechazó, con propósito de rendición de cuentas.|
 Será el administrador quien rechazara o aceptara las solicitudes generadas por el usuario, quedando registrado y cambiando el estado de la solicitud según sea la decision tomada.
 
-## Singleton
+## Implementación del repository
 
 Las solicitudes son almacenadas en un Singleton, este cuenta con 3 sets, uno para cada estado. Optamos por esta solución por la simpleza de tener las solicitudes separadas por listas e inferir su estado según en que lista esté. \
 También consideramos que cada lista tenga su propia lista de solicitudes, solo teniéndolas en cuenta las que le son relevantes lo que agilizaría el proceso de búsqueda de hechos eliminados, pero esto es complejo de mantener, especialmente frente a un cambio de Criterio. \
@@ -64,24 +66,14 @@ Entendemos que esta solución dada por un singleton es temporal, ya que cambiar�
 
 # Filtros
 
-Definimos un Filtro como un Predicate \<Hecho>, funcionalidad provista por el lenguaje. Su uso se basa en 2 auxiliares.\
-Esto permite que todo filtro tome un hecho y retorne un valor booleano que determina si ese hecho en particular "pasa" o no el filtro.
+La Intefaz de filtro entiende 2 métodos, uno que la pasa a Predicate `<Hecho>` y otro a `Map<String, String>` para una query http. Este segundo método retornará un map vació si ese filtro no debe ser pasado, como por ejemplo un fitro que siempre es verdadero.
 
-## Fábrica de filtros
-
-Se creó un ENUM con ~~casi~~ todos los filtros que se pueden querer a utilizar, simplificando el proceso a un llamado con un único parámetro.
-Cada opción de filtro tiene asociada una ```funcionCreadora``` que es una función que toma un String (que representa el valor a comparar) y devuelve
-(a través del llamado a una función auxiliar) el Filtro. \
-El método ```crearFiltro``` recibe la String con el valor a utilizar y aplica la función creadora con la misma para armar el Filtro \
-con la siguiente sintaxis: \
-    ```Predicate<Hecho> filtro = Filtro.TIPO_DE_FILTRO.crearFiltro(valorComparado);``` \
-    Ej: \
-    ```Predicate<Hecho> filtro = Filtro.LONGITUD_MENOR.crearFiltro("-50");```
-
-## Builder de Filtros Compuestos
-
-Para poder mezclar filtros también tenemos un builder que va acumulando filtros a una lista para después reducirlos con AND. \
-Este builder representa la posibilidad del usuario de crear sus filtros compuestos paso por paso, mediante la conjunción de filtros simples (provenientes del ENUM), para luego aplicarlos en su búsqueda.
+Los diferentes filtros que soportamos son:
+- Por categoria: recibe string de categoria y filtra por igualdad
+- Por hecho eliminado: Filtra por los hechos que han sido eliminados del sistema
+- Por fecha: Filtra por la fecha de acontecimiento del hecho, pudiendo ser desde o hasta la fecha especificada
+- Filtro null: Representa la ausencia de filtros
+- filtro compuesto: Representa la concatenación de múltiples filtros de los tipos mencionados. 
 
 # Fuente Estática
 
@@ -109,7 +101,7 @@ Para hacer una demostración de funcionamiento en la primera entrega, se eligió
 
 # Fuente Proxy
 
-Como existen fuertes diferencias entre cada fuente proxy, ya sea porque protocolo de comunicación usan, si son sincrónicas o no, etc. no existe una interfaz común que las unifique. Sin embargo, se diseñaron abstracciones que buscan reducir al mínimo la lógica que debe implementarse en cada adapter específico.
+Como existen fuertes diferencias entre cada fuente proxy, ya sea por que protocolo de comunicación usan, si son sincrónicas o no, etc. no existe una interfaz común que las unifique. Sin embargo, se diseñaron abstracciones que buscan reducir al mínimo la lógica que debe implementarse en cada adapter específico.
 
 ## Fuente Proxy Calendarizada
 
@@ -117,7 +109,7 @@ Esta clase representa una fuente proxy genérica que se actualiza de forma peri�
 
 Actua de observer frente al `ActualizadorFuentesCalendarizadas`, cuando es notificada por el actualizador, actualiza sus hechos trayendo aquellos que no fueron cargados desde la ultima llamada.
 
-Se define como una clase abstracta, y para utilizarla se debe implementar un único método abstracto:
+Se define como una clase abstracta, para permitir extender este comportamiento a nuevas fuentes que se actualicen periódicamente, teniendo en cuenta que la única implementación concreta actual es una demo. Para utilizarla se debe implementar un único método abstracto:
 
 ``` java
 protected abstract List<Hecho> getNewHechos(Instant ultimaLlamada);
@@ -128,52 +120,58 @@ Este método debe retornar una lista de hechos nuevos desde el momento de la úl
 ### Actualizador de Fuentes Calendarizadas
 
 Oficia de _"subject"_ frente a las fuentes calendarizadas a través de una estructura similar al patrón observer mediante la cual el actualizador se encarga de llevar el control del tiempo transcurrido y notificar a todas las fuentes suscriptas a él cada vez que se cumple el intervalo de tiempo connfigurado.\
-De esta manera, se delega la responsabilidad del manejo de las actualizaciones de las fuentes a un objeto central sin acoplamiento innecesario, ya que éste expone la interfaz necesaria para suscribir y desuscribir fuentes y opera polimorficamente sobre la lista de fuentes suscriptas a la hora de notificar el evento.\
+De esta manera, se delega la responsabilidad del manejo de las actualizaciones de las fuentes a un objeto central sin acoplamiento innecesario, ya que éste expone la interfaz necesaria para suscribir y desuscribir fuentes y opera polimórficamente sobre la lista de fuentes suscriptas a la hora de notificar el evento.\
 Además, permite tener un manejo centralizado de los tiempos de actualización de las fuentes, permitiendo cambiarlo en tiempo de ejecución (reiniciando el timer interno pero manteniendo la lista de fuentes suscriptas) y evitando el procesamiento innecesario de tener un timer activo por cada fuente calendarizada del sistema.
 
-De momento, ya que solo tenemos un tipo de fuente calendarizada, el sistema posee un solo actualizador como singleton que actualiza a todas las fuentes con una misma frecuencia configurable. Pero si en el futuro hubiera un requerimiento de actualizar diferentes fuentes con diferentes frecuencias se puede modificar para abandonar el patrón singleton y poder tener múltiples instancias de actualizadores con difetentes intervalos de tiempo.
+De momento, ya que solo tenemos ún tipo de fuente calendarizada, el sistema posee un solo actualizador como singleton que actualiza a todas las fuentes con una misma frecuencia configurable. Pero si en próximas iteraciones hubiera un requerimiento de actualizar diferentes fuentes con diferentes frecuencias se puede modificar para abandonar el patrón singleton y poder tener múltiples instancias de actualizadores con difetentes intervalos de tiempo.
 
 ### Fuente Demo
 
 Simula una fuente conectada a una API ficticia llamada Conexión. Esta API devuelve hechos en forma de `Map<String, Object>`, los cuales son transformados a objetos Hecho. \
 Esta clase hereda de `FuenteProxyCalendarizada`, por lo que es suceptible de ser notificada por el actualizador de fuentes calendarizadas que por defecto esta configurado para actualizar las fuentes una vez por hora.\
-Sin embargo, sí recibe por inyección la dependencia Conexión, lo que permite desacoplar la lógica de obtención de datos del mecanismo de actualización automática.
 
-### Fuente Dinamica
+## Fuente Dinamica
+
 En esta entrega se solicito la implementacion de una fuente dinamica en la cual los usuarios podran cargar sus hechos.
 
 Para ello creamos una clase que sera un SINGLETON ya que solo existira una fuente dinamica en todo el sistema.
 
 La fuente dinamica necesitaba poseer una lista de hechos propia y una coleccion de solicitudes de cambio propia. 
 Para resolver este requerimiento podriamos haber tenido en la propia clase la lista de Hechos y sus listas de solicitudes de cambio segun estado.
-Sin embargo optamos por la utilizacion de un patron Repositorio para la implementaciond e ambas. Por ello existen las interfaces: SolicitudDeCambioRepository
-y HechoRepository. De esta forma la fuente dinamica se desacopla y desconoce el lugar donde se almacenan realmente las cosas, 
+Sin embargo optamos por la utilizacion de un patron Repositorio para la implementacion de ambas. Por ello existen las interfaces: `SolicitudDeCambioRepository`
+y `HechoRepository`. De esta forma la fuente dinamica se desacopla y desconoce el lugar donde se almacenan realmente las cosas, 
 esto nos brinda mucha mas extensibilidad ya que a la hora de pasar al uso de la base de datos no habra que cambiar nada del codigo de la FuenteDinamica que ni se 
 enterara de este cambio. 
-Estos repositorios son inyectados por setters, debido a que la fuente es un singleton. Son intercambiables obviamente, por cualquier repositorio que implemente la interfaz
-requerida.
+Estos repositorios son inyectados por setters, debido a que la fuente es un singleton. Son intercambiables obviamente, por cualquier repositorio que implemente la interfaz requerida.
 
-Existen por lo tanto la clase HechosFuenteDinamica que implementa la interfaz de HechosRepository, por el momento es donde se almacenan los hechos, de la fuente dinamica en este caso.
-Siguiendo esta logica, existe la clase SolicitudesFuenteDinamica que implementa la interfaz SolicitudesFuenteDinamica, alli se guardaran las solicitudes de cambio correspondientes a la fuente dinamica
+Existen por lo tanto la clase `HechosFuenteDinamica` que implementa la interfaz de `HechosRepository`, y que por el momento es donde se almacenan los hechos de la fuente dinamica.
+Siguiendo esta logica, existe la clase `SolicitudesFuenteDinamica` que implementa la interfaz `SolicitudesDeCambioRepository`, alli se guardaran las solicitudes de cambio correspondientes a la fuente dinamica en memoria.
 
 ### Solicitud de cambio
+
 Se requirio la posibilidad de solicitar cambios en un hecho subido anteriormente dentro de una fuente dinamica.
 
-Para cunplir este requerimiento se creo la clase SolicitudDeCambio, la cual para ser creada, se debe llamar con un Usuario, un Hecho a modificar y una
-modificacion que representara un nuevo Hecho. Para ser creado se chequea que no hayan pasado 7 dias, que el usuario este registrado y que quien solicita el cambio
-se quien creo el hecho en primer lugar.
+Para cumplir este requerimiento se creo la clase SolicitudDeCambio, la cual para ser creada, se debe llamar con un Usuario, un Hecho a modificar y una
+modificacion que se representa como un nuevo Hecho. Para ser creado se chequea que no hayan pasado 7 dias, que el usuario este registrado y que quien solicita el cambio sea quien creo el hecho en primer lugar.
 
-Esta solicitud puede ser aceptada, aceptada con sugerencias o rechazada por un administrados, quedando ligado a ella como responsable.
+Esta solicitud puede ser aceptada, aceptada con sugerencias o rechazada por un administrador, el cual quedará ligado a ella como responsable.
 
 Las sugerencias son modeladas con un String que es guardado en la misma solicitud, la solicitud tambien almacena el Usuario que la creo, asi que de ser necesario
-se podria llegar facilmente a las solicitudes de un usuario especifico y ver las sugerencias que se le realizaron al mismo. La verdad es que no esta especificado el flujo a seguir
-con la sugerencia realizada por el usuario
+se podria llegar facilmente a las solicitudes de un usuario especifico y ver las sugerencias que se le realizaron al mismo.
 
-Las solicitudes tienen como atributo a la fuente dinamica por el momento es la unica fuente que acepta estas solicitudes. Aceptar una solicitud de cambio, eliminara el Hecho a modificar y agregara
-el nuevo. Rechazar la solicitud no realizara el cambio. En cualquier caso las solicitudes se almacen.
+Las solicitudes tienen como atributo a la fuente dinamica que por el momento es la unica fuente que acepta estas solicitudes. Aceptar una solicitud de cambio, eliminara el Hecho a modificar y agregara
+el nuevo. Rechazar la solicitud no realizara el cambio. En cualquier caso las solicitudes se almacenan.
+
+## Fuente MetaMapa
+
+Para consumir la API REST de otra fuente MetaMapa, utilizamos la biblioteca Retrofit, la cual se encarga de gestionar de manera declarativa en el envío y recibimiento de HTTP request y HTTP response respectivamente. Para ello, fue necesario crear la interfaz `IMetaMapa`, la cual define los endpoints a consumir con sus respectivos verbos, paths y query parameters (los cuales se envían con `Map<String,String>` para aplicar múltiples filtros), siendo la clase `FuenteMetaMapa` quien utiliza la instancia de Retrofit para consumir la API. A su vez, esta biblioteca utiliza GSON para crear los JSON. GSON no puede parsear campos privados de clases internas como LocalDate y Path, por lo tanto tuvimos que inyectarle a nuestra instancia de Retrofit dentro de `ServicioMetaMapa` un `gson` especial, que utiliza las clases `PathAdapter` y `LocalDateAdapter` para manejar esos tipos de datos. 
+Dotamos a la clase `ServicioMetaMapa` del parametro `urlAPI` para poder diferenciar las diferentes instancias de MetaMapa a las que estamos conectados.
+
+Para el testeo utilizamos la biblioteca WireMock, la cual mockea una API REST levantando un servidor en puerto propio, con el fin de testear la funcionalidad del modulo completo.
 
 
 # BONUS: Detector de Spam
+
 Implementamos un detector de spam basico propio, sin recurrir a ningun servicio ni biblioteca externa. Este detector toma mensajes que se escriben como justificacion para una solicitud de eliminacion de un hecho \
 y analiza si es spam o es una solicitud genuina. Para lograrlo, se aplica un proceso de vectorizacion de texto (llevar el texto a una repesentacion numerica dentro de un espacio vectorial) siguiendo el algoritmo TF-IDF \
 para asignar a cada palabra dentro del texto un puntaje numerico que mide su importancia dentro del mismo. Luego, tras el proceso de vectorizacion se pasa a una etapa de clasificacion, para la cual previamente se tiene vectorizado \
@@ -186,11 +184,8 @@ Primeramente, utilizar un servicio completamente externo implicaria exponer todo
 tarea que se nos propone es muy especifica (eliminar spam de solicitudes de eliminacion de un hecho), diferentes a las mas clasicas filtraciones de spam en emails o SMS, y al estar aplicando tecnicas de aprendizaje supervisado \
 la pertinencia de los datos que se usan como ejemplo es clave en el correcto funcionamiento del modelo; la utilizacion de un modelo propia permite ajustar estos datos de ejemplo como se quiera, actualmente usando uno de demostracion.
 
-A nivel tecnico, se decidio usar el metodo TF-IDF para ponderar la importancia de las palabras en un texto ya que evalua la frecuencia de las mismas en el texto pero comprensa penalizando a las palabras que son comunes en todos los textos \
+A nivel tecnico, se decidio usar el metodo TF-IDF para ponderar la importancia de las palabras en un texto ya que evalua la frecuencia de las mismas en el texto pero compensa penalizando a las palabras que son comunes en todos los textos \
 dando un buen resultado para diferenciar palabras importantes de palabras que no lo son. Para la parte de clasificacion se decidio usar el metodo KNN por una cuestion de simplicidad de implementacion ya que es un detector basico, pero podria \
-ser cambiado por otro mas efectivo en proximas iteraciones. Adicionalmente, podria pensarte en otro tipo de clasificadores, como uno probabilitisco, que no solo categorice sino que de un estimado de la probabilidad de cada categoria.
+ser cambiado por otro mas efectivo en proximas iteraciones. Adicionalmente, podria pensarse en otro tipo de clasificadores, como uno probabilitisco, que no solo categorice sino que de un estimado de la probabilidad de cada categoria.
 Si se decidiera a futuro mantener el detector propio, la mayor mejoria vendria de ampliar y curar el corpus de datos de ejemplo pudiendo incluso cruzar ejemplos curados (etiquetados por un administrador, por ejemplo) con otras instancias de Metamapa,
 para generar una suerte de "repositorio de ejemplos de spam en solicitudes a metamapa" general, aplicando la idea de inteligencia colectiva ahora entre instancias de Metamapa.
-
-CAMBIAR SOLICITUDES DE ELIMINACION Y SU REPO
-CAMBIAR LOS FILTROS, BUILDER TMB 
