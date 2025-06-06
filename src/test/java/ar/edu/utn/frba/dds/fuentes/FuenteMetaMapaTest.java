@@ -4,11 +4,15 @@ import ar.edu.utn.frba.dds.execpciones.AccesoRecursoFallidoException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa.LocalDateAdapter;
+import ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa.PathAdapter;
 import ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa.ServicioMetaMapa;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
+import ar.edu.utn.frba.dds.usuarios.Usuario;
 import com.github.tomakehurst.wiremock.http.Fault;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -18,6 +22,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.mockito.Mockito.mock;
 
@@ -34,12 +45,29 @@ public class FuenteMetaMapaTest {
   @Nested
   class obtenerHechosTest {
 
+    Set<Hecho> hechos = crearHechos();
+    Gson gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(Path.class, new PathAdapter())
+        .create();
+
     @Test
     public void obtenerHecho(WireMockRuntimeInfo wmRuntimeInfo) {
 
       Filtro filtro = new FiltroCategoria("Desastre natural");
-      fuente.obtenerHechos(filtro);
-      verify(getRequestedFor(urlEqualTo(fuente.getUrlAPI())));
+
+      Set<Hecho> esperado = hechos.stream()
+          .filter(h -> "Desastre natural".equals(h.categoria()))
+          .collect(Collectors.toSet());
+
+      stubFor(get(urlPathEqualTo("/hechos"))
+          .withQueryParam(filtro.toString(), equalTo("Desastre natural"))
+          .willReturn(aResponse()
+              .withStatus(200)
+              .withHeader("Content-Type", "application/json")
+              .withBody(gson.toJson(esperado))));
+
+      Assertions.assertEquals(esperado, fuente.obtenerHechos(filtro));
     }
 
     @Test
@@ -60,25 +88,37 @@ public class FuenteMetaMapaTest {
     Coleccion coleccion = new Coleccion(
         "Desastres Naturales Relevantes",
         "Incluye hechos relacionados con eventos naturales como incendios, inundaciones, etc.",
-        mock(Filtro.class),
+        new FiltroCategoria("Desastre Naturales"),
         mock(Fuente.class),
-        SolicitudesDeEliminacion.instance());
-    Gson gsonColeccion = new GsonBuilder()
-        .setPrettyPrinting()
+        mock(SolicitudDeEliminacionRepository.class));
+    Set<Hecho> hechos = crearHechos();
+    Gson gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(Path.class, new PathAdapter())
         .create();
 
     @Test
     public void obtenerHechosDeColeccion() {
 
-      Filtro filtro = new NullFiltro();
-      fuente.obtenerHechosDeColeccion(filtro, coleccion.getId());
+      Filtro filtro = new FiltroCategoria("Desastre Naturales");
 
-      verify(getRequestedFor(urlEqualTo(fuente.getUrlAPI())));
+      Set<Hecho> esperado = hechos.stream()
+          .filter(h -> "Desastre natural".equals(h.categoria()))
+          .collect(Collectors.toSet());
+
+      stubFor(get(urlEqualTo("/Colecciones/:"+ coleccion.getId()) + "/hechos")
+          .withQueryParam(filtro.toString(), equalTo("Desastre natural"))
+          .willReturn(aResponse()
+              .withStatus(200)
+              .withHeader("Content-Type", "application/json")
+              .withBody(gson.toJson(esperado))));
+
+      Assertions.assertEquals(esperado,fuente.obtenerHechosDeColeccion(filtro, coleccion.getId()));
     }
 
     @Test
     public void obtenerHechosDeColeccionLanzaAccesoARecursoFallido() {
-      stubFor(get(urlEqualTo("/colecciones/:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/hechos"))
+      stubFor(get(urlEqualTo("/colecciones/:" + coleccion.getId()) + "/hechos")
           .willReturn(aResponse()
               .withFault(Fault.CONNECTION_RESET_BY_PEER)));
 
@@ -96,12 +136,45 @@ public class FuenteMetaMapaTest {
 
     public void enviarSolicitudDeEliminacion() {
       fuente.enviarSolicitudDeEliminacion(solicitud);
-      verify(getRequestedFor(urlEqualTo(fuente.getUrlAPI())));
+      verify(getRequestedFor(urlEqualTo("/solicitudes")));
     }
 
     public void enviarSolicitudDeEliminacionLanzaAccesoARecursoFallido() {
       Assertions.assertThrows(AccesoRecursoFallidoException.class,
           () -> {fuente.enviarSolicitudDeEliminacion(solicitud);});
     }
+  }
+
+  public static Set<Hecho> crearHechos() {
+
+    Set<Hecho> hechos = new HashSet<>();
+
+    hechos.add(new Hecho(
+        "Terremoto en la región norte",
+        "Se registró un terremoto de magnitud 7.2",
+        "Desastre natural",
+        -33.456,
+        -70.648,
+        LocalDate.now(),
+        LocalDate.of(2025, 5, 15),
+        mock(Origen.class),
+        mock(Path.class),
+        mock(Usuario.class)
+    ));
+
+    hechos.add(new Hecho(
+        "Inauguración biblioteca central",
+        "Se inauguró la nueva biblioteca en la ciudad",
+        "Evento cultural",
+        -33.456,
+        -70.648,
+        LocalDate.now(),
+        LocalDate.of(2025, 6, 1),
+        mock(Origen.class),
+        mock(Path.class),
+        mock(Usuario.class)
+    ));
+
+    return hechos;
   }
 }
