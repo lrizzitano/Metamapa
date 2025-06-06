@@ -43,7 +43,7 @@ public class HechosFuenteDinamica implements HechoRepository {
   }
 
   @Override
-  public void marcarHechoComoRevisado(Hecho hecho) {
+  public void marcarComoRevisado(Hecho hecho) {
     this.hechosSinRevisar.remove(hecho);
     this.hechosRevisados.add(hecho);
   }

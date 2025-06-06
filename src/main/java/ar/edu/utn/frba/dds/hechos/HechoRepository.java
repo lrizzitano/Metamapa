@@ -12,7 +12,7 @@ public interface HechoRepository {
 
   void eliminar(Hecho hecho);
 
-  void marcarHechoComoRevisado(Hecho hecho);
+  void marcarComoRevisado(Hecho hecho);
 
   Set<Hecho> obtenerNoRevisados();
 }
