@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
 import com.google.gson.Gson;
 
@@ -12,7 +13,7 @@ import java.util.function.Predicate;
 public class FiltroEliminados implements Filtro {
   private final Set<Hecho> hechosEliminados;
 
-  public FiltroEliminados(SolicitudesDeEliminacion solicitudes) {
+  public FiltroEliminados(SolicitudDeEliminacionRepository solicitudes) {
     hechosEliminados = solicitudes.hechosEliminados();
   }
 

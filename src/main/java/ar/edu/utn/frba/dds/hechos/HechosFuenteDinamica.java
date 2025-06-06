@@ -16,7 +16,7 @@ public class HechosFuenteDinamica implements HechoRepository {
   @Override
   public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {
     this.eliminar(hechoParaCambiar);
-    this.agregar(hechoModificado);
+    this.hechosRevisados.add(hechoModificado);
   }
 
   @Override
@@ -33,14 +33,17 @@ public class HechosFuenteDinamica implements HechoRepository {
 
   @Override
   public void eliminar(Hecho hecho) {
-    if (!hechosRevisados.contains(hecho)) {
+    if (hechosRevisados.contains(hecho)) {
+      this.hechosRevisados.remove(hecho);
+    } else if (hechosSinRevisar.contains(hecho)) {
+      this.hechosSinRevisar.remove(hecho);
+    } else {
       throw new NoSePuedeEliminarUnHechoQueNoExisteException();
     }
-    this.hechosRevisados.remove(hecho);
   }
 
   @Override
-  public void marcarHechoComoRevisado(Hecho hecho) {
+  public void marcarComoRevisado(Hecho hecho) {
     this.hechosSinRevisar.remove(hecho);
     this.hechosRevisados.add(hecho);
   }
