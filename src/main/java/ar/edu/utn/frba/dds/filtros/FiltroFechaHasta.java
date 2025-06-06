@@ -19,7 +19,7 @@ public class FiltroFechaHasta implements Filtro {
 
   public Map<String,String> toQueryParam() {
     Map<String,String> query = new HashMap<String,String>();
-    query.put(this.toString(), fecha.toString());
+    query.put("fechaHasta", fecha.toString());
     return query;
   }
 }

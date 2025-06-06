@@ -31,9 +31,7 @@ public class FiltroCompuesto implements Filtro {
 
   public Map<String,String> toQueryParam() {
     Map<String,String> query = new HashMap<String,String>();
-    for(Filtro filtro : filtros) {
-      query.putAll(filtro.toQueryParam());
-    }
+    filtros.forEach(f -> query.putAll(f.toQueryParam()));
     return query;
   }
 }

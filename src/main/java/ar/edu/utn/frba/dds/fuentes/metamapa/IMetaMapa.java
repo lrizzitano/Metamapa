@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa;
+package ar.edu.utn.frba.dds.fuentes.metamapa;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;

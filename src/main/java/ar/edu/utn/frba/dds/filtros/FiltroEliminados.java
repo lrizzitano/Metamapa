@@ -22,12 +22,6 @@ public class FiltroEliminados implements Filtro {
   }
 
   public Map<String,String> toQueryParam() {
-    Map<String,String> query = new HashMap<String,String>();
-
-    Gson gson = new Gson();
-    String json = gson.toJson(hechosEliminados);
-
-    query.put(this.toString(), json);
-    return query;
+    return new HashMap<>();
   }
 }

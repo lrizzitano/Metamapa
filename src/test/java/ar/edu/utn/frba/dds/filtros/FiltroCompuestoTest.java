@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -32,11 +33,11 @@ public class FiltroCompuestoTest {
   public void mapeaCorrectamente() {
     FiltroCompuesto compuesto = new FiltroCompuesto();
     Filtro filtro1 = new FiltroCategoria("hola");
-    Filtro filtro2 = new FiltroCategoria("chau");
+    Filtro filtro2 = new FiltroFechaDesde(LocalDate.parse("2020-01-01"));
     compuesto.and(filtro1).and(filtro2);
     Map<String,String> mapa = new HashMap<>();
-    mapa.put(filtro1.toString(), "hola");
-    mapa.put(filtro2.toString(), "chau");
+    mapa.put("categoria", "hola");
+    mapa.put("fechaDesde", "2020-01-01");
     Assertions.assertEquals(mapa,
         compuesto.toQueryParam());
   }

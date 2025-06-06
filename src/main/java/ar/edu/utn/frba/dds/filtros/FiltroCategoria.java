@@ -20,8 +20,8 @@ public class FiltroCategoria implements Filtro {
   }
 
   public Map<String,String> toQueryParam() {
-    Map<String,String> query = new HashMap<String,String>();
-    query.put(this.toString(), categoria);
+    Map<String, String> query = new HashMap<>();
+    query.put("categoria", categoria);
     return query;
   }
 }

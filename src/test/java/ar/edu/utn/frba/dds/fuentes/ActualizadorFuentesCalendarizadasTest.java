@@ -38,7 +38,7 @@ class ActualizadorFuentesCalendarizadasTest {
     verify(fuente, atLeastOnce()).actualizarHechos(any());
     scheduler.desuscribir(fuente);
     clearInvocations(fuente);
-    TimeUnit.MILLISECONDS.sleep(100); // wait longer than one period
+    TimeUnit.MILLISECONDS.sleep(100);
     verify(fuente, never()).actualizarHechos(any());
   }
 }

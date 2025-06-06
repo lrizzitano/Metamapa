@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.fuentes.ServicioMetaMapa;
+package ar.edu.utn.frba.dds.fuentes.metamapa;
 
 import ar.edu.utn.frba.dds.execpciones.AccesoRecursoFallidoException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
@@ -24,13 +24,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 @WireMockTest
-public class ServicioMetaMapaWireMockTest {
+public class FuenteMetaMapaTest {
   static Gson gson;
-  static ServicioMetaMapa fuente;
+  static FuenteMetaMapa fuente;
 
   @BeforeAll
   public static void setup(WireMockRuntimeInfo wmRuntimeInfo) {
-    fuente = new ServicioMetaMapa(wmRuntimeInfo.getHttpBaseUrl());
+    fuente = new FuenteMetaMapa(wmRuntimeInfo.getHttpBaseUrl());
     gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
@@ -38,29 +38,26 @@ public class ServicioMetaMapaWireMockTest {
   }
 
   @Test
-  public void respuestaExitosaConBodyVacioLanzaExcepcion() {
+  public void respuestaExitosaConBodyVacioRetornaSetVacio() {
     Filtro filtro = new FiltroCategoria("Cualquier categoría");
 
     stubFor(get(urlPathEqualTo("/hechos"))
         .withQueryParam(filtro.toString(), equalTo("Cualquier categoría"))
         .willReturn(aResponse()
-            .withStatus(200)
-            .withHeader("Content-Type", "application/json")
-            .withBody(""))); // Body vacío
+            .withStatus(204)
+            .withHeader("Content-Type", "application/json")));
 
-    Assertions.assertThrows(AccesoRecursoFallidoException.class, () -> {
-      fuente.obtenerHechos(filtro);
-    });
+    Assertions.assertTrue(fuente.obtenerHechos(filtro).isEmpty());
   }
 
   @Test
-  public void respuesta204SinContenidoLanzaExcepcion() {
+  public void respuestaConErrorLanzaExcepcion() {
     Filtro filtro = new FiltroCategoria("Categoría vacía");
 
     stubFor(get(urlPathEqualTo("/hechos"))
         .withQueryParam(filtro.toString(), equalTo("Categoría vacía"))
         .willReturn(aResponse()
-            .withStatus(204))); // No Content
+            .withStatus(404)));
 
     Assertions.assertThrows(AccesoRecursoFallidoException.class, () -> {
       fuente.obtenerHechos(filtro);
@@ -68,7 +65,7 @@ public class ServicioMetaMapaWireMockTest {
   }
 
   @Test
-  public void obtenerHechos_respuestaExitosa() {
+  public void respuestaExitosaRetornaHechos() {
     Filtro filtro = new FiltroCategoria("Desastre natural");
 
     Set<Hecho> hechosEsperados = new HashSet<>();

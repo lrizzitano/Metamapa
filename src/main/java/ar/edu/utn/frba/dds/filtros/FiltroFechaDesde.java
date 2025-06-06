@@ -19,7 +19,7 @@ public class FiltroFechaDesde implements Filtro {
 
   public Map<String,String> toQueryParam() {
     Map<String,String> query = new HashMap<String,String>();
-    query.put(this.toString(), fecha.toString());
+    query.put("fechaDesde", fecha.toString());
     return query;
   }
 }
