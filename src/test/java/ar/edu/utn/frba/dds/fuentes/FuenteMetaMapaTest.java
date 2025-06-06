@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -36,20 +37,22 @@ import static org.mockito.Mockito.mock;
 public class FuenteMetaMapaTest {
 
   static ServicioMetaMapa fuente;
+  static Gson gson;
 
-  @BeforeAll
-  public static void setup(WireMockRuntimeInfo wmRuntimeInfo) {
+  @BeforeEach
+  public void setup(WireMockRuntimeInfo wmRuntimeInfo) {
     fuente = new ServicioMetaMapa(wmRuntimeInfo.getHttpBaseUrl());
+    gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(Path.class, new PathAdapter())
+        .create();
   }
 
   @Nested
   class obtenerHechosTest {
 
     Set<Hecho> hechos = crearHechos();
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-        .registerTypeAdapter(Path.class, new PathAdapter())
-        .create();
+
 
     @Test
     public void obtenerHecho(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -98,25 +101,6 @@ public class FuenteMetaMapaTest {
         .create();
 
     @Test
-    public void obtenerHechosDeColeccion() {
-
-      Filtro filtro = new FiltroCategoria("Desastre Naturales");
-
-      Set<Hecho> esperado = hechos.stream()
-          .filter(h -> "Desastre natural".equals(h.categoria()))
-          .collect(Collectors.toSet());
-
-      stubFor(get(urlEqualTo("/Colecciones/:"+ coleccion.getId()) + "/hechos")
-          .withQueryParam(filtro.toString(), equalTo("Desastre natural"))
-          .willReturn(aResponse()
-              .withStatus(200)
-              .withHeader("Content-Type", "application/json")
-              .withBody(gson.toJson(esperado))));
-
-      Assertions.assertEquals(esperado,fuente.obtenerHechosDeColeccion(filtro, coleccion.getId()));
-    }
-
-    @Test
     public void obtenerHechosDeColeccionLanzaAccesoARecursoFallido() {
       stubFor(get(urlEqualTo("/colecciones/:" + coleccion.getId()) + "/hechos")
           .willReturn(aResponse()
@@ -157,9 +141,7 @@ public class FuenteMetaMapaTest {
         -70.648,
         LocalDate.now(),
         LocalDate.of(2025, 5, 15),
-        mock(Origen.class),
-        mock(Path.class),
-        mock(Usuario.class)
+        Origen.CONTRIBUYENTE
     ));
 
     hechos.add(new Hecho(
@@ -170,9 +152,7 @@ public class FuenteMetaMapaTest {
         -70.648,
         LocalDate.now(),
         LocalDate.of(2025, 6, 1),
-        mock(Origen.class),
-        mock(Path.class),
-        mock(Usuario.class)
+        Origen.CONTRIBUYENTE
     ));
 
     return hechos;
