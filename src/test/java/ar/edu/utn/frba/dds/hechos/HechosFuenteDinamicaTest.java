@@ -69,5 +69,16 @@ public class HechosFuenteDinamicaTest {
     Assertions.assertFalse(hechosFuenteDinamica.obtenerTodos().contains(unHecho));
   }
 
+  @Test
+  void unHechoArrancaComoNoRevisado() {
+    hechosFuenteDinamica.agregar(unHecho);
+    Assertions.assertTrue(hechosFuenteDinamica.obtenerNoRevisados().contains(unHecho));
+  }
 
+  @Test
+  void sePuedeMarcarComoRevisadoUnHecho() {
+    hechosFuenteDinamica.agregar(unHecho);
+    hechosFuenteDinamica.marcarComoRevisado(unHecho);
+    Assertions.assertFalse(hechosFuenteDinamica.obtenerNoRevisados().contains(unHecho));
+  }
 }
