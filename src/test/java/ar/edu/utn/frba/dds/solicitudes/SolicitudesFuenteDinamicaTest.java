@@ -32,7 +32,7 @@ public class SolicitudesFuenteDinamicaTest {
   }
 
   @Test
-  void aceptarSolicitudLaMueveARechazadasYSeVaDePendientes()
+  void aceptarSolicitudLaMueveAceptadasYSeVaDePendientes()
   {
     solicitudesFuenteDinamica.crear(unaSolicitudDeCambio);
     solicitudesFuenteDinamica.aceptar(unaSolicitudDeCambio);
