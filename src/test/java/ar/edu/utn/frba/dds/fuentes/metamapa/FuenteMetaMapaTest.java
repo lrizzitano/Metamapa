@@ -85,6 +85,27 @@ public class FuenteMetaMapaTest {
     Assertions.assertEquals(hechosEsperados, fuente.obtenerHechos(new NullFiltro()));
   }
 
-    Assertions.assertEquals(hechosEsperados, resultado);
+  @Test
+  public void seEnviaElFiltro() {
+    Filtro filtro = new FiltroCategoria("hola");
+
+    stubFor(get(urlPathEqualTo("/hechos"))
+        .willReturn(aResponse()
+            .withStatus(204)));
+    fuente.obtenerHechos(filtro);
+    verify(getRequestedFor(urlPathEqualTo("/hechos"))
+        .withQueryParam("categoria", equalTo("hola")));
+  }
+
+  @Test
+  public void seEnviaCorrectamenteIdColeccion() {
+    String idEsperado = "hola";
+
+    stubFor(get(urlPathMatching("/colecciones/[^/]+/hechos"))
+        .willReturn(aResponse().withStatus(204)));
+
+    fuente.obtenerHechosDeColeccion(new NullFiltro(), idEsperado);
+
+    verify(getRequestedFor(urlPathEqualTo("/colecciones/" + idEsperado + "/hechos")));
   }
 }
