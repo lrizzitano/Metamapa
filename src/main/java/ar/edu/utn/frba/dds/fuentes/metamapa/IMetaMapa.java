@@ -12,7 +12,7 @@ public interface IMetaMapa {
   @GET("/hechos")
   Call<Set<Hecho>> obtenerHechos(@QueryMap Map<String, String> filtros);
 
-  @GET("/colecciones/:{id}/hechos")
+  @GET("/colecciones/{id}/hechos")
   Call<Set<Hecho>> obtenerHechosDeColeccion(@Path("id") String identificadorColeccion, @QueryMap Map<String, String> filtros);
 
   @POST("/solicitudes")
