@@ -5,6 +5,7 @@ class Usuario {
     +(apellido)
     +(edad)
     +esContribuyente
+    +tipoNavegacion
     --
     +contribuir()
 }
@@ -49,9 +50,36 @@ class Coleccion {
     +descripcion
     +id
     -criterioDePertenencia
+    -criterioConsenso
     -fuente
     --
     +hechos(filtro)
+    -filtrarEliminados()
+    -filtrarConsencuados()
+}
+
+abstract class CriterioConsenso {
+    +fuentesRepository
+    +hechosConsensuados
+    +algoritmo {abstract}
+    -ultimaActualizacion
+    -intervaloActualizacion
+    --
+    +getHechosConsensuados()
+}
+
+class Backup {
+    +fuenteDinamica
+    -ultimaActualizacion
+    -intervaloActualizacion
+    --
+    +backupear()
+}
+
+class FuentesRepository {
+    fuentes
+    --
+    getFuentes()
 }
 
 interface Fuente {
@@ -113,16 +141,12 @@ interface SolicitudDeCambioRepository {
     +rechazar(solicitudDeCambio)
 }
 
-abstract class FuenteProxyCalendarizada {
-    +hechos
-    --
-    -actualizarHechos(ultimaLlamada)
-    #getNewHechos(ultimaLlamada) {abstract}
-}
-
 class FuenteDemo {
+    -hechos
     -url
     -conexionDemo
+    -intervaloActualizacion
+    -ultimaActualizacion
     --
     -parseHecho(fila)
 }
@@ -134,37 +158,50 @@ class FuenteMetaMapa {
     +enviarSolicitudDeEliminacion(solicitud)
 }
 
-class ActualizadorFuentesCalendarizadas {
-    -fuentesSuscriptas
-    -ultimaLlamada
-    -timer
-    -intervalo
+class CalendarizablesRepository {
+    FuentesCalendarizadas
     --
-    +setIntervalo(tiempo)
-    +reiniciar()
-    +suscribir(fuente)
-    +desuscribir(fuente)
-    -iniciarTimer()
+    getPendientesDeActualizacion()
 }
 
+interface Calendarizable {
+    tocaActualizar()
+    actualizar()
+}
+
+class Agregador {
+    -fuentes
+    -hechos
+    -intervaloActualizacion
+    -ultimaActualizacion
+}
 
 Administrador -r-|> Usuario
 
 
 Coleccion --> Fuente
 Coleccion .r.> Filtro
+Coleccion --> CriterioConsenso
+
+CriterioConsenso -[hidden]l- Filtro
 
 Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
-FuenteProxyCalendarizada .u.|> Fuente
+Calendarizable -u-|> Fuente
 FuenteMetaMapa .u.|> Fuente
-FuenteDemo -u-|> FuenteProxyCalendarizada
+FuenteDemo .u.|> Calendarizable
 FuenteDinamica .u.|> Fuente
 FuenteDinamica --> HechoRepository
 FuenteDinamica --> SolicitudDeCambioRepository
 
+CriterioConsenso ..|> Calendarizable
+CriterioConsenso -u-> FuentesRepository
+
+Agregador .u.|> Calendarizable
+
+CalendarizablesRepository -r->"*" Calendarizable
 
 Hecho -l-> Origen
 
@@ -175,7 +212,9 @@ SolicitudDeEliminacionRepo *-- SolicitudDeEliminacion
 DetectorDeSpam <.. SolicitudDeEliminacionRepo
 SolicitudDeEliminacionRepo <-- Coleccion
 
-ActualizadorFuentesCalendarizadas -r->"*" FuenteProxyCalendarizada
+Backup .u.|> Calendarizable
+Backup -u-> FuenteDinamica
+
 
 
 @enduml
