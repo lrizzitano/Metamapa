@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.hechos.consenso;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import java.util.Set;
 

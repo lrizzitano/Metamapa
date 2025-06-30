@@ -1,12 +1,11 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import java.util.ArrayList;
+import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class CriterioAbsoluto extends CriterioConsenso{

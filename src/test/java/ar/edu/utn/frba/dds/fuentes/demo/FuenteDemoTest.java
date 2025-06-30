@@ -1,8 +1,9 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.fuentes.demo;
 
 import ar.edu.utn.frba.dds.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 class FuenteDemoTest {
 
@@ -60,9 +62,20 @@ class FuenteDemoTest {
   }
 
   @Test
-  void noSiempreEsActualizable() {
+  void seActualizaLaUltimaVez() throws InterruptedException {
     fuente.actualizar();
-    Assertions.assertFalse(fuente.tocaActualizar());
+    LocalDateTime ultimaActualizacion = fuente.ultimaActualizaion();
+    Thread.sleep(100);
+    fuente.actualizar();
+    Assertions.assertNotEquals(ultimaActualizacion, fuente.ultimaActualizaion());
+  }
+
+  @Test
+  void laUltimaActualizacionNoCambiaSola()  throws InterruptedException {
+    fuente.actualizar();
+    LocalDateTime ultimaActualizacion = fuente.ultimaActualizaion();
+    Thread.sleep(100);
+    Assertions.assertEquals(ultimaActualizacion, fuente.ultimaActualizaion());
   }
 
   //Aux

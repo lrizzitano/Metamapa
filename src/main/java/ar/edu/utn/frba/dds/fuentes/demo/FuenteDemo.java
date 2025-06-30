@@ -1,6 +1,8 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.fuentes.demo;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
+import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import java.net.URL;
@@ -15,7 +17,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class FuenteDemo implements Fuente, Calendarizable{
+public class FuenteDemo implements Fuente, Calendarizable {
   private final URL url;
   private final Conexion conexion;
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
@@ -34,11 +36,13 @@ public class FuenteDemo implements Fuente, Calendarizable{
   }
 
   @Override
-  public Boolean tocaActualizar() {
-    Duration transcurrido = Duration.between(ultimaActualizacion, LocalDateTime.now());
+  public LocalDateTime ultimaActualizaion() {
+    return this.ultimaActualizacion;
+  }
 
-    return (!transcurrido.minus( frecuencia.plus(Duration.ofMinutes(5))).isNegative()) &&
-        (transcurrido.compareTo( frecuencia.plus(Duration.ofMinutes(5))) <= 0);
+  @Override
+  public Duration frecuencia() {
+    return this.frecuencia;
   }
 
   @Override
