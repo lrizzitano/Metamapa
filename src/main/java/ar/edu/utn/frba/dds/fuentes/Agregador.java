@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-public class Agregador implements Calendarizable {
+public class Agregador implements Calendarizable, Fuente {
   public Set<Fuente> fuentes;
   public Set<Hecho> hechos = new HashSet<>();
   public Duration intervaloActualizacion = Duration.ofMinutes(24);
@@ -30,11 +30,12 @@ public class Agregador implements Calendarizable {
   }
 
   @Override
-  public Boolean tocaActulizar() {
-    //MARGEN DE 10 MINS ANTES O DESPUES.
+  public Boolean tocaActualizar() {
+    //MARGEN DE 5 MINS ANTES O DESPUES.
     Duration transcurrido = Duration.between(ultimaActualizacion, LocalDate.now());
-    Duration margenMin = intervaloActualizacion.plus(Duration.ofMinutes(10));
-    Duration margenMax = intervaloActualizacion.minus(Duration.ofMinutes(10));
+
+    Duration margenMin = intervaloActualizacion.plus(Duration.ofMinutes(5));
+    Duration margenMax = intervaloActualizacion.minus(Duration.ofMinutes(5));
 
     return (!transcurrido.minus(margenMin).isNegative()) &&
           (transcurrido.compareTo(margenMax) <= 0);
@@ -42,10 +43,10 @@ public class Agregador implements Calendarizable {
 
   @Override
   public void actualizar() {
-    Filtro filtro = new NullFiltro();
+    Filtro filtroNull = new NullFiltro();
 
     this.hechos =  this.fuentes.stream()
-        .flatMap(f -> f.obtenerHechos(filtro).stream())
+        .flatMap(f -> f.obtenerHechos(filtroNull).stream())
         .collect(Collectors.toSet());
 
     this.ultimaActualizacion = LocalDate.now();

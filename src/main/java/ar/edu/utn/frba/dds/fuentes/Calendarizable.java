@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
-public interface Calendarizable extends Fuente {
+public interface Calendarizable {
 
-  Boolean tocaActulizar();
+  Boolean tocaActualizar();
   void actualizar();
 }

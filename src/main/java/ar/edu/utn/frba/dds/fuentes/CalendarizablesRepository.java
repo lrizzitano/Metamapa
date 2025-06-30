@@ -12,9 +12,11 @@ public class CalendarizablesRepository {
   private CalendarizablesRepository() {}
   private static final CalendarizablesRepository instance = new CalendarizablesRepository();
 
+  public static CalendarizablesRepository instance() {return instance;}
+
   public List<Calendarizable> getPendientesDeActulizar() {
     return this.fuentesCalendarizables.stream()
-        .filter(Calendarizable::tocaActulizar)
+        .filter(Calendarizable::tocaActualizar)
         .collect(Collectors.toList());
   }
 
