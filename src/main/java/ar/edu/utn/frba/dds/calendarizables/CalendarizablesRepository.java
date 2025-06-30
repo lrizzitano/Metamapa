@@ -1,5 +1,7 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.calendarizables;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +18,11 @@ public class CalendarizablesRepository {
 
   public List<Calendarizable> getPendientesDeActualizar() {
     return this.fuentesCalendarizables.stream()
-        .filter(Calendarizable::tocaActualizar)
-        .collect(Collectors.toList());
+        .filter(c -> {
+          Duration transcurrido = Duration.between(c.ultimaActualizaion(), LocalDateTime.now());
+          Duration margen = c.frecuencia().minus(Duration.ofMinutes(5));
+          return !transcurrido.minus(margen).isNegative();
+        }).collect(Collectors.toList());
   }
 
   public void agregarCalendarizable(Calendarizable calendarizable) {

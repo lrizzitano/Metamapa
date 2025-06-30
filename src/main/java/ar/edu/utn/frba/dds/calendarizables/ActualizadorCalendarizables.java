@@ -1,13 +1,11 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.calendarizables;
 
-
-
-public class ActualizadorFuentesCalendarizadas {
+public class ActualizadorCalendarizables {
   public static void main(String[] args) {
     CalendarizablesRepository repo = CalendarizablesRepository.instance();
-    repo.getPendientesDeActualizar().forEach(fuente -> {
+    repo.getPendientesDeActualizar().forEach(c -> {
       try {
-        fuente.actualizar();
+        c.actualizar();
       }
       catch (Exception e) {
         reportarExcepcion(e);
