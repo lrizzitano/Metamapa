@@ -5,10 +5,15 @@ import java.util.Set;
 
 public class FuentesRepository {
 
-  private FuentesRepository() {}
+  private FuentesRepository() {
+
+  }
+
   private static final FuentesRepository instance = new FuentesRepository();
 
-  public static FuentesRepository instance() {return instance;}
+  public static FuentesRepository instance() {
+    return instance;
+  }
 
   public Set<Fuente> fuentes = new HashSet<>();
 
@@ -20,7 +25,7 @@ public class FuentesRepository {
     fuentes.remove(fuente);
   }
 
-  public Set<Fuente> getFuentes(){
+  public Set<Fuente> getFuentes() {
     return this.fuentes;
   }
 }
