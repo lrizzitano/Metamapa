@@ -18,7 +18,7 @@ public class CriterioAbsoluto extends CriterioConsenso{
 
     Set<Hecho> hechosConsensuadosNuevos = null;
 
-    for (Fuente f : fuentes){
+    for (Fuente f : fuentes) {
       Set<Hecho> hechos = f.obtenerHechos(nullFiltro);
 
       if (hechosConsensuadosNuevos == null) {
@@ -32,7 +32,7 @@ public class CriterioAbsoluto extends CriterioConsenso{
       if (hechosConsensuadosNuevos.isEmpty()) break;
     }
 
-    if ( hechosConsensuadosNuevos ==null || hechosConsensuadosNuevos.isEmpty()) {
+    if (hechosConsensuadosNuevos == null || hechosConsensuadosNuevos.isEmpty()) {
       hechosConsensuadosNuevos = Collections.emptySet();
     }
 
