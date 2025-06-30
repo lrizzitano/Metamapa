@@ -10,10 +10,10 @@ import java.util.Set;
 
 public abstract class CriterioConsenso implements Calendarizable {
 
-  public FuentesRepository fuentesRepository = FuentesRepository.instance();
-  public Set<Hecho> hechosConsensuados = new HashSet<>();
-  public Duration frecuencia = Duration.ofDays(1);
-  public LocalDateTime ultimaActualizacion;
+  protected final FuentesRepository fuentesRepository = FuentesRepository.instance();
+  protected Set<Hecho> hechosConsensuados = new HashSet<>();
+  private final Duration frecuencia = Duration.ofDays(1);
+  protected LocalDateTime ultimaActualizacion;
 
 
   public CriterioConsenso(){
