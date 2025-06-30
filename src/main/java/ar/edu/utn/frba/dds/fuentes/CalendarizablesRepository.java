@@ -14,7 +14,7 @@ public class CalendarizablesRepository {
 
   public static CalendarizablesRepository instance() {return instance;}
 
-  public List<Calendarizable> getPendientesDeActulizar() {
+  public List<Calendarizable> getPendientesDeActualizar() {
     return this.fuentesCalendarizables.stream()
         .filter(Calendarizable::tocaActualizar)
         .collect(Collectors.toList());
