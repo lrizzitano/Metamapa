@@ -28,4 +28,8 @@ public class FuentesRepository {
   public Set<Fuente> getFuentes() {
     return this.fuentes;
   }
+
+  public void reset() {
+    fuentes.clear();
+  }
 }
