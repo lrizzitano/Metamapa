@@ -41,7 +41,7 @@ public class CriterioMultiplesMenciones extends CriterioConsenso{
     }
 
     this.hechosConsensuados = hechosConsensuadosNuevos.values().stream()
-        .filter(hechos -> hechos.size() > 1 && !this.compartenAtributos(hechos))
+        .filter(hechos -> hechos.size() > 1 && this.compartenAtributos(hechos))
         .map(lista -> lista.get(0))
         .collect(Collectors.toSet());
   }
