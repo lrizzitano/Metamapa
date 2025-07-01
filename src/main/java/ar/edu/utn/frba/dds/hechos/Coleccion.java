@@ -4,15 +4,12 @@ import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
-import ar.edu.utn.frba.dds.filtros.FiltroEliminados;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.consenso.CriterioConsenso;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesDeEliminacion;
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
