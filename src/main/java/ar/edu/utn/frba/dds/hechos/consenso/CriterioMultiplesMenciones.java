@@ -47,9 +47,6 @@ public class CriterioMultiplesMenciones extends CriterioConsenso{
   }
 
   private boolean compartenAtributos(List<Hecho> hechos) {
-    return hechos.stream()
-        .map(Hecho::titulo)
-        .distinct()
-        .count() <= 1;
+    return hechos.stream().distinct().count() == 1;
   }
 }
