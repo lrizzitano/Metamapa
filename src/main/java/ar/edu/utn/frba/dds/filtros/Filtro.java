@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public interface Filtro {
   Predicate<Hecho> getAsPredicate();
 
-  Map<String,String> toQueryParam();
+  Map<String, String> toQueryParam();
 }
 
 

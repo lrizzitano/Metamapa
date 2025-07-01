@@ -16,7 +16,7 @@ public class FiltroFechaHasta implements Filtro {
     return hecho -> hecho.fechaAcontecimiento().isBefore(fecha);
   }
 
-  public Map<String,String> toQueryParam() {
+  public Map<String, String> toQueryParam() {
     return Map.of("fechaHasta", fecha.toString());
   }
 }

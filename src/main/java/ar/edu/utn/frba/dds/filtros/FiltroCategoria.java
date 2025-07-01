@@ -17,7 +17,7 @@ public class FiltroCategoria implements Filtro {
     return hecho -> hecho.categoria().equals(categoria);
   }
 
-  public Map<String,String> toQueryParam() {
+  public Map<String, String> toQueryParam() {
     return Map.of("categoria", categoria);
   }
 }

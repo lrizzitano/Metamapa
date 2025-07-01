@@ -9,7 +9,7 @@ public class NullFiltro implements Filtro {
     return hecho -> true;
   }
 
-  public Map<String,String> toQueryParam() {
+  public Map<String, String> toQueryParam() {
     return Map.of();
   }
 }

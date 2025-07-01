@@ -28,8 +28,8 @@ public class FiltroCompuesto implements Filtro {
         .reduce(Predicate::and).orElse(hecho -> true);
   }
 
-  public Map<String,String> toQueryParam() {
-    Map<String,String> query = new HashMap<>();
+  public Map<String, String> toQueryParam() {
+    Map<String, String> query = new HashMap<>();
     filtros.forEach(f -> query.putAll(f.toQueryParam()));
     return query;
   }
