@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public interface Filtro {
-  public Predicate<Hecho> getAsPredicate();
+  Predicate<Hecho> getAsPredicate();
 
-  public Map<String,String> toQueryParam();
+  Map<String,String> toQueryParam();
 }
 
 
