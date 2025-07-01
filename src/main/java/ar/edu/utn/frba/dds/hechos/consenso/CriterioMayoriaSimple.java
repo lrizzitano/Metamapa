@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class CriterioMayoriaSimple extends CriterioConsenso{
 
   @Override
-  public void actualizar() {
+  public Set<Hecho> actualizarHechos() {
     Set<Fuente> fuentes = this.fuentesRepository.getFuentes();
 
     Filtro nullFiltro = new NullFiltro();
@@ -33,7 +33,7 @@ public class CriterioMayoriaSimple extends CriterioConsenso{
     int cantidadFuentes = this.fuentesRepository.getFuentes().size();
 
     // Filtramos los hechos que aparezcan en mas de la mitad de las fuentes
-    this.hechosConsensuados = hechosConsensuadosNuevos.entrySet().stream()
+    return hechosConsensuadosNuevos.entrySet().stream()
         .filter(entrada -> entrada.getValue() >= cantidadFuentes/2)
         .map(Map.Entry::getKey)
         .collect(Collectors.toSet());

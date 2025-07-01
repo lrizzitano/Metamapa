@@ -9,12 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class CriterioConsenso implements Calendarizable {
-
   protected final FuentesRepository fuentesRepository = FuentesRepository.instance();
   protected Set<Hecho> hechosConsensuados = new HashSet<>();
   private final Duration frecuencia = Duration.ofDays(1);
   protected LocalDateTime ultimaActualizacion;
-
 
   public CriterioConsenso(){
     this.actualizar();
@@ -30,7 +28,19 @@ public abstract class CriterioConsenso implements Calendarizable {
     return this.frecuencia;
   }
 
+  @Override
+  public void actualizar() {
+    this.hechosConsensuados = this.actualizarHechos();
+    this.ultimaActualizacion = LocalDateTime.now();
+  }
+
+  protected abstract Set<Hecho> actualizarHechos();
+
   public Set<Hecho> getHechosConsensuados() {
     return this.hechosConsensuados;
+  }
+
+  public boolean esConsensuado(Hecho hecho) {
+    return this.hechosConsensuados.contains(hecho);
   }
 }

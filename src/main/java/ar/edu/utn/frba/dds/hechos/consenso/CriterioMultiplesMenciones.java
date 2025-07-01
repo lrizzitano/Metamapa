@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class CriterioMultiplesMenciones extends CriterioConsenso{
 
   @Override
-  public void actualizar(){
+  public Set<Hecho> actualizarHechos(){
     Set<Fuente> fuentes = this.fuentesRepository.getFuentes();
 
     Filtro nullFiltro = new NullFiltro();
@@ -40,7 +40,7 @@ public class CriterioMultiplesMenciones extends CriterioConsenso{
       }
     }
 
-    this.hechosConsensuados = hechosConsensuadosNuevos.values().stream()
+    return hechosConsensuadosNuevos.values().stream()
         .filter(hechos -> hechos.size() > 1 && this.compartenAtributos(hechos))
         .map(lista -> lista.get(0))
         .collect(Collectors.toSet());
