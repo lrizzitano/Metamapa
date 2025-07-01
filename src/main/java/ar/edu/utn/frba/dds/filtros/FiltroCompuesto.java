@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class FiltroCompuesto implements Filtro {
   private final List<Filtro> filtros;
@@ -30,7 +29,7 @@ public class FiltroCompuesto implements Filtro {
   }
 
   public Map<String,String> toQueryParam() {
-    Map<String,String> query = new HashMap<String,String>();
+    Map<String,String> query = new HashMap<>();
     filtros.forEach(f -> query.putAll(f.toQueryParam()));
     return query;
   }
