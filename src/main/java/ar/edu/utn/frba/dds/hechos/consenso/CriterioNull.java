@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
+import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class CriterioNull extends CriterioConsenso{
   }
 
   @Override
-  protected Set<Hecho> actualizarHechos() {
-    return null;
+  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
+    return Set.of();
   }
 }

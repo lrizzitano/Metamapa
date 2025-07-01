@@ -54,18 +54,16 @@ class Coleccion {
     -fuente
     --
     +hechos(filtro)
-    -filtrarEliminados()
-    -filtrarConsencuados()
+    +hechosConsensuados(filtro)
+    -streamFiltradaBase(filtro)
 }
 
 abstract class CriterioConsenso {
-    +fuentesRepository
+    -fuentesRepository
     +hechosConsensuados
-    +algoritmo {abstract}
-    -ultimaActualizacion
-    -intervaloActualizacion
     --
-    +getHechosConsensuados()
+    -actualizarHechos(fuentes) {abstract}
+    +esConsensuado(hecho)
 }
 
 class Backup {
@@ -109,7 +107,7 @@ enum Origen {
 
 interface Filtro {
     +asPredicate()
-    +toQueryParam(prefix, delimiter, suffix)
+    +toQueryParam()
 }
 
 class FuenteEstatica {
@@ -128,7 +126,7 @@ class FuenteDinamica {
     +eliminarHecho(hecho)
 }
 
-interface  HechoRepository {
+interface HechoRepository {
     +obtenerTodos()
     +actualizar(hechoParaCambiar, hechoModificado)
     +agregar(hecho)
@@ -159,14 +157,15 @@ class FuenteMetaMapa {
 }
 
 class CalendarizablesRepository {
-    FuentesCalendarizadas
+    +FuentesCalendarizadas
     --
-    getPendientesDeActualizacion()
+    +getPendientesDeActualizacion()
 }
 
 interface Calendarizable {
-    tocaActualizar()
-    actualizar()
+    +ultimaLlamada()
+    +frecuencia()
+    +actualizar()
 }
 
 class Agregador {
@@ -189,8 +188,9 @@ Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
 
 FuenteEstatica .u.|> Fuente
-Calendarizable -u-|> Fuente
 FuenteMetaMapa .u.|> Fuente
+FuenteDemo .u.|> Fuente
+Agregador .u.|> Fuente
 FuenteDemo .u.|> Calendarizable
 FuenteDinamica .u.|> Fuente
 FuenteDinamica --> HechoRepository

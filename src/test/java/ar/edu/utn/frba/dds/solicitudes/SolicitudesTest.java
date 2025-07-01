@@ -69,6 +69,5 @@ class SolicitudesTest {
     solicitudes.setDetectorDeSpam(detectorDeSpam);
     new SolicitudDeEliminacion(hecho, "spam spam");
     Assertions.assertEquals(1, solicitudes.getRechazos(hecho));
-    solicitudes.setDetectorDeSpam(null);
   }
 }

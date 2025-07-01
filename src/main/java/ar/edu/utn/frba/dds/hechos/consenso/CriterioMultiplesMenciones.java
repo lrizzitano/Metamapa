@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 public class CriterioMultiplesMenciones extends CriterioConsenso{
 
   @Override
-  public Set<Hecho> actualizarHechos(){
-    Set<Fuente> fuentes = this.fuentesRepository.getFuentes();
-
+  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
     Map<String, List<Hecho>> hechosConsensuadosNuevos = new HashMap<>(); // <nombre, hechos>

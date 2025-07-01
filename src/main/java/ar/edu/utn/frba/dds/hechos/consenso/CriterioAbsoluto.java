@@ -11,8 +11,7 @@ import java.util.Set;
 public class CriterioAbsoluto extends CriterioConsenso{
 
   @Override
-  public Set<Hecho> actualizarHechos(){
-    Set<Fuente> fuentes = this.fuentesRepository.getFuentes();
+  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
 
     Filtro nullFiltro = new NullFiltro();
 

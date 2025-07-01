@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.time.Duration;
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class CriterioConsenso implements Calendarizable {
-  protected final FuentesRepository fuentesRepository = FuentesRepository.instance();
+  private final FuentesRepository fuentesRepository = FuentesRepository.instance();
   protected Set<Hecho> hechosConsensuados = new HashSet<>();
   private final Duration frecuencia = Duration.ofDays(1);
   protected LocalDateTime ultimaActualizacion;
@@ -30,11 +31,11 @@ public abstract class CriterioConsenso implements Calendarizable {
 
   @Override
   public void actualizar() {
-    this.hechosConsensuados = this.actualizarHechos();
+    this.hechosConsensuados = this.actualizarHechos(fuentesRepository.getFuentes());
     this.ultimaActualizacion = LocalDateTime.now();
   }
 
-  protected abstract Set<Hecho> actualizarHechos();
+  protected abstract Set<Hecho> actualizarHechos(Set<Fuente> fuentes);
 
   public Set<Hecho> getHechosConsensuados() {
     return this.hechosConsensuados;
