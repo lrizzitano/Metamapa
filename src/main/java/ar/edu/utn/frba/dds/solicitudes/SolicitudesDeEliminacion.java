@@ -2,10 +2,13 @@ package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
 
 public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepository{
   private static final SolicitudesDeEliminacion instance = new SolicitudesDeEliminacion();
@@ -13,7 +16,7 @@ public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepositor
   private final Set<SolicitudDeEliminacion> pendientes = new HashSet<>();
   private final Set<SolicitudDeEliminacion> aceptadas = new HashSet<>();
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
-  private DetectorDeSpam detectorDeSpam;
+  private DetectorDeSpam detectorDeSpam = new NullDetector();
 
   private SolicitudesDeEliminacion() {
   }
@@ -23,11 +26,11 @@ public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepositor
   }
 
   public void setDetectorDeSpam(DetectorDeSpam detectorDeSpam) {
-    this.detectorDeSpam = detectorDeSpam;
+    this.detectorDeSpam = requireNonNull(detectorDeSpam);
   }
 
   public void nuevaSolicitud(SolicitudDeEliminacion solicitud) {
-    if (detectorDeSpam != null && detectorDeSpam.esSpam(solicitud.getFundamento())) {
+    if (detectorDeSpam.esSpam(solicitud.getFundamento())) {
       this.rechazarSolicitud(solicitud);
       return;
     }
@@ -74,5 +77,4 @@ public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepositor
     aceptadas.clear();
     rechazadas.clear();
   }
-
 }

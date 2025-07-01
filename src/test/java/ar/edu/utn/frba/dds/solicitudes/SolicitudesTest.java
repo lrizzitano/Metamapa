@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ class SolicitudesTest {
   @BeforeEach
   void setUp() {
     solicitudes.reset();
+    solicitudes.setDetectorDeSpam(new NullDetector());
     solicitud = new SolicitudDeEliminacion(hecho, "null");
   }
 
