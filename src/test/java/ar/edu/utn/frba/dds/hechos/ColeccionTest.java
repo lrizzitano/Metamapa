@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import ar.edu.utn.frba.dds.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.consenso.CriterioConsenso;
+import ar.edu.utn.frba.dds.hechos.consenso.CriterioNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,7 +61,8 @@ public class ColeccionTest {
   @Test
   void filtraPorConsenso() {
     CriterioConsenso criterioConsenso = mock(CriterioConsenso.class);
-    when(criterioConsenso.getHechosConsensuados()).thenReturn(Set.of(hecho1));
+    when(criterioConsenso.esConsensuado(hecho1)).thenReturn(true);
+    when(criterioConsenso.esConsensuado(hecho2)).thenReturn(false);
     Coleccion unaColeccion = new Coleccion("", "",
         filtroTrue, unaFuente, criterioConsenso, SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechosConsensuados(filtroTrue));
@@ -69,14 +71,14 @@ public class ColeccionTest {
   @Test
   void ColeccionFiltraPorCriterioDePertenencia() {
     Coleccion unaColeccion = new Coleccion("", "",
-        filtroFecha, unaFuente, mock(CriterioConsenso.class), SolicitudesDeEliminacion.instance());
+        filtroFecha, unaFuente, new CriterioNull(), SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue));
   }
 
   @Test
   void ColeccionFiltraPorParametro() {
     Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente,
-        mock(CriterioConsenso.class), SolicitudesDeEliminacion.instance());
+        new CriterioNull(), SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroFecha),
         Set.of(hecho1));
   }
@@ -85,8 +87,8 @@ public class ColeccionTest {
   void CollecionFiltraHechosEliminados() {
     SolicitudDeEliminacion unaSolicitud = new SolicitudDeEliminacion(hecho1, "");
     unaSolicitud.aceptar(mock(Administrador.class));
-    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente, mock(CriterioConsenso.class),
-        SolicitudesDeEliminacion.instance());
+    Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente,
+        new CriterioNull(), SolicitudesDeEliminacion.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
   }
 }

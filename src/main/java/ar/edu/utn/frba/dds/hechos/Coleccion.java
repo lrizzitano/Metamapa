@@ -52,29 +52,18 @@ public class Coleccion {
   }
 
   public Set<Hecho> hechos(Filtro filtro) {
-    return this.streamFiltradaBase(filtro)
-        .collect(Collectors.toSet());
+    return this.streamFiltradaBase(filtro).collect(Collectors.toSet());
   }
 
   public Set<Hecho> hechosConsensuados(Filtro filtro) {
     return this.streamFiltradaBase(filtro)
-        .filter(this.condicionConsenso())
+        .filter(criterioConsenso::esConsensuado)
         .collect(Collectors.toSet());
   }
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
+    Set<Hecho> eliminados = solicitudes.hechosEliminados();
     return fuente.obtenerHechos(criterioDePertenencia.and(filtro)).stream()
-        .filter(this.condicionNoEliminado());
-  }
-
-  private Predicate<Hecho> condicionNoEliminado() {
-    return h -> {
-      Set<Hecho> eliminados = solicitudes.hechosEliminados();
-      return !eliminados.contains(h);
-    };
-  }
-
-  private Predicate<Hecho> condicionConsenso() {
-    return hecho-> criterioConsenso.getHechosConsensuados().contains(hecho);
+        .filter(h -> !eliminados.contains(h));
   }
 }
