@@ -1,18 +1,33 @@
 package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
+import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 public class Backup implements Calendarizable {
 
-  public Fuente fuenteDinamica = FuenteDinamica.instance();
-  public Duration frecuencia = Duration.ofDays(1);
-  public LocalDateTime ultimaActualizacion = LocalDateTime.now();
+  private final Path archivo;
+  private final Gson gson;
+  private final Fuente fuenteDinamica = FuenteDinamica.instance();
+  private final Duration frecuencia = Duration.ofDays(1);
+  private LocalDateTime ultimaActualizacion = LocalDateTime.now();
+
+  public Backup(Path archivo) {
+    this.archivo = archivo;
+    this.gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(Path.class, new PathAdapter())
+        .create();
+  }
 
   @Override
   public LocalDateTime ultimaActualizaion() {
@@ -26,13 +41,16 @@ public class Backup implements Calendarizable {
 
   @Override
   public void actualizar() { //ESTO ES BACKUPEAR
-
-    Filtro nullFiltro = new NullFiltro();
-
-    Set<Hecho> hechosABackupear = this.fuenteDinamica.obtenerHechos(nullFiltro);
-    //SOBREESCRIBIR EL JSON
-
+    try {
+      Files.createDirectories(archivo.getParent());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    try (var writer = Files.newBufferedWriter(archivo, StandardCharsets.UTF_8)) {
+      gson.toJson(this.fuenteDinamica.obtenerHechos(new NullFiltro()), writer);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
     this.ultimaActualizacion = LocalDateTime.now();
   }
-
 }
