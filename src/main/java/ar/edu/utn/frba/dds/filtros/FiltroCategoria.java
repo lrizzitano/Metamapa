@@ -2,8 +2,6 @@ package ar.edu.utn.frba.dds.filtros;
 
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -20,8 +18,6 @@ public class FiltroCategoria implements Filtro {
   }
 
   public Map<String,String> toQueryParam() {
-    Map<String, String> query = new HashMap<>();
-    query.put("categoria", categoria);
-    return query;
+    return Map.of("categoria", categoria);
   }
 }
