@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CalendarizablesRepository {
-
-  Set<Calendarizable> fuentesCalendarizables = new HashSet<>();
+  private final Duration margen = Duration.ofMinutes(5);
+  private final Set<Calendarizable> fuentesCalendarizables = new HashSet<>();
 
   private CalendarizablesRepository() {}
   private static final CalendarizablesRepository instance = new CalendarizablesRepository();
@@ -17,12 +17,10 @@ public class CalendarizablesRepository {
   public static CalendarizablesRepository instance() {return instance;}
 
   public List<Calendarizable> getPendientesDeActualizar() {
+    LocalDateTime ahora  = LocalDateTime.now();
     return this.fuentesCalendarizables.stream()
-        .filter(c -> {
-          Duration transcurrido = Duration.between(c.ultimaActualizaion(), LocalDateTime.now());
-          Duration margen = c.frecuencia().minus(Duration.ofMinutes(5));
-          return !transcurrido.minus(margen).isNegative();
-        }).collect(Collectors.toList());
+        .filter(c -> !c.proximaActualizacion().minus(margen).isBefore(ahora))
+        .collect(Collectors.toList());
   }
 
   public void agregarCalendarizable(Calendarizable calendarizable) {
