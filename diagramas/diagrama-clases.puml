@@ -58,26 +58,33 @@ class Coleccion {
     -streamFiltradaBase(filtro)
 }
 
-abstract class CriterioConsenso {
+class CriterioConsenso {
+    -hechosConsensuados
     -fuentesRepository
-    +hechosConsensuados
+    -AlgoritmoConsenso
     --
-    -actualizarHechos(fuentes) {abstract}
     +esConsensuado(hecho)
 }
 
-class Backup {
-    +fuenteDinamica
-    -ultimaActualizacion
-    -intervaloActualizacion
+class NullConsenso {
     --
-    +backupear()
+    +actualizar()
+    +esConsensuado(hecho)
+    +proximaActualizacion()
+}
+
+interface AlgoritmoConsenso {
+    +getHechosConsensuados(fuentes)
+}
+
+class Backup {
+    -fuenteDinamica
+    -pathArchivo
+    --
 }
 
 class FuentesRepository {
-    fuentes
-    --
-    getFuentes()
+    +fuentes
 }
 
 interface Fuente {
@@ -143,8 +150,7 @@ class FuenteDemo {
     -hechos
     -url
     -conexionDemo
-    -intervaloActualizacion
-    -ultimaActualizacion
+    -ultimaLlamada
     --
     -parseHecho(fila)
 }
@@ -163,16 +169,13 @@ class CalendarizablesRepository {
 }
 
 interface Calendarizable {
-    +ultimaLlamada()
-    +frecuencia()
+    +proximaActualizacion()
     +actualizar()
 }
 
 class Agregador {
     -fuentes
     -hechos
-    -intervaloActualizacion
-    -ultimaActualizacion
 }
 
 Administrador -r-|> Usuario
@@ -198,6 +201,8 @@ FuenteDinamica --> SolicitudDeCambioRepository
 
 CriterioConsenso ..|> Calendarizable
 CriterioConsenso -u-> FuentesRepository
+CriterioConsenso --* AlgoritmoConsenso
+NullConsenso --|> CriterioConsenso
 
 Agregador .u.|> Calendarizable
 
