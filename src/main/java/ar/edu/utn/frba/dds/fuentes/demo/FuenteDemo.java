@@ -22,13 +22,11 @@ public class FuenteDemo implements Fuente, Calendarizable {
   private final Conexion conexion;
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
   private LocalDateTime ultimaActualizacion;
-  private final Duration frecuencia = Duration.ofHours(1);
 
-  public FuenteDemo(Conexion conexion, URL url) {
+  public FuenteDemo(Conexion conexion, URL url, LocalDateTime ultimaActualizacion) {
     this.conexion = conexion;
     this.url = url;
-    this.ultimaActualizacion = LocalDateTime.now();
-    this.actualizar();
+    this.ultimaActualizacion = ultimaActualizacion;
   }
 
   public Set<Hecho> obtenerHechos(Filtro filtro) {
@@ -36,13 +34,8 @@ public class FuenteDemo implements Fuente, Calendarizable {
   }
 
   @Override
-  public LocalDateTime ultimaActualizaion() {
-    return this.ultimaActualizacion;
-  }
-
-  @Override
-  public Duration frecuencia() {
-    return this.frecuencia;
+  public LocalDateTime proximaActualizacion() {
+    return this.ultimaActualizacion.plusHours(1);
   }
 
   @Override

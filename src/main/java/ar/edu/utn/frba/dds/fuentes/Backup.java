@@ -14,29 +14,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Backup implements Calendarizable {
-
   private final Path archivo;
   private final Gson gson;
   private final Fuente fuenteDinamica = FuenteDinamica.instance();
-  private final Duration frecuencia = Duration.ofDays(1);
-  private LocalDateTime ultimaActualizacion = LocalDateTime.now();
+  private LocalDateTime proximaActualizacion;
 
-  public Backup(Path archivo) {
+  public Backup(Path archivo, LocalDateTime proximaActualizacion) {
     this.archivo = archivo;
     this.gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .create();
+    this.proximaActualizacion = proximaActualizacion;
   }
 
   @Override
-  public LocalDateTime ultimaActualizaion() {
-    return this.ultimaActualizacion;
-  }
-
-  @Override
-  public Duration frecuencia() {
-    return this.frecuencia;
+  public LocalDateTime proximaActualizacion() {
+    return proximaActualizacion;
   }
 
   @Override
@@ -51,6 +45,6 @@ public class Backup implements Calendarizable {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-    this.ultimaActualizacion = LocalDateTime.now();
+    this.proximaActualizacion = LocalDateTime.now().plusHours(3);
   }
 }
