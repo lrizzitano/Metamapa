@@ -18,35 +18,27 @@ public class CriterioAbsolutoTest {
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho = mock(Hecho.class);
-  private final FuentesRepository fuentes = FuentesRepository.instance();
+  private Set<Fuente> fuentes;
 
 
   @BeforeEach
   public void setUp() {
     fuente1 = mock(Fuente.class);
     fuente2 = mock(Fuente.class);
-    fuentes.agregarFuente(fuente1);
-    fuentes.agregarFuente(fuente2);
-  }
-
-  @AfterEach
-  public void tearDown() {
-    fuentes.reset();
+    fuentes = Set.of(fuente1, fuente2);
   }
 
   @Test
   void hechoEnTodasLasFuentesPasa() {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho));
-    criterioAbsoluto.actualizar();
-    Assertions.assertEquals(Set.of(hecho), criterioAbsoluto.getHechosConsensuados());
+    Assertions.assertEquals(Set.of(hecho), criterioAbsoluto.getHechosConsensuados(fuentes));
   }
 
   @Test
   void hechoEn1FuenteNoPasa() {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of());
-    criterioAbsoluto.actualizar();
-    Assertions.assertTrue(criterioAbsoluto.getHechosConsensuados().isEmpty());
+    Assertions.assertTrue(criterioAbsoluto.getHechosConsensuados(fuentes).isEmpty());
   }
 }

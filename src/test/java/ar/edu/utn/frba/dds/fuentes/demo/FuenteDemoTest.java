@@ -35,7 +35,7 @@ class FuenteDemoTest {
   @BeforeEach
   void setUp() {
     conexion = new TestConexion();
-    fuente = new FuenteDemo(conexion, null);
+    fuente = new FuenteDemo(conexion, null, LocalDateTime.MIN);
   }
 
   @Test
@@ -64,18 +64,18 @@ class FuenteDemoTest {
   @Test
   void seActualizaLaUltimaVez() throws InterruptedException {
     fuente.actualizar();
-    LocalDateTime ultimaActualizacion = fuente.ultimaActualizaion();
+    LocalDateTime ultimaActualizacion = fuente.proximaActualizacion();
     Thread.sleep(100);
     fuente.actualizar();
-    Assertions.assertNotEquals(ultimaActualizacion, fuente.ultimaActualizaion());
+    Assertions.assertNotEquals(ultimaActualizacion, fuente.proximaActualizacion());
   }
 
   @Test
   void laUltimaActualizacionNoCambiaSola()  throws InterruptedException {
     fuente.actualizar();
-    LocalDateTime ultimaActualizacion = fuente.ultimaActualizaion();
+    LocalDateTime ultimaActualizacion = fuente.proximaActualizacion();
     Thread.sleep(100);
-    Assertions.assertEquals(ultimaActualizacion, fuente.ultimaActualizaion());
+    Assertions.assertEquals(ultimaActualizacion, fuente.proximaActualizacion());
   }
 
   //Aux

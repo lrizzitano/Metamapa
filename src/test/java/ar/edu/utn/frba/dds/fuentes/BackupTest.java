@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +39,7 @@ public class BackupTest {
 
   @Test
   void lanzaExcepcionSiElArchivoNoExiste() {
-    Backup backup = new Backup(Path.of("hola"));
+    Backup backup = new Backup(Path.of("hola"), LocalDateTime.now());
     Assertions.assertThrows(RuntimeException.class, backup::actualizar);
   }
 
@@ -52,7 +53,7 @@ public class BackupTest {
         Origen.DATASET);
    when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
    FuenteDinamica.instance().setHechoRepository(repo);
-    Backup backup = new Backup(tempFile);
+    Backup backup = new Backup(tempFile, LocalDateTime.now());
     backup.actualizar();
     String json = Files.readString(tempFile);
 
