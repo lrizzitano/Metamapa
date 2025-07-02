@@ -1,10 +1,13 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
-import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 public class CriterioNull extends CriterioConsenso{
+
+  public CriterioNull() {
+    super(null, null);
+  }
 
   @Override
   public boolean esConsensuado(Hecho hecho) {
@@ -12,11 +15,11 @@ public class CriterioNull extends CriterioConsenso{
   }
 
   @Override
-  public void actualizar() {
+  public LocalDateTime proximaActualizacion() {
+    return LocalDateTime.MAX;
   }
 
   @Override
-  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
-    return Set.of();
+  public void actualizar() {
   }
 }

@@ -8,11 +8,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CriterioAbsoluto extends CriterioConsenso{
+public class CriterioAbsoluto implements AlgoritmoConsenso{
 
   @Override
-  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
-
+  public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
     Set<Hecho> hechosConsensuadosNuevos = null;

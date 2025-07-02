@@ -7,10 +7,12 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CriterioMayoriaSimple extends CriterioConsenso{
+import static java.lang.Math.ceil;
+
+public class CriterioMayoriaSimple implements AlgoritmoConsenso{
 
   @Override
-  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
+  public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
     Map<Hecho,Integer> hechosConsensuadosNuevos = new HashMap<>();
@@ -28,11 +30,11 @@ public class CriterioMayoriaSimple extends CriterioConsenso{
 
     }
 
-    int cantidadFuentes = fuentes.size();
+    int cantidadFuentes = (int) ceil((double) fuentes.size() /2);
 
     // Filtramos los hechos que aparezcan en mas de la mitad de las fuentes
     return hechosConsensuadosNuevos.entrySet().stream()
-        .filter(entrada -> entrada.getValue() >= cantidadFuentes/2)
+        .filter(entrada -> entrada.getValue() >= cantidadFuentes)
         .map(Map.Entry::getKey)
         .collect(Collectors.toSet());
   }

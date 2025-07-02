@@ -5,37 +5,32 @@ import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class CriterioConsenso implements Calendarizable {
-  private final FuentesRepository fuentesRepository = FuentesRepository.instance();
-  protected Set<Hecho> hechosConsensuados = new HashSet<>();
-  private final Duration frecuencia = Duration.ofDays(1);
-  protected LocalDateTime ultimaActualizacion;
+public class CriterioConsenso implements Calendarizable {
+  private final FuentesRepository fuentes = FuentesRepository.instance();
+  private final AlgoritmoConsenso algoritmoConsenso;
+  private Set<Hecho> hechosConsensuados = new HashSet<>();
+  private LocalDate proximaActualizacion;
 
-  public CriterioConsenso(){
-    this.actualizar();
+  public CriterioConsenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
+    this.algoritmoConsenso = algoritmoConsenso;
+    this.proximaActualizacion = proximaActualizacion;
   }
 
   @Override
-  public LocalDateTime ultimaActualizaion() {
-    return this.ultimaActualizacion;
-  }
-
-  @Override
-  public Duration frecuencia() {
-    return this.frecuencia;
+  public LocalDateTime proximaActualizacion() {
+    return proximaActualizacion.atStartOfDay().plusHours(3);
   }
 
   @Override
   public void actualizar() {
-    this.hechosConsensuados = this.actualizarHechos(fuentesRepository.getFuentes());
-    this.ultimaActualizacion = LocalDateTime.now();
+    this.hechosConsensuados = algoritmoConsenso.getHechosConsensuados(fuentes.getFuentes());
+    this.proximaActualizacion = LocalDate.now().plusDays(1);
   }
-
-  protected abstract Set<Hecho> actualizarHechos(Set<Fuente> fuentes);
 
   public Set<Hecho> getHechosConsensuados() {
     return this.hechosConsensuados;

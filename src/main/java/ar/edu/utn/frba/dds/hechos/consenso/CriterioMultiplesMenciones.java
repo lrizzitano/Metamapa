@@ -8,10 +8,10 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CriterioMultiplesMenciones extends CriterioConsenso{
+public class CriterioMultiplesMenciones implements AlgoritmoConsenso{
 
   @Override
-  public Set<Hecho> actualizarHechos(Set<Fuente> fuentes) {
+  public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
     Map<String, List<Hecho>> hechosConsensuadosNuevos = new HashMap<>(); // <nombre, hechos>
