@@ -1,12 +1,10 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import java.time.LocalDate;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class CriterioMultiplesMencionesTest {
 
-  private final CriterioMultiplesMenciones criterioAbsoluto = new CriterioMultiplesMenciones();
+  private final AlgoritmoMultiplesMenciones criterioAbsoluto = new AlgoritmoMultiplesMenciones();
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho1 = new Hecho("t1", "desc1", "cat1", 3.3,

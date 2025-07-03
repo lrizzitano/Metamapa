@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CriterioAbsoluto implements AlgoritmoConsenso{
+public class AlgoritmoConsensoAbsoluto implements AlgoritmoConsenso{
 
   @Override
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {

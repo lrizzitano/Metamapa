@@ -1,10 +1,8 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CriterioAbsolutoTest {
-  private final CriterioAbsoluto criterioAbsoluto = new CriterioAbsoluto();
+  private final AlgoritmoConsensoAbsoluto criterioAbsoluto = new AlgoritmoConsensoAbsoluto();
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho = mock(Hecho.class);

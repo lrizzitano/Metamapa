@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CriterioMayoriaSimpleTest {
-  private final CriterioMayoriaSimple criterioMayoriaSimple = new CriterioMayoriaSimple();
+  private final AlgoritmoMayoriaSimple criterioMayoriaSimple = new AlgoritmoMayoriaSimple();
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho = mock(Hecho.class);

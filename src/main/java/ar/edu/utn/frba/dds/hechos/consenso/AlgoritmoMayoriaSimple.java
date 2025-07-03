@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.Math.ceil;
 
-public class CriterioMayoriaSimple implements AlgoritmoConsenso{
+public class AlgoritmoMayoriaSimple implements AlgoritmoConsenso{
 
   @Override
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
