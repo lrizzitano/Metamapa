@@ -11,8 +11,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CriterioMayoriaSimpleTest {
-  private final AlgoritmoMayoriaSimple criterioMayoriaSimple = new AlgoritmoMayoriaSimple();
+public class AlgoritmoMayoriaSimpleTest {
+  private final AlgoritmoMayoriaSimple algoritmoMayoriaSimple = new AlgoritmoMayoriaSimple();
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho = mock(Hecho.class);
@@ -30,7 +30,7 @@ public class CriterioMayoriaSimpleTest {
     fuentes = Set.of(fuente1, fuente2);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho));
-    Assertions.assertEquals(Set.of(hecho), criterioMayoriaSimple.getHechosConsensuados(fuentes));
+    Assertions.assertEquals(Set.of(hecho), algoritmoMayoriaSimple.getHechosConsensuados(fuentes));
   }
 
   @Test
@@ -38,7 +38,7 @@ public class CriterioMayoriaSimpleTest {
     fuentes = Set.of(fuente1, fuente2);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of());
-    Assertions.assertEquals(Set.of(hecho), criterioMayoriaSimple.getHechosConsensuados(fuentes));
+    Assertions.assertEquals(Set.of(hecho), algoritmoMayoriaSimple.getHechosConsensuados(fuentes));
   }
 
   @Test
@@ -48,6 +48,6 @@ public class CriterioMayoriaSimpleTest {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of());
     when(fuente3.obtenerHechos(any())).thenReturn(Set.of());
-    Assertions.assertTrue(criterioMayoriaSimple.getHechosConsensuados(fuentes).isEmpty());
+    Assertions.assertTrue(algoritmoMayoriaSimple.getHechosConsensuados(fuentes).isEmpty());
   }
 }

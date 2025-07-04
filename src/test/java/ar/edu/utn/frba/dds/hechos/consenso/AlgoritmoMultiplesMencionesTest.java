@@ -13,9 +13,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CriterioMultiplesMencionesTest {
+public class AlgoritmoMultiplesMencionesTest {
 
-  private final AlgoritmoMultiplesMenciones criterioAbsoluto = new AlgoritmoMultiplesMenciones();
+  private final AlgoritmoMultiplesMenciones algoritmoMultiplesMenciones
+      = new AlgoritmoMultiplesMenciones();
   private Fuente fuente1;
   private Fuente fuente2;
   private final Hecho hecho1 = new Hecho("t1", "desc1", "cat1", 3.3,
@@ -39,14 +40,14 @@ public class CriterioMultiplesMencionesTest {
         3.3, LocalDate.now(), LocalDate.now(), Origen.DATASET);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho2, hecho3));
-    Assertions.assertTrue(criterioAbsoluto.getHechosConsensuados(fuentes).isEmpty());
+    Assertions.assertTrue(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes).isEmpty());
   }
 
   @Test
   void hechoConUnaMencionNoPasa() {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of());
-    Assertions.assertTrue(criterioAbsoluto.getHechosConsensuados(fuentes).isEmpty());
+    Assertions.assertTrue(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes).isEmpty());
   }
 
   @Test
@@ -56,6 +57,6 @@ public class CriterioMultiplesMencionesTest {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho3));
     Assertions.assertEquals(hecho1, hecho3);
-    Assertions.assertEquals(criterioAbsoluto.getHechosConsensuados(fuentes), Set.of(hecho1));
+    Assertions.assertEquals(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes), Set.of(hecho1));
   }
 }

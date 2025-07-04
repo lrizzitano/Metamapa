@@ -6,36 +6,22 @@ import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-public class AlgoritmoConsensoAbsoluto implements AlgoritmoConsenso{
+public class AlgoritmoConsensoAbsoluto implements AlgoritmoConsenso {
 
   @Override
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
+    if (fuentes.isEmpty()) {
+      return Collections.emptySet();
+    }
     Filtro nullFiltro = new NullFiltro();
-
-    Set<Hecho> hechosConsensuadosNuevos = null;
-
-    for (Fuente f : fuentes) {
-      Set<Hecho> hechos = f.obtenerHechos(nullFiltro);
-
-      if (hechosConsensuadosNuevos == null) {
-        // Primera fuente: se inicializa con sus hechos
-        hechosConsensuadosNuevos = new HashSet<>(hechos);
-      } else {
-        // Intersección progresiva
-        hechosConsensuadosNuevos.retainAll(hechos); //VA DEJANDO LA INTERSECCION
-      }
-
-      if (hechosConsensuadosNuevos.isEmpty()) break;
+    Iterator<Fuente> fuenteIterator = fuentes.iterator();
+    Set<Hecho> consensuados = new HashSet<>(fuenteIterator.next().obtenerHechos(nullFiltro));
+    while (fuenteIterator.hasNext() && !consensuados.isEmpty()) {
+      consensuados.retainAll(fuenteIterator.next().obtenerHechos(nullFiltro));
     }
-
-    if (hechosConsensuadosNuevos == null || hechosConsensuadosNuevos.isEmpty()) {
-      hechosConsensuadosNuevos = Collections.emptySet();
-    }
-
-    return hechosConsensuadosNuevos;
+    return consensuados;
   }
-
-
 }

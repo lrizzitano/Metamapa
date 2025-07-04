@@ -17,7 +17,7 @@ public class AlgoritmoMultiplesMenciones implements AlgoritmoConsenso{
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
-    Map<String, List<Hecho>> hechosConsensuadosNuevos = new HashMap<>(); // <nombre, hechos>
+    Map<String, List<Hecho>> hechosConsensuados = new HashMap<>(); // <título, hechos>
 
     for (Fuente f : fuentes) {
       Set<Hecho> hechos = f.obtenerHechos(nullFiltro);
@@ -26,22 +26,11 @@ public class AlgoritmoMultiplesMenciones implements AlgoritmoConsenso{
         // Si no existe el hecho en el hashmap lo agrega
         // Si ya aparecio por otra fuente, le suma uno a las apariciones
         // aguante la tabla de hash
-          hechosConsensuadosNuevos
-              .compute(h.titulo(),
-                  (titulo, hechosEsteTitulo) -> {
-                    if (hechosEsteTitulo == null) {
-                      List<Hecho> nuevaLista = new ArrayList<>();
-                      nuevaLista.add(h);
-                      return nuevaLista;
-                    } else {
-                      hechosEsteTitulo.add(h);
-                      return hechosEsteTitulo;
-                    }
-                  });
+          hechosConsensuados.computeIfAbsent(h.titulo(), t -> new ArrayList<>()).add(h);
       }
     }
 
-    return hechosConsensuadosNuevos.values().stream()
+    return hechosConsensuados.values().stream()
         .filter(hechos -> hechos.size() > 1 && this.compartenAtributos(hechos))
         .map(lista -> lista.get(0))
         .collect(Collectors.toSet());

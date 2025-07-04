@@ -79,6 +79,7 @@ interface AlgoritmoConsenso {
 class Backup {
     -fuenteDinamica
     -pathArchivo
+    -frecuencia
     --
 }
 
@@ -175,6 +176,7 @@ interface Calendarizable {
 class Agregador {
     -fuentes
     -hechos
+    -frecuencia
 }
 
 Administrador -r-|> Usuario

@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -38,8 +39,8 @@ public class BackupTest {
   }
 
   @Test
-  void lanzaExcepcionSiElArchivoNoExiste() {
-    Backup backup = new Backup(Path.of("hola"), LocalDateTime.now());
+  void lanzaExcepcionSiElArchivoPathNoEsValido() {
+    Backup backup = new Backup(Path.of("hola"), LocalDateTime.now(), Duration.ZERO);
     Assertions.assertThrows(RuntimeException.class, backup::actualizar);
   }
 
@@ -53,7 +54,7 @@ public class BackupTest {
         Origen.DATASET);
    when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
    FuenteDinamica.instance().setHechoRepository(repo);
-    Backup backup = new Backup(tempFile, LocalDateTime.now());
+    Backup backup = new Backup(tempFile, LocalDateTime.now(), Duration.ZERO);
     backup.actualizar();
     String json = Files.readString(tempFile);
 
@@ -66,4 +67,22 @@ public class BackupTest {
 
     Assertions.assertEquals(Set.of(hecho1, hecho2),  gson.fromJson(json, setType));
   }
+
+
+
+  //Verificamos que escriba a un archivo real
+  /*
+  @Test
+  void estoNoEsUnTest() {
+    HechoRepository repo = mock(HechoRepository.class);
+    Hecho hecho1 = new Hecho("titulo1", "desc1", "cat1", 1.0,
+        2.0, LocalDate.now(), LocalDate.now(), Origen.DATASET);
+    Hecho hecho2 = new Hecho("titulo2", "desc2", "cat2", 2.0,
+        4.0, LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+        Origen.DATASET);
+    when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
+    FuenteDinamica.instance().setHechoRepository(repo);
+    Backup backup = new Backup(Path.of("./test.json"), LocalDateTime.now(), Duration.ZERO);
+    backup.actualizar();
+  }*/
 }
