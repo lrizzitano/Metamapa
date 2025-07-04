@@ -6,11 +6,16 @@ Decisiones de Diseño
 - [Usuario y Administrador](#usuario-y-administrador)
 - [Hecho](#hecho)
 - [Colección](#colección)
-- [Solicitudes](#solicitudes)
+- [Solicitudes](#solicitudes-de-eliminación)
 - [Filtros](#filtros)
 - [Fuente Estática](#fuente-estática)
-- Fuente Proxy
-- Fuente Demo
+- [Fuente Proxy](#fuente-proxy)
+- [Fuente Demo](#fuente-demo)
+- [Detector de Spam](#bonus-detector-de-spam)
+- [Calendarización](#calendarizacion)
+- [Algoritmos de Consenso](#algoritmos-de-consenso)
+- [Agregadores](#agregadores)
+- [Propuesta de Requerimiento](#propuesta-de-requerimiento)
 
 
 # Usuario y Administrador
@@ -110,7 +115,7 @@ Como existen fuertes diferencias entre cada fuente proxy, ya sea por que protoco
 
 Esta clase representa una fuente proxy genérica que se actualiza de forma periódica y automática. Mantiene internamente un `Set<Hecho>` que va enriqueciendo con nuevos datos obtenidos desde la fuente remota.
 
-Actua de observer frente al `ActualizadorFuentesCalendarizadas`, cuando es notificada por el actualizador, actualiza sus hechos trayendo aquellos que no fueron cargados desde la ultima llamada.
+Actua de observer frente al `ActualizadorCalendarizables`, cuando es notificada por el actualizador, actualiza sus hechos trayendo aquellos que no fueron cargados desde la ultima llamada.
 
 Se define como una clase abstracta, para permitir extender este comportamiento a nuevas fuentes que se actualicen periódicamente, teniendo en cuenta que la única implementación concreta actual es una demo. Para utilizarla se debe implementar un único método abstracto:
 
@@ -120,20 +125,19 @@ protected abstract List<Hecho> getNewHechos(Instant ultimaLlamada);
 
 Este método debe retornar una lista de hechos nuevos desde el momento de la última consulta. Si no hay más elementos, debe retornar null o una lista vacía.
 
-### Actualizador de Fuentes Calendarizadas
-
-Oficia de _"subject"_ frente a las fuentes calendarizadas a través de una estructura similar al patrón observer mediante la cual el actualizador se encarga de llevar el control del tiempo transcurrido y notificar a todas las fuentes suscriptas a él cada vez que se cumple el intervalo de tiempo connfigurado.\
-De esta manera, se delega la responsabilidad del manejo de las actualizaciones de las fuentes a un objeto central sin acoplamiento innecesario, ya que éste expone la interfaz necesaria para suscribir y desuscribir fuentes y opera polimórficamente sobre la lista de fuentes suscriptas a la hora de notificar el evento.\
-Además, permite tener un manejo centralizado de los tiempos de actualización de las fuentes, permitiendo cambiarlo en tiempo de ejecución (reiniciando el timer interno pero manteniendo la lista de fuentes suscriptas) y evitando el procesamiento innecesario de tener un timer activo por cada fuente calendarizada del sistema.
-
-De momento, ya que solo tenemos ún tipo de fuente calendarizada, el sistema posee un solo actualizador como singleton que actualiza a todas las fuentes con una misma frecuencia configurable. Pero si en próximas iteraciones hubiera un requerimiento de actualizar diferentes fuentes con diferentes frecuencias se puede modificar para abandonar el patrón singleton y poder tener múltiples instancias de actualizadores con difetentes intervalos de tiempo.
-
 ### Fuente Demo
 
 Simula una fuente conectada a una API ficticia llamada Conexión. Esta API devuelve hechos en forma de `Map<String, Object>`, los cuales son transformados a objetos Hecho. \
-Esta clase hereda de `FuenteProxyCalendarizada`, por lo que es suceptible de ser notificada por el actualizador de fuentes calendarizadas que por defecto esta configurado para actualizar las fuentes una vez por hora.\
+Esta clase implemente la interfaz `Calendarizable`, por lo que es suceptible de ser notificada por el `ActualizadorCalendarizables` y esta configurada para actualizar las fuentes una vez por hora.\
 
-## Fuente Dinamica
+## Fuente MetaMapa
+
+Para consumir la API REST de otra fuente MetaMapa, utilizamos la biblioteca Retrofit, la cual se encarga de gestionar de manera declarativa en el envío y recibimiento de HTTP request y HTTP response respectivamente. Para ello, fue necesario crear la interfaz `IMetaMapa`, la cual define los endpoints a consumir con sus respectivos verbos, paths y query parameters (los cuales se envían con `Map<String,String>` para aplicar múltiples filtros), siendo la clase `FuenteMetaMapa` quien utiliza la instancia de Retrofit para consumir la API. A su vez, esta biblioteca utiliza GSON para crear los JSON. GSON no puede parsear campos privados de clases internas como LocalDate y Path, por lo tanto tuvimos que inyectarle a nuestra instancia de Retrofit dentro de `ServicioMetaMapa` un `gson` especial, que utiliza las clases `PathAdapter` y `LocalDateAdapter` para manejar esos tipos de datos. 
+Dotamos a la clase `ServicioMetaMapa` del parametro `urlAPI` para poder diferenciar las diferentes instancias de MetaMapa a las que estamos conectados.
+
+Para el testeo utilizamos la biblioteca WireMock, la cual mockea una API REST levantando un servidor en puerto propio, con el fin de testear la funcionalidad del modulo completo.
+
+# Fuente Dinamica
 
 En esta entrega se solicito la implementacion de una fuente dinamica en la cual los usuarios podran cargar sus hechos.
 
@@ -150,7 +154,7 @@ Estos repositorios son inyectados por setters, debido a que la fuente es un sing
 Existen por lo tanto la clase `HechosFuenteDinamica` que implementa la interfaz de `HechosRepository`, y que por el momento es donde se almacenan los hechos de la fuente dinamica.
 Siguiendo esta logica, existe la clase `SolicitudesFuenteDinamica` que implementa la interfaz `SolicitudesDeCambioRepository`, alli se guardaran las solicitudes de cambio correspondientes a la fuente dinamica en memoria.
 
-### Solicitud de cambio
+## Solicitud de cambio
 
 Se requirio la posibilidad de solicitar cambios en un hecho subido anteriormente dentro de una fuente dinamica.
 
@@ -164,14 +168,6 @@ se podria llegar facilmente a las solicitudes de un usuario especifico y ver las
 
 Las solicitudes tienen como atributo a la fuente dinamica que por el momento es la unica fuente que acepta estas solicitudes. Aceptar una solicitud de cambio, eliminara el Hecho a modificar y agregara
 el nuevo. Rechazar la solicitud no realizara el cambio. En cualquier caso las solicitudes se almacenan.
-
-## Fuente MetaMapa
-
-Para consumir la API REST de otra fuente MetaMapa, utilizamos la biblioteca Retrofit, la cual se encarga de gestionar de manera declarativa en el envío y recibimiento de HTTP request y HTTP response respectivamente. Para ello, fue necesario crear la interfaz `IMetaMapa`, la cual define los endpoints a consumir con sus respectivos verbos, paths y query parameters (los cuales se envían con `Map<String,String>` para aplicar múltiples filtros), siendo la clase `FuenteMetaMapa` quien utiliza la instancia de Retrofit para consumir la API. A su vez, esta biblioteca utiliza GSON para crear los JSON. GSON no puede parsear campos privados de clases internas como LocalDate y Path, por lo tanto tuvimos que inyectarle a nuestra instancia de Retrofit dentro de `ServicioMetaMapa` un `gson` especial, que utiliza las clases `PathAdapter` y `LocalDateAdapter` para manejar esos tipos de datos. 
-Dotamos a la clase `ServicioMetaMapa` del parametro `urlAPI` para poder diferenciar las diferentes instancias de MetaMapa a las que estamos conectados.
-
-Para el testeo utilizamos la biblioteca WireMock, la cual mockea una API REST levantando un servidor en puerto propio, con el fin de testear la funcionalidad del modulo completo.
-
 
 # BONUS: Detector de Spam
 
