@@ -20,11 +20,11 @@ public class Agregador implements Calendarizable, Fuente {
     this.proximaActualizacion = proximaActualizacion;
   }
 
-  public void agreggarFuente(Fuente fuente){
+  public void agregarFuente(Fuente fuente){
     this.fuentes.add(fuente);
   }
 
-  public void elimnarFuente(Fuente fuente){
+  public void eliminarFuente(Fuente fuente){
     this.fuentes.remove(fuente);
   }
 
