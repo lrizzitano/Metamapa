@@ -6,19 +6,16 @@ left to right direction
 
 node "Agregador" {
 
-    database Colecciones
-    database SolicitudesDeEliminacion
+    database hechos
 
     interface "Aceptar/RechazarSolicitudDeEliminacion(solicitud)" as interfazSolicitudesEliminacion
-    interface "Contribuir(hecho) / \n AgregarSolicitud(solicitud)" as interfazContribucion
-    interface "VerHechosFiltrados(coleccion, filtro)"
+    interface "ObtenerHechos(filtro)"
 
-    [Dominio] -- Colecciones
-    [Dominio] -- SolicitudesDeEliminacion
-    interfazSolicitudesEliminacion -- [Dominio]
+    interfazSolicitudesEliminacion -- [Modelo]
 
-    "VerHechosFiltrados(coleccion, filtro)" -- [Dominio]
-    interfazContribucion -- [Dominio]
+    "ObtenerHechos(filtro)" -- [Modelo]
+
+    [Modelo] -- hechos
 }
 
 node "FuenteEstatica" {
@@ -32,7 +29,7 @@ node "FuenteEstatica" {
     InterfazFuenteEstatica -- procesadorFuenteEstatica
     procesadorFuenteEstatica  -- Archivo
 
-    [Dominio] -- InterfazFuenteEstatica
+    [Modelo] -- InterfazFuenteEstatica
 }
 
 node "FuenteProxy" {
@@ -41,7 +38,7 @@ node "FuenteProxy" {
     [Procesador] as procesadorFuenteProxy
 
     InterfazFuenteProxy -- procesadorFuenteProxy
-    [Dominio] -- InterfazFuenteProxy
+    [Modelo] -- InterfazFuenteProxy
 
 }
 
@@ -61,7 +58,7 @@ node "FuenteDinamica" {
     procesadorFuenteDinamica -- Hechos
     procesadorFuenteDinamica -- SolicitudesDeCambio
 
-    [Dominio] -- interfazFuenteDinamica
+    [Modelo] -- interfazFuenteDinamica
 }
 
 
@@ -70,8 +67,7 @@ node "FuenteDinamica" {
  procesadorFuenteProxy -- conexion
 
  actor "Usuario" as user
- user -- interfazContribucion
- user -- "VerHechosFiltrados(coleccion, filtro)"
+ user -- "ObtenerHechos(filtro)"
 
  Actor "Administrador" as admin
  user <|- admin
