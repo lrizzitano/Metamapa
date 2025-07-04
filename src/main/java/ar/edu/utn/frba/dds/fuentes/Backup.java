@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
 import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,13 +19,15 @@ public class Backup implements Calendarizable {
   private final Gson gson;
   private final Fuente fuenteDinamica = FuenteDinamica.instance();
   private LocalDateTime proximaActualizacion;
+  private Duration frecuencia;
 
-  public Backup(Path archivo, LocalDateTime proximaActualizacion) {
+  public Backup(Path archivo, LocalDateTime proximaActualizacion, Duration frecuencia) {
     this.archivo = archivo;
+    this.frecuencia = frecuencia;
     this.gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
-        .create();
+        .setPrettyPrinting().create();
     this.proximaActualizacion = proximaActualizacion;
   }
 
@@ -45,6 +48,10 @@ public class Backup implements Calendarizable {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-    this.proximaActualizacion = LocalDateTime.now().plusHours(3);
+    this.proximaActualizacion = LocalDateTime.now().plus(this.frecuencia);
+  }
+
+  public void setFrecuencia(Duration frecuencia) {
+    this.frecuencia = frecuencia;
   }
 }

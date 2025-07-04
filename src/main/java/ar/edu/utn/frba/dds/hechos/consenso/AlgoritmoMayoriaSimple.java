@@ -15,7 +15,7 @@ public class AlgoritmoMayoriaSimple implements AlgoritmoConsenso{
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
     Filtro nullFiltro = new NullFiltro();
 
-    Map<Hecho,Integer> hechosConsensuadosNuevos = new HashMap<>();
+    Map<Hecho,Integer> hechosConsensuados = new HashMap<>();
 
     for (Fuente f : fuentes) {
       Set<Hecho> hechos = f.obtenerHechos(nullFiltro);
@@ -24,16 +24,15 @@ public class AlgoritmoMayoriaSimple implements AlgoritmoConsenso{
         // Si no existe el hecho en el hashmap lo agrega
         // Si ya aparecio por otra fuente, le suma uno a las apariciones
         // aguante la tabla de hash
-        hechosConsensuadosNuevos
-            .compute(h, (clave, apariciones) -> apariciones == null ? 1 : apariciones + 1);
+        hechosConsensuados.merge(h, 1, Integer::sum);
       }
 
     }
 
-    int cantidadFuentes = (int) ceil((double) fuentes.size() /2);
+    int cantidadFuentes = (int) ceil( fuentes.size() /2.0);
 
-    // Filtramos los hechos que aparezcan en mas de la mitad de las fuentes
-    return hechosConsensuadosNuevos.entrySet().stream()
+    // Filtramos los hechos que aparezcan en más de la mitad de las fuentes
+    return hechosConsensuados.entrySet().stream()
         .filter(entrada -> entrada.getValue() >= cantidadFuentes)
         .map(Map.Entry::getKey)
         .collect(Collectors.toSet());

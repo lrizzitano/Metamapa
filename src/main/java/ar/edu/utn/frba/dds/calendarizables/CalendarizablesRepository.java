@@ -11,10 +11,13 @@ public class CalendarizablesRepository {
   private final Duration margen = Duration.ofMinutes(5);
   private final Set<Calendarizable> fuentesCalendarizables = new HashSet<>();
 
-  private CalendarizablesRepository() {}
+  private CalendarizablesRepository() {
+  }
   private static final CalendarizablesRepository instance = new CalendarizablesRepository();
 
-  public static CalendarizablesRepository instance() {return instance;}
+  public static CalendarizablesRepository instance() {
+    return instance;
+  }
 
   public List<Calendarizable> getPendientesDeActualizar() {
     LocalDateTime ahora  = LocalDateTime.now();

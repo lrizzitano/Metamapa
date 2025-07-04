@@ -11,7 +11,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CriterioAbsolutoTest {
+public class AlgoritmoConsensoAbsolutoTest {
   private final AlgoritmoConsensoAbsoluto criterioAbsoluto = new AlgoritmoConsensoAbsoluto();
   private Fuente fuente1;
   private Fuente fuente2;

@@ -14,6 +14,7 @@ rectangle #line.dashed {
  usecase "Crear hecho" as UC5
  usecase "Editar hecho" as UC6
  usecase "Eliminar hecho de Fuente Dinámica" as UC7
+ usecase "Asocia algoritmo de \n consenso a una coleccion" as UC8
 
  usecase "Generar solicitud" as UC1.1
 }
@@ -23,6 +24,7 @@ Administrador -- UC2
 Administrador -- UC3
 Administrador -- UC4
 Administrador -- UC7
+Administrador -- UC8
 Contribuyente -- UC5
 Contribuyente -- UC6
 

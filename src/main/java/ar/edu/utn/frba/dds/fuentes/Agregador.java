@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,17 +15,19 @@ public class Agregador implements Calendarizable, Fuente {
   private final Set<Fuente> fuentes;
   private Set<Hecho> hechos = Set.of();
   private LocalDateTime proximaActualizacion;
+  private Duration frecuencia;
 
-  public Agregador(Set<Fuente> fuentes, LocalDateTime proximaActualizacion) {
+  public Agregador(Set<Fuente> fuentes, LocalDateTime proximaActualizacion, Duration frecuencia) {
     this.fuentes = new HashSet<>(fuentes);
     this.proximaActualizacion = proximaActualizacion;
+    this.frecuencia = frecuencia;
   }
 
-  public void agregarFuente(Fuente fuente){
+  public void agregarFuente(Fuente fuente) {
     this.fuentes.add(fuente);
   }
 
-  public void eliminarFuente(Fuente fuente){
+  public void eliminarFuente(Fuente fuente) {
     this.fuentes.remove(fuente);
   }
 
@@ -42,13 +45,17 @@ public class Agregador implements Calendarizable, Fuente {
         .flatMap(f -> f.obtenerHechos(filtroNull).stream())
         .collect(Collectors.toSet());
 
-    this.proximaActualizacion = LocalDateTime.now().plusHours(4);
+    this.proximaActualizacion = LocalDateTime.now().plus(this.frecuencia);
   }
 
   @Override
-  public Set<Hecho> obtenerHechos(Filtro filtro){
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
     return this.hechos.stream()
         .filter(filtro.getAsPredicate()).collect(Collectors.toSet());
+  }
+
+  public void setFrecuencia(Duration frecuencia) {
+    this.frecuencia = frecuencia;
   }
 }
 

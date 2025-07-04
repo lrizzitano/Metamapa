@@ -19,7 +19,7 @@ public class Coleccion {
   private final FiltroCompuesto criterioDePertenencia;
   private final Fuente fuente;
   private final String id = UUID.randomUUID().toString();
-  private final CriterioConsenso criterioConsenso;
+  private CriterioConsenso criterioConsenso;
   private final SolicitudDeEliminacionRepository solicitudes;
 
   public Coleccion(String titulo, String descripcion,
@@ -46,6 +46,10 @@ public class Coleccion {
 
   public String getId() {
     return id;
+  }
+
+  public void setCriterioConsenso(CriterioConsenso criterioConsenso) {
+    this.criterioConsenso = criterioConsenso;
   }
 
   public Set<Hecho> hechos(Filtro filtro) {

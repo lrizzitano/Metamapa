@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +24,7 @@ public class AgregadorTest {
     fuente1 = mock(Fuente.class);
     fuente2 = mock(Fuente.class);
     Set<Fuente> fuentes = Set.of(fuente1, fuente2);
-    agregador = new Agregador(fuentes, LocalDateTime.now());
+    agregador = new Agregador(fuentes, LocalDateTime.now(), Duration.ZERO);
   }
 
   @Test
