@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class AlgoritmoConsensoAbsoluto implements AlgoritmoConsenso {
+public class AlgoritmoConsensoAbsoluto extends AlgoritmoConsenso {
 
   @Override
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {

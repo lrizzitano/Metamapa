@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class Coleccion {
   private final String titulo;
   private final String descripcion;
-  private final FiltroCompuesto criterioDePertenencia;
+  private final Filtro criterioDePertenencia;
   private final Fuente fuente;
   private final String id = UUID.randomUUID().toString();
   private Consenso criterioConsenso;
@@ -30,8 +30,7 @@ public class Coleccion {
     this.descripcion = requireNonNull(descripcion);
     this.criterioConsenso = requireNonNull(criterioConsenso);
     requireNonNull(criterioDePertenencia);
-    this.criterioDePertenencia =
-        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+    this.criterioDePertenencia = criterioDePertenencia;
     this.fuente = requireNonNull(fuente);
     this.solicitudes = solicitudes;
   }
@@ -64,7 +63,9 @@ public class Coleccion {
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
     Set<Hecho> eliminados = solicitudes.hechosEliminados();
-    return fuente.obtenerHechos(criterioDePertenencia.and(filtro)).stream()
+    FiltroCompuesto filtroCompuesto =
+        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+    return fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
         .filter(h -> !eliminados.contains(h));
   }
 }

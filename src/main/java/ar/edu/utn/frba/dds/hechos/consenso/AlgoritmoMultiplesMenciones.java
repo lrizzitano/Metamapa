@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AlgoritmoMultiplesMenciones implements AlgoritmoConsenso{
+public class AlgoritmoMultiplesMenciones extends AlgoritmoConsenso{
 
   @Override
   public Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes) {
