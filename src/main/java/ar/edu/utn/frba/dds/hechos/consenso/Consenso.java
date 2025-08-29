@@ -1,22 +1,20 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CriterioConsenso implements Calendarizable {
+public class Consenso implements Calendarizable {
   private final FuentesRepository fuentes = FuentesRepository.instance();
   private final AlgoritmoConsenso algoritmoConsenso;
   private Set<Hecho> hechosConsensuados = new HashSet<>();
   private LocalDate proximaActualizacion;
 
-  public CriterioConsenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
+  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
     this.algoritmoConsenso = algoritmoConsenso;
     this.proximaActualizacion = proximaActualizacion;
   }

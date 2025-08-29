@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.consenso.CriterioConsenso;
+import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
 import java.util.Collections;
 import java.util.Set;
@@ -19,12 +19,12 @@ public class Coleccion {
   private final FiltroCompuesto criterioDePertenencia;
   private final Fuente fuente;
   private final String id = UUID.randomUUID().toString();
-  private CriterioConsenso criterioConsenso;
+  private Consenso criterioConsenso;
   private final SolicitudDeEliminacionRepository solicitudes;
 
   public Coleccion(String titulo, String descripcion,
                    Filtro criterioDePertenencia,
-                   Fuente fuente, CriterioConsenso criterioConsenso,
+                   Fuente fuente, Consenso criterioConsenso,
                    SolicitudDeEliminacionRepository solicitudes) {
     this.titulo = requireNonNull(titulo);
     this.descripcion = requireNonNull(descripcion);
@@ -48,7 +48,7 @@ public class Coleccion {
     return id;
   }
 
-  public void setCriterioConsenso(CriterioConsenso criterioConsenso) {
+  public void setCriterioConsenso(Consenso criterioConsenso) {
     this.criterioConsenso = criterioConsenso;
   }
 
