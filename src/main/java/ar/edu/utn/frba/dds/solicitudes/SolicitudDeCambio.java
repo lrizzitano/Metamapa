@@ -7,15 +7,39 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 
+@Entity
 public class SolicitudDeCambio {
 
-  private final Hecho hechoParacambiar;
-  private final Hecho hechoModificado;
-  private  String sugerencias;
-  private final Usuario usuario;
-  private Administrador responsable;
-  private final FuenteDinamica fuente = FuenteDinamica.instance();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  public Long id;
+
+  @Transient
+  private  Hecho hechoParacambiar;
+
+  @Transient
+  private  Hecho hechoModificado;
+
+  @Column
+  private String sugerencias;
+
+  @Transient
+  private  Usuario usuario;
+
+  @Transient
+  private  Administrador responsable;
+
+  @Transient
+  private  FuenteDinamica fuente = FuenteDinamica.instance();
+
+  public SolicitudDeCambio(){}
 
   public SolicitudDeCambio(Hecho hechoParacambiar, Hecho hechoModificado, Usuario usuario) {
     if (hechoParacambiar.fechaCarga().isBefore(LocalDate.now().minusDays(7))) {
@@ -68,4 +92,9 @@ public class SolicitudDeCambio {
     this.responsable = administrador;
     fuente.rechazarSolicitudDeCambio(this);
   }
+
+  public Long getId() {
+    return id;
+  }
+
 }
