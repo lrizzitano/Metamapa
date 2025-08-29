@@ -1,0 +1,104 @@
+@startuml
+
+' Single Table Usuario - Administrador
+entity Usuario {
+    id <<generated>>
+    --
+    nombre <<nullable>>
+    apellido <<nullable>>
+    edad <<nullable>>
+    esContribuyente
+    esAdministrador <<discriminador>>
+}
+
+entity SolicitudDeEliminación {
+    id <<generated>>
+    --
+    hecho_id <<FK>>
+    fundamentacion
+    responsable_id <<FK>>
+}
+
+entity Hecho {
+    id <<generated>>
+    --
+    titulo
+    descripcion
+    categoria
+    latitud
+    longitud
+    fechaAcontecimiento
+    fechaCarga
+    origen <<enum>>
+    'Cambiar el nombre para diferenciarlo del de la clase??
+    usuario_id <<FK>> <<nullable>>
+    multimedia <<nullable>>
+}
+
+entity Coleccion {
+    id <<generated>>
+    --
+    titulo
+    descripcion
+    criterioPertenencia_id <<FK>>
+    criterioConsenso_id <<FK>>
+    fuente <<FK>>
+}
+
+entity CriterioConsenso {
+    id <<generated>>
+    --
+}
+
+
+
+' Joined entre Filtro y sus subtipos
+entity Filtro {
+    id <<generated>>
+    --
+}
+
+entity FiltroCompuesto {
+    id <<FK>> <<generated>>
+    --
+}
+
+entity FiltroCategoria {
+    id <<FK>> <<generated>>
+    --
+    categoria
+}
+
+entity FiltroFechaDesde {
+    id <<FK>> <<generated>>
+    --
+    fecha
+}
+
+entity FiltroFechaHasta {
+    id <<FK>> <<generated>>
+    --
+    fecha
+}
+
+entity FiltroPorFiltroCompuesto {
+    Filtro_id <<FK>>
+    FiltroCompuesto_id <<FK>>
+    --
+}
+
+
+SolicitudDeEliminación }o--|| Usuario
+Hecho }o--o| Usuario
+
+Coleccion }o--|| CriterioConsenso
+Coleccion }o-l-|| Filtro
+
+Filtro ||--o{ FiltroCategoria
+Filtro ||--o{ FiltroFechaDesde
+Filtro ||--o{ FiltroFechaHasta
+Filtro ||--o{ FiltroCompuesto
+
+Filtro ||-l-o{ FiltroPorFiltroCompuesto
+FiltroCompuesto ||--o{ FiltroPorFiltroCompuesto
+ @enduml
