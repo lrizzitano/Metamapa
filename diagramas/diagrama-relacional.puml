@@ -45,60 +45,53 @@ entity Coleccion {
     fuente <<FK>>
 }
 
-entity CriterioConsenso {
+entity Consenso {
     id <<generated>>
     --
+    discriminador
 }
 
+entity AlgoritmoConsenso {
+    id <<generated>>
+    --
+    discriminador
+}
 
-
-' Joined entre Filtro y sus subtipos
 entity Filtro {
     id <<generated>>
     --
-}
-
-entity FiltroCompuesto {
-    id <<FK>> <<generated>>
-    --
-}
-
-entity FiltroCategoria {
-    id <<FK>> <<generated>>
-    --
+    discriminador
     categoria
-}
-
-entity FiltroFechaDesde {
-    id <<FK>> <<generated>>
-    --
-    fecha
-}
-
-entity FiltroFechaHasta {
-    id <<FK>> <<generated>>
-    --
     fecha
 }
 
 entity FiltroPorFiltroCompuesto {
     Filtro_id <<FK>>
-    FiltroCompuesto_id <<FK>>
+    Componente_id <<FK>>
     --
 }
 
+entity Fuente {
+    id <<generated>>
+    --
+
+}
 
 SolicitudDeEliminación }o--|| Usuario
 Hecho }o--o| Usuario
 
-Coleccion }o--|| CriterioConsenso
+Coleccion }o--|| Consenso
 Coleccion }o-l-|| Filtro
 
-Filtro ||--o{ FiltroCategoria
-Filtro ||--o{ FiltroFechaDesde
-Filtro ||--o{ FiltroFechaHasta
-Filtro ||--o{ FiltroCompuesto
+
 
 Filtro ||-l-o{ FiltroPorFiltroCompuesto
-FiltroCompuesto ||--o{ FiltroPorFiltroCompuesto
- @enduml
+Filtro ||--o{ FiltroPorFiltroCompuesto
+
+Consenso }o--|| AlgoritmoConsenso
+
+Coleccion }o--|| Fuente
+
+
+
+@enduml
