@@ -9,9 +9,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio</class>
-
-
-
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsenso</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsensoAbsoluto</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMayoriaSimple</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMultiplesMenciones</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

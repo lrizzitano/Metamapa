@@ -3,12 +3,16 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.ceil;
 
+@Entity
+@DiscriminatorValue("mayoriaSimple")
 public class AlgoritmoMayoriaSimple extends AlgoritmoConsenso{
 
   @Override
