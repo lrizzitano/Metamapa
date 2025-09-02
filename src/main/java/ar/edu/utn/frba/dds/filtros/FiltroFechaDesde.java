@@ -5,17 +5,19 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class FiltroFechaDesde implements Filtro {
+public class FiltroFechaDesde extends Filtro {
   private final LocalDate fecha;
 
   public FiltroFechaDesde(LocalDate fecha) {
     this.fecha = fecha;
   }
 
+  @Override
   public Predicate<Hecho> getAsPredicate() {
     return hecho -> hecho.fechaAcontecimiento().isAfter(fecha);
   }
 
+  @Override
   public Map<String, String> toQueryParam() {
     return Map.of("fechaDesde", fecha.toString());
   }

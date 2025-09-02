@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class FiltroCompuesto implements Filtro {
+public class FiltroCompuesto extends Filtro {
   private final List<Filtro> filtros;
 
   public FiltroCompuesto() {
@@ -23,6 +23,7 @@ public class FiltroCompuesto implements Filtro {
     return this;
   }
 
+  @Override
   public Predicate<Hecho> getAsPredicate() {
     return filtros.stream().map(Filtro::getAsPredicate)
         .reduce(Predicate::and).orElse(hecho -> true);

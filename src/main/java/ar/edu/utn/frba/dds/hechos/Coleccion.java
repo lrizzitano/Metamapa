@@ -39,12 +39,14 @@ public class Coleccion{
   @Column(name = "descripcion",nullable = false)
   private String descripcion;
 
-  @ManyToOne
-  @JoinColumn(name = "criterioDePertenencia",nullable = false)
+  @Transient
+  //@ManyToOne
+  //@JoinColumn(name = "criterioDePertenencia",nullable = false)
   private Filtro criterioDePertenencia;
 
-  @ManyToOne
-  @JoinColumn(name = "fuente",nullable = false)
+  @Transient
+  //@ManyToOne
+  //@JoinColumn(name = "fuente",nullable = false)
   private Fuente fuente;
 
   @Transient

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 public class FiltroCompuestoTest {
-  static class siempreFalse implements Filtro {
+  static class siempreFalse extends Filtro {
     public Predicate<Hecho> getAsPredicate() {
       return hecho -> false;
     }

@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public interface Filtro {
-  Predicate<Hecho> getAsPredicate();
+public abstract class Filtro {
 
-  Map<String, String> toQueryParam();
+  abstract public Predicate<Hecho> getAsPredicate();
+
+  abstract public Map<String, String> toQueryParam();
+
 }
 
 
