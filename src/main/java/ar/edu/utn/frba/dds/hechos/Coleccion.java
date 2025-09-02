@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.consenso.CriterioConsenso;
+import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
 import java.util.Collections;
 import java.util.Set;
@@ -16,22 +16,21 @@ import java.util.stream.Stream;
 public class Coleccion {
   private final String titulo;
   private final String descripcion;
-  private final FiltroCompuesto criterioDePertenencia;
+  private final Filtro criterioDePertenencia;
   private final Fuente fuente;
   private final String id = UUID.randomUUID().toString();
-  private CriterioConsenso criterioConsenso;
+  private Consenso criterioConsenso;
   private final SolicitudDeEliminacionRepository solicitudes;
 
   public Coleccion(String titulo, String descripcion,
                    Filtro criterioDePertenencia,
-                   Fuente fuente, CriterioConsenso criterioConsenso,
+                   Fuente fuente, Consenso criterioConsenso,
                    SolicitudDeEliminacionRepository solicitudes) {
     this.titulo = requireNonNull(titulo);
     this.descripcion = requireNonNull(descripcion);
     this.criterioConsenso = requireNonNull(criterioConsenso);
     requireNonNull(criterioDePertenencia);
-    this.criterioDePertenencia =
-        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+    this.criterioDePertenencia = criterioDePertenencia;
     this.fuente = requireNonNull(fuente);
     this.solicitudes = solicitudes;
   }
@@ -48,7 +47,7 @@ public class Coleccion {
     return id;
   }
 
-  public void setCriterioConsenso(CriterioConsenso criterioConsenso) {
+  public void setCriterioConsenso(Consenso criterioConsenso) {
     this.criterioConsenso = criterioConsenso;
   }
 
@@ -64,7 +63,9 @@ public class Coleccion {
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
     Set<Hecho> eliminados = solicitudes.hechosEliminados();
-    return fuente.obtenerHechos(criterioDePertenencia.and(filtro)).stream()
+    FiltroCompuesto filtroCompuesto =
+        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+    return fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
         .filter(h -> !eliminados.contains(h));
   }
 }

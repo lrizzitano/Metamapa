@@ -14,12 +14,12 @@ import static org.mockito.Mockito.when;
 public class CriterioConsensoTest {
   private final Hecho hecho = mock(Hecho.class);
   private AlgoritmoConsenso algoritmo;
-  private CriterioConsenso criterio;
+  private Consenso criterio;
 
   @BeforeEach
   void setUp() {
     algoritmo = mock(AlgoritmoConsenso.class);
-    criterio = new CriterioConsenso(algoritmo, LocalDate.now());
+    criterio = new Consenso(algoritmo, LocalDate.now());
 
   }
 

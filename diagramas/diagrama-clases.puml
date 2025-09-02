@@ -49,7 +49,7 @@ class Coleccion {
     +descripcion
     +id
     -criterioDePertenencia
-    -criterioConsenso
+    -consenso
     -fuente
     --
     +hechos(filtro)
@@ -57,7 +57,7 @@ class Coleccion {
     -streamFiltradaBase(filtro)
 }
 
-class CriterioConsenso {
+class Consenso {
     -hechosConsensuados
     -fuentesRepository
     -AlgoritmoConsenso
@@ -184,9 +184,9 @@ Administrador -r-|> Usuario
 
 Coleccion --> Fuente
 Coleccion .r.> Filtro
-Coleccion --> CriterioConsenso
+Coleccion --> Consenso
 
-CriterioConsenso -[hidden]l- Filtro
+Consenso -[hidden]l- Filtro
 
 Fuente -l-> "*" Hecho
 Fuente .r.>Filtro
@@ -200,10 +200,10 @@ FuenteDinamica .u.|> Fuente
 FuenteDinamica --> HechoRepository
 FuenteDinamica --> SolicitudDeCambioRepository
 
-CriterioConsenso ..|> Calendarizable
-CriterioConsenso -u-> FuentesRepository
-CriterioConsenso --* AlgoritmoConsenso
-NullConsenso --|> CriterioConsenso
+Consenso ..|> Calendarizable
+Consenso -u-> FuentesRepository
+Consenso --* AlgoritmoConsenso
+NullConsenso --|> Consenso
 
 Agregador .u.|> Calendarizable
 

@@ -1,24 +1,48 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import java.time.Duration;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CriterioConsenso implements Calendarizable {
+@Entity
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "esNull")
+@DiscriminatorValue("consenso")
+public class Consenso implements Calendarizable {
+  @Transient
   private final FuentesRepository fuentes = FuentesRepository.instance();
-  private final AlgoritmoConsenso algoritmoConsenso;
+
+  @OneToOne
+  private AlgoritmoConsenso algoritmoConsenso;
+
+  @Transient
   private Set<Hecho> hechosConsensuados = new HashSet<>();
+
+  @Column
   private LocalDate proximaActualizacion;
 
-  public CriterioConsenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
+  @Id
+  private Long id;
+
+  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
     this.algoritmoConsenso = algoritmoConsenso;
     this.proximaActualizacion = proximaActualizacion;
+  }
+
+  public Consenso() {
   }
 
   @Override

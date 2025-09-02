@@ -70,8 +70,7 @@ public class BackupTest {
 
 
 
-  //Verificamos que escriba a un archivo real
-  /*
+
   @Test
   void estoNoEsUnTest() {
     HechoRepository repo = mock(HechoRepository.class);
@@ -84,5 +83,5 @@ public class BackupTest {
     FuenteDinamica.instance().setHechoRepository(repo);
     Backup backup = new Backup(Path.of("./test.json"), LocalDateTime.now(), Duration.ZERO);
     backup.actualizar();
-  }*/
+  }
 }

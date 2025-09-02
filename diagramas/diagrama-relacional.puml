@@ -1,0 +1,97 @@
+@startuml
+
+' Single Table Usuario - Administrador
+entity Usuario {
+    id <<generated>>
+    --
+    nombre <<nullable>>
+    apellido <<nullable>>
+    edad <<nullable>>
+    esContribuyente
+    esAdministrador <<discriminador>>
+}
+
+entity SolicitudDeEliminación {
+    id <<generated>>
+    --
+    hecho_id <<FK>>
+    fundamentacion
+    responsable_id <<FK>>
+}
+
+entity Hecho {
+    id <<generated>>
+    --
+    titulo
+    descripcion
+    categoria
+    latitud
+    longitud
+    fechaAcontecimiento
+    fechaCarga
+    origen <<enum>>
+    'Cambiar el nombre para diferenciarlo del de la clase??
+    usuario_id <<FK>> <<nullable>>
+    multimedia <<nullable>>
+}
+
+entity Coleccion {
+    id <<generated>>
+    --
+    titulo
+    descripcion
+    criterioPertenencia_id <<FK>>
+    criterioConsenso_id <<FK>>
+    fuente <<FK>>
+}
+
+entity Consenso {
+    id <<generated>>
+    --
+    discriminador
+}
+
+entity AlgoritmoConsenso {
+    id <<generated>>
+    --
+    discriminador
+}
+
+entity Filtro {
+    id <<generated>>
+    --
+    discriminador
+    categoria
+    fecha
+}
+
+entity FiltroPorFiltroCompuesto {
+    Filtro_id <<FK>>
+    Componente_id <<FK>>
+    --
+}
+
+entity Fuente {
+    id <<generated>>
+    --
+
+}
+
+SolicitudDeEliminación }o--|| Usuario
+Hecho }o--o| Usuario
+
+Coleccion }o--|| Consenso
+Coleccion }o-l-|| Filtro
+
+
+
+Filtro ||-l-o{ FiltroPorFiltroCompuesto
+Filtro ||--o{ FiltroPorFiltroCompuesto
+
+Consenso }o--|| AlgoritmoConsenso
+
+Coleccion }o--|| Fuente
+
+
+
+@enduml

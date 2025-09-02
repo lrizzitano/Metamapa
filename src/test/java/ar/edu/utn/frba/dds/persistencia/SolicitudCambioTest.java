@@ -17,7 +17,7 @@ public class SolicitudCambioTest implements SimplePersistenceTest {
     SolicitudDeCambio solicitud = new SolicitudDeCambio();
     SolicitudesFuenteDinamica repo = new SolicitudesFuenteDinamica();
 
-    repo.persist(solicitud);
+    repo.persistir(solicitud);
     Assertions.assertNotNull(solicitud.getId());
 
     SolicitudDeCambio otraSolicitud = repo.obetenerSolicitudDeCambio(solicitud.getId());

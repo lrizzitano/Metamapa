@@ -3,9 +3,9 @@ package ar.edu.utn.frba.dds.hechos.consenso;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.time.LocalDateTime;
 
-public class CriterioNull extends CriterioConsenso{
+public class ConsensoNull extends Consenso {
 
-  public CriterioNull() {
+  public ConsensoNull() {
     super(null, null);
   }
 
