@@ -1,6 +1,7 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.hechos.repositorios;
 
-import java.util.List;
+import ar.edu.utn.frba.dds.hechos.Hecho;
+
 import java.util.Set;
 
 public interface HechoRepository {

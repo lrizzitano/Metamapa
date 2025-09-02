@@ -23,6 +23,5 @@ public class SolicitudCambioTest implements SimplePersistenceTest {
     SolicitudDeCambio otraSolicitud = repo.obetenerSolicitudDeCambio(solicitud.getId());
     Assertions.assertEquals(solicitud, otraSolicitud);
 
-
   }
 }

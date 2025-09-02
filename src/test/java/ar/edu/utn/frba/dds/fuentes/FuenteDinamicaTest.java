@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.HechosFuenteDinamica;
+import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamica;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamica;
 import ar.edu.utn.frba.dds.usuarios.Usuario;

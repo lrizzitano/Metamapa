@@ -7,7 +7,8 @@
     "longitud": 2.0,
     "fechaCarga": "2025-09-02",
     "fechaAcontecimiento": "2025-09-02",
-    "origen": "DATASET"
+    "origen": "DATASET",
+    "fueRevisado": false
   },
   {
     "titulo": "titulo2",
@@ -17,6 +18,7 @@
     "longitud": 4.0,
     "fechaCarga": "2025-09-03",
     "fechaAcontecimiento": "2025-08-30",
-    "origen": "DATASET"
+    "origen": "DATASET",
+    "fueRevisado": false
   }
 ]

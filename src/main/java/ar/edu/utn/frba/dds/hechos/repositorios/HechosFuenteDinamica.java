@@ -1,8 +1,9 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.hechos.repositorios;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
+import ar.edu.utn.frba.dds.hechos.Hecho;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class HechosFuenteDinamica implements HechoRepository {
