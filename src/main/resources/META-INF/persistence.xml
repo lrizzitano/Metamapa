@@ -14,6 +14,10 @@
         <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMayoriaSimple</class>
         <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMultiplesMenciones</class>
         <class>ar.edu.utn.frba.dds.hechos.Coleccion</class>
+        <class>ar.edu.utn.frba.dds.usuarios.Usuario</class>
+        <class>ar.edu.utn.frba.dds.usuarios.Administrador</class>
+        <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion</class>
+        <class>ar.edu.utn.frba.dds.hechos.Hecho</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

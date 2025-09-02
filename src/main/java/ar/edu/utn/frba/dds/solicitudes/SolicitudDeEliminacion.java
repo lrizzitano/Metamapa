@@ -15,17 +15,18 @@ public class SolicitudDeEliminacion {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "solicitudDeEliminacion_id")
   private long id;
-  @OneToMany()
+  @ManyToOne
   @JoinColumn(name = "hecho_id")
   private Hecho hecho;
   @Column(name = "fundamento")
   private String fundamento;
   @Transient
   private SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
-  @OneToMany()
+  @ManyToOne()
   @JoinColumn(name = "administrador_id")
   private Administrador responsable;
 
+  public SolicitudDeEliminacion() {}
   public SolicitudDeEliminacion(Hecho hecho, String fundamento) {
     if (hecho == null) {
       throw new SolicitudInvalidaException("Falta hecho");

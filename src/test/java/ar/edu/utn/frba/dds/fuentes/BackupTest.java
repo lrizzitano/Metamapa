@@ -47,9 +47,9 @@ public class BackupTest {
   @Test
   void testBackupWritesCorrectHechosJson() throws Exception {
     HechoRepository repo = mock(HechoRepository.class);
-    Hecho hecho1 = new Hecho("titulo1", "desc1", "cat1", 1.0,
+    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1", 1.0,
         2.0, LocalDate.now(), LocalDate.now(), Origen.DATASET);
-   Hecho hecho2 = new Hecho("titulo2", "desc2", "cat2", 2.0,
+   Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2", 2.0,
         4.0, LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
         Origen.DATASET);
    when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
@@ -74,9 +74,9 @@ public class BackupTest {
   @Test
   void estoNoEsUnTest() {
     HechoRepository repo = mock(HechoRepository.class);
-    Hecho hecho1 = new Hecho("titulo1", "desc1", "cat1", 1.0,
+    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1", 1.0,
         2.0, LocalDate.now(), LocalDate.now(), Origen.DATASET);
-    Hecho hecho2 = new Hecho("titulo2", "desc2", "cat2", 2.0,
+    Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2", 2.0,
         4.0, LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
         Origen.DATASET);
     when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));

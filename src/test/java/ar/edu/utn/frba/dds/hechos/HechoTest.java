@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class HechoTest {
   private final Hecho unHecho = new Hecho(
+      null,
       "Incendio forestal",
       "Gran incendio en zona rural",
       "Desastre natural",

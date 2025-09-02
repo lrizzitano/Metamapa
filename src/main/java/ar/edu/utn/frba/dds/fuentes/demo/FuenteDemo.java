@@ -55,6 +55,7 @@ public class FuenteDemo implements Fuente, Calendarizable {
 
   private Hecho parseHecho(Map<String, Object> fila) {
     return new Hecho(
+        null, // creo que tiene sentido que un hecho de una fuente externa tenga id en null
         (String) fila.get("titulo"),
         (String) fila.get("descripcion"),
         (String) fila.get("categoria"),

@@ -69,6 +69,7 @@ public class FuenteEstatica implements Fuente {
 
   public Hecho crearHechoDesdeFila(Map<String, String> fila) {
     return new Hecho(
+        null, // creo que tiene sentido que un hecho de una fuente externa tenga id en null
         fila.get("titulo"),
         fila.get("descripcion"),
         fila.get("categoria"),

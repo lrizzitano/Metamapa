@@ -2,12 +2,41 @@ package ar.edu.utn.frba.dds.hechos;
 
 import ar.edu.utn.frba.dds.execpciones.HechoInvalidoException;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
+
+import javax.persistence.*;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-public record Hecho(String titulo, String descripcion, String categoria, Double latitud,
-                    Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
-                    Origen origen, Path multimedia, Usuario contribuyente) {
+@Entity
+@Table(name = "Hecho")
+public record Hecho(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hecho_id")
+    Long id,
+    @Column(name = "titulo")
+    String titulo,
+    @Column(name = "descripcion")
+    String descripcion,
+    @Column(name = "categoria")
+    String categoria,
+    @Column(name = "latitud")
+    Double latitud,
+    @Column(name = "longitud")
+    Double longitud,
+    @Column(name = "fechaCarga")
+    LocalDate fechaCarga,
+    @Column(name = "fechaAcontecimiento")
+    LocalDate fechaAcontecimiento,
+    @Enumerated(EnumType.STRING)
+    @Column(name = "origen")
+    Origen origen,
+    @Column(name = "multimedia")
+    Path multimedia,
+    @ManyToOne()
+    @JoinColumn(name = "contribuyente_id")
+    Usuario contribuyente) {
+
   public Hecho {
     this.isNull(titulo, "titulo");
     this.isNull(descripcion, "descripción");
@@ -19,10 +48,10 @@ public record Hecho(String titulo, String descripcion, String categoria, Double 
     this.isNull(origen, "origen");
   }
 
-  public Hecho(String titulo, String descripcion, String categoria, Double latitud,
+  public Hecho(Long id, String titulo, String descripcion, String categoria, Double latitud,
                Double longitud, LocalDate fechaCarga, LocalDate fechaAcontecimiento,
                Origen origen) {
-    this(titulo, descripcion, categoria, latitud, longitud, fechaCarga, fechaAcontecimiento,
+    this(id, titulo, descripcion, categoria, latitud, longitud, fechaCarga, fechaAcontecimiento,
         origen, null, null);
   }
 

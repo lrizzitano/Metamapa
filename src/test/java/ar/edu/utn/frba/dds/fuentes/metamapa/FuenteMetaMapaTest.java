@@ -65,7 +65,7 @@ public class FuenteMetaMapaTest {
   @Test
   public void respuestaExitosaRetornaHechos() {
     Set<Hecho> hechosEsperados = new HashSet<>();
-    hechosEsperados.add(new Hecho(
+    hechosEsperados.add(new Hecho(null,
         "Inundación en zona norte",
         "Fuertes lluvias causaron una inundación severa",
         "Desastre natural",

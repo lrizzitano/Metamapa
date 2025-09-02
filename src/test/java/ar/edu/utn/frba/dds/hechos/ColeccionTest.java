@@ -25,9 +25,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ColeccionTest {
-  private final Hecho hecho1 = new Hecho("hecho1", "desc1", "cat1",
+  private final Hecho hecho1 = new Hecho(null,"hecho1", "desc1", "cat1",
       1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
-  private final Hecho hecho2 = new Hecho("hecho2", "desc2", "cat2",
+  private final Hecho hecho2 = new Hecho(null,"hecho2", "desc2", "cat2",
       3.0,4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
   private final Fuente unaFuente = mock(Fuente.class);
   private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02"));
