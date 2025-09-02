@@ -74,24 +74,53 @@ entity FiltroPorFiltroCompuesto {
 entity Fuente {
     id <<generated>>
     --
-
+    tipoFuente -- priorizando la consulta polimorfica por el agregador
+    url --demo/metamapa
+    path -- estatica
+    ultimaModificacion -- estatica
 }
 
+entity FuenteDeAgregador {
+    agregador_id
+    fuente_id
+    -- igual que los filtros compuestos
+}
+
+entity SolicitudDeCambio {
+    solicitud_id
+    --
+    fuente_id
+    -- por que las solicitudes de cambio
+    -- quedaron con varios campos en transient
+}
+
+entity FuentePorHechos {
+    --mas extensible si tuvieramos
+    --que persistir hechos de otras fuentes
+    --y si pudieran pertenecer a varias
+    fuente_id
+    hecho_id
+    --
+}
+
+SolicitudDeEliminación }o-left-|| Hecho
 SolicitudDeEliminación }o--|| Usuario
 Hecho }o--o| Usuario
 
-Coleccion }o--|| Consenso
+Coleccion }o-up-|| Consenso
 Coleccion }o-l-|| Filtro
 
-
+Fuente ||--o{ FuenteDeAgregador
+FuenteDeAgregador }o--|| Fuente
+Fuente ||-right-o{FuentePorHechos
+FuentePorHechos}|--|| Hecho
+Fuente ||-left-o{ SolicitudDeCambio
 
 Filtro ||-l-o{ FiltroPorFiltroCompuesto
 Filtro ||--o{ FiltroPorFiltroCompuesto
 
-Consenso }o--|| AlgoritmoConsenso
+Consenso }o-right-|| AlgoritmoConsenso
 
 Coleccion }o--|| Fuente
-
-
 
 @enduml
