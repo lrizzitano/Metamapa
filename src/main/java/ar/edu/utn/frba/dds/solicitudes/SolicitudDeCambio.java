@@ -12,28 +12,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
+@Table(name ="SolicitudDeCambio")
 public class SolicitudDeCambio {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public Long id;
 
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "hechoACambiar")
   private  Hecho hechoParacambiar;
 
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "hechoModificado")
   private  Hecho hechoModificado;
 
-  @Column
+  @Column(name = "sugerencias")
   private String sugerencias;
 
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "usuario")
   private  Usuario usuario;
 
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "administrador")
   private  Administrador responsable;
 
   @Transient
