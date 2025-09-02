@@ -1,13 +1,20 @@
 package ar.edu.utn.frba.dds.filtros;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+@Entity
+@DiscriminatorValue("compuesto")
 public class FiltroCompuesto extends Filtro {
+
+  @ManyToMany
   private final List<Filtro> filtros;
 
   public FiltroCompuesto() {

@@ -18,6 +18,12 @@
         <class>ar.edu.utn.frba.dds.usuarios.Administrador</class>
         <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion</class>
         <class>ar.edu.utn.frba.dds.hechos.Hecho</class>
+        <class>ar.edu.utn.frba.dds.filtros.Filtro</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroCategoria</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroCompuesto</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaDesde</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaHasta</class>
+        <class>ar.edu.utn.frba.dds.filtros.NullFiltro</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

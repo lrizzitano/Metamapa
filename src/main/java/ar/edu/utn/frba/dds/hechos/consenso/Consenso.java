@@ -38,7 +38,7 @@ public class Consenso implements Calendarizable {
   @Transient //Es cache
   private Set<Hecho> hechosConsensuados = new HashSet<>();
 
-  @Column(name = "proximaActualizacion",nullable = true)
+  @Column(name = "proximaActualizacion")
   private LocalDate proximaActualizacion;
 
   @Id

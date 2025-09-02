@@ -39,9 +39,8 @@ public class Coleccion{
   @Column(name = "descripcion",nullable = false)
   private String descripcion;
 
-  @Transient
-  //@ManyToOne
-  //@JoinColumn(name = "criterioDePertenencia",nullable = false)
+  @ManyToOne
+  @JoinColumn(name = "criterioDePertenencia",nullable = false)
   private Filtro criterioDePertenencia;
 
   @Transient
