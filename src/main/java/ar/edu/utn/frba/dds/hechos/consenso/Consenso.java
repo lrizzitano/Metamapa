@@ -5,12 +5,17 @@ import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,22 +24,26 @@ import java.util.Set;
 
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "esNull")
-@DiscriminatorValue("consenso")
+@DiscriminatorColumn(name = "tieneConsenso",discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("HayConsenso")
+@Table(name ="Consenso")
 public class Consenso implements Calendarizable {
   @Transient
   private final FuentesRepository fuentes = FuentesRepository.instance();
 
   @OneToOne
+  @JoinColumn(name = "algoritmoConsenso",nullable = false)
   private AlgoritmoConsenso algoritmoConsenso;
 
-  @Transient
+  @Transient //Es cache
   private Set<Hecho> hechosConsensuados = new HashSet<>();
 
-  @Column
+  @Column(name = "proximaActualizacion",nullable = true)
   private LocalDate proximaActualizacion;
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "consenso_id")
   private Long id;
 
   public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
