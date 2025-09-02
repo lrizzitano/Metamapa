@@ -5,10 +5,25 @@ import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "SolicitudDeEliminacion")
 public class SolicitudDeEliminacion {
-  private final Hecho hecho;
-  private final String fundamento;
-  private final SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "solicitudDeEliminacion_id")
+  private long id;
+  @OneToMany()
+  @JoinColumn(name = "hecho_id")
+  private Hecho hecho;
+  @Column(name = "fundamento")
+  private String fundamento;
+  @Transient
+  private SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
+  @OneToMany()
+  @JoinColumn(name = "administrador_id")
   private Administrador responsable;
 
   public SolicitudDeEliminacion(Hecho hecho, String fundamento) {

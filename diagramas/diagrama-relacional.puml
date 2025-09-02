@@ -46,19 +46,21 @@ entity Coleccion {
 }
 
 entity Consenso {
-    id <<generated>>
+    consenso_id <<generated>>
     --
-    discriminador
+    tieneConsenso
+    algoritmoConsenso
+    proximaActualizacion
 }
 
 entity AlgoritmoConsenso {
     id <<generated>>
     --
-    discriminador
+    algoritmoConsenso
 }
 
 entity Filtro {
-    id <<generated>>
+    algoritmoConseso_id <<generated>>
     --
     discriminador
     categoria
@@ -90,8 +92,10 @@ entity SolicitudDeCambio {
     solicitud_id
     --
     fuente_id
-    -- por que las solicitudes de cambio
-    -- quedaron con varios campos en transient
+    hechoACambiar_id
+    nuevoHecho_id
+    usuario_id
+    administrador_id
 }
 
 entity FuentePorHechos {
@@ -113,7 +117,7 @@ Coleccion }o-l-|| Filtro
 Fuente ||--o{ FuenteDeAgregador
 FuenteDeAgregador }o--|| Fuente
 Fuente ||-right-o{FuentePorHechos
-FuentePorHechos}|--|| Hecho
+FuentePorHechos}o--|| Hecho
 Fuente ||-left-o{ SolicitudDeCambio
 
 Filtro ||-l-o{ FiltroPorFiltroCompuesto
