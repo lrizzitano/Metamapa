@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -61,11 +62,15 @@ public class BackupTest {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
+        .setPrettyPrinting()
         .create();
 
-    Type setType = new TypeToken<Set<Hecho>>() {}.getType();
+    Type setType = new TypeToken<Set<Hecho>>(){}.getType();
+    Set<Hecho> hechos = gson.fromJson(json, setType);
 
-    Assertions.assertEquals(Set.of(hecho1, hecho2),  gson.fromJson(json, setType));
+    assertThat(hechos)
+        .usingRecursiveComparison()
+        .isEqualTo(Set.of(hecho1, hecho2));
   }
 
 

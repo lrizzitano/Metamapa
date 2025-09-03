@@ -1,14 +1,22 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.fuentes.Fuente;
+import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
+import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Set;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,7 +64,12 @@ public class AlgoritmoMultiplesMencionesTest {
         3.3, LocalDate.now(), LocalDate.now(), Origen.DATASET);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho3));
-    Assertions.assertEquals(hecho1, hecho3);
-    Assertions.assertEquals(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes), Set.of(hecho1));
+
+    assertThat(hecho1)
+        .usingRecursiveComparison()
+        .isEqualTo(hecho3);
+    assertThat(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes))
+        .usingRecursiveComparison()
+        .isEqualTo(Set.of(hecho1));
   }
 }

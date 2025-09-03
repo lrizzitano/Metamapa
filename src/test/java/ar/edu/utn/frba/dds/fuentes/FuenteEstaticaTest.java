@@ -17,6 +17,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FuenteEstaticaTest{
 
@@ -51,7 +52,10 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho(null, "hecho2", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
-    Assertions.assertEquals(hechos, Set.of(esperado1, esperado2));
+
+    assertThat(hechos)
+        .usingRecursiveComparison()
+        .isEqualTo(Set.of(esperado2, esperado1));
   }
 
   @Test
@@ -64,7 +68,10 @@ public class FuenteEstaticaTest{
     Hecho esperado1 = new Hecho(null, "hecho1", "desc1", "cat1", 1.0,
         2.0, LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new FiltroFechaHasta(LocalDate.parse("2024-01-02")));
-    Assertions.assertEquals(hechos, Collections.singleton(esperado1));
+
+    assertThat(hechos)
+        .usingRecursiveComparison()
+        .isEqualTo(Collections.singleton(esperado1));
   }
 
   @Test
@@ -77,7 +84,10 @@ public class FuenteEstaticaTest{
     Hecho esperado2 = new Hecho(null, "hecho1", "desc2", "cat2", 3.0,
         4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
-    Assertions.assertEquals(hechos, Collections.singleton(esperado2));
+
+    assertThat(hechos)
+        .usingRecursiveComparison()
+        .isEqualTo(Collections.singleton(esperado2));
   }
 
 

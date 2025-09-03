@@ -6,12 +6,10 @@ import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @DiscriminatorValue("multiplesMenciones")
@@ -41,6 +39,23 @@ public class AlgoritmoMultiplesMenciones extends AlgoritmoConsenso{
   }
 
   private boolean compartenAtributos(List<Hecho> hechos) {
-    return hechos.stream().distinct().count() == 1;
+    return distinctByKey(
+        hechos.stream(),
+        h -> Objects.hash(
+            h.titulo(), h.descripcion(), h.categoria(),
+            h.latitud(), h.longitud(),
+            h.fechaCarga(), h.fechaAcontecimiento(), h.origen()
+        )
+    ).count() == 1;
+  }
+  // crea una clave con los atributos y los compara en base a eso, es la solucion para no modificar la logica existente
+  private static <T> Stream<T> distinctByKey(Stream<T> stream, Function<? super T, ?> keyExtractor) {
+    return stream.collect(
+        Collectors.toMap(
+            keyExtractor,      // cómo obtener la clave
+            e -> e,            // el valor es el mismo objeto
+            (a, b) -> a        // en caso de colisión, quedate con el primero
+        )
+    ).values().stream();
   }
 }

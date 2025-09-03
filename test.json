@@ -1,23 +1,23 @@
 [
   {
-    "titulo": "titulo1",
-    "descripcion": "desc1",
-    "categoria": "cat1",
-    "latitud": 1.0,
-    "longitud": 2.0,
-    "fechaCarga": "2025-09-02",
-    "fechaAcontecimiento": "2025-09-02",
-    "origen": "DATASET",
-    "fueRevisado": false
-  },
-  {
     "titulo": "titulo2",
     "descripcion": "desc2",
     "categoria": "cat2",
     "latitud": 2.0,
     "longitud": 4.0,
+    "fechaCarga": "2025-09-04",
+    "fechaAcontecimiento": "2025-08-31",
+    "origen": "DATASET",
+    "fueRevisado": false
+  },
+  {
+    "titulo": "titulo1",
+    "descripcion": "desc1",
+    "categoria": "cat1",
+    "latitud": 1.0,
+    "longitud": 2.0,
     "fechaCarga": "2025-09-03",
-    "fechaAcontecimiento": "2025-08-30",
+    "fechaAcontecimiento": "2025-09-03",
     "origen": "DATASET",
     "fueRevisado": false
   }

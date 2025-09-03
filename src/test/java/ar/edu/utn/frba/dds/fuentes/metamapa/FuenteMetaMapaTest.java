@@ -26,6 +26,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @WireMockTest
 public class FuenteMetaMapaTest {
@@ -38,6 +39,7 @@ public class FuenteMetaMapaTest {
     gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
+        .setPrettyPrinting()
         .create();
   }
 
@@ -82,7 +84,10 @@ public class FuenteMetaMapaTest {
             .withHeader("Content-Type", "application/json")
             .withBody(gson.toJson(hechosEsperados))));
 
-    Assertions.assertEquals(hechosEsperados, fuente.obtenerHechos(new NullFiltro()));
+    assertThat(hechosEsperados)
+        .usingRecursiveComparison()
+        .ignoringCollectionOrder()
+        .isEqualTo(fuente.obtenerHechos(new NullFiltro()));
   }
 
   @Test
