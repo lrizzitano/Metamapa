@@ -6,9 +6,9 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HechosDinamicosRepository implements HechoRepository, WithSimplePersistenceUnit {
+public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersistenceUnit {
 
-  public HechosDinamicosRepository() {}
+  public HechosFuenteDinamicaJPA() {}
 
   @Override
   public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {

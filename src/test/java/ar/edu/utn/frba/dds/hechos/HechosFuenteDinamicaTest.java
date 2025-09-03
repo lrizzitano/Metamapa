@@ -16,11 +16,11 @@ import org.junit.jupiter.api.Test;
 public class HechosFuenteDinamicaTest {
 
   private final Hecho unHecho = mock(Hecho.class);
-  private HechosFuenteDinamica hechosFuenteDinamica;
+  private HechosFuenteDinamicaMemoria hechosFuenteDinamica;
 
   @BeforeEach
   public void setUp() {
-    hechosFuenteDinamica = new HechosFuenteDinamica();
+    hechosFuenteDinamica = new HechosFuenteDinamicaMemoria();
   }
 
 

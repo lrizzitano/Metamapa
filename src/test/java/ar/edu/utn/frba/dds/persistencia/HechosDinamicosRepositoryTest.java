@@ -1,7 +1,9 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.persistencia;
 
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.repositorios.HechoRepository;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechosDinamicosRepository;
+import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamicaJPA;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,7 @@ import java.util.Set;
 
 public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
-  HechoRepository hechoRepository = new HechosDinamicosRepository();
+  HechoRepository hechoRepository = new HechosFuenteDinamicaJPA();
 
   @Test
   public void marcaYObtieneRevisados() {

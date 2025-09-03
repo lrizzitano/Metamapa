@@ -6,11 +6,11 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HechosFuenteDinamica implements HechoRepository {
+public class HechosFuenteDinamicaMemoria implements HechoRepository {
   private final Set<Hecho> hechosSinRevisar = new HashSet<>();
   private final Set<Hecho> hechosRevisados = new HashSet<>();
 
-  public HechosFuenteDinamica() {
+  public HechosFuenteDinamicaMemoria() {
 
   }
 
