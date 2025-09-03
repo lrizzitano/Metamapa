@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.hechos.consenso;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.fuentes.FuentesRepository;
+import ar.edu.utn.frba.dds.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;

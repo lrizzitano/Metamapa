@@ -1,12 +1,8 @@
 package ar.edu.utn.frba.dds.hechos;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaMemoria;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Assertions;
@@ -42,7 +38,8 @@ public class HechosFuenteDinamicaTest {
   void NoPuedoEliminarHechoNoContenidoEnElSet() {
 
     Assertions.assertThrows(NoSePuedeEliminarUnHechoQueNoExisteException.class, () -> {
-      hechosFuenteDinamica.eliminar(unHecho);;});
+      hechosFuenteDinamica.eliminar(unHecho);
+    });
   }
 
   @Test

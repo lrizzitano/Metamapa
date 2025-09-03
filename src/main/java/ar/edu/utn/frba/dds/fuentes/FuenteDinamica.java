@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechoRepository;
+import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambioRepository;
 import java.util.Set;

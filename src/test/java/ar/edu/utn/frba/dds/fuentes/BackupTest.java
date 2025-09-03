@@ -4,7 +4,7 @@ package ar.edu.utn.frba.dds.fuentes;
 import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
 import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechoRepository;
+import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;

@@ -1,6 +1,8 @@
-package ar.edu.utn.frba.dds.solicitudes;
+package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambioRepository;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashMap;
 import java.util.HashSet;

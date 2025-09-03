@@ -1,15 +1,11 @@
 package ar.edu.utn.frba.dds.fuentes;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.SolicitudesFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

@@ -2,8 +2,7 @@ package ar.edu.utn.frba.dds.persistencia;
 
 
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamicaJPA;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.SolicitudesFuenteDinamicaJPA;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;

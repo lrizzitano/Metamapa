@@ -1,6 +1,8 @@
-package ar.edu.utn.frba.dds.solicitudes;
+package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacionRepository;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
-public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepository{
+public class SolicitudesDeEliminacion implements SolicitudDeEliminacionRepository {
   private static final SolicitudesDeEliminacion instance = new SolicitudesDeEliminacion();
 
   private final Set<SolicitudDeEliminacion> pendientes = new HashSet<>();
