@@ -44,6 +44,9 @@ public class SolicitudDeCambio {
   @JoinColumn(name = "administrador")
   private  Administrador responsable;
 
+  @Column
+  private boolean fueAceptada;
+
   @Transient
   private  FuenteDinamica fuente = FuenteDinamica.instance();
 
@@ -64,6 +67,7 @@ public class SolicitudDeCambio {
     this.hechoParacambiar = hechoParacambiar;
     this.hechoModificado = hechoModificado;
     this.usuario = usuario;
+    this.fueAceptada = false;
     fuente.nuevaSolicitudDeCambio(this);
   }
 
@@ -103,6 +107,10 @@ public class SolicitudDeCambio {
 
   public Long getId() {
     return id;
+  }
+
+  public void aceptar(){
+    this.fueAceptada = true;
   }
 
 }

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamica;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudesFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 public class FuenteDinamicaTest {
 
   private final FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
-  private final SolicitudesFuenteDinamica solicitudesFuenteDinamica = mock(SolicitudesFuenteDinamica.class);
-  private final HechosFuenteDinamica hochosFuenteDinamica = mock(HechosFuenteDinamica.class);
+  private final SolicitudesFuenteDinamicaMemoria solicitudesFuenteDinamica = mock(SolicitudesFuenteDinamicaMemoria.class);
   private final HechosFuenteDinamicaMemoria hechosFuenteDinamica = mock(HechosFuenteDinamicaMemoria.class);
   private final Hecho unHecho = mock(Hecho.class);
 

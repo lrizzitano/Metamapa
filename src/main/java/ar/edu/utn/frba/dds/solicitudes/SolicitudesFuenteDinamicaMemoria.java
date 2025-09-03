@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 // Implementacion de repositorio con almacenamiento en memoria
-public class SolicitudesFuenteDinamica implements SolicitudDeCambioRepository, WithSimplePersistenceUnit {
+public class SolicitudesFuenteDinamicaMemoria implements SolicitudDeCambioRepository, WithSimplePersistenceUnit {
   private final Set<SolicitudDeCambio> pendientes = new HashSet<>();
   private final Set<SolicitudDeCambio> aceptadas = new HashSet<>();
   private final Map<Hecho, Integer> rechazadas = new HashMap<>();
 
-  public SolicitudesFuenteDinamica() {
+  public SolicitudesFuenteDinamicaMemoria() {
   }
 
   public Set<SolicitudDeCambio> getPendientes() {
@@ -44,13 +44,5 @@ public class SolicitudesFuenteDinamica implements SolicitudDeCambioRepository, W
     this.pendientes.remove(solicitudDeCambio);
     Hecho hecho = solicitudDeCambio.getHechoParacambiar();
     rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
-  }
-
-  public void persistir(SolicitudDeCambio solicitudDeCambio) {
-    entityManager().persist(solicitudDeCambio);
-  }
-
-  public SolicitudDeCambio obetenerSolicitudDeCambio(Long id) {
-    return entityManager().find(SolicitudDeCambio.class, id);
   }
 }

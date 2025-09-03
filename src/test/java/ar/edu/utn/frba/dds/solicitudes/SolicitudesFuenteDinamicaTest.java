@@ -16,11 +16,11 @@ import org.junit.jupiter.api.Test;
 public class SolicitudesFuenteDinamicaTest {
 
   private final SolicitudDeCambio unaSolicitudDeCambio = mock(SolicitudDeCambio.class);
-  private  SolicitudesFuenteDinamica solicitudesFuenteDinamica;
+  private SolicitudesFuenteDinamicaMemoria solicitudesFuenteDinamica;
 
   @BeforeEach
   public void setUp() {
-    solicitudesFuenteDinamica = new SolicitudesFuenteDinamica();
+    solicitudesFuenteDinamica = new SolicitudesFuenteDinamicaMemoria();
   }
 
   @Test
