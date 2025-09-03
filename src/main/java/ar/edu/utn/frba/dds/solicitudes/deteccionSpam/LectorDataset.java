@@ -5,7 +5,6 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class LectorDataset {
 

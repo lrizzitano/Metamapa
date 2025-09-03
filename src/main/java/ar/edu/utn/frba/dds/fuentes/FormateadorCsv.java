@@ -27,7 +27,7 @@ public class FormateadorCsv {
         CSVWriter writer = new CSVWriter(
             java.nio.file.Files.newBufferedWriter(
                 java.nio.file.Paths.get(ARCHIVO_SALIDA), StandardCharsets.UTF_8)
-        );
+        )
 
     ) {
       writer.writeNext(new String[]{"titulo", "descripcion", "categoria",
