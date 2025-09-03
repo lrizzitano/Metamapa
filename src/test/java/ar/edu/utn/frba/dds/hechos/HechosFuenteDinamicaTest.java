@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
-import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamica;
+import ar.edu.utn.frba.dds.hechos.repositorios.HechosFuenteDinamicaMemoria;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
