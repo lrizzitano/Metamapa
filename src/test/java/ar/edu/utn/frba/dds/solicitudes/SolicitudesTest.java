@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacion;
+import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 class SolicitudesTest {
   private final Hecho hecho = mock(Hecho.class);
-  private final SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
+  private final SolicitudesDeEliminacionMemoria solicitudes = SolicitudesDeEliminacionMemoria.instance();
   private SolicitudDeEliminacion solicitud;
 
   @BeforeEach

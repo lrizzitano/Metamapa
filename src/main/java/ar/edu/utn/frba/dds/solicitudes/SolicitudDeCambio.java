@@ -91,9 +91,11 @@ public class SolicitudDeCambio {
     if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
     }
-    this.sugerencias = sugerencias;
 
+    this.sugerencias = sugerencias;
     this.responsable = administrador;
+    this.fueAceptada = true;
+
     fuente.aceptarSolicitudDeCambio(this);
   }
 
@@ -101,16 +103,15 @@ public class SolicitudDeCambio {
     if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
     }
+
     this.responsable = administrador;
+    this.fueAceptada = false;
+
     fuente.rechazarSolicitudDeCambio(this);
   }
 
   public Long getId() {
     return id;
-  }
-
-  public void aceptar(){
-    this.fueAceptada = true;
   }
 
 }

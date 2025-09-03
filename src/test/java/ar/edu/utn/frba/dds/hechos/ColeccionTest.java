@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacion;
+import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -45,7 +45,7 @@ public class ColeccionTest {
 
   @AfterEach
   void tearDown() {
-    SolicitudesDeEliminacion.instance().reset();
+    SolicitudesDeEliminacionMemoria.instance().reset();
   }
 
 
@@ -54,7 +54,7 @@ public class ColeccionTest {
     Consenso criterioConsenso = mock(Consenso.class);
     when(criterioConsenso.getHechosConsensuados()).thenReturn(new HashSet<>());
     Coleccion unaColeccion = new Coleccion("", "",
-        filtroTrue, unaFuente, criterioConsenso, SolicitudesDeEliminacion.instance());
+        filtroTrue, unaFuente, criterioConsenso, SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(Set.of(hecho1, hecho2), unaColeccion.hechos(filtroTrue));
   }
 
@@ -64,21 +64,21 @@ public class ColeccionTest {
     when(criterioConsenso.esConsensuado(hecho1)).thenReturn(true);
     when(criterioConsenso.esConsensuado(hecho2)).thenReturn(false);
     Coleccion unaColeccion = new Coleccion("", "",
-        filtroTrue, unaFuente, criterioConsenso, SolicitudesDeEliminacion.instance());
+        filtroTrue, unaFuente, criterioConsenso, SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechosConsensuados(filtroTrue));
   }
 
   @Test
   void ColeccionFiltraPorCriterioDePertenencia() {
     Coleccion unaColeccion = new Coleccion("", "",
-        filtroFecha, unaFuente, new ConsensoNull(), SolicitudesDeEliminacion.instance());
+        filtroFecha, unaFuente, new ConsensoNull(), SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue));
   }
 
   @Test
   void ColeccionFiltraPorParametro() {
     Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente,
-        new ConsensoNull(), SolicitudesDeEliminacion.instance());
+        new ConsensoNull(), SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroFecha),
         Set.of(hecho1));
   }
@@ -88,7 +88,7 @@ public class ColeccionTest {
     SolicitudDeEliminacion unaSolicitud = new SolicitudDeEliminacion(hecho1, "");
     unaSolicitud.aceptar(mock(Administrador.class));
     Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente,
-        new ConsensoNull(), SolicitudesDeEliminacion.instance());
+        new ConsensoNull(), SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
   }
 }

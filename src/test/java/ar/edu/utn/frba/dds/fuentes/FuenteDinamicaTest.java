@@ -48,7 +48,7 @@ public class FuenteDinamicaTest {
     fuenteDinamica.aceptarSolicitudDeCambio(unaSolicitudDeCambio);
 
     verify(hechosFuenteDinamica).actualizar(unHecho, unHecho);
-    verify(solicitudesFuenteDinamica).aceptar(unaSolicitudDeCambio);
+    verify(solicitudesFuenteDinamica).aceptarSolicitud(unaSolicitudDeCambio);
 
   }
 }

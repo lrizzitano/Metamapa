@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds.solicitudes;
 import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacion;
+import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 
 import javax.persistence.*;
@@ -16,13 +16,20 @@ public class SolicitudDeEliminacion {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "solicitudDeEliminacion_id")
   private long id;
+
   @ManyToOne
   @JoinColumn(name = "hecho_id")
   private Hecho hecho;
+
   @Column(name = "fundamento")
   private String fundamento;
+
+  @Column
+  private Boolean fueAceptada;
+
   @Transient
-  private SolicitudesDeEliminacion solicitudes = SolicitudesDeEliminacion.instance();
+  private SolicitudesDeEliminacionMemoria solicitudes = SolicitudesDeEliminacionMemoria.instance();
+
   @ManyToOne()
   @JoinColumn(name = "administrador_id")
   private Administrador responsable;
@@ -37,6 +44,9 @@ public class SolicitudDeEliminacion {
     }
     this.hecho = hecho;
     this.fundamento = fundamento;
+    this.fueAceptada = false;
+
+    // TODO: Esta bien que un constructor se encargue de persistir la instancia??
     solicitudes.nuevaSolicitud(this);
   }
 
@@ -57,6 +67,7 @@ public class SolicitudDeEliminacion {
       throw new SolicitudYaResueltaException();
     }
     this.responsable = admin;
+    this.fueAceptada = true;
     solicitudes.aceptarSolicitud(this);
   }
 
@@ -65,6 +76,12 @@ public class SolicitudDeEliminacion {
       throw new SolicitudYaResueltaException();
     }
     this.responsable = admin;
+    this.fueAceptada = false;
     solicitudes.rechazarSolicitud(this);
   }
+
+  public Long getId() {
+    return id;
+  }
+
 }

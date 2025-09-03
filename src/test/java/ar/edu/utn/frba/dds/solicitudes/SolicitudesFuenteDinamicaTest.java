@@ -23,7 +23,7 @@ public class SolicitudesFuenteDinamicaTest {
   @Test
   void crearSolicitudLaAgregaAPendientes()
   {
-    solicitudesFuenteDinamica.crear(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
 
     Assertions.assertTrue(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
   }
@@ -31,8 +31,8 @@ public class SolicitudesFuenteDinamicaTest {
   @Test
   void aceptarSolicitudLaMueveAceptadasYSeVaDePendientes()
   {
-    solicitudesFuenteDinamica.crear(unaSolicitudDeCambio);
-    solicitudesFuenteDinamica.aceptar(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.aceptarSolicitud(unaSolicitudDeCambio);
 
     Assertions.assertFalse(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
     Assertions.assertTrue(solicitudesFuenteDinamica.getAceptadas().contains(unaSolicitudDeCambio));
@@ -43,8 +43,8 @@ public class SolicitudesFuenteDinamicaTest {
   {
     Hecho unHecho = mock(Hecho.class);
     when(unaSolicitudDeCambio.getHechoParacambiar()).thenReturn(unHecho);
-    solicitudesFuenteDinamica.crear(unaSolicitudDeCambio);
-    solicitudesFuenteDinamica.rechazar(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.rechazarSolicitud(unaSolicitudDeCambio);
 
     Assertions.assertFalse(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
     Assertions.assertTrue(solicitudesFuenteDinamica.getRechazadas().containsKey(unHecho));

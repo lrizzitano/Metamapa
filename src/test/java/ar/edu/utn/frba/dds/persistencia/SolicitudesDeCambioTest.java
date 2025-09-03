@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 
 
-public class SolicitudCambioTest implements SimplePersistenceTest {
+public class SolicitudesDeCambioTest implements SimplePersistenceTest {
 
   SolicitudesFuenteDinamicaJPA repo = new SolicitudesFuenteDinamicaJPA();
 
@@ -18,7 +18,7 @@ public class SolicitudCambioTest implements SimplePersistenceTest {
   public void persistirSolicitudDeCambio() {
     SolicitudDeCambio solicitud = new SolicitudDeCambio();
 
-    repo.crear(solicitud);
+    repo.nuevaSolicitud(solicitud);
     Assertions.assertNotNull(solicitud.getId());
 
     Set<SolicitudDeCambio> solicitudesPendientes = repo.getPendientes();
@@ -29,8 +29,8 @@ public class SolicitudCambioTest implements SimplePersistenceTest {
   public void aceptarSolicitudDeCambio() {
     SolicitudDeCambio solicitud = new SolicitudDeCambio();
 
-    repo.crear(solicitud);
-    repo.aceptar(solicitud);
+    repo.nuevaSolicitud(solicitud);
+    repo.aceptarSolicitud(solicitud);
 
     Set<SolicitudDeCambio> solicitudesPendientes = repo.getPendientes();
     Set<SolicitudDeCambio> solicitudesAceptadas = repo.getAceptadas();

@@ -4,7 +4,7 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.repositorios.SolicitudDeCambioRepository;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,17 +31,17 @@ public class FuenteDinamica implements Fuente {
   }
 
   public void nuevaSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.repositorioDeSolicitudes.crear(solicitudDeCambio);
+    this.repositorioDeSolicitudes.nuevaSolicitud(solicitudDeCambio);
   }
 
   public void aceptarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
     this.repositorioDeHechos.actualizar(solicitudDeCambio.getHechoParacambiar(),
         solicitudDeCambio.getHechoModificado());
-    this.repositorioDeSolicitudes.aceptar(solicitudDeCambio);
+    this.repositorioDeSolicitudes.aceptarSolicitud(solicitudDeCambio);
   }
 
   public void rechazarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
-    this.repositorioDeSolicitudes.rechazar(solicitudDeCambio);
+    this.repositorioDeSolicitudes.rechazarSolicitud(solicitudDeCambio);
   }
 
   public Set<Hecho> obtenerHechos(Filtro filtro) {

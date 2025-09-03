@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambioRepository;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,18 +30,18 @@ public class SolicitudesFuenteDinamicaMemoria implements SolicitudDeCambioReposi
   }
 
   @Override
-  public void crear(SolicitudDeCambio solicitudDeCambio) {
+  public void nuevaSolicitud(SolicitudDeCambio solicitudDeCambio) {
     this.pendientes.add(solicitudDeCambio);
   }
 
   @Override
-  public void aceptar(SolicitudDeCambio solicitudDeCambio) {
+  public void aceptarSolicitud(SolicitudDeCambio solicitudDeCambio) {
     this.pendientes.remove(solicitudDeCambio);
     this.aceptadas.add(solicitudDeCambio);
   }
 
   @Override
-  public void rechazar(SolicitudDeCambio solicitudDeCambio) {
+  public void rechazarSolicitud(SolicitudDeCambio solicitudDeCambio) {
     this.pendientes.remove(solicitudDeCambio);
     Hecho hecho = solicitudDeCambio.getHechoParacambiar();
     rechazadas.put(hecho, rechazadas.getOrDefault(hecho, 0) + 1);
