@@ -1,34 +1,29 @@
 package ar.edu.utn.frba.dds.persistencia;
 
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
 public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
 
-  SolicitudesDeEliminacionJPA repo = new SolicitudesDeEliminacionJPA();
+  SolicitudesDeEliminacionJPA repoSolicitudes = new SolicitudesDeEliminacionJPA();
+  HechosFuenteDinamicaJPA repoHechos = new HechosFuenteDinamicaJPA();
 
-  // TODO: Arreglar test
-  @Disabled
   @Test
   public void persistirSolicitudDeEliminacion() {
     SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion();
 
-    repo.nuevaSolicitud(solicitud);
-    entityManager().flush();
+    repoSolicitudes.nuevaSolicitud(solicitud);
     Assertions.assertNotNull(solicitud.getId());
 
-    Set<SolicitudDeEliminacion> solicitudesPendientes = repo.getPendientes();
-    Set<SolicitudDeEliminacion> solicitudesAceptadas = repo.getAceptadas();
+    Set<SolicitudDeEliminacion> solicitudesPendientes = repoSolicitudes.getPendientes();
 
-    System.out.println("Tamaño: " + solicitudesPendientes.size());
-    System.out.println("Tamaño aceptadas: " + solicitudesAceptadas.size());
-    solicitudesPendientes.stream().forEach(s -> System.out.println(s.getId()));
     Assertions.assertTrue(solicitudesPendientes.contains(solicitud));
   }
 
@@ -36,15 +31,28 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   public void aceptarSolicitudDeEliminacion() {
     SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion();
 
-    repo.nuevaSolicitud(solicitud);
-    repo.aceptarSolicitud(solicitud);
+    repoSolicitudes.nuevaSolicitud(solicitud);
+    repoSolicitudes.aceptarSolicitud(solicitud);
 
-    Set<SolicitudDeEliminacion> solicitudesPendientes = repo.getPendientes();
-    Set<SolicitudDeEliminacion> solicitudesAceptadas = repo.getAceptadas();
+    Set<SolicitudDeEliminacion> solicitudesPendientes = repoSolicitudes.getPendientes();
+    Set<SolicitudDeEliminacion> solicitudesAceptadas = repoSolicitudes.getAceptadas();
 
     Assertions.assertTrue(solicitudesPendientes.isEmpty());
     Assertions.assertTrue(solicitudesAceptadas.contains(solicitud));
 
+  }
+
+  @Test
+  public void detectarHechoEliminado() {
+    Hecho hecho = new Hecho();
+    repoHechos.agregar(hecho);
+
+    SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho, "No me gusto, bajenlon");
+    repoSolicitudes.nuevaSolicitud(solicitud);
+
+    Assertions.assertFalse(repoSolicitudes.estaEliminado(hecho));
+    repoSolicitudes.aceptarSolicitud(solicitud);
+    Assertions.assertTrue(repoSolicitudes.estaEliminado(hecho));
   }
 
 }

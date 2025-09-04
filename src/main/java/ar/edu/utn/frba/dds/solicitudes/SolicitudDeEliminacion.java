@@ -25,7 +25,7 @@ public class SolicitudDeEliminacion {
   private String fundamento;
 
   @Column
-  private Boolean fueAceptada;
+  private boolean fueAceptada;
 
   @Transient
   private SolicitudesDeEliminacionMemoria solicitudes = SolicitudesDeEliminacionMemoria.instance();
