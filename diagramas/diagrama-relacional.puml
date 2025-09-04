@@ -98,15 +98,6 @@ entity SolicitudDeCambio {
     administrador_id
 }
 
-entity FuentePorHechos {
-    --mas extensible si tuvieramos
-    --que persistir hechos de otras fuentes
-    --y si pudieran pertenecer a varias
-    fuente_id
-    hecho_id
-    --
-}
-
 SolicitudDeEliminación }o-left-|| Hecho
 SolicitudDeEliminación }o--|| Usuario
 Hecho }o--o| Usuario
@@ -116,8 +107,7 @@ Coleccion }o-l-|| Filtro
 
 Fuente ||--o{ FuenteDeAgregador
 FuenteDeAgregador }o--|| Fuente
-Fuente ||-right-o{FuentePorHechos
-FuentePorHechos}o--|| Hecho
+Fuente ||-right-o{Hecho
 Fuente ||-left-o{ SolicitudDeCambio
 
 Filtro ||-l-o{ FiltroPorFiltroCompuesto
@@ -126,5 +116,9 @@ Filtro ||--o{ FiltroPorFiltroCompuesto
 Consenso }o-right-|| AlgoritmoConsenso
 
 Coleccion }o--|| Fuente
+
+SolicitudDeCambio }o--||Hecho
+SolicitudDeCambio }o--||Hecho
+SolicitudDeCambio }o--||Usuario
 
 @enduml

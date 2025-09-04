@@ -12,14 +12,26 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Set;
 
-public class FuenteMetaMapa implements Fuente {
-  private final String urlAPI;
-  private final Retrofit retrofit;
+@Entity
+@DiscriminatorValue("meta_mapa")
+public class FuenteMetaMapa extends Fuente {
+
+  public FuenteMetaMapa(){}
+
+  @Column(name = "url_api_metamapa")
+  private  String urlAPI;
+
+  @Transient
+  private  Retrofit retrofit;
 
   public FuenteMetaMapa(String urlAPI) {
     this.urlAPI = urlAPI;
