@@ -5,6 +5,9 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import com.opencsv.CSVReaderHeaderAware;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,14 +19,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-
-public class FuenteEstatica implements Fuente {
+@Entity
+@DiscriminatorValue("estatica")
+public class FuenteEstatica extends Fuente {
   /*
   Como pre-condición para funcionar correctamente, se asume que el archivo CSV ingresado
   tiene 6 columnas: título, descripción, categoría, latitud, longitud, fecha
   Además no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
   */
-  private final Path path;
+  public FuenteEstatica() {}
+
+  @Column(name = "path_estatica" ,nullable = false)
+  private Path path;
+
+  @Column(name = "ultima_modificacion_estatica")
   private LocalDate ultimaModificacion;
 
   public FuenteEstatica(String path) {
@@ -47,6 +56,7 @@ public class FuenteEstatica implements Fuente {
     }
   }
 
+  @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     Map<String, Hecho> hechosPorTitulo = new HashMap<>();
     Predicate<Hecho> filtroPredicate = filtro.getAsPredicate();

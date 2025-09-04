@@ -4,17 +4,38 @@ import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Entity
+@DiscriminatorValue("agregador")
+public class Agregador extends Fuente implements Calendarizable  {
 
-public class Agregador implements Calendarizable, Fuente {
-  private final Set<Fuente> fuentes;
+  public Agregador() {}
+
+  @ManyToMany
+  @JoinColumn(name = "fuentes_agregador")
+  private Set<Fuente> fuentes;
+
+  @OneToMany
+  @JoinColumn(name = "hechos_agregador")
   private Set<Hecho> hechos = Set.of();
+
+  @Column(name = "proxima_actualizacion_agregador")
   private LocalDateTime proximaActualizacion;
+
+  @Column(name = "frecuencia_actualizacion_agregador")
   private Duration frecuencia;
 
   public Agregador(Set<Fuente> fuentes, LocalDateTime proximaActualizacion, Duration frecuencia) {

@@ -5,15 +5,25 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
 import ar.edu.utn.frba.dds.repositorios.SolicitudDeCambioRepository;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class FuenteDinamica implements Fuente {
+@Entity
+@DiscriminatorValue("dinamica")
+public class FuenteDinamica extends Fuente {
 
-  private FuenteDinamica() {}
+  public FuenteDinamica() {}
 
+  @Transient
   private static final FuenteDinamica instance = new FuenteDinamica();
+
+  @Transient
   private HechoRepository repositorioDeHechos;
+
+  @Transient
   private SolicitudDeCambioRepository repositorioDeSolicitudes;
 
   // inyecto por setter porque es singleton (no puedo inyectar en constructor)
@@ -44,6 +54,7 @@ public class FuenteDinamica implements Fuente {
     this.repositorioDeSolicitudes.rechazarSolicitud(solicitudDeCambio);
   }
 
+  @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     return this.repositorioDeHechos.obtenerTodos().stream()
         .filter(filtro.getAsPredicate()).collect(Collectors.toSet());
