@@ -1,14 +1,12 @@
 # Pendientes
 
 ## Persistencia
-- Hacer el DER
-
-  Esta realizado, puede discutirse, sobre todo el tema de la fuente
+- Hacer el DER `x` ?
 
 
-- Mapear a BD con Tags @
+- Mapear a BD con Tags @ `x`
 
-  Realizado, falta la fuente
+ 
 
 
 - Pasar los repos/singletons a repos posta
@@ -34,4 +32,4 @@
 (base de datos tmb?)
 
 ## Busqueda de texto
--Implementar full text search para la busqueda de hechos por descripcion
+- Implementar full text search para la busqueda de hechos por descripcion

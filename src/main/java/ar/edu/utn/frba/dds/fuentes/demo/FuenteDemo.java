@@ -34,8 +34,9 @@ public class FuenteDemo extends Fuente implements Calendarizable {
   @Transient
   private  Conexion conexion;
 
-  @OneToMany
-  @JoinColumn(name = "hechos_demo")
+  //@OneToMany
+  //@JoinColumn(name = "hechos_demo")
+  @Transient
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
 
   @Column(name = "ultimaActualizacion_demo")

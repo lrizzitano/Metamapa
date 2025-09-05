@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -28,8 +29,9 @@ public class Agregador extends Fuente implements Calendarizable  {
   @JoinColumn(name = "fuentes_agregador")
   private Set<Fuente> fuentes;
 
-  @OneToMany
-  @JoinColumn(name = "hechos_agregador")
+  //@OneToMany
+  //@JoinColumn(name = "hechos_agregador")
+  @Transient
   private Set<Hecho> hechos = Set.of();
 
   @Column(name = "proxima_actualizacion_agregador")
