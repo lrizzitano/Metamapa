@@ -5,6 +5,12 @@ import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -16,10 +22,24 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class FuenteDemo implements Fuente, Calendarizable {
-  private final URL url;
-  private final Conexion conexion;
+@Entity
+@DiscriminatorValue("demo")
+public class FuenteDemo extends Fuente implements Calendarizable {
+
+  public FuenteDemo(){}
+
+  @Column(name = "url_demo")
+  private  URL url;
+
+  @Transient
+  private  Conexion conexion;
+
+  //@OneToMany
+  //@JoinColumn(name = "hechos_demo")
+  @Transient
   private final Set<Hecho> hechos = ConcurrentHashMap.newKeySet();
+
+  @Column(name = "ultimaActualizacion_demo")
   private LocalDateTime ultimaActualizacion;
 
   public FuenteDemo(Conexion conexion, URL url, LocalDateTime ultimaActualizacion) {
@@ -28,6 +48,7 @@ public class FuenteDemo implements Fuente, Calendarizable {
     this.ultimaActualizacion = ultimaActualizacion;
   }
 
+  @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     return this.hechos.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
   }

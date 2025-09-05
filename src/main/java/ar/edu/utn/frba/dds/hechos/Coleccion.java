@@ -42,9 +42,9 @@ public class Coleccion{
   @JoinColumn(name = "criterioDePertenencia",nullable = false)
   private Filtro criterioDePertenencia;
 
-  @Transient
-  //@ManyToOne
-  //@JoinColumn(name = "fuente",nullable = false)
+
+  @ManyToOne
+  @JoinColumn(name = "fuente",nullable = false)
   private Fuente fuente;
 
   @Transient
