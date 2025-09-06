@@ -11,11 +11,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SolicitudesDeEliminacionJPA implements SolicitudDeEliminacionRepository, WithSimplePersistenceUnit {
+public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeEliminacion> implements SolicitudDeEliminacionRepository, WithSimplePersistenceUnit {
 
   private DetectorDeSpam detectorDeSpam;
 
   public SolicitudesDeEliminacionJPA() {
+    super(SolicitudDeEliminacion.class);
     this.detectorDeSpam = new NullDetector();
   }
 
@@ -30,7 +31,7 @@ public class SolicitudesDeEliminacionJPA implements SolicitudDeEliminacionReposi
       return;
     }
 
-    entityManager().persist(solicitud);
+    super.save(solicitud);
   }
 
   @Override

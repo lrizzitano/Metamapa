@@ -7,13 +7,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SolicitudesFuenteDinamicaJPA implements SolicitudDeCambioRepository, WithSimplePersistenceUnit {
+public class SolicitudesFuenteDinamicaJPA extends RepoGenerico<SolicitudDeCambio> implements SolicitudDeCambioRepository, WithSimplePersistenceUnit {
 
-  public SolicitudesFuenteDinamicaJPA() {}
+  public SolicitudesFuenteDinamicaJPA() {
+    super(SolicitudDeCambio.class);
+  }
 
   @Override
   public void nuevaSolicitud(SolicitudDeCambio solicitudDeCambio) {
-    entityManager().persist(solicitudDeCambio);
+    super.save(solicitudDeCambio);
   }
 
   @Override
