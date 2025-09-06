@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.repositorios;
 
+import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -12,6 +13,7 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {
+    hechoModificado.setId(hechoParaCambiar.getId()); // reutiliza el id
     entityManager().merge(hechoModificado);
   }
 
@@ -27,6 +29,10 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public void eliminar(Hecho hecho) {
+
+    if(hecho.getId() == null) {
+      throw new NoSePuedeEliminarUnHechoQueNoExisteException();
+    }
     entityManager().remove(hecho);
   }
 
