@@ -1,14 +1,11 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
-import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionMemoria;
-import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
@@ -18,10 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 class SolicitudesTest implements SimplePersistenceTest {
   private final Hecho hecho = new Hecho(

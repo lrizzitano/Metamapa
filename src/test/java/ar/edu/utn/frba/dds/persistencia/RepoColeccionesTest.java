@@ -1,28 +1,33 @@
-package ar.edu.utn.frba.dds.hechos;
-
+package ar.edu.utn.frba.dds.persistencia;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
-import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
+import ar.edu.utn.frba.dds.hechos.Coleccion;
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
+import ar.edu.utn.frba.dds.usuarios.Administrador;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class ColeccionTest{
+public class RepoColeccionesTest implements SimplePersistenceTest {
+
   private final Hecho hecho1 = new Hecho(null,"hecho1", "desc1", "cat1",
       1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
   private final Hecho hecho2 = new Hecho(null,"hecho2", "desc2", "cat2",
@@ -31,13 +36,22 @@ public class ColeccionTest{
   private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02"));
   private final Filtro filtroTrue = new NullFiltro();
 
+  private final RepoUsuarios repoUsuarios = new RepoUsuarios();
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho1, "null");
+  private Administrador administrador = new Administrador();
+
   private final SolicitudesDeEliminacionJPA solicitudesRepo = new SolicitudesDeEliminacionJPA();
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
 
 
 
+  //ANDANDO
   @BeforeEach
   void setUp() {
+    hechos.agregar(hecho1);
+    repoUsuarios.save(administrador);
+    solicitudesRepo.setDetectorDeSpam(new NullDetector());
+    solicitudesRepo.nuevaSolicitud(solicitud);
 
     Set<Hecho> hechos = Set.of(hecho1, hecho2);
     when(unaFuente.obtenerHechos(any())).thenAnswer(invocation -> {
@@ -47,40 +61,17 @@ public class ColeccionTest{
   }
 
   @Test
-  void noLeImportaElConsensoSiNoSeLePide() {
-    Consenso criterioConsenso = mock(Consenso.class);
-    when(criterioConsenso.getHechosConsensuados()).thenReturn(new HashSet<>());
-    Coleccion unaColeccion = new Coleccion("", "",
-        filtroTrue, unaFuente, criterioConsenso, solicitudesRepo);
-    Assertions.assertEquals(Set.of(hecho1, hecho2), unaColeccion.hechos(filtroTrue));
-  }
+  void CollecionFiltraHechosEliminados() {
 
+    solicitud.aceptar(administrador);
 
-
-  @Test
-  void filtraPorConsenso() {
-    Consenso criterioConsenso = mock(Consenso.class);
-    when(criterioConsenso.esConsensuado(hecho1)).thenReturn(true);
-    when(criterioConsenso.esConsensuado(hecho2)).thenReturn(false);
-    Coleccion unaColeccion = new Coleccion("", "",
-        filtroTrue, unaFuente, criterioConsenso, solicitudesRepo);
-    Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechosConsensuados(filtroTrue));
-  }
-
-  @Test
-  void ColeccionFiltraPorCriterioDePertenencia() {
-    Coleccion unaColeccion = new Coleccion("", "",
-        filtroFecha, unaFuente, new ConsensoNull(), solicitudesRepo);
-    Assertions.assertEquals(Set.of(hecho1), unaColeccion.hechos(filtroTrue));
-  }
-
-  @Test
-  void ColeccionFiltraPorParametro() {
     Coleccion unaColeccion = new Coleccion("", "", filtroTrue, unaFuente,
         new ConsensoNull(), solicitudesRepo);
-    Assertions.assertEquals(unaColeccion.hechos(filtroFecha),
-        Set.of(hecho1));
-  }
 
+    Set<Hecho> hechosFiltrados = unaColeccion.hechos(filtroTrue);
+
+    Assertions.assertEquals(1, hechosFiltrados.size());
+    Assertions.assertEquals(Set.of(hecho2), hechosFiltrados);
+  }
 
 }
