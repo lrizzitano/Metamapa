@@ -84,7 +84,7 @@ public class SolicitudesFuenteDinamicaJPA extends RepoGenerico<SolicitudDeCambio
         .orElse(0);
   }
 
-  private Set<SolicitudDeCambio> getByEstado(Boolean estado) {
+  public Set<SolicitudDeCambio> getByEstado(Boolean estado) {
     return new HashSet<>(
         entityManager().createQuery(
                 "FROM SolicitudDeCambio sc " +
