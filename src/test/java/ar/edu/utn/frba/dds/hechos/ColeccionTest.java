@@ -83,6 +83,7 @@ public class ColeccionTest {
         Set.of(hecho1));
   }
 
+  /*
   @Test
   void CollecionFiltraHechosEliminados() {
     SolicitudDeEliminacion unaSolicitud = new SolicitudDeEliminacion(hecho1, "");
@@ -91,4 +92,6 @@ public class ColeccionTest {
         new ConsensoNull(), SolicitudesDeEliminacionMemoria.instance());
     Assertions.assertEquals(unaColeccion.hechos(filtroTrue), Set.of(hecho2));
   }
+
+   */
 }

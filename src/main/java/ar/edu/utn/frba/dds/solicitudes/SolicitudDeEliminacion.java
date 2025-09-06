@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.solicitudes;
 import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 
@@ -27,12 +28,12 @@ public class SolicitudDeEliminacion {
   @Column
   private boolean fueAceptada;
 
-  @Transient
-  private SolicitudesDeEliminacionMemoria solicitudes = SolicitudesDeEliminacionMemoria.instance();
-
   @ManyToOne()
   @JoinColumn(name = "administrador_id")
   private Administrador responsable;
+
+  @Transient
+  public SolicitudesDeEliminacionJPA solicitudes;
 
   public SolicitudDeEliminacion() {}
   public SolicitudDeEliminacion(Hecho hecho, String fundamento) {
@@ -45,9 +46,7 @@ public class SolicitudDeEliminacion {
     this.hecho = hecho;
     this.fundamento = fundamento;
     this.fueAceptada = false;
-
-    // TODO: Esta bien que un constructor se encargue de persistir la instancia??
-    solicitudes.nuevaSolicitud(this);
+    this.solicitudes = new SolicitudesDeEliminacionJPA();
   }
 
   public Hecho getHecho() {
@@ -68,6 +67,9 @@ public class SolicitudDeEliminacion {
     }
     this.responsable = admin;
     this.fueAceptada = true;
+
+
+    // TODO: no se 
     solicitudes.aceptarSolicitud(this);
   }
 

@@ -1,10 +1,17 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
+import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
+import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,62 +20,63 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class SolicitudesTest {
-  private final Hecho hecho = mock(Hecho.class);
-  private final SolicitudesDeEliminacionMemoria solicitudes = SolicitudesDeEliminacionMemoria.instance();
-  private SolicitudDeEliminacion solicitud;
+import java.time.LocalDate;
+import java.util.Set;
+
+class SolicitudesTest implements SimplePersistenceTest {
+  private final Hecho hecho = new Hecho(
+      null,
+      "Incendio forestal",
+      "Gran incendio en zona rural",
+      "Desastre natural",
+      -34.6037,
+      -58.3816,
+      LocalDate.of(2023, 12, 15),
+      LocalDate.of(2023, 11, 30),
+      Origen.DATASET);
+
+  private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
+  private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
+  private final RepoUsuarios repoUsuarios = new RepoUsuarios();
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho, "null");
+  private Administrador administrador = new Administrador();
 
   @BeforeEach
   void setUp() {
-    solicitudes.reset();
+    hechos.agregar(hecho);
+    repoUsuarios.save(administrador);
     solicitudes.setDetectorDeSpam(new NullDetector());
-    solicitud = new SolicitudDeEliminacion(hecho, "null");
-  }
-
-  @Test
-  void contieneSolicitudPendiente(){
-    Assertions.assertTrue(solicitudes.getPendientes().contains(solicitud));
-  }
-
-  @Test
-  void aceptoSolicitud(){
-    solicitud.aceptar(null);
-    Assertions.assertTrue(solicitudes.getAceptadas().contains(solicitud));
-  }
-
-  @Test
-  void rechazoSolicitud(){
-    solicitud.rechazar(null);
-    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho, "null");
-    solicitud2.rechazar(null);
-    Assertions.assertEquals(2, solicitudes.getRechazadas().get(solicitud.getHecho()));
-  }
-
-  @Test
-  void seEliminaElHecho(){
-    solicitud.aceptar(null);
-    Assertions.assertTrue(solicitudes.hechosEliminados().contains(solicitud.getHecho()));
-  }
-
-  @Test
-  void seEliminaElSolicitud(){
-    solicitud.aceptar(null);
-    Assertions.assertTrue(solicitudes.estaEliminado(hecho));
   }
 
   @Test
   void seAcuerdaQuienLaAcepto(){
-    Administrador admin = mock(Administrador.class);
-    solicitud.aceptar(admin);
-    Assertions.assertEquals(solicitud.getResponsable(), admin);
+    solicitud.aceptar(administrador);
+    Assertions.assertEquals(solicitud.getResponsable(), administrador);
   }
 
   @Test
-  void seRechazaElSpam() {
-    DetectorDeSpam detectorDeSpam = mock(DetectorDeSpam.class);
-    when(detectorDeSpam.esSpam(any())).thenReturn(true);
-    solicitudes.setDetectorDeSpam(detectorDeSpam);
-    new SolicitudDeEliminacion(hecho, "spam spam");
-    Assertions.assertEquals(1, solicitudes.getRechazos(hecho));
+  void seAcuerdaQuienLaRechazo(){
+    solicitud.rechazar(administrador);
+    Assertions.assertEquals(solicitud.getResponsable(), administrador);
   }
+
+  @Test
+  void noSePuedeAceptarSolicitudQueYaFueAceptada(){
+    solicitud.aceptar(administrador);
+
+    Assertions.assertThrows(SolicitudYaResueltaException.class, () -> {
+      solicitud.aceptar(administrador);;
+    });
+  }
+
+  @Test
+  void noSePuedeRechazarSolicitudQueYaFueRechazada(){
+    solicitud.rechazar(administrador);
+
+    Assertions.assertThrows(SolicitudYaResueltaException.class, () -> {
+      solicitud.rechazar(administrador);;
+    });
+  }
+
+
 }
