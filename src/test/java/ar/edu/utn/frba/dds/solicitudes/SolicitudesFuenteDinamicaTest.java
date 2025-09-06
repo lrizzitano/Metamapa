@@ -5,7 +5,7 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ar.edu.utn.frba.dds.repositorios.SolicitudesFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaMemoria;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

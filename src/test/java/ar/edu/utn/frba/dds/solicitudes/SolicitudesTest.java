@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionMemoria;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;

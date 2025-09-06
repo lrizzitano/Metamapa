@@ -68,7 +68,6 @@ public class SolicitudDeCambio {
     this.hechoModificado = hechoModificado;
     this.usuario = usuario;
     this.fueAceptada = false;
-    fuente.nuevaSolicitudDeCambio(this);
   }
 
   public Hecho getHechoParacambiar() {
@@ -85,6 +84,10 @@ public class SolicitudDeCambio {
 
   public Usuario getUsuario() {
     return usuario;
+  }
+
+  public void persistir() {
+    fuente.nuevaSolicitudDeCambio(this);
   }
 
   public void aceptarCambio(Administrador administrador, String sugerencias) {

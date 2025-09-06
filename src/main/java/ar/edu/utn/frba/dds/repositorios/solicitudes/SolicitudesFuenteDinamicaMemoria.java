@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
@@ -27,6 +27,11 @@ public class SolicitudesFuenteDinamicaMemoria implements SolicitudDeCambioReposi
 
   public Map<Hecho, Integer> getRechazadas() {
     return new HashMap<>(rechazadas);
+  }
+
+  @Override
+  public Integer getRechazos(Hecho hecho) {
+    return rechazadas.get(hecho);
   }
 
   @Override

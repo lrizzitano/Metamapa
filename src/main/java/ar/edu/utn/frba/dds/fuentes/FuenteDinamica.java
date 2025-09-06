@@ -4,7 +4,7 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.repositorios.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeCambioRepository;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;

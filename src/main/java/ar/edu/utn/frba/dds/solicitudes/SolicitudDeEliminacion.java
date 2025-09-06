@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds.solicitudes;
 import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
 import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesDeEliminacionMemoria;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionMemoria;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 
 import javax.persistence.*;

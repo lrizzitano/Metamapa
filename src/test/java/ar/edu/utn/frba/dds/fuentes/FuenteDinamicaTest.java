@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds.fuentes;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.repositorios.SolicitudesFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import static org.mockito.Mockito.mock;

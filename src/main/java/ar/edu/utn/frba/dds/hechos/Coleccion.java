@@ -6,7 +6,7 @@ import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
-import ar.edu.utn.frba.dds.repositorios.SolicitudDeEliminacionRepository;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

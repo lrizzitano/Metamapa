@@ -49,8 +49,7 @@ public class Hecho {
         Double longitud,
         LocalDate fechaCarga,
         LocalDate fechaAcontecimiento,
-        Origen origen
-    ) {
+        Origen origen) {
       this.id = id;
       this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
       this.descripcion = Objects.requireNonNull(descripcion, "descripcion no puede ser null");
@@ -61,6 +60,7 @@ public class Hecho {
       this.fechaAcontecimiento = Objects.requireNonNull(fechaAcontecimiento, "fechaAcontecimiento no puede ser null");
       this.origen = Objects.requireNonNull(origen, "origen no puede ser null");
       this.multimedia = null;
+      this.contribuyente = null;
       this.fueRevisado = false;
     }
 
@@ -99,5 +99,13 @@ public class Hecho {
     }
     public Boolean fueRevisado() {
         return fueRevisado;
+    }
+
+    public void setContribuyente(Usuario contribuyente) {
+        this.contribuyente = contribuyente;
+    }
+
+    public void setMultimedia(Path multimedia) {
+        this.multimedia = multimedia;
     }
 }

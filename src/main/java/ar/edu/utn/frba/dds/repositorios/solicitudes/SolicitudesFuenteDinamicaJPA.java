@@ -1,11 +1,13 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.repositorios.RepoGenerico;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SolicitudesFuenteDinamicaJPA extends RepoGenerico<SolicitudDeCambio> implements SolicitudDeCambioRepository, WithSimplePersistenceUnit {
 
@@ -30,9 +32,25 @@ public class SolicitudesFuenteDinamicaJPA extends RepoGenerico<SolicitudDeCambio
   }
 
   @Override
-  public void rechazarSolicitud(SolicitudDeCambio solicitudDeCambio) {
-    entityManager().remove(solicitudDeCambio);
-    // TODO: Agregar al conteo de solicitudes rechazadas para el hecho
+  public void rechazarSolicitud(SolicitudDeCambio solicitud) {
+    Hecho hecho = solicitud.getHechoParacambiar();
+
+    RechazosDeCambio rechazos = entityManager().createQuery(
+            "FROM RechazosDeCambio r WHERE r.hecho = :hecho", RechazosDeCambio.class)
+        .setParameter("hecho", hecho)
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
+
+    if (rechazos == null) {
+      rechazos = new RechazosDeCambio(hecho, 1);
+      entityManager().persist(rechazos);
+    } else {
+      rechazos.sumarRechazo();
+      entityManager().merge(rechazos);
+    }
+
+    entityManager().remove(solicitud);
   }
 
   @Override
@@ -45,10 +63,25 @@ public class SolicitudesFuenteDinamicaJPA extends RepoGenerico<SolicitudDeCambio
     return this.getByEstado(true);
   }
 
-  // TODO: manejar la persistencia de las solicitudes rechazadas como un mapa de hecho a int
   @Override
   public Map<Hecho, Integer> getRechazadas() {
-    throw new UnsupportedOperationException("Falta implementar, disculpe las moletias");
+    return entityManager().createQuery(
+            "FROM RechazosDeCambio r", RechazosDeCambio.class)
+        .getResultStream()
+        .collect(Collectors.toMap(
+            RechazosDeCambio::getHecho,
+            RechazosDeCambio::getCantidad
+        ));
+  }
+
+  @Override
+  public Integer getRechazos(Hecho hecho) {
+    return entityManager().createQuery(
+            "SELECT r.cantidad FROM RechazosDeCambio r WHERE r.hecho = :hecho", Integer.class)
+        .setParameter("hecho", hecho)
+        .getResultStream()
+        .findFirst()
+        .orElse(0);
   }
 
   private Set<SolicitudDeCambio> getByEstado(Boolean estado) {

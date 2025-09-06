@@ -1,8 +1,9 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.repositorios.RepoGenerico;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
@@ -10,6 +11,7 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeEliminacion> implements SolicitudDeEliminacionRepository, WithSimplePersistenceUnit {
 
@@ -46,9 +48,25 @@ public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeElimina
   }
 
   @Override
-  public void rechazarSolicitud(SolicitudDeEliminacion solicitudDeCambio) {
-    entityManager().remove(solicitudDeCambio);
-    // TODO: Agregar al conteo de solicitudes rechazadas para el hecho
+  public void rechazarSolicitud(SolicitudDeEliminacion solicitud) {
+    Hecho hecho = solicitud.getHecho();
+
+    RechazosDeEliminacion rechazos = entityManager().createQuery(
+            "FROM RechazosDeEliminacion r WHERE r.hecho = :hecho", RechazosDeEliminacion.class)
+        .setParameter("hecho", hecho)
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
+
+    if (rechazos == null) {
+      rechazos = new RechazosDeEliminacion(hecho, 1);
+      entityManager().persist(rechazos);
+    } else {
+      rechazos.sumarRechazo();
+      entityManager().merge(rechazos);
+    }
+
+    entityManager().remove(solicitud);
   }
 
   @Override
@@ -61,16 +79,27 @@ public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeElimina
     return this.getByEstado(true);
   }
 
-  // TODO: manejar la persistencia de las solicitudes rechazadas como un mapa de hecho a int
   @Override
   public Map<Hecho, Integer> getRechazadas() {
-    throw new UnsupportedOperationException("Falta implementar, disculpe las moletias");
+    return entityManager().createQuery(
+        "FROM RechazosDeEliminacion r", RechazosDeEliminacion.class)
+        .getResultStream()
+        .collect(Collectors.toMap(
+            RechazosDeEliminacion::getHecho,
+            RechazosDeEliminacion::getCantidad
+        ));
   }
 
   @Override
   public Integer getRechazos(Hecho hecho) {
-    throw new UnsupportedOperationException("Falta implementar, disculpe las moletias");
+    return entityManager().createQuery(
+            "SELECT r.cantidad FROM RechazosDeEliminacion r WHERE r.hecho = :hecho", Integer.class)
+        .setParameter("hecho", hecho)
+        .getResultStream()
+        .findFirst()
+        .orElse(0);
   }
+
 
   @Override
   public boolean estaEliminado(Hecho hecho) {

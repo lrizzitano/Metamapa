@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
