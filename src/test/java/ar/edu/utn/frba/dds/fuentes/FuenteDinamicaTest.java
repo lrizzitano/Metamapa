@@ -1,9 +1,9 @@
 package ar.edu.utn.frba.dds.fuentes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaMemoria;
+import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaMemoria;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import static org.mockito.Mockito.mock;
@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 public class FuenteDinamicaTest {
 
   private final FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
-  private final SolicitudesFuenteDinamicaMemoria solicitudesFuenteDinamica = mock(SolicitudesFuenteDinamicaMemoria.class);
-  private final HechosFuenteDinamicaMemoria hechosFuenteDinamica = mock(HechosFuenteDinamicaMemoria.class);
+  private final SolicitudesFuenteDinamicaJPA solicitudesFuenteDinamica = mock(SolicitudesFuenteDinamicaJPA.class);
+  private final HechosFuenteDinamicaJPA hechosFuenteDinamica = mock(HechosFuenteDinamicaJPA.class);
   private final Hecho unHecho = mock(Hecho.class);
 
   @BeforeEach
@@ -34,7 +34,6 @@ public class FuenteDinamicaTest {
     when(unHecho.contribuyente()).thenReturn(juanma);
 
     fuenteDinamica.agregarHecho(unHecho);
-
     Assertions.assertTrue(juanma.esContribuyente());
   }
 

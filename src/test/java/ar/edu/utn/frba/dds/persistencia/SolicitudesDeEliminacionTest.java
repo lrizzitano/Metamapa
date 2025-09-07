@@ -1,12 +1,18 @@
 package ar.edu.utn.frba.dds.persistencia;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
+import ar.edu.utn.frba.dds.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -14,6 +20,29 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
 
   SolicitudesDeEliminacionJPA repoSolicitudes = new SolicitudesDeEliminacionJPA();
   HechosFuenteDinamicaJPA repoHechos = new HechosFuenteDinamicaJPA();
+  private final Hecho hecho = new Hecho(
+      null,
+      "Incendio forestal",
+      "Gran incendio en zona rural",
+      "Desastre natural",
+      -34.6037,
+      -58.3816,
+      LocalDate.of(2023, 12, 15),
+      LocalDate.of(2023, 11, 30),
+      Origen.DATASET);
+
+  private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
+  private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
+  private final RepoUsuarios repoUsuarios = new RepoUsuarios();
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho, "null");
+  private Administrador administrador = new Administrador();
+
+  @BeforeEach
+  void setUp() {
+    hechos.agregar(hecho);
+    repoUsuarios.save(administrador);
+    solicitudes.setDetectorDeSpam(new NullDetector());
+  }
 
   @Test
   public void persistirSolicitudDeEliminacion() {
@@ -74,5 +103,7 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
     Assertions.assertFalse(repoSolicitudes.getRechazadas().isEmpty());
     Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho));
   }
+
+
 
 }

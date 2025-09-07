@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,36 +22,36 @@ public class SolicitudesDeCambioTest implements SimplePersistenceTest {
   SolicitudesFuenteDinamicaJPA repoSolicitudes = new SolicitudesFuenteDinamicaJPA();
   HechosFuenteDinamicaJPA repoHechos = new HechosFuenteDinamicaJPA();
   RepoUsuarios repoUsuarios = new RepoUsuarios();
-
+  SolicitudDeCambio solicitudVacia = new SolicitudDeCambio();
 
   @Test
-  public void persistirSolicitudDeCambio() {
-    SolicitudDeCambio solicitud = new SolicitudDeCambio();
+  public void persistirSolicitudDeCambio_LaAgregaAPendientes() {
 
-    repoSolicitudes.nuevaSolicitud(solicitud);
-    Assertions.assertNotNull(solicitud.getId());
+
+    repoSolicitudes.nuevaSolicitud(solicitudVacia);
+    Assertions.assertNotNull(solicitudVacia.getId());
 
     Set<SolicitudDeCambio> solicitudesPendientes = repoSolicitudes.getPendientes();
-    Assertions.assertTrue(solicitudesPendientes.contains(solicitud));
+    Assertions.assertTrue(solicitudesPendientes.contains(solicitudVacia));
   }
 
   @Test
-  public void aceptarSolicitudDeCambio() {
-    SolicitudDeCambio solicitud = new SolicitudDeCambio();
+  public void aceptarSolicitudDeCambio_PasaAEstarAceptada() {
 
-    repoSolicitudes.nuevaSolicitud(solicitud);
-    repoSolicitudes.aceptarSolicitud(solicitud);
+
+    repoSolicitudes.nuevaSolicitud(solicitudVacia);
+    repoSolicitudes.aceptarSolicitud(solicitudVacia);
 
     Set<SolicitudDeCambio> solicitudesPendientes = repoSolicitudes.getPendientes();
     Set<SolicitudDeCambio> solicitudesAceptadas = repoSolicitudes.getAceptadas();
 
     Assertions.assertTrue(solicitudesPendientes.isEmpty());
-    Assertions.assertTrue(solicitudesAceptadas.contains(solicitud));
+    Assertions.assertTrue(solicitudesAceptadas.contains(solicitudVacia));
 
   }
 
   @Test
-  public void detectarSolicitudesRechazadas() {
+  public void detectarContadorDeRechazosDeUnHecho() {
 
     Usuario  usuario = new Usuario("Peperino", "Pomoro", 43);
     repoUsuarios.save(usuario);
@@ -82,4 +83,62 @@ public class SolicitudesDeCambioTest implements SimplePersistenceTest {
     Assertions.assertFalse(repoSolicitudes.getRechazadas().isEmpty());
     Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho));
   }
+
+  @Test
+  void rechazarSolicitud_PasaAEstarRechazada()
+  {
+    repoSolicitudes.nuevaSolicitud(solicitudVacia);
+    repoSolicitudes.rechazarSolicitud(solicitudVacia);
+
+    Assertions.assertTrue(repoSolicitudes.getPendientes().isEmpty());
+    Assertions.assertTrue(repoSolicitudes.getAceptadas().isEmpty());
+    Assertions.assertEquals(1, repoSolicitudes.getRechazadas().size());
+
+  }
+
 }
+
+/*
+    private final SolicitudDeCambio unaSolicitudDeCambio = mock(SolicitudDeCambio.class);
+  private SolicitudesFuenteDinamicaJPA solicitudesFuenteDinamica;
+
+  @BeforeEach
+  public void setUp() {
+    solicitudesFuenteDinamica = new SolicitudesFuenteDinamicaJPA();
+  }
+
+  @Test
+  void crearSolicitudLaAgregaAPendientes()
+  {
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
+
+
+    verify(solicitudesFuenteDinamica).
+    //Assertions.assertTrue(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
+  }
+
+  @Test
+  void aceptarSolicitudLaMueveAceptadasYSeVaDePendientes()
+  {
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.aceptarSolicitud(unaSolicitudDeCambio);
+
+    Assertions.assertFalse(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
+    Assertions.assertTrue(solicitudesFuenteDinamica.getAceptadas().contains(unaSolicitudDeCambio));
+  }
+
+  @Test
+  void rechazarSolicitudLaMueveARechazadasGuardaElHechoYSeVaDePendientes()
+  {
+    Hecho unHecho = mock(Hecho.class);
+    when(unaSolicitudDeCambio.getHechoParacambiar()).thenReturn(unHecho);
+    solicitudesFuenteDinamica.nuevaSolicitud(unaSolicitudDeCambio);
+    solicitudesFuenteDinamica.rechazarSolicitud(unaSolicitudDeCambio);
+
+    Assertions.assertFalse(solicitudesFuenteDinamica.getPendientes().contains(unaSolicitudDeCambio));
+    Assertions.assertTrue(solicitudesFuenteDinamica.getRechazadas().containsKey(unHecho));
+  }
+
+
+ */
+
