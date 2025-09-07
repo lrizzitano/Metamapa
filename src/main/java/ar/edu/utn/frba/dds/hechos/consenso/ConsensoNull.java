@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class ConsensoNull extends Consenso {
 
   public ConsensoNull() {
-    super(null, null);
+    super(null, null, null);
   }
 
   @Override
