@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
+import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -19,6 +20,11 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public Set<Hecho> obtenerTodos() {
+    return new HashSet<>(entityManager().createQuery("FROM Hecho", Hecho.class).getResultList());
+  }
+
+  @Override
+  public Set<Hecho> obtenerHechos(Filtro filtro) {
     return new HashSet<>(entityManager().createQuery("FROM Hecho", Hecho.class).getResultList());
   }
 

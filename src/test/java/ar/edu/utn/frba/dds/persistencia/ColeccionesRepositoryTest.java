@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RepoColeccionesTest implements SimplePersistenceTest {
+public class ColeccionesRepositoryTest implements SimplePersistenceTest {
 
   private final Hecho hecho1 = new Hecho(null,"hecho1", "desc1", "cat1",
       1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);

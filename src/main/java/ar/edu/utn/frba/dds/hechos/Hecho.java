@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.hechos;
 
+import ar.edu.utn.frba.dds.estadisticas.Provincia;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import javax.persistence.*;
@@ -120,4 +121,8 @@ public class Hecho {
     public String getTitulo() {
         return this.titulo;
     }
+
+  public Provincia getProvincia() {
+        return null;
+  }
 }

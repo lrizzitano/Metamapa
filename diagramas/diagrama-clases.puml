@@ -179,8 +179,22 @@ class Agregador {
     -frecuencia
 }
 
-Administrador -r-|> Usuario
+class Estadistico {
+    + objetosDeEstudio
+    + medioDePublicacion
+}
 
+interface ObjetoDeEstudio {
+    + //resultados// generarEstadisticas()
+}
+
+interface PublicadorDeResultados {
+    + exportar(//resultados//)
+}
+interface ResultadoEstadistico {
+}
+
+Administrador -r-|> Usuario
 
 Coleccion --> Fuente
 Coleccion .r.> Filtro
@@ -207,7 +221,7 @@ NullConsenso --|> Consenso
 
 Agregador .u.|> Calendarizable
 
-CalendarizablesRepository -r->"*" Calendarizable
+CalendarizablesRepository -->"*" Calendarizable
 
 Hecho -l-> Origen
 
@@ -221,6 +235,11 @@ SolicitudDeEliminacionRepo <-- Coleccion
 Backup .u.|> Calendarizable
 Backup -u-> FuenteDinamica
 
-
+Estadistico .d.|> Calendarizable
+Estadistico -->"*" ObjetoDeEstudio
+Estadistico --> PublicadorDeResultados
+Estadistico ..> ResultadoEstadistico
+PublicadorDeResultados ..> ResultadoEstadistico
+ObjetoDeEstudio ..> ResultadoEstadistico
 
 @enduml
