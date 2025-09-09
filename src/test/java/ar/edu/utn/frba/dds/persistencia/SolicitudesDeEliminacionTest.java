@@ -34,7 +34,7 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
-  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho, "null");
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho.titulo(), "null");
   private Administrador administrador = new Administrador();
 
   @BeforeEach
@@ -73,35 +73,38 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
 
   @Test
   public void detectarHechoEliminado() {
-    Hecho hecho = new Hecho();
+    Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
+        1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     repoHechos.agregar(hecho);
 
-    SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho, "No me gusto, bajenlon");
+    SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
     repoSolicitudes.nuevaSolicitud(solicitud);
 
-    Assertions.assertFalse(repoSolicitudes.estaEliminado(hecho));
+    Assertions.assertFalse(repoSolicitudes.estaEliminado(hecho.titulo()));
     repoSolicitudes.aceptarSolicitud(solicitud);
-    Assertions.assertTrue(repoSolicitudes.estaEliminado(hecho));
+    Assertions.assertTrue(repoSolicitudes.estaEliminado(hecho.titulo()));
   }
 
   @Test
   public void detectarSolicitudesRechazadas() {
-    Hecho hecho = new Hecho();
+    Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
+        1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+
     repoHechos.agregar(hecho);
 
-    SolicitudDeEliminacion solicitud1 = new SolicitudDeEliminacion(hecho, "No me gusto, bajenlon");
-    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho, "Malisimo esto, cortala pipo");
+    SolicitudDeEliminacion solicitud1 = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
+    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho.titulo(), "Malisimo esto, cortala pipo");
     repoSolicitudes.nuevaSolicitud(solicitud1);
     repoSolicitudes.nuevaSolicitud(solicitud2);
 
     Assertions.assertTrue(repoSolicitudes.getRechazadas().isEmpty());
-    Assertions.assertEquals(0, repoSolicitudes.getRechazos(hecho));
+    Assertions.assertEquals(0, repoSolicitudes.getRechazos(hecho.titulo()));
 
     repoSolicitudes.rechazarSolicitud(solicitud1);
     repoSolicitudes.rechazarSolicitud(solicitud2);
 
     Assertions.assertFalse(repoSolicitudes.getRechazadas().isEmpty());
-    Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho));
+    Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho.titulo()));
   }
 
 

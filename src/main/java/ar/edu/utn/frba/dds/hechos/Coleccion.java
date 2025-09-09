@@ -97,10 +97,10 @@ public class Coleccion{
   }
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
-    Set<Hecho> eliminados = solicitudes.hechosEliminados();
+    Set<String> eliminados = solicitudes.hechosEliminados();
     FiltroCompuesto filtroCompuesto =
         new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
     return fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
-        .filter(h -> !eliminados.contains(h));
+        .filter(h -> !eliminados.contains(h.titulo()));
   }
 }

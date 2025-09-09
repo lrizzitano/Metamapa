@@ -78,7 +78,7 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
     hechosFuenteDinamica.agregar(primerHecho);
 
-    Assertions.assertNotNull(primerHecho.getId());
+    Assertions.assertNotNull(primerHecho.id());
 
     Assertions.assertTrue(hechosFuenteDinamica.obtenerTodos().contains(primerHecho));
 
@@ -89,8 +89,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
     Hecho hechoPersistido = hechosActualizados.iterator().next();
 
     Assertions.assertEquals(1,hechosActualizados.size());
-    Assertions.assertEquals(primerHecho.getId(),segundoHecho.getId());
-    Assertions.assertEquals("Incendio URBANO",hechoPersistido.getTitulo());
+    Assertions.assertEquals(primerHecho.id(),segundoHecho.id());
+    Assertions.assertEquals("Incendio URBANO",hechoPersistido.titulo());
   }
 
   @Test

@@ -109,15 +109,22 @@ public class Hecho {
         this.multimedia = multimedia;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id){
         this.id = id;
     }
 
-    public String getTitulo() {
-        return this.titulo;
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof  Hecho)) {
+            return false;
+        }
+
+        return this.titulo.equals(((Hecho) obj).titulo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo);
     }
 }

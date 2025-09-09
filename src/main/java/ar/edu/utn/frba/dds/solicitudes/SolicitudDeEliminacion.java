@@ -17,9 +17,8 @@ public class SolicitudDeEliminacion {
   @Column(name = "solicitudDeEliminacion_id")
   private long id;
 
-  @ManyToOne
-  @JoinColumn(name = "hecho_id")
-  private Hecho hecho;
+  @Column
+  private String tituloHecho;
 
   @Column(name = "fundamento")
   private String fundamento;
@@ -35,21 +34,21 @@ public class SolicitudDeEliminacion {
   public SolicitudesDeEliminacionJPA solicitudes;
 
   public SolicitudDeEliminacion() {}
-  public SolicitudDeEliminacion(Hecho hecho, String fundamento) {
-    if (hecho == null) {
+  public SolicitudDeEliminacion(String tituloHecho, String fundamento) {
+    if (tituloHecho == null) {
       throw new SolicitudInvalidaException("Falta hecho");
     }
     if (fundamento == null) {
       throw new SolicitudInvalidaException("Falta fundamento");
     }
-    this.hecho = hecho;
+    this.tituloHecho = tituloHecho;
     this.fundamento = fundamento;
     this.fueAceptada = false;
     this.solicitudes = new SolicitudesDeEliminacionJPA();
   }
 
-  public Hecho getHecho() {
-    return hecho;
+  public String getTituloHecho() {
+    return tituloHecho;
   }
 
   public String getFundamento() {
