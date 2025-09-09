@@ -163,7 +163,7 @@ class FuenteMetaMapa {
 }
 
 class CalendarizablesRepository {
-    +FuentesCalendarizadas
+    +entidadesCalendarizadas
     --
     +getPendientesDeActualizacion()
 }

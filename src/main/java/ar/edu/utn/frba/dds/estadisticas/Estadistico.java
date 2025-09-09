@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.estadisticas;
 
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.estadisticas.exportador.PublicadorDeResultados;
+import ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados.PublicadorDeResultados;
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.ObjetoDeEstudio;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.estadisticas.exportador;
+package ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados;
 
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;

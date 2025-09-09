@@ -47,13 +47,13 @@ public class ProvinciaConMasHechosDeColeccion implements ObjetoDeEstudio {
   private ResultadoEstadistico pronvinciaConMasHechos(Coleccion coleccion) {
     Provincia provincia = coleccion.hechos(new NullFiltro()).stream()
         .collect(Collectors.groupingBy(
-            Hecho::getProvincia,      // clave: provincia
-            Collectors.counting()     // valor: cantidad de veces
+            Hecho::getProvincia,
+            Collectors.counting()
         ))
         .entrySet().stream()
-        .max(Map.Entry.comparingByValue()) // encuentra la provincia con más ocurrencias
-        .map(Map.Entry::getKey)            // obtenemos solo el nombre de la provincia
-        .orElse(null);                     // por si la lista está vacía
+        .max(Map.Entry.comparingByValue())
+        .map(Map.Entry::getKey)
+        .orElse(null);
 
     if(provincia == null) {
       throw new NoExisteInformacionException(
