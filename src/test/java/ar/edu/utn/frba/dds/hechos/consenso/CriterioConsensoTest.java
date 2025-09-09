@@ -3,6 +3,8 @@ package ar.edu.utn.frba.dds.hechos.consenso;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import java.time.LocalDate;
 import java.util.Set;
+
+import ar.edu.utn.frba.dds.repositorios.FuentesRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,7 @@ public class CriterioConsensoTest {
   @BeforeEach
   void setUp() {
     algoritmo = mock(AlgoritmoConsenso.class);
-    criterio = new Consenso(algoritmo, LocalDate.now());
+    criterio = new Consenso(algoritmo, LocalDate.now(), mock(FuentesRepository.class));
 
   }
 

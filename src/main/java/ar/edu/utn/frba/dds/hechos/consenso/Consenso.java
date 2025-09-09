@@ -29,7 +29,7 @@ import java.util.Set;
 @Table(name ="Consenso")
 public class Consenso implements Calendarizable {
   @Transient
-  private final FuentesRepository fuentes = FuentesRepository.instance();
+  private FuentesRepository fuentes;
 
   @OneToOne
   @JoinColumn(name = "algoritmoConsenso",nullable = false)
@@ -46,9 +46,10 @@ public class Consenso implements Calendarizable {
   @Column(name = "consenso_id")
   private Long id;
 
-  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion) {
+  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion, FuentesRepository fuentes) {
     this.algoritmoConsenso = algoritmoConsenso;
     this.proximaActualizacion = proximaActualizacion;
+    this.fuentes = fuentes;
   }
 
   public Consenso() {
@@ -61,7 +62,7 @@ public class Consenso implements Calendarizable {
 
   @Override
   public void actualizar() {
-    this.hechosConsensuados = algoritmoConsenso.getHechosConsensuados(fuentes.getFuentes());
+    this.hechosConsensuados = algoritmoConsenso.getHechosConsensuados(fuentes.obtenerFuentes());
     this.proximaActualizacion = LocalDate.now().plusDays(1);
   }
 
