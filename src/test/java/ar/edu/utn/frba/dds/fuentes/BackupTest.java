@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
 
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
 import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.hechos.Hecho;
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +49,6 @@ public class BackupTest {
     Assertions.assertThrows(RuntimeException.class, backup::actualizar);
   }
 
-  @Disabled
   @Test
   void testBackupWritesCorrectHechosJson() throws Exception {
     HechoRepository repo = mock(HechoRepository.class);
@@ -59,8 +60,8 @@ public class BackupTest {
        LocalDate.now().atStartOfDay().plusDays(1), LocalDate.now().atStartOfDay().minusDays(3),
        Origen.DATASET);
 
-   when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
-   FuenteDinamica.instance().setHechoRepository(repo);
+    when(repo.obtenerHechos(any(NullFiltro.class))).thenReturn(Set.of(hecho1, hecho2));
+    FuenteDinamica.instance().setHechoRepository(repo);
 
     Backup backup = new Backup(tempFile, LocalDate.now().atStartOfDay(), Duration.ZERO);
     backup.actualizar();
@@ -72,16 +73,11 @@ public class BackupTest {
         .setPrettyPrinting()
         .create();
 
-    Type setType = new TypeToken<Set<Hecho>>(){}.getType();
+    Type setType = new TypeToken<Set<Hecho>>() {}.getType();
     Set<Hecho> hechos = gson.fromJson(json, setType);
 
-    assertThat(hechos)
-        .usingRecursiveComparison()
-        .isEqualTo(Set.of(hecho1, hecho2));
+    Assertions.assertEquals(Set.of(hecho1, hecho2), hechos);
   }
-
-
-
 
   @Test
   void estoNoEsUnTest() {

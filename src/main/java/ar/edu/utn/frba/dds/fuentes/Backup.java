@@ -24,7 +24,7 @@ public class Backup implements Calendarizable {
     this.archivo = archivo;
     this.frecuencia = frecuencia;
     this.gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .setPrettyPrinting().create();
     this.proximaActualizacion = proximaActualizacion;
