@@ -5,7 +5,6 @@ import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCol
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
 import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.ColeccionesRepository;
