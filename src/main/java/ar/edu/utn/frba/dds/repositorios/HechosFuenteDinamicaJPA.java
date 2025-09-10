@@ -58,4 +58,22 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
                     .getResultList()
     );
   }
+
+  @SuppressWarnings("unchecked")
+  public Set<Hecho> fullTextSearch(String texto) {
+
+    entityManager().flush();
+
+    return new HashSet<>(
+        entityManager()
+            .createNativeQuery(
+                "SELECT * FROM Hecho h " +
+                    "WHERE MATCH(h.titulo, h.descripcion) AGAINST (:texto IN BOOLEAN MODE)",
+                Hecho.class
+            )
+            .setParameter("texto", texto)
+            .getResultList()
+    );
+  }
+
 }

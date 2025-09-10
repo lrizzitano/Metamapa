@@ -16,4 +16,6 @@ public interface HechoRepository {
   void marcarComoRevisado(Hecho hecho);
 
   Set<Hecho> obtenerNoRevisados();
+
+  Set<Hecho> fullTextSearch(String texto);
 }

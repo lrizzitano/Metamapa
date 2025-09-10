@@ -8,8 +8,10 @@ import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -38,8 +40,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
   Hecho segundoHecho = new Hecho(
       null,
-      "Incendio URBANO",
-      "Gran incendio en zona rural",
+      "Incendio urbano",
+      "Gran incendio en capital federal",
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
@@ -49,9 +51,9 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
   Hecho tercerHecho = new Hecho(
       null,
-      "Incendio forestal",
-      "Gran incendio en zona rural",
-      "Desastre natural",
+      "represion policial",
+      "represion en zona congreso",
+      "Violencia estatal",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
       LocalDate.of(2023, 12, 15),
@@ -91,7 +93,7 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
     Assertions.assertEquals(1,hechosActualizados.size());
     Assertions.assertEquals(primerHecho.id(),segundoHecho.id());
-    Assertions.assertEquals("Incendio URBANO",hechoPersistido.titulo());
+    Assertions.assertEquals("Incendio urbano",hechoPersistido.titulo());
   }
 
   @Test
@@ -131,4 +133,5 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
     hechosFuenteDinamica.marcarComoRevisado(primerHecho);
     Assertions.assertFalse(hechosFuenteDinamica.obtenerNoRevisados().contains(primerHecho));
   }
+
 }
