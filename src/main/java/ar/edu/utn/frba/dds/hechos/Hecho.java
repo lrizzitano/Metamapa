@@ -31,7 +31,7 @@ public class Hecho {
     @Column(name = "origen")
     private Origen origen;
     @Column(name = "multimedia")
-    private Path multimedia;
+    private String multimedia;
     @ManyToOne()
     @JoinColumn(name = "contribuyente_id")
     private Usuario contribuyente;
@@ -91,7 +91,7 @@ public class Hecho {
     public Origen origen() {
         return origen;
     }
-    public Path multimedia() {
+    public String multimedia() {
         return multimedia;
     }
     public Usuario contribuyente() {
@@ -105,20 +105,27 @@ public class Hecho {
         this.contribuyente = contribuyente;
     }
 
-    public void setMultimedia(Path multimedia) {
+    public void setMultimedia(String multimedia) {
         this.multimedia = multimedia;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id){
         this.id = id;
     }
 
-    public String getTitulo() {
-        return this.titulo;
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof  Hecho)) {
+            return false;
+        }
+
+        return this.titulo.equals(((Hecho) obj).titulo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo);
     }
 
     public Provincia getProvincia() {

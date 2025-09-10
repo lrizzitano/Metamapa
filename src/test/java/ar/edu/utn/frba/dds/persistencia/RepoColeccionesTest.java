@@ -38,7 +38,7 @@ public class RepoColeccionesTest implements SimplePersistenceTest {
   private final Filtro filtroTrue = new NullFiltro();
 
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
-  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho1, "null");
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho1.titulo(), "null");
   private Administrador administrador = new Administrador();
 
   private final SolicitudesDeEliminacionJPA solicitudesRepo = new SolicitudesDeEliminacionJPA();

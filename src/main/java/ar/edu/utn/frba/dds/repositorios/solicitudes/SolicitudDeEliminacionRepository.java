@@ -16,11 +16,11 @@ public interface SolicitudDeEliminacionRepository {
 
   Set<SolicitudDeEliminacion> getAceptadas();
 
-  Map<Hecho, Integer> getRechazadas();
+  Map<String, Integer> getRechazadas();
 
-  Integer getRechazos(Hecho hecho);
+  Integer getRechazos(String tituloHecho);
 
-  boolean estaEliminado(Hecho hecho);
+  boolean estaEliminado(String tituloHecho);
 
-  Set<Hecho> hechosEliminados();
+  Set<String> hechosEliminados();
 }

@@ -14,14 +14,14 @@ public class RechazosDeEliminacion {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  private Hecho hecho;
+  @Column
+  private String tituloHecho;
 
   @Column
   private Integer cantidad;
 
-  public RechazosDeEliminacion(Hecho hecho, Integer cantidad) {
-    this.hecho = hecho;
+  public RechazosDeEliminacion(String tituloHecho, Integer cantidad) {
+    this.tituloHecho = tituloHecho;
     this.cantidad = cantidad;
   }
 
@@ -31,8 +31,8 @@ public class RechazosDeEliminacion {
     return id;
   }
 
-  public Hecho getHecho() {
-    return hecho;
+  public String getTituloHecho() {
+    return tituloHecho;
   }
 
   public Integer getCantidad() {
