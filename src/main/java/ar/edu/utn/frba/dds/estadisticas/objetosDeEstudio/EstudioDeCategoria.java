@@ -35,10 +35,8 @@ public class CategoriaConMasHechosReportados implements ObjetoDeEstudio {
         .max(Map.Entry.comparingByValue())
         .orElse(null);
 
-    if (categoria == null) {
-      throw new NoExisteInformacionException(
-          "no se encontraron datos al buscar colecciones o hechos"
-      );
+    if (categoria == null || categoria.getValue() == null || categoria.getKey() == null) {
+      throw new NoExisteInformacionException("no existe una categoria");
     }
 
     return List.of(new CategoriaConMasHechos(LocalDate.now(), categoria.getKey(), categoria.getValue()));
@@ -51,9 +49,7 @@ public class CategoriaConMasHechosReportados implements ObjetoDeEstudio {
         .toList();
 
     if (informacion.isEmpty()) {
-      throw new NoExisteInformacionException(
-          "no se encontraron datos al buscar colecciones o hechos"
-      );
+      throw new NoExisteInformacionException("no se encontraron datos al buscar colecciones o hechos");
     }
     return informacion;
   }

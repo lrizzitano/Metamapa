@@ -1,10 +1,10 @@
 package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
 
-import ar.edu.utn.frba.dds.estadisticas.LocalizadorAdapter;
 import ar.edu.utn.frba.dds.estadisticas.Provincia;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ProvinciaConMasHechos;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
+import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
@@ -15,22 +15,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProvinciaConMasHechosDeColeccion implements ObjetoDeEstudio {
+public class EstudioDeColeccion implements ObjetoDeEstudio {
 
   private ColeccionesRepository coleccionesRepository;
 
-  public ProvinciaConMasHechosDeColeccion(ColeccionesRepository coleccionesRepository) {
+  public EstudioDeColeccion(ColeccionesRepository coleccionesRepository) {
     this.coleccionesRepository = coleccionesRepository;
   }
 
   @Override
-  public List<ResultadoEstadistico> estudiar() {
-    return this.calcularEstadisticas(this.transformarDatosEnInformacion());
+  public List<ResultadoEstadistico> estudiar(LocalDate desde) {
+    return this.calcularEstadisticas(desde, this.transformarDatosEnInformacion());
   }
 
-  private List<ResultadoEstadistico> calcularEstadisticas(List<Coleccion> informacion) {
+  private List<ResultadoEstadistico> calcularEstadisticas(LocalDate desde, List<Coleccion> informacion) {
     return informacion.stream()
-        .map(this::pronvinciaConMasHechos)
+        .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
         .collect(Collectors.toList());
   }
 
@@ -44,8 +44,8 @@ public class ProvinciaConMasHechosDeColeccion implements ObjetoDeEstudio {
     return informacion;
   }
 
-  private ResultadoEstadistico pronvinciaConMasHechos(Coleccion coleccion) {
-    Provincia provincia = coleccion.hechos(new NullFiltro()).stream()
+  private ResultadoEstadistico pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
+    Provincia provincia = coleccion.hechos(new FiltroFechaDesde(desde)).stream()
         .collect(Collectors.groupingBy(
             Hecho::getProvincia,
             Collectors.counting()
@@ -61,6 +61,6 @@ public class ProvinciaConMasHechosDeColeccion implements ObjetoDeEstudio {
       );
     }
 
-    return new ProvinciaConMasHechos(LocalDate.now(), coleccion, provincia);
+    return new ResultadoEstudioColeccion(LocalDate.now(), coleccion, provincia);
   }
 }
