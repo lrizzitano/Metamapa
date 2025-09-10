@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import com.opencsv.CSVReaderHeaderAware;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -83,8 +84,8 @@ public class FuenteEstatica extends Fuente {
         fila.get("titulo"),
         fila.get("descripcion"),
         fila.get("categoria"),
-        Double.parseDouble(fila.get("latitud")),
-        Double.parseDouble(fila.get("longitud")),
+        new Ubicacion(Double.parseDouble(fila.get("latitud")),
+        Double.parseDouble(fila.get("longitud")), null, null),
         ultimaModificacion,
         LocalDate.parse(fila.get("fecha")),
         Origen.DATASET

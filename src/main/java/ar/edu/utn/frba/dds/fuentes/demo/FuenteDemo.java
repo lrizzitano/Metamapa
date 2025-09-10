@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -80,8 +81,8 @@ public class FuenteDemo extends Fuente implements Calendarizable {
         (String) fila.get("titulo"),
         (String) fila.get("descripcion"),
         (String) fila.get("categoria"),
-        (Double) fila.get("latitud"),
-        (Double) fila.get("longitud"),
+        new Ubicacion((Double) fila.get("latitud"),
+            (Double) fila.get("longitud"), null, null),
         LocalDate.now(),
         (LocalDate) fila.get("fecha"),
         Origen.MANUAL

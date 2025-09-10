@@ -11,6 +11,7 @@ import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
@@ -29,9 +30,9 @@ import java.util.stream.Collectors;
 public class RepoColeccionesTest implements SimplePersistenceTest {
 
   private final Hecho hecho1 = new Hecho(null,"hecho1", "desc1", "cat1",
-      1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+      new Ubicacion(1.0, 2.0, null, null),  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
   private final Hecho hecho2 = new Hecho(null,"hecho2", "desc2", "cat2",
-      3.0,4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
+      new Ubicacion(3.0, 4.0, null, null), LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
   private final Fuente unaFuente = mock(Fuente.class);
   private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02"));
   private final Filtro filtroTrue = new NullFiltro();
