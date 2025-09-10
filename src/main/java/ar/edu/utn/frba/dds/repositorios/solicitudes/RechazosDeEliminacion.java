@@ -1,12 +1,10 @@
 package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class RechazosDeEliminacion {
@@ -18,11 +16,15 @@ public class RechazosDeEliminacion {
   private String tituloHecho;
 
   @Column
-  private Integer cantidad;
+  private Integer cantidadRechazadas;
 
-  public RechazosDeEliminacion(String tituloHecho, Integer cantidad) {
+  @Column
+  private Integer cantidadSpam;
+
+  public RechazosDeEliminacion(String tituloHecho, Integer cantidadRechazadas, Integer cantidadSpam) {
     this.tituloHecho = tituloHecho;
-    this.cantidad = cantidad;
+    this.cantidadRechazadas = cantidadRechazadas;
+    this.cantidadSpam = cantidadSpam;
   }
 
   public RechazosDeEliminacion() {}
@@ -35,12 +37,20 @@ public class RechazosDeEliminacion {
     return tituloHecho;
   }
 
-  public Integer getCantidad() {
-    return cantidad;
+  public Integer getCantidadRechazadas() {
+    return cantidadRechazadas;
+  }
+
+  public Integer getCantidadSpam() {
+    return cantidadSpam;
   }
 
   public void sumarRechazo() {
-    this.cantidad += 1;
+    this.cantidadRechazadas += 1;
+  }
+
+  public void sumarSpam() {
+    this.cantidadSpam += 1;
   }
 
 }

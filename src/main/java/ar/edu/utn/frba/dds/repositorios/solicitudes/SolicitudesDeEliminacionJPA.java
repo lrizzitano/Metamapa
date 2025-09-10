@@ -2,13 +2,13 @@ package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import static java.util.Objects.requireNonNull;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.RepoGenerico;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -59,10 +59,21 @@ public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeElimina
         .orElse(null);
 
     if (rechazos == null) {
-      rechazos = new RechazosDeEliminacion(hecho, 1);
+
+      rechazos = new RechazosDeEliminacion(
+          hecho,
+          1,
+          detectorDeSpam.esSpam(solicitud.getFundamento()) ? 1 : 0
+      );
       entityManager().persist(rechazos);
+
     } else {
       rechazos.sumarRechazo();
+
+      if (detectorDeSpam.esSpam(solicitud.getFundamento())) {
+        rechazos.sumarSpam();
+      }
+
       entityManager().merge(rechazos);
     }
 
@@ -80,20 +91,18 @@ public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeElimina
   }
 
   @Override
-  public Map<String, Integer> getRechazadas() {
+  public Set<RechazosDeEliminacion> getRechazadas() {
     return entityManager().createQuery(
         "FROM RechazosDeEliminacion r", RechazosDeEliminacion.class)
         .getResultStream()
-        .collect(Collectors.toMap(
-            RechazosDeEliminacion::getTituloHecho,
-            RechazosDeEliminacion::getCantidad
-        ));
+        .collect(Collectors.toSet()
+        );
   }
 
   @Override
   public Integer getRechazos(String tituloHecho) {
     return entityManager().createQuery(
-            "SELECT r.cantidad FROM RechazosDeEliminacion r WHERE r.tituloHecho = :hecho", Integer.class)
+            "SELECT r.cantidadRechazadas FROM RechazosDeEliminacion r WHERE r.tituloHecho = :hecho", Integer.class)
         .setParameter("hecho", tituloHecho)
         .getResultStream()
         .findFirst()
