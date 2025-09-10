@@ -4,16 +4,22 @@ import ar.edu.utn.frba.dds.estadisticas.Provincia;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ResultadoEstudioColeccion implements ResultadoEstadistico {
 
   private LocalDate fecha;
   private Coleccion coleccion;
-  private Provincia provincia;
+  private Long total_hechos;
+  private List<HechosPorProvincia> hechosXColecciones;
 
-  public ResultadoEstudioColeccion(LocalDate now, Coleccion coleccion, Provincia provincia) {
+  public ResultadoEstudioColeccion(LocalDate now,
+                                   Coleccion coleccion,
+                                   Long total_hechos,
+                                   List<HechosPorProvincia> hechosXColecciones) {
     this.fecha = now;
     this.coleccion = coleccion;
-    this.provincia = provincia;
+    this.total_hechos = total_hechos;
+    this.hechosXColecciones = hechosXColecciones;
   }
 }

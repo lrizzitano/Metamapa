@@ -35,7 +35,6 @@ public class ColeccionTest{
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
 
 
-
   @BeforeEach
   void setUp() {
 

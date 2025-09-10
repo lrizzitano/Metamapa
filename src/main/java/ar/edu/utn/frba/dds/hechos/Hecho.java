@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.usuarios.Usuario;
 import javax.persistence.*;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -21,14 +22,12 @@ public class Hecho {
     private String descripcion;
     @Column(name = "categoria")
     private String categoria;
-    @Column(name = "latitud")
-    private Double latitud;
-    @Column(name = "longitud")
-    private Double longitud;
+    @Embedded
+    private Ubicacion ubicacion;
     @Column(name = "fechaCarga")
-    private LocalDate fechaCarga;
+    private LocalDateTime fechaCarga;
     @Column(name = "fechaAcontecimiento")
-    private LocalDate fechaAcontecimiento;
+    private LocalDateTime fechaAcontecimiento;
     @Enumerated(EnumType.STRING)
     @Column(name = "origen")
     private Origen origen;
@@ -46,17 +45,15 @@ public class Hecho {
         String titulo,
         String descripcion,
         String categoria,
-        Double latitud,
-        Double longitud,
-        LocalDate fechaCarga,
-        LocalDate fechaAcontecimiento,
+        Ubicacion ubicacion,
+        LocalDateTime fechaCarga,
+        LocalDateTime fechaAcontecimiento,
         Origen origen) {
       this.id = id;
       this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
       this.descripcion = Objects.requireNonNull(descripcion, "descripcion no puede ser null");
       this.categoria = Objects.requireNonNull(categoria, "categoria no puede ser null");
-      this.latitud = Objects.requireNonNull(latitud, "latitud no puede ser null");
-      this.longitud = Objects.requireNonNull(longitud, "longitud no puede ser null");
+      this.ubicacion = Objects.requireNonNull(ubicacion, "ubicacion no puede ser null");
       this.fechaCarga = Objects.requireNonNull(fechaCarga, "fechaCarga no puede ser null");
       this.fechaAcontecimiento = Objects.requireNonNull(fechaAcontecimiento, "fechaAcontecimiento no puede ser null");
       this.origen = Objects.requireNonNull(origen, "origen no puede ser null");
@@ -78,15 +75,18 @@ public class Hecho {
         return categoria;
     }
     public Double latitud() {
-        return latitud;
+        return ubicacion.getLatitud();
     }
     public Double longitud() {
-        return longitud;
+        return ubicacion.getLongitud();
     }
-    public LocalDate fechaCarga() {
+    public Provincia provincia() {return this.ubicacion.getProvincia();}
+    public LocalDateTime fechaCarga() {
         return fechaCarga;
     }
-    public LocalDate fechaAcontecimiento() {
+    public int hora(){return fechaCarga.getHour();}
+    public int minuto(){return fechaCarga.getMinute();}
+    public LocalDateTime fechaAcontecimiento() {
         return fechaAcontecimiento;
     }
     public Origen origen() {

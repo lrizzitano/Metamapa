@@ -70,14 +70,14 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     int totalHechos = hechosCategoria.size();
 
     // promedio horario en minutos
-    double promedioHorarioMinutos = hechosCategoria.stream()
-        .mapToInt(h -> h.getHora() * 60 + h.getMinuto())
+    double pico_de_subida = hechosCategoria.stream()
+        .mapToInt(h -> h.hora() * 60 + h.minuto())
         .average()
         .orElse(0);
 
     // provincia con más hechos
     Map<Provincia, Long> conteoProvincia = hechosCategoria.stream()
-        .collect(groupingBy(Hecho::getProvincia, counting()));
+        .collect(groupingBy(Hecho::provincia, counting()));
 
     Map.Entry<Provincia, Long> maxProvincia = conteoProvincia.entrySet().stream()
         .max(Map.Entry.comparingByValue())
@@ -91,6 +91,6 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     Long totalHechosProvincia = maxProvincia.getValue();
 
     return new ResultadoEstudioCategoria
-        (LocalDate.now(), categoria, totalHechos, promedioHorarioMinutos, provincia, totalHechosProvincia);
+        (LocalDate.now(), categoria, totalHechos, pico_de_subida, provincia, totalHechosProvincia);
   }
 }

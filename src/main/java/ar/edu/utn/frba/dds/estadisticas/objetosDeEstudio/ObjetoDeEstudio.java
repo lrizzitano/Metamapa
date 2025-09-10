@@ -8,8 +8,4 @@ import java.util.List;
 public interface ObjetoDeEstudio {
 
   List<ResultadoEstadistico> estudiar(LocalDate desde);
-
-  // transformarDatosEnInformacion
-  // calcularEstadisticas
-  // calcularIndicadores, etc
 }

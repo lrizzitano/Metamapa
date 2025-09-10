@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
 
 import ar.edu.utn.frba.dds.estadisticas.Provincia;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
@@ -27,13 +28,13 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     return this.estructurarInformacion(desde, this.recolectarDatos());
   }
 
-  private List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, List<Coleccion> informacion) {
+  public List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, List<Coleccion> informacion) {
     return informacion.stream()
         .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
         .collect(Collectors.toList());
   }
 
-  private List<Coleccion> recolectarDatos() {
+  public List<Coleccion> recolectarDatos() {
     List<Coleccion> informacion = coleccionesRepository.findAll();
 
     if(informacion.isEmpty()) {
@@ -43,23 +44,28 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     return informacion;
   }
 
-  private ResultadoEstadistico pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
-    Provincia provincia = coleccion.hechos(new FiltroFechaDesde(desde)).stream()
+  public ResultadoEstadistico pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
+    Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde)).stream()
         .collect(Collectors.groupingBy(
             Hecho::getProvincia,
             Collectors.counting()
-        ))
-        .entrySet().stream()
-        .max(Map.Entry.comparingByValue())
-        .map(Map.Entry::getKey)
-        .orElse(null);
+        ));
 
-    if(provincia == null) {
+    if(provinciasXcantHechos.isEmpty()) {
       throw new NoExisteInformacionException(
           "al buscar los hechos de la coleccion " + coleccion.getTitulo() + " no se encontraron datos"
       );
     }
 
-    return new ResultadoEstudioColeccion(LocalDate.now(), coleccion, provincia);
+    List<HechosPorProvincia> lista = provinciasXcantHechos.entrySet()
+        .stream()
+        .map(entry -> new HechosPorProvincia(entry.getKey(), entry.getValue()))
+        .toList();
+
+    return
+        new ResultadoEstudioColeccion(LocalDate.now(),
+            coleccion,
+            provinciasXcantHechos.values().stream().mapToLong(Long::longValue).sum(),
+            lista);
   }
 }
