@@ -25,7 +25,7 @@ public class Estadistico implements WithSimplePersistenceUnit {
             "select categoria from ResultadoEstudioCategoria " +
                 "where fecha = :fecha " +
                 "group by categoria " +
-                "order by count(*) desc"
+                "order by total_hechos desc"
         )
         .setParameter("fecha", fecha)
         .setMaxResults(1)
