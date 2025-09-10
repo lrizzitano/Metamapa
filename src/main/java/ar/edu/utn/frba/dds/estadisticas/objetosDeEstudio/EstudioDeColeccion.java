@@ -24,16 +24,16 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
 
   @Override
   public List<ResultadoEstadistico> estudiar(LocalDate desde) {
-    return this.calcularEstadisticas(desde, this.transformarDatosEnInformacion());
+    return this.estructurarInformacion(desde, this.recolectarDatos());
   }
 
-  private List<ResultadoEstadistico> calcularEstadisticas(LocalDate desde, List<Coleccion> informacion) {
+  private List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, List<Coleccion> informacion) {
     return informacion.stream()
         .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
         .collect(Collectors.toList());
   }
 
-  private List<Coleccion> transformarDatosEnInformacion() {
+  private List<Coleccion> recolectarDatos() {
     List<Coleccion> informacion = coleccionesRepository.findAll();
 
     if(informacion.isEmpty()) {

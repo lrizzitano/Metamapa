@@ -26,17 +26,17 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
 
   @Override
   public List<ResultadoEstadistico> estudiar(LocalDate desde) {
-    return this.calcularEstadisticas(this.transformarDatosEnInformacion(desde));
+    return this.estructurarInformacion(this.recolectarDatos(desde));
   }
 
-  private List<ResultadoEstadistico> calcularEstadisticas(List<Hecho> informacion) {
+  private List<ResultadoEstadistico> estructurarInformacion(List<Hecho> informacion) {
 
     Map<String, ResultadoEstadistico> mapResultados = informacion.stream()
         .collect(groupingBy(
             Hecho::categoria, //clasificador, agrupa por esto, en analizar categoria se guarda la misma en el resultado
             collectingAndThen(
                 toList(),
-                this::analizarCategoria
+                this::analizarHechosDeCategoria
             )
         ));
 
@@ -45,7 +45,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     return resultados;
   }
 
-  private List<Hecho> transformarDatosEnInformacion(LocalDate desde) {
+  private List<Hecho> recolectarDatos(LocalDate desde) {
     List<Hecho> informacion = coleccionesRepository.findAll().stream()
         .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde)))
         .flatMap(Collection::stream)
@@ -57,7 +57,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     return informacion;
   }
 
-  private ResultadoEstadistico analizarCategoria(List<Hecho> hechosCategoria) {
+  private ResultadoEstadistico analizarHechosDeCategoria(List<Hecho> hechosCategoria) {
 
     // setear la categoría
     String categoria = hechosCategoria.isEmpty() ? null : hechosCategoria.get(0).categoria();
