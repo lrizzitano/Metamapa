@@ -4,6 +4,7 @@ package ar.edu.utn.frba.dds.fuentes;
 import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
 import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import com.google.common.reflect.TypeToken;
@@ -48,11 +49,13 @@ public class BackupTest {
   @Test
   void testBackupWritesCorrectHechosJson() throws Exception {
     HechoRepository repo = mock(HechoRepository.class);
-    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1", 1.0,
-        2.0, LocalDate.now(), LocalDate.now(), Origen.DATASET);
-   Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2", 2.0,
-        4.0, LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
-        Origen.DATASET);
+    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1",
+    new Ubicacion(1.0, 2.0, null, null),
+    LocalDate.now(), LocalDate.now(), Origen.DATASET);
+   Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2",
+       new Ubicacion(2.0, 4.0, null, null),
+       LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+       Origen.DATASET);
    when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
    FuenteDinamica.instance().setHechoRepository(repo);
     Backup backup = new Backup(tempFile, LocalDateTime.now(), Duration.ZERO);
@@ -79,10 +82,12 @@ public class BackupTest {
   @Test
   void estoNoEsUnTest() {
     HechoRepository repo = mock(HechoRepository.class);
-    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1", 1.0,
-        2.0, LocalDate.now(), LocalDate.now(), Origen.DATASET);
-    Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2", 2.0,
-        4.0, LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+    Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1",
+        new Ubicacion(1.0, 2.0, null, null),
+        LocalDate.now(), LocalDate.now(), Origen.DATASET);
+    Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2",
+        new Ubicacion(2.0, 4.0, null, null),
+        LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
         Origen.DATASET);
     when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
     FuenteDinamica.instance().setHechoRepository(repo);

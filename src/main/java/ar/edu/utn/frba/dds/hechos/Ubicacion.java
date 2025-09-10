@@ -1,28 +1,46 @@
 package ar.edu.utn.frba.dds.hechos;
 
-import ar.edu.utn.frba.dds.estadisticas.Provincia;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.util.Objects;
 
+@Embeddable
 public class Ubicacion {
+  @Column
+  public Double latitud;
+  @Column
+  public Double longitud;
+  @Column
+  @Enumerated(EnumType.STRING)
+  public Provincia provincia;
 
-  private Double latitud;
-  private Double longitud;
-  private Provincia provincia;
-
-  public Ubicacion(Double latitud, Double longitud, Provincia provincia) {
-    this.latitud = latitud;
-    this.longitud = longitud;
-    this.provincia = provincia;
+  public Ubicacion(Double latitud, Double longitud, Provincia provincia, ServicioUbicador ubicador) {
+    this.latitud = Objects.requireNonNull(latitud, "latitud no puede ser null");
+    this.longitud = Objects.requireNonNull(longitud, "longitud no puede ser null");
+    if (provincia == null) {
+      if (ubicador != null) {
+        this.provincia = ubicador.getProvincia(this.latitud, this.longitud);
+      } else {
+        this.provincia = Provincia.PROVINCIA_DESCONOCIDA;
+      }
+    } else {
+      this.provincia = provincia;
+    }
   }
 
-  public Double getLongitud() {
-    return longitud;
+  public Ubicacion() {}
+
+  Double getLatitud() {
+    return this.latitud;
   }
 
-  public Double getLatitud() {
-    return latitud;
+  Double getLongitud() {
+    return this.longitud;
   }
 
-  public Provincia getProvincia() {
-    return provincia;
+  Provincia getProvincia() {
+    return this.provincia;
   }
 }

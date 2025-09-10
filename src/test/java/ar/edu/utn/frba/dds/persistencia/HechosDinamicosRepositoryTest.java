@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.persistencia;
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
@@ -29,8 +30,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Incendio forestal",
       "Gran incendio en zona rural",
       "Desastre natural",
-      -34.6037,
-      -58.3816,
+      new Ubicacion(-34.6037,
+          -58.3816, null, null),
       LocalDate.of(2023, 12, 15),
       LocalDate.of(2023, 11, 30),
       Origen.DATASET);
@@ -40,8 +41,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Incendio URBANO",
       "Gran incendio en zona rural",
       "Desastre natural",
-      -34.6037,
-      -58.3816,
+      new Ubicacion(-34.6037,
+          -58.3816, null, null),
       LocalDate.of(2023, 12, 15),
       LocalDate.of(2023, 11, 30),
       Origen.DATASET);
@@ -51,8 +52,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Incendio forestal",
       "Gran incendio en zona rural",
       "Desastre natural",
-      -34.6037,
-      -58.3816,
+      new Ubicacion(-34.6037,
+          -58.3816, null, null),
       LocalDate.of(2023, 12, 15),
       LocalDate.of(2023, 11, 30),
       Origen.DATASET);

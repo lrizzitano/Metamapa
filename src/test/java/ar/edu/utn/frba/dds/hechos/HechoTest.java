@@ -10,8 +10,10 @@ public class HechoTest {
       "Incendio forestal",
       "Gran incendio en zona rural",
       "Desastre natural",
-      -34.6037,
-      -58.3816,
+      new Ubicacion(-34.6037,
+           -58.3816,
+          null,
+          null),
       LocalDate.of(2023, 12, 15),
       LocalDate.of(2023, 11, 30),
       Origen.DATASET);

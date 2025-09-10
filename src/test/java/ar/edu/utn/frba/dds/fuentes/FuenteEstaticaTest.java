@@ -13,11 +13,13 @@ import java.util.Set;
 import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FuenteEstaticaTest{
 
@@ -47,15 +49,16 @@ public class FuenteEstaticaTest{
         "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
         "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
-    Hecho esperado1 = new Hecho(null, "hecho1", "desc1", "cat1", 1.0,
-        2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
-    Hecho esperado2 = new Hecho(null, "hecho2", "desc2", "cat2", 3.0,
-        4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
+    Hecho esperado1 = new Hecho(null,"hecho1", "desc1", "cat1",
+        new Ubicacion(1.0, 2.0, null, null),
+        LocalDate.now(), LocalDate.now(), Origen.DATASET);
+    Hecho esperado2 = new Hecho(null,"hecho2", "desc2", "cat2",
+        new Ubicacion(2.0, 4.0, null, null),
+        LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+        Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
 
-    assertThat(hechos)
-        .usingRecursiveComparison()
-        .isEqualTo(Set.of(esperado2, esperado1));
+    assertThat(hechos).isEqualTo(Set.of(esperado2, esperado1));
   }
 
   @Test
@@ -65,13 +68,11 @@ public class FuenteEstaticaTest{
         "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
         "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
-    Hecho esperado1 = new Hecho(null, "hecho1", "desc1", "cat1", 1.0,
-        2.0, LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+    Hecho esperado1 = new Hecho(null, "hecho1", "desc1", "cat1",         new Ubicacion(-34.6037,
+        -58.3816, null, null), LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new FiltroFechaHasta(LocalDate.parse("2024-01-02")));
 
-    assertThat(hechos)
-        .usingRecursiveComparison()
-        .isEqualTo(Collections.singleton(esperado1));
+    assertEquals(hechos, Collections.singleton(esperado1));
   }
 
   @Test
@@ -81,13 +82,12 @@ public class FuenteEstaticaTest{
         "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
         "\"hecho1\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
-    Hecho esperado2 = new Hecho(null, "hecho1", "desc2", "cat2", 3.0,
-        4.0, LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
+    Hecho esperado2 = new Hecho(null, "hecho1", "desc2", "cat2",
+        new Ubicacion(-34.6037, -58.3816, null, null),
+        LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
 
-    assertThat(hechos)
-        .usingRecursiveComparison()
-        .isEqualTo(Collections.singleton(esperado2));
+    assertEquals(hechos, Collections.singleton(esperado2));
   }
 
 
