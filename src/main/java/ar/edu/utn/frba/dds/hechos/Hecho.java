@@ -19,8 +19,6 @@ public class Hecho {
     private String descripcion;
     @Column(name = "categoria")
     private String categoria;
-    @Column(name = "provincia")
-    private String provincia;
     @Embedded
     private Ubicacion ubicacion;
     @Column(name = "fechaCarga")

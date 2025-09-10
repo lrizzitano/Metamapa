@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.hechos;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,14 +8,17 @@ import java.util.Objects;
 
 @Embeddable
 public class Ubicacion {
+  @Column
   public Double latitud;
+  @Column
   public Double longitud;
+  @Column
   @Enumerated(EnumType.STRING)
   public Provincia provincia;
 
   public Ubicacion(Double latitud, Double longitud, Provincia provincia, ServicioUbicador ubicador) {
     this.latitud = Objects.requireNonNull(latitud, "latitud no puede ser null");
-    this.longitud = Objects.requireNonNull(longitud, "latitud no puede ser null");
+    this.longitud = Objects.requireNonNull(longitud, "longitud no puede ser null");
     if (provincia == null) {
       if (ubicador != null) {
         this.provincia = ubicador.getProvincia(this.latitud, this.longitud);
@@ -26,9 +30,7 @@ public class Ubicacion {
     }
   }
 
-  public Ubicacion() {
-
-  }
+  public Ubicacion() {}
 
   Double getLatitud() {
     return this.latitud;
