@@ -40,6 +40,10 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
             )
         ));
 
+    if (mapResultados.isEmpty()) {
+      throw new NoExisteInformacionException("no se encontraron datos al buscar colecciones o hechos");
+    }
+
     List<ResultadoEstadistico> resultados = new ArrayList<>(mapResultados.values());
 
     return resultados;

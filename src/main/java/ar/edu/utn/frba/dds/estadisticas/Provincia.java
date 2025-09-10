@@ -1,4 +1,28 @@
 package ar.edu.utn.frba.dds.estadisticas;
 
 public enum Provincia {
+  CABA,
+  PROV_BUENOS_AIRES,
+  ENTRE_RIOS,
+  SANTA_FE,
+  CORRIENTES,
+  MISIONES,
+  FORMOSA,
+  CHACO,
+  SANTIAGO_DEL_ESTERO,
+  TUCUMAN,
+  SANTA,
+  JUJUY,
+  CATAMARCA,
+  LA_RIOJA,
+  CORDOBA,
+  SAN_JUAN,
+  SAN_LUIS,
+  MENDOZA,
+  NEUQUEN,
+  LA_PAMPA,
+  RIO_NEGRO,
+  SANTA_CRUZ,
+  CHUBUT,
+  TIERRA_DEL_FUEGO;
 }

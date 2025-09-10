@@ -7,9 +7,9 @@ import java.time.LocalDate;
 
 public class ResultadoEstudioColeccion implements ResultadoEstadistico {
 
-  LocalDate fecha;
-  Coleccion coleccion;
-  Provincia provincia;
+  private LocalDate fecha;
+  private Coleccion coleccion;
+  private Provincia provincia;
 
   public ResultadoEstudioColeccion(LocalDate now, Coleccion coleccion, Provincia provincia) {
     this.fecha = now;
