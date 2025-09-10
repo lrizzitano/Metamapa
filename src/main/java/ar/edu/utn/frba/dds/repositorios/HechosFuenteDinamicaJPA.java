@@ -14,7 +14,7 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {
-    hechoModificado.setId(hechoParaCambiar.getId()); // reutiliza el id
+    hechoModificado.setId(hechoParaCambiar.id()); // reutiliza el id
     entityManager().merge(hechoModificado);
   }
 
@@ -36,7 +36,7 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
   @Override
   public void eliminar(Hecho hecho) {
 
-    if(hecho.getId() == null) {
+    if(hecho.id() == null) {
       throw new NoSePuedeEliminarUnHechoQueNoExisteException();
     }
     entityManager().remove(hecho);

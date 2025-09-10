@@ -5,8 +5,8 @@
     "categoria": "cat2",
     "latitud": 2.0,
     "longitud": 4.0,
-    "fechaCarga": "2025-09-04",
-    "fechaAcontecimiento": "2025-08-31",
+    "fechaCarga": "2025-09-08",
+    "fechaAcontecimiento": "2025-09-04",
     "origen": "DATASET",
     "fueRevisado": false
   },
@@ -16,8 +16,8 @@
     "categoria": "cat1",
     "latitud": 1.0,
     "longitud": 2.0,
-    "fechaCarga": "2025-09-03",
-    "fechaAcontecimiento": "2025-09-03",
+    "fechaCarga": "2025-09-07",
+    "fechaAcontecimiento": "2025-09-07",
     "origen": "DATASET",
     "fueRevisado": false
   }

@@ -14,6 +14,7 @@ import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.repositorios.ColeccionesRepository;
+import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,14 +29,14 @@ import static org.mockito.Mockito.when;
 
 public class EstudioDeColeccionTest {
 
-  private ColeccionesRepository coleccionesRepository;
+  private RepoColecciones coleccionesRepository;
   private EstudioDeColeccion estudioColecciones;
   private List<Coleccion> colecciones;
   private List<Hecho> hechos;
 
   @BeforeEach
   public void setup() {
-    coleccionesRepository = mock(ColeccionesRepository.class);
+    coleccionesRepository = mock(RepoColecciones.class);
     hechos = crearListaHechos();
     colecciones = crearColecciones();
     estudioColecciones = new EstudioDeColeccion(coleccionesRepository);

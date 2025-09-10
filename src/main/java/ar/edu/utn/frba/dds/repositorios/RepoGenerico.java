@@ -2,6 +2,8 @@ package ar.edu.utn.frba.dds.repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 public class RepoGenerico<T> implements WithSimplePersistenceUnit {
@@ -14,9 +16,9 @@ public class RepoGenerico<T> implements WithSimplePersistenceUnit {
     this.entityClass = entityClass;
   }
 
-  public List<T> findAll() {
+  public Set<T> findAll() {
     return entitityManager.createQuery("from " + entityClass.getSimpleName(), entityClass)
-        .getResultList();
+        .getResultStream().collect(Collectors.toSet());
   }
 
   public void save(T entity) {

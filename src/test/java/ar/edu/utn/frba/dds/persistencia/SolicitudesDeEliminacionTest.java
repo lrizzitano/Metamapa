@@ -1,11 +1,16 @@
 package ar.edu.utn.frba.dds.persistencia;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
 import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
@@ -14,6 +19,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 
 public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
@@ -34,14 +40,16 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
-  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho, "null");
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho.titulo(), "null");
   private Administrador administrador = new Administrador();
+  private DetectorDeSpam detectorSpam;
 
   @BeforeEach
   void setUp() {
     hechos.agregar(hecho);
     repoUsuarios.save(administrador);
     solicitudes.setDetectorDeSpam(new NullDetector());
+    detectorSpam = mock(DetectorDeSpam.class);
   }
 
   @Test
@@ -73,35 +81,50 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
 
   @Test
   public void detectarHechoEliminado() {
-    Hecho hecho = new Hecho();
+
     repoHechos.agregar(hecho);
 
-    SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho, "No me gusto, bajenlon");
+    SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
     repoSolicitudes.nuevaSolicitud(solicitud);
 
-    Assertions.assertFalse(repoSolicitudes.estaEliminado(hecho));
+    Assertions.assertFalse(repoSolicitudes.estaEliminado(hecho.titulo()));
     repoSolicitudes.aceptarSolicitud(solicitud);
-    Assertions.assertTrue(repoSolicitudes.estaEliminado(hecho));
+    Assertions.assertTrue(repoSolicitudes.estaEliminado(hecho.titulo()));
   }
 
   @Test
   public void detectarSolicitudesRechazadas() {
-    Hecho hecho = new Hecho();
+
     repoHechos.agregar(hecho);
 
-    SolicitudDeEliminacion solicitud1 = new SolicitudDeEliminacion(hecho, "No me gusto, bajenlon");
-    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho, "Malisimo esto, cortala pipo");
+    SolicitudDeEliminacion solicitud1 = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
+    SolicitudDeEliminacion solicitud2 = new SolicitudDeEliminacion(hecho.titulo(), "Malisimo esto, cortala pipo");
     repoSolicitudes.nuevaSolicitud(solicitud1);
     repoSolicitudes.nuevaSolicitud(solicitud2);
 
     Assertions.assertTrue(repoSolicitudes.getRechazadas().isEmpty());
-    Assertions.assertEquals(0, repoSolicitudes.getRechazos(hecho));
+    Assertions.assertEquals(0, repoSolicitudes.getRechazos(hecho.titulo()));
 
     repoSolicitudes.rechazarSolicitud(solicitud1);
     repoSolicitudes.rechazarSolicitud(solicitud2);
 
     Assertions.assertFalse(repoSolicitudes.getRechazadas().isEmpty());
-    Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho));
+    Assertions.assertEquals(2, repoSolicitudes.getRechazos(hecho.titulo()));
+  }
+
+  @Test
+  public void detectarSolicitudesRechazadasPorSpam() {
+    when(detectorSpam.esSpam(solicitud.getFundamento())).thenReturn(true);
+    repoSolicitudes.setDetectorDeSpam(detectorSpam);
+
+    Assertions.assertTrue(repoSolicitudes.getRechazadas().isEmpty());
+
+    repoSolicitudes.nuevaSolicitud(solicitud);
+    Set<RechazosDeEliminacion> listaRechazos = repoSolicitudes.getRechazadas();
+
+    Assertions.assertEquals(1, listaRechazos.size());
+    Assertions.assertEquals(1, listaRechazos.iterator().next().getCantidadRechazadas());
+    Assertions.assertEquals(1, listaRechazos.iterator().next().getCantidadSpam());
   }
 
 

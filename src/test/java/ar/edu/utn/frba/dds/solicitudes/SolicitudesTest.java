@@ -33,7 +33,7 @@ class SolicitudesTest implements SimplePersistenceTest {
   private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
-  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho, "null");
+  private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho.titulo(), "null");
   private Administrador administrador = new Administrador();
 
   @BeforeEach

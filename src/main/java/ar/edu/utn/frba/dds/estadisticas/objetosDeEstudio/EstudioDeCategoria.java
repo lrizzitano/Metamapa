@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
 import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.ColeccionesRepository;
+import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import static java.util.stream.Collectors.*;
 
 public class EstudioDeCategoria implements ObjetoDeEstudio {
 
-  ColeccionesRepository coleccionesRepository;
+  RepoColecciones coleccionesRepository;
 
-  EstudioDeCategoria(ColeccionesRepository coleccionesRepository) {
+  EstudioDeCategoria(RepoColecciones coleccionesRepository) {
     this.coleccionesRepository = coleccionesRepository;
   }
 

@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.ColeccionesRepository;
+import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 
 public class EstudioDeColeccion implements ObjetoDeEstudio {
 
-  private ColeccionesRepository coleccionesRepository;
+  private RepoColecciones coleccionesRepository;
 
-  public EstudioDeColeccion(ColeccionesRepository coleccionesRepository) {
+  public EstudioDeColeccion(RepoColecciones coleccionesRepository) {
     this.coleccionesRepository = coleccionesRepository;
   }
 

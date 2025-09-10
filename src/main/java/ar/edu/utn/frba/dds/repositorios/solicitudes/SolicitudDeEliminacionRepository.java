@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,11 +17,11 @@ public interface SolicitudDeEliminacionRepository {
 
   Set<SolicitudDeEliminacion> getAceptadas();
 
-  Map<Hecho, Integer> getRechazadas();
+  Set<RechazosDeEliminacion> getRechazadas();
 
-  Integer getRechazos(Hecho hecho);
+  Integer getRechazos(String tituloHecho);
 
-  boolean estaEliminado(Hecho hecho);
+  boolean estaEliminado(String tituloHecho);
 
-  Set<Hecho> hechosEliminados();
+  Set<String> hechosEliminados();
 }
