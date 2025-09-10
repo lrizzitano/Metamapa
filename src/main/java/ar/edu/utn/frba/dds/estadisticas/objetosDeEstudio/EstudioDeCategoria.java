@@ -1,12 +1,11 @@
 package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
 
-import ar.edu.utn.frba.dds.estadisticas.Provincia;
+import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
 import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
 import java.time.LocalDate;
@@ -72,13 +71,13 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
 
     // promedio horario en minutos
     double pico_de_subida = hechosCategoria.stream()
-        .mapToInt(h -> h.hora() * 60 + h.minuto())
+        .mapToInt(h -> h.fechaCarga().getHour() * 60 + h.fechaCarga().getMinute())
         .average()
         .orElse(0);
 
     // provincia con más hechos
     Map<Provincia, Long> conteoProvincia = hechosCategoria.stream()
-        .collect(groupingBy(Hecho::provincia, counting()));
+        .collect(groupingBy(hecho -> hecho.getProvincia(), counting()));
 
     Map.Entry<Provincia, Long> maxProvincia = conteoProvincia.entrySet().stream()
         .max(Map.Entry.comparingByValue())

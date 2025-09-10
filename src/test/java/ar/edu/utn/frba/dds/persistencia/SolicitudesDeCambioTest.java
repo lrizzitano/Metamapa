@@ -11,7 +11,6 @@ import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
