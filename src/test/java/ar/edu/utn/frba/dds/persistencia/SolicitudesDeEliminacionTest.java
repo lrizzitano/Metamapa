@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.persistencia;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
@@ -25,8 +26,8 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
       "Incendio forestal",
       "Gran incendio en zona rural",
       "Desastre natural",
-      -34.6037,
-      -58.3816,
+      new Ubicacion(-34.6037,
+          -58.3816, null, null),
       LocalDate.of(2023, 12, 15),
       LocalDate.of(2023, 11, 30),
       Origen.DATASET);
@@ -74,7 +75,8 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   @Test
   public void detectarHechoEliminado() {
     Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
-        1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+        new Ubicacion(-34.6037, -58.3816, null, null),
+        LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
     repoHechos.agregar(hecho);
 
     SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
@@ -88,7 +90,8 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   @Test
   public void detectarSolicitudesRechazadas() {
     Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
-        1.0, 2.0,  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+        new Ubicacion(-34.6037, -58.3816, null, null),
+        LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
 
     repoHechos.agregar(hecho);
 

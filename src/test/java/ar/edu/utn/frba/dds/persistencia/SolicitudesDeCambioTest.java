@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.persistencia;
 
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
@@ -61,8 +62,8 @@ public class SolicitudesDeCambioTest implements SimplePersistenceTest {
         "Incendio forestal",
         "Gran incendio en zona rural",
         "Desastre natural",
-        -34.6037,
-        -58.3816,
+        new Ubicacion(-34.6037,
+            -58.3816, null, null),
         LocalDate.now(),
         LocalDate.of(2023, 11, 30),
         Origen.DATASET);

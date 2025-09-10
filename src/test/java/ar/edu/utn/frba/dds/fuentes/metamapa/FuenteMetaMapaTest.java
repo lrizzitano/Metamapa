@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.gson.Gson;
@@ -71,8 +72,8 @@ public class FuenteMetaMapaTest {
         "Inundación en zona norte",
         "Fuertes lluvias causaron una inundación severa",
         "Desastre natural",
-        -34.6037,
-        -58.3816,
+        new Ubicacion(-34.6037,
+        -58.3816, null, null),
         LocalDate.of(2025, 5, 10),
         LocalDate.of(2025, 5, 9),
         Origen.CONTRIBUYENTE
