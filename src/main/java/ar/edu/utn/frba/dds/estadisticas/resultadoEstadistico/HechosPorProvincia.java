@@ -11,4 +11,12 @@ public class HechosPorProvincia {
     this.provincia = p;
     this.cant_hechos = cant_hechos;
   }
+
+  public Provincia getProvincia() {
+    return provincia;
+  }
+
+  public Long getCant_hechos() {
+    return cant_hechos;
+  }
 }

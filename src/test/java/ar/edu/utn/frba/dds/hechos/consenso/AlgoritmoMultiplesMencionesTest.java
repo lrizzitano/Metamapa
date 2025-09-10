@@ -5,8 +5,10 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,8 +24,8 @@ public class AlgoritmoMultiplesMencionesTest {
       = new AlgoritmoMultiplesMenciones();
   private Fuente fuente1;
   private Fuente fuente2;
-  private final Hecho hecho1 = new Hecho(null,"t1", "desc1", "cat1", 3.3,
-      3.3, LocalDate.now(), LocalDate.now(), Origen.DATASET);
+  private final Hecho hecho1 = new Hecho(null,"t1", "desc1", "cat1",
+      mock(Ubicacion.class), LocalDateTime.now(), LocalDateTime.now(), Origen.DATASET);
   private Set<Fuente> fuentes;
 
 
@@ -36,11 +38,11 @@ public class AlgoritmoMultiplesMencionesTest {
 
   @Test
   void hechoConDosMencionesDistintasNoPasa() {
-    final Hecho hecho2 = new Hecho(null,"t1", "desc2", "cat2", 3.3,
-        2.1, LocalDate.now().plusDays(1),
-        LocalDate.now().minusDays(4), Origen.DATASET);
-    final Hecho hecho3 = new Hecho(null,"t1", "desc1", "cat1", 3.3,
-        3.3, LocalDate.now(), LocalDate.now(), Origen.DATASET);
+    final Hecho hecho2 = new Hecho(null,"t1", "desc2", "cat2",
+        mock(Ubicacion.class), LocalDateTime.now().plusDays(1),
+        LocalDateTime.now().minusDays(4), Origen.DATASET);
+    final Hecho hecho3 = new Hecho(null,"t1", "desc1", "cat1",
+        mock(Ubicacion.class), LocalDateTime.now(), LocalDateTime.now(), Origen.DATASET);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho2, hecho3));
     Assertions.assertTrue(algoritmoMultiplesMenciones.getHechosConsensuados(fuentes).isEmpty());
@@ -55,8 +57,8 @@ public class AlgoritmoMultiplesMencionesTest {
 
   @Test
   void hechoEn2FuentesPasa() {
-    final Hecho hecho3 = new Hecho(null,"t1", "desc1", "cat1", 3.3,
-        3.3, LocalDate.now(), LocalDate.now(), Origen.DATASET);
+    final Hecho hecho3 = new Hecho(null,"t1", "desc1", "cat1", mock(Ubicacion.class),
+        LocalDateTime.now(), LocalDateTime.now(), Origen.DATASET);
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho3));
 

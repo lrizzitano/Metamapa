@@ -22,4 +22,20 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     this.total_hechos = total_hechos;
     this.hechosXColecciones = hechosXColecciones;
   }
+
+  public LocalDate getFecha() {
+    return fecha;
+  }
+
+  public Coleccion getColeccion() {
+    return coleccion;
+  }
+
+  public Long getTotal_hechos() {
+    return total_hechos;
+  }
+
+  public List<HechosPorProvincia> getHechosXColecciones() {
+    return hechosXColecciones;
+  }
 }

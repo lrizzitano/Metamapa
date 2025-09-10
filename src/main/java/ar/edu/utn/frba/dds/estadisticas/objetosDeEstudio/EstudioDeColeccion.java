@@ -44,8 +44,8 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     return informacion;
   }
 
-  public ResultadoEstadistico pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
-    Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde)).stream()
+  public ResultadoEstudioColeccion pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
+    Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde.atStartOfDay())).stream()
         .collect(Collectors.groupingBy(
             Hecho::getProvincia,
             Collectors.counting()

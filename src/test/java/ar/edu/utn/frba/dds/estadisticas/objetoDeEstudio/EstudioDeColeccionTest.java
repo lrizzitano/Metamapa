@@ -3,6 +3,8 @@ package ar.edu.utn.frba.dds.estadisticas.objetoDeEstudio;
 import ar.edu.utn.frba.dds.estadisticas.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeColeccion;
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.ObjetoDeEstudio;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
@@ -52,9 +54,16 @@ public class EstudioDeColeccionTest {
   }
 
   @Test
-  public void determinaLaProvinciaConMasHechosDeUnaColeccion() {
+  public void estudiaCorrectamenteLasColecciones() {
     LocalDate desde = LocalDate.of(2023,1,1);
 
+    when(coleccionesRepository.findAll()).thenReturn(colecciones);
+
+    estudioColecciones.recolectarDatos();
+
+    ResultadoEstudioColeccion resultados = estudioColecciones.pronvinciaConMasHechos(desde, colecciones.get(0));
+
+    Assertions.assertEquals(3, resultados.getHechosXColecciones().stream().map(HechosPorProvincia::getCant_hechos).mapToLong(Long::longValue).sum());
   }
 
   private List<Coleccion> crearColecciones() {
@@ -138,6 +147,6 @@ public class EstudioDeColeccionTest {
         Origen.CONTRIBUYENTE
     );
 
-    return List.of(hecho1, hecho2, hecho3, hecho4);
+    return List.of(hecho1, hecho2, hecho3, hecho4, hecho5);
   }
 }

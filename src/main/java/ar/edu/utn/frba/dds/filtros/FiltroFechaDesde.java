@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -13,11 +14,11 @@ import java.util.function.Predicate;
 public class FiltroFechaDesde extends Filtro {
 
   @Column(name = "fechaMinima")
-  private LocalDate fecha;
+  private LocalDateTime fecha;
 
   public FiltroFechaDesde() {}
 
-  public FiltroFechaDesde(LocalDate fecha) {
+  public FiltroFechaDesde(LocalDateTime fecha) {
     this.fecha = fecha;
   }
 

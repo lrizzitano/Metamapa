@@ -51,7 +51,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
 
   private List<Hecho> recolectarDatos(LocalDate desde) {
     List<Hecho> informacion = coleccionesRepository.findAll().stream()
-        .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde)))
+        .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde.atStartOfDay())))
         .flatMap(Collection::stream)
         .toList();
 
