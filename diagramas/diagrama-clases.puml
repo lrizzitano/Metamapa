@@ -179,7 +179,7 @@ class Agregador {
     -frecuencia
 }
 
-class Estadistico {
+class RecolectorDeInformacion {
     + objetosDeEstudio
     + medioDePublicacion
 }
@@ -191,7 +191,16 @@ interface ObjetoDeEstudio {
 interface PublicadorDeResultados {
     + exportar(//resultados//)
 }
+
 interface ResultadoEstadistico {
+}
+
+class Estadistico {
+    +provinciaConMayorCantidadDeHechosReportadosDeColeccion()
+    +categoriaConMasHechosReportados()
+    +provinciaConMasHechosReportadosDeUnaCategoria()
+    +horaPicoDeReporteDeUnaCategoria()
+    +cantidadDeSpamEnSolicitudesDeEliminacion()
 }
 
 Administrador -r-|> Usuario
@@ -235,11 +244,12 @@ SolicitudDeEliminacionRepo <-- Coleccion
 Backup .u.|> Calendarizable
 Backup -u-> FuenteDinamica
 
-Estadistico .d.|> Calendarizable
-Estadistico -->"*" ObjetoDeEstudio
-Estadistico --> PublicadorDeResultados
-Estadistico ..> ResultadoEstadistico
+RecolectorDeInformacion ..|> Calendarizable
+RecolectorDeInformacion -->"*" ObjetoDeEstudio
+RecolectorDeInformacion --> PublicadorDeResultados
+RecolectorDeInformacion ..> ResultadoEstadistico
 PublicadorDeResultados ..> ResultadoEstadistico
 ObjetoDeEstudio ..> ResultadoEstadistico
+RecolectorDeInformacion -r-* Estadistico
 
 @enduml
