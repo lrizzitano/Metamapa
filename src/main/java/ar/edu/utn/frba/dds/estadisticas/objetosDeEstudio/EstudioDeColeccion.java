@@ -13,6 +13,7 @@ import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EstudioDeColeccion implements ObjetoDeEstudio {
@@ -28,14 +29,14 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     return this.estructurarInformacion(desde, this.recolectarDatos());
   }
 
-  public List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, List<Coleccion> informacion) {
+  public List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, Set<Coleccion> informacion) {
     return informacion.stream()
         .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
         .collect(Collectors.toList());
   }
 
-  public List<Coleccion> recolectarDatos() {
-    List<Coleccion> informacion = coleccionesRepository.findAll();
+  public Set<Coleccion> recolectarDatos() {
+    Set<Coleccion> informacion = coleccionesRepository.findAll();
 
     if(informacion.isEmpty()) {
       throw new NoExisteInformacionException("no se encontraron colecciones");
