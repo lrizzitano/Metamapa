@@ -3,16 +3,17 @@ package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ResultadoEstudioColeccion implements ResultadoEstadistico {
 
-  private LocalDate fecha;
+  private LocalDateTime fecha;
   private Coleccion coleccion;
   private Long total_hechos;
   private List<HechosPorProvincia> hechosXColecciones;
 
-  public ResultadoEstudioColeccion(LocalDate now,
+  public ResultadoEstudioColeccion(LocalDateTime now,
                                    Coleccion coleccion,
                                    Long total_hechos,
                                    List<HechosPorProvincia> hechosXColecciones) {
@@ -22,7 +23,7 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     this.hechosXColecciones = hechosXColecciones;
   }
 
-  public LocalDate getFecha() {
+  public LocalDateTime getFecha() {
     return fecha;
   }
 

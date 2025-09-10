@@ -62,6 +62,10 @@ public class FuenteMetaMapa extends Fuente {
 
     evaluarCodigoHTTP(response);
 
+    if (response.code() == 204 || response.body() == null) {
+      return new HashSet<>();
+    }
+
     return response.body() == null ? new HashSet<>() : response.body();
   }
 
@@ -80,6 +84,9 @@ public class FuenteMetaMapa extends Fuente {
     }
 
     evaluarCodigoHTTP(response);
+    if (response.code() == 204 || response.body() == null) {
+      return new HashSet<>();
+    }
 
     return response.body() == null ? new HashSet<>() : response.body();
   }
@@ -98,6 +105,8 @@ public class FuenteMetaMapa extends Fuente {
     }
 
     evaluarCodigoHTTP(response);
+
+
   }
 
   public String getUrlAPI() {
@@ -105,6 +114,10 @@ public class FuenteMetaMapa extends Fuente {
   }
 
   private <T> void  evaluarCodigoHTTP(Response<T> response){
+    if (response.code() == 204) {
+      return; // no hay body, lo manejamos afuera
+    }
+
     if (!response.isSuccessful()) {
       throw new AccesoRecursoFallidoException("Respuesta no exitosa " + this.urlAPI);
     }

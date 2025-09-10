@@ -4,7 +4,6 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Predicate;

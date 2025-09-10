@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
@@ -32,8 +33,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDateTime.of(2023, 12, 15,11,11),
+      LocalDateTime.of(2023, 11, 30,11,11),
       Origen.DATASET);
 
   Hecho segundoHecho = new Hecho(
@@ -43,8 +44,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDateTime.of(2023, 12, 15,11,11),
+      LocalDateTime.of(2023, 11, 30,11,11),
       Origen.DATASET);
 
   Hecho tercerHecho = new Hecho(
@@ -54,8 +55,8 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDateTime.of(2023, 12, 15,11,11),
+      LocalDateTime.of(2023, 11, 30,11,11),
       Origen.DATASET);
 
 

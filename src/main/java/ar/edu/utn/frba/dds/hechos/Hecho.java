@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.usuarios.Usuario;
 import javax.persistence.*;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -22,9 +23,9 @@ public class Hecho {
     @Embedded
     private Ubicacion ubicacion;
     @Column(name = "fechaCarga")
-    private LocalDate fechaCarga;
+    private LocalDateTime fechaCarga;
     @Column(name = "fechaAcontecimiento")
-    private LocalDate fechaAcontecimiento;
+    private LocalDateTime fechaAcontecimiento;
     @Enumerated(EnumType.STRING)
     @Column(name = "origen")
     private Origen origen;
@@ -43,8 +44,8 @@ public class Hecho {
         String descripcion,
         String categoria,
         Ubicacion ubicacion,
-        LocalDate fechaCarga,
-        LocalDate fechaAcontecimiento,
+        LocalDateTime fechaCarga,
+        LocalDateTime fechaAcontecimiento,
         Origen origen) {
         this.id = id;
         this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
@@ -80,10 +81,10 @@ public class Hecho {
     public Double longitud() {
         return ubicacion.getLongitud();
     }
-    public LocalDate fechaCarga() {
+    public LocalDateTime fechaCarga() {
         return fechaCarga;
     }
-    public LocalDate fechaAcontecimiento() {
+    public LocalDateTime fechaAcontecimiento() {
         return fechaAcontecimiento;
     }
     public Origen origen() {

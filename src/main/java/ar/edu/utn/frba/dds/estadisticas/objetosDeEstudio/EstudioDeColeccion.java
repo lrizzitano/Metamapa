@@ -11,6 +11,7 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,11 +26,11 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
   }
 
   @Override
-  public List<ResultadoEstadistico> estudiar(LocalDate desde) {
+  public List<ResultadoEstadistico> estudiar(LocalDateTime desde) {
     return this.estructurarInformacion(desde, this.recolectarDatos());
   }
 
-  public List<ResultadoEstadistico> estructurarInformacion(LocalDate desde, Set<Coleccion> informacion) {
+  public List<ResultadoEstadistico> estructurarInformacion(LocalDateTime desde, Set<Coleccion> informacion) {
     return informacion.stream()
         .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
         .collect(Collectors.toList());
@@ -38,15 +39,16 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
   public Set<Coleccion> recolectarDatos() {
     Set<Coleccion> informacion = coleccionesRepository.findAll();
 
-    if(informacion.isEmpty()) {
+    if(informacion == null || informacion.isEmpty() ){
       throw new NoExisteInformacionException("no se encontraron colecciones");
     }
 
     return informacion;
   }
 
-  public ResultadoEstudioColeccion pronvinciaConMasHechos(LocalDate desde, Coleccion coleccion) {
-    Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde.atStartOfDay())).stream()
+  public ResultadoEstudioColeccion pronvinciaConMasHechos(LocalDateTime desde, Coleccion coleccion) {
+    Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde.withHour(0))).stream()
+        .filter(h -> h.getProvincia() != null)
         .collect(Collectors.groupingBy(
             Hecho::getProvincia,
             Collectors.counting()
@@ -64,7 +66,7 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
         .toList();
 
     return
-        new ResultadoEstudioColeccion(LocalDate.now(),
+        new ResultadoEstudioColeccion(LocalDateTime.now(),
             coleccion,
             provinciasXcantHechos.values().stream().mapToLong(Long::longValue).sum(),
             lista);

@@ -39,14 +39,14 @@ public class Consenso implements Calendarizable {
   private Set<Hecho> hechosConsensuados = new HashSet<>();
 
   @Column(name = "proximaActualizacion")
-  private LocalDate proximaActualizacion;
+  private LocalDateTime proximaActualizacion;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "consenso_id")
   private Long id;
 
-  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDate proximaActualizacion, FuentesRepository fuentes) {
+  public Consenso(AlgoritmoConsenso algoritmoConsenso, LocalDateTime proximaActualizacion, FuentesRepository fuentes) {
     this.algoritmoConsenso = algoritmoConsenso;
     this.proximaActualizacion = proximaActualizacion;
     this.fuentes = fuentes;
@@ -57,13 +57,13 @@ public class Consenso implements Calendarizable {
 
   @Override
   public LocalDateTime proximaActualizacion() {
-    return proximaActualizacion.atStartOfDay().plusHours(3);
+    return proximaActualizacion.withHour(3);
   }
 
   @Override
   public void actualizar() {
     this.hechosConsensuados = algoritmoConsenso.getHechosConsensuados(fuentes.obtenerFuentes());
-    this.proximaActualizacion = LocalDate.now().plusDays(1);
+    this.proximaActualizacion = LocalDateTime.now().plusDays(1);
   }
 
   public Set<Hecho> getHechosConsensuados() {

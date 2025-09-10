@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.hechos;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class HechoTest {
   private final Hecho unHecho = new Hecho(
@@ -14,8 +15,8 @@ public class HechoTest {
            -58.3816,
           null,
           null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDateTime.of(2023, 12, 15,11,23),
+      LocalDateTime.of(2023, 11, 30,11,23),
       Origen.DATASET);
 
   @Test
@@ -45,12 +46,12 @@ public class HechoTest {
 
   @Test
   public void SeCargoFechaCarga() {
-    Assertions.assertEquals(LocalDate.of(2023, 12, 15),unHecho.fechaCarga());
+    Assertions.assertEquals(LocalDateTime.of(2023, 12, 15,11,23),unHecho.fechaCarga());
   }
 
   @Test
   public void SeCargoFechaAcontecimiento() {
-    Assertions.assertEquals(LocalDate.of(2023, 11, 30),unHecho.fechaAcontecimiento());
+    Assertions.assertEquals(LocalDateTime.of(2023, 11, 30,11,23),unHecho.fechaAcontecimiento());
   }
 
   @Test

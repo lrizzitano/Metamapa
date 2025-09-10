@@ -27,7 +27,7 @@ public class RecolectorDeInformacion implements Calendarizable {
 
   @Override
   public void actualizar() {
-    objetosDeEstudio.forEach(objetoDeEstudio -> {publicador.comunicarResultados(objetoDeEstudio.estudiar(LocalDate.now().minusDays(1)));});
+    objetosDeEstudio.forEach(objetoDeEstudio -> {publicador.comunicarResultados(objetoDeEstudio.estudiar(LocalDateTime.now().minusDays(1)));});
     this.fecha = fecha.plusDays(1);
   }
 }

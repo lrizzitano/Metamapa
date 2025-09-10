@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,7 @@ public class AlgoritmoConsensoAbsolutoTest {
   private Fuente fuente2;
   private final Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
       new Ubicacion(-34.6037, -58.3816, null, null),
-      LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+      LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
   private Set<Fuente> fuentes;
 
 

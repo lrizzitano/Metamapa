@@ -3,18 +3,19 @@ package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
 
-  private LocalDate fecha;
+  private LocalDateTime fecha;
   private String categoria;
   private int total_hechos;
   private LocalTime hora_pico;
   private Provincia provincia_con_mas_reportes;
   private Long total_hechos_provincia;
 
-  public ResultadoEstudioCategoria(LocalDate fecha,
+  public ResultadoEstudioCategoria(LocalDateTime fecha,
                                    String categoria,
                                    int total_hechos,
                                    double hora_pico_minutos,

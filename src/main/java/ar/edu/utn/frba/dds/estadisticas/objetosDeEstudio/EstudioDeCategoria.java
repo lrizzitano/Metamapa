@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +26,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
   }
 
   @Override
-  public List<ResultadoEstadistico> estudiar(LocalDate desde) {
+  public List<ResultadoEstadistico> estudiar(LocalDateTime desde) {
     return this.estructurarInformacion(this.recolectarDatos(desde));
   }
 
@@ -49,9 +50,9 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     return resultados;
   }
 
-  private List<Hecho> recolectarDatos(LocalDate desde) {
+  private List<Hecho> recolectarDatos(LocalDateTime desde) {
     List<Hecho> informacion = coleccionesRepository.findAll().stream()
-        .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde.atStartOfDay())))
+        .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde.withHour(0))))
         .flatMap(Collection::stream)
         .toList();
 
@@ -91,6 +92,6 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
     Long totalHechosProvincia = maxProvincia.getValue();
 
     return new ResultadoEstudioCategoria
-        (LocalDate.now(), categoria, totalHechos, pico_de_subida, provincia, totalHechosProvincia);
+        (LocalDateTime.now(), categoria, totalHechos, pico_de_subida, provincia, totalHechosProvincia);
   }
 }

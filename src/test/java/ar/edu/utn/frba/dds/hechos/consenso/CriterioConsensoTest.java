@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.hechos.consenso;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
@@ -18,14 +19,14 @@ import static org.mockito.Mockito.when;
 public class CriterioConsensoTest {
   private final Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
       new Ubicacion(1.0, 2.0, null, null),
-      LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+      LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
   private AlgoritmoConsenso algoritmo;
   private Consenso criterio;
 
   @BeforeEach
   void setUp() {
     algoritmo = mock(AlgoritmoConsenso.class);
-    criterio = new Consenso(algoritmo, LocalDate.now(), mock(FuentesRepository.class));
+    criterio = new Consenso(algoritmo, LocalDateTime.now(), mock(FuentesRepository.class));
 
   }
 
