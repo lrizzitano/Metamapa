@@ -1,5 +1,4 @@
 package ar.edu.utn.frba.dds.hechos;
-
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 
 import javax.persistence.*;
@@ -20,10 +19,10 @@ public class Hecho {
     private String descripcion;
     @Column(name = "categoria")
     private String categoria;
-    @Column(name = "latitud")
-    private Double latitud;
-    @Column(name = "longitud")
-    private Double longitud;
+    @Column(name = "provincia")
+    private String provincia;
+    @Embedded
+    private Ubicacion ubicacion;
     @Column(name = "fechaCarga")
     private LocalDate fechaCarga;
     @Column(name = "fechaAcontecimiento")
@@ -45,23 +44,21 @@ public class Hecho {
         String titulo,
         String descripcion,
         String categoria,
-        Double latitud,
-        Double longitud,
+        Ubicacion ubicacion,
         LocalDate fechaCarga,
         LocalDate fechaAcontecimiento,
         Origen origen) {
-      this.id = id;
-      this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
-      this.descripcion = Objects.requireNonNull(descripcion, "descripcion no puede ser null");
-      this.categoria = Objects.requireNonNull(categoria, "categoria no puede ser null");
-      this.latitud = Objects.requireNonNull(latitud, "latitud no puede ser null");
-      this.longitud = Objects.requireNonNull(longitud, "longitud no puede ser null");
-      this.fechaCarga = Objects.requireNonNull(fechaCarga, "fechaCarga no puede ser null");
-      this.fechaAcontecimiento = Objects.requireNonNull(fechaAcontecimiento, "fechaAcontecimiento no puede ser null");
-      this.origen = Objects.requireNonNull(origen, "origen no puede ser null");
-      this.multimedia = null;
-      this.contribuyente = null;
-      this.fueRevisado = false;
+        this.id = id;
+        this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
+        this.descripcion = Objects.requireNonNull(descripcion, "descripcion no puede ser null");
+        this.categoria = Objects.requireNonNull(categoria, "categoria no puede ser null");
+        this.ubicacion = Objects.requireNonNull(ubicacion, "ubicacion no puede ser null");
+        this.fechaCarga = Objects.requireNonNull(fechaCarga, "fechaCarga no puede ser null");
+        this.fechaAcontecimiento = Objects.requireNonNull(fechaAcontecimiento, "fechaAcontecimiento no puede ser null");
+        this.origen = Objects.requireNonNull(origen, "origen no puede ser null");
+        this.multimedia = null;
+        this.contribuyente = null;
+        this.fueRevisado = false;
     }
 
     public Long id() {
@@ -76,11 +73,14 @@ public class Hecho {
     public String categoria() {
         return categoria;
     }
+    public Ubicacion ubicacion() {
+        return ubicacion;
+    }
     public Double latitud() {
-        return latitud;
+        return ubicacion.getLatitud();
     }
     public Double longitud() {
-        return longitud;
+        return ubicacion.getLongitud();
     }
     public LocalDate fechaCarga() {
         return fechaCarga;
@@ -119,5 +119,9 @@ public class Hecho {
 
     public String getTitulo() {
         return this.titulo;
+    }
+
+    public Provincia getProvincia() {
+        return null;
     }
 }
