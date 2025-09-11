@@ -61,16 +61,16 @@ public class EstudioDeColeccionTest {
     System.out.println(colecciones.iterator().next().hechos(new NullFiltro()));
 
     var total = estudioColecciones.provinciasPorHecho(desde, colecciones.iterator().next())
-        .getHechosXColecciones();
+        .getHechosPorProvincia();
 
     Assertions.assertEquals(3, total.stream()
         .filter(estadistica -> estadistica.getProvincia().equals(Provincia.LA_PAMPA))
-        .mapToLong(HechosPorProvincia::getCant_hechos)
+        .mapToLong(HechosPorProvincia::getCantHechos)
         .sum());
 
     Assertions.assertEquals(2, total.stream()
         .filter(estadistica -> estadistica.getProvincia().equals(Provincia.PROV_BUENOS_AIRES))
-        .mapToLong(HechosPorProvincia::getCant_hechos)
+        .mapToLong(HechosPorProvincia::getCantHechos)
         .sum());
   }
 
