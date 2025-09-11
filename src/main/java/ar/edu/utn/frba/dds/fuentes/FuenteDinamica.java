@@ -59,6 +59,14 @@ public class FuenteDinamica extends Fuente {
     return this.repositorioDeHechos.obtenerHechos(filtro);
   }
 
+  @Override
+  public Set<Hecho> obtenerHechos(String busqueda, Filtro filtro) {
+    Set<Hecho> hechosBusqueda = this.repositorioDeHechos.fullTextSearch(busqueda);
+
+    return hechosBusqueda.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
+
+  }
+
   public void agregarHecho(Hecho hecho) {
     hecho.contribuyente().contribuir();
     this.repositorioDeHechos.agregar(hecho);
