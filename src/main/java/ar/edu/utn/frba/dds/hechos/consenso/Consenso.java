@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.hechos.consenso;
 import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.hechos.Hecho;
+import org.hibernate.annotations.Cascade;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -32,17 +33,20 @@ public class Consenso implements Calendarizable {
   private FuentesRepository fuentes;
 
   @OneToOne
-  @JoinColumn(name = "algoritmoConsenso",nullable = false)
+  @JoinColumn(name = "algoritmoConsenso",nullable = true)
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private AlgoritmoConsenso algoritmoConsenso;
 
   @Transient //Es cache
   private Set<Hecho> hechosConsensuados = new HashSet<>();
 
   @Column(name = "proximaActualizacion")
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private LocalDateTime proximaActualizacion;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   @Column(name = "consenso_id")
   private Long id;
 

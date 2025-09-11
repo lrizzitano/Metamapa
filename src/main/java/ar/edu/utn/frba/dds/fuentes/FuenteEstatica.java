@@ -31,7 +31,7 @@ public class FuenteEstatica extends Fuente {
   */
   public FuenteEstatica() {}
 
-  @Column(name = "path_estatica" ,nullable = false)
+  @Column(name = "path_estatica" ,nullable = true)
   private Path path;
 
   @Column(name = "ultima_modificacion_estatica")

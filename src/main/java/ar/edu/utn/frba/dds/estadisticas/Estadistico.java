@@ -13,8 +13,9 @@ public class Estadistico implements WithSimplePersistenceUnit {
 
   public String provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime fecha) {
     return (String) entityManager().createNativeQuery(
-            "select provincia from ResultadoEstudioColeccion "
-                + "where fecha = :fecha and coleccion_id = :coleccion"
+            "select r.provincia from ResultadoEstudioColeccion_hechosXColecciones r" +
+                "join EstudioColeccion e on ResultadoEstudioColeccion_estudio_id = estudio_id"
+                + "where e.fecha = :fecha and e.coleccion_id = :coleccion"
         )
         .setParameter("fecha", fecha)
         .setParameter("coleccion", coleccion.getId())

@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
+import org.hibernate.annotations.Cascade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class Coleccion{
 
   @ManyToOne
   @JoinColumn(name = "criterioDePertenencia",nullable = false)
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private Filtro criterioDePertenencia;
 
 
@@ -52,6 +54,7 @@ public class Coleccion{
 
   @ManyToOne
   @JoinColumn(name = "criterioConsenso",nullable = false)
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private Consenso criterioConsenso;
 
   @Transient
