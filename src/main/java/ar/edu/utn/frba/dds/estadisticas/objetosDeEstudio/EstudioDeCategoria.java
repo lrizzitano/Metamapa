@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
 
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
@@ -21,7 +22,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
 
   RepoColecciones coleccionesRepository;
 
-  EstudioDeCategoria(RepoColecciones coleccionesRepository) {
+  public EstudioDeCategoria(RepoColecciones coleccionesRepository) {
     this.coleccionesRepository = coleccionesRepository;
   }
 
