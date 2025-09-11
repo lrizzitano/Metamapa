@@ -24,5 +24,9 @@ public abstract class Fuente {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public Long id;
 
+  public Long getId(){
+    return id;
+  }
+
   public abstract Set<Hecho> obtenerHechos(Filtro filtro);
 }

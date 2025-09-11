@@ -28,10 +28,10 @@ public class Estadistico implements WithSimplePersistenceUnit {
 
   public String categoriaConMasHechosReportados(LocalDateTime fecha) {
     return (String) entityManager().createNativeQuery(
-            "select categoria from ResultadoEstudioCategoria " +
+            "select categoria from EstudioCategoria " +
                 "where fecha = :fecha " +
                 "group by categoria " +
-                "order by total_hechos desc"
+                "order by SUM(total_hechos) desc"
         )
         .setParameter("fecha", fecha)
         .setMaxResults(1)
@@ -40,8 +40,13 @@ public class Estadistico implements WithSimplePersistenceUnit {
 
   public String provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime fecha) {
     return (String) entityManager().createNativeQuery(
-            "select provincia from ResultadoEstudioCategoria " +
-                "where fecha = :fecha and categoria = :categoria "
+            "select r.provincia " +
+                "from EstudioCategoria e " +
+                "join ResultadoEstudioCategoria_hechosPorProvincia r " +
+                "  ON r.resultadoestudiocategoria_estudio_id = e.estudio_id " +
+                "where e.fecha = :fecha and e.categoria = :categoria " +
+                "group by r.categoria " +
+                "order by SUM(r.hechos_de_provincia) desc limit 1"
         )
         .setParameter("fecha", fecha)
         .setParameter("categoria", categoria)
@@ -50,7 +55,7 @@ public class Estadistico implements WithSimplePersistenceUnit {
 
   public LocalTime horaPicoDeReporteDeUnaCategoria(String categoria, LocalDateTime fecha) {
     Object result = entityManager().createNativeQuery(
-            "select hora_pico from ResultadoEstudioCategoria " +
+            "select hora_pico from EstudioCategoria " +
                 "where fecha = :fecha and categoria = :categoria"
         )
         .setParameter("fecha", fecha)

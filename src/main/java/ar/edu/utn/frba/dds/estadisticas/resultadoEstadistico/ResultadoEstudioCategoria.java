@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 
+import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +26,7 @@ public class ResultadoEstudioCategoria implements ResultadoEstadistico {
   @Column(name = "hora_pico")
   private LocalTime hora_pico;
   @ElementCollection(fetch =  FetchType.EAGER)
+  @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private List<HechosPorProvincia> hechosPorProvincia;
 
   public ResultadoEstudioCategoria(LocalDateTime fecha,

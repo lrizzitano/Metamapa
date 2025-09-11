@@ -5,39 +5,25 @@ import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCat
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.fuentes.FuenteDinamica;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.FuentesRepositoryJPA;
-import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
-import ar.edu.utn.frba.dds.repositorios.RepoUsuarios;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
-import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
-import ar.edu.utn.frba.dds.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-
-public class EstadisticoTest implements SimplePersistenceTest {
-
+public class EstadisticaHoraPicoCategoriaTest implements SimplePersistenceTest {
 
   RepoColecciones repoColecciones;
   FuentesRepositoryJPA repoFuentes;
@@ -62,18 +48,18 @@ public class EstadisticoTest implements SimplePersistenceTest {
 
 
   @BeforeEach
-   void setUp() {
+  void setUp() {
 
-     repoColecciones = new RepoColecciones();
-     repoFuentes = new FuentesRepositoryJPA();
+    repoColecciones = new RepoColecciones();
+    repoFuentes = new FuentesRepositoryJPA();
     fuenteDinamica = FuenteDinamica.instance();
 
     hpc1 = new HechosPorProvincia(Provincia.LA_PAMPA,(long)3);
-     hpc2 = new HechosPorProvincia(Provincia.LA_RIOJA,(long) 2);
+    hpc2 = new HechosPorProvincia(Provincia.LA_RIOJA,(long) 2);
 
     hechosXprovincia = List.of(hpc1, hpc2);
     consensoNull = new ConsensoNull();
-     filtroNulo = new NullFiltro();
+    filtroNulo = new NullFiltro();
 
     coleccionAux = new Coleccion("prueb","Una descripcion",filtroNulo,
         fuenteDinamica,consensoNull,new SolicitudesDeEliminacionJPA());
@@ -100,61 +86,15 @@ public class EstadisticoTest implements SimplePersistenceTest {
 
   }
 
-  @AfterEach
-  void afterEach(){
-    repoColecciones.delete(coleccionAux);
-    repoFuentes.eliminarFuente(fuenteDinamica);
-    //entityManager().createQuery("delete from ResultadoEstudioCategoria ").executeUpdate();
-    //entityManager().createQuery("delete from ResultadoEstudioColeccion ").executeUpdate();
-  }
 
   @Disabled
   @Test
-  public void provinciaConMasHechosDeUnaColleccion() {
-
-    entityManager().persist(estudioColeccion);
-
-    String provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux,fecha);
-
-    Assertions.assertEquals("LA_PAMPA",provincia);
-    System.out.println(provincia);
-  }
-
-
-  @Disabled
-  @Test
-  public void categoriaConMasHechosReportados() {
-
+  public void horaPicoDeReporteDeUnaCategoria(){
     entityManager().persist(estudioCategoria);
 
-    String categoria = estadistico.categoriaConMasHechosReportados(fecha);
+    LocalTime horaPico = estadistico.horaPicoDeReporteDeUnaCategoria("Incendio",fecha);
 
-    System.out.println(categoria);
-
-    Assertions.assertEquals("Incendio",categoria);
-
+    Assertions.assertEquals("00:12",horaPico.toString());
   }
-
-    @Disabled
-    @Test
-    public void horaPicoDeReporteDeUnaCategoria(){
-      entityManager().persist(estudioCategoria);
-
-      LocalTime horaPico = estadistico.horaPicoDeReporteDeUnaCategoria("Incendio",fecha);
-
-      Assertions.assertEquals("00:12",horaPico.toString());
-    }
-
-    @Disabled
-    @Test
-    public void provinciaConMasHechosReportadosDeUnaCategoria(){
-
-      entityManager().persist(estudioCategoria);
-
-      String provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio",fecha);
-
-      Assertions.assertEquals("LA_PAMPA",provincia);
-
-    }
 
 }
