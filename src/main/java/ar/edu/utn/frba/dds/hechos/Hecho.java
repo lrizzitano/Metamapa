@@ -128,6 +128,6 @@ public class Hecho {
     }
 
     public Provincia getProvincia() {
-        return null;
+        return ubicacion.getProvincia();
     }
 }
