@@ -12,13 +12,17 @@ public class Estadistico implements WithSimplePersistenceUnit {
   public Estadistico() {}
 
   public String provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime fecha) {
-    return (String) entityManager().createNativeQuery(
-            "select r.provincia from ResultadoEstudioColeccion_hechosXColecciones r" +
-                "join EstudioColeccion e on ResultadoEstudioColeccion_estudio_id = estudio_id"
-                + "where e.fecha = :fecha and e.coleccion_id = :coleccion"
+    return (String)  entityManager().createNativeQuery(
+            "select r.provincia " +
+                "from estudiocoleccion e " +
+                "join ResultadoEstudioColeccion_hechosPorProvincia r " +
+                "  ON r.resultadoestudiocoleccion_estudio_id = e.estudio_id " +
+                "where e.fecha = :fechaP and e.coleccion_id = :coleccionID " +
+                "group by r.provincia " +
+                "order by SUM(r.hechos_de_provincia) desc limit 1"
         )
-        .setParameter("fecha", fecha)
-        .setParameter("coleccion", coleccion.getId())
+        .setParameter("fechaP", fecha)
+        .setParameter("coleccionID", coleccion.getId())
         .getSingleResult();
   }
 

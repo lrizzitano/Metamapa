@@ -31,7 +31,7 @@ public class Coleccion{
   @Id
   @Column(name = "coleccion_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  public Long idd;
+  public Long id;
 
   @Column(name = "titulo",nullable = false)
   private String titulo;
@@ -44,13 +44,9 @@ public class Coleccion{
   @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private Filtro criterioDePertenencia;
 
-
   @ManyToOne
   @JoinColumn(name = "fuente",nullable = false)
   private Fuente fuente;
-
-  @Transient
-  private final String id = UUID.randomUUID().toString();
 
   @ManyToOne
   @JoinColumn(name = "criterioConsenso",nullable = false)
@@ -81,7 +77,7 @@ public class Coleccion{
     return descripcion;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
