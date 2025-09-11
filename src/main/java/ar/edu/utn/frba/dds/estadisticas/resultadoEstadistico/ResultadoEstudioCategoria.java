@@ -8,12 +8,12 @@ import java.time.LocalTime;
 
 public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
 
-  private LocalDateTime fecha;
-  private String categoria;
-  private int total_hechos;
-  private LocalTime hora_pico;
-  private Provincia provincia_con_mas_reportes;
-  private Long total_hechos_provincia;
+  private final LocalDateTime fecha;
+  private final String categoria;
+  private final int total_hechos;
+  private final LocalTime hora_pico;
+  private final Provincia provincia_con_mas_reportes;
+  private final Long total_hechos_provincia;
 
   public ResultadoEstudioCategoria(LocalDateTime fecha,
                                    String categoria,
@@ -27,5 +27,29 @@ public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
     this.hora_pico = LocalTime.of((int) hora_pico_minutos / 60, (int) hora_pico_minutos % 60);
     this.provincia_con_mas_reportes = provincia_con_mas_reportes;
     this.total_hechos_provincia = total_hechos_provincia;
+  }
+
+  public LocalDateTime getFecha() {
+    return fecha;
+  }
+
+  public String getCategoria() {
+    return categoria;
+  }
+
+  public int getTotal_hechos() {
+    return total_hechos;
+  }
+
+  public LocalTime getHora_pico() {
+    return hora_pico;
+  }
+
+  public Provincia getProvincia_con_mas_reportes() {
+    return provincia_con_mas_reportes;
+  }
+
+  public Long getTotal_hechos_provincia() {
+    return total_hechos_provincia;
   }
 }
