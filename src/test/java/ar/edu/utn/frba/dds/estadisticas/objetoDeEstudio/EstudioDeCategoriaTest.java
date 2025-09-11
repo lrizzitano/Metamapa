@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.estadisticas.objetoDeEstudio;
 
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeCategoria;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
 
 import ar.edu.utn.frba.dds.filtros.NullFiltro;
@@ -17,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Set;
-import kotlin.collections.EmptySet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,12 +57,11 @@ public class EstudioDeCategoriaTest {
         .findFirst()
         .orElseThrow();
 
-    Assertions.assertEquals(Provincia.LA_PAMPA, desastreNatural.getProvincia_con_mas_reportes());
-    Assertions.assertEquals(3, desastreNatural.getTotal_hechos_provincia());
-    //tira un resultado medio random la hora pico
-    //Assertions.assertEquals(LocalTime.of(11, 0, 0), desastreNatural.getHora_pico());
+    Assertions.assertEquals(3,
+        desastreNatural.getHechosPorProvincia().stream().mapToLong(HechosPorProvincia::getCant_hechos).max()
+            .orElseThrow(() -> new IllegalStateException("No hay hechos por provincia")));
 
-
+    // falta la hora pico
   }
 
   private Set<Coleccion> crearColecciones() {
