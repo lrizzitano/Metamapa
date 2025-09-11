@@ -10,7 +10,6 @@ import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
 
   public List<ResultadoEstadistico> estructurarInformacion(LocalDateTime desde, Set<Coleccion> informacion) {
     return informacion.stream()
-        .map(coleccion -> pronvinciaConMasHechos(desde, coleccion))
+        .map(coleccion -> provinciasPorHecho(desde, coleccion))
         .collect(Collectors.toList());
   }
 
@@ -46,7 +45,7 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     return informacion;
   }
 
-  public ResultadoEstudioColeccion pronvinciaConMasHechos(LocalDateTime desde, Coleccion coleccion) {
+  public ResultadoEstudioColeccion provinciasPorHecho(LocalDateTime desde, Coleccion coleccion) {
     Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(new FiltroFechaDesde(desde.withHour(0))).stream()
         .filter(h -> h.getProvincia() != null)
         .collect(Collectors.groupingBy(

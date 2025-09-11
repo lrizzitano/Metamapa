@@ -4,7 +4,6 @@ import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeColeccion;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
@@ -61,11 +60,8 @@ public class EstudioDeColeccionTest {
 
     System.out.println(colecciones.iterator().next().hechos(new NullFiltro()));
 
-    ResultadoEstudioColeccion resultados =
-        estudioColecciones.pronvinciaConMasHechos(desde, colecciones.iterator().next());
-
-
-    var total = resultados.getHechosXColecciones();
+    var total = estudioColecciones.provinciasPorHecho(desde, colecciones.iterator().next())
+        .getHechosXColecciones();
 
     Assertions.assertEquals(3, total.stream()
         .filter(estadistica -> estadistica.getProvincia().equals(Provincia.LA_PAMPA))
