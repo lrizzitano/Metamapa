@@ -1,10 +1,12 @@
 package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 
 import ar.edu.utn.frba.dds.hechos.Coleccion;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "EstudioColeccion")
@@ -22,8 +24,7 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
   @Column(name = "total_hechos")
   private Long total_hechos;
   @ElementCollection(fetch = FetchType.EAGER)
-  private List<HechosPorProvincia> hechosXColecciones;
-
+  private List<HechosPorProvincia> hechosPorProvincia;
 
   public ResultadoEstudioColeccion() {
 
@@ -31,11 +32,11 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
   public ResultadoEstudioColeccion(LocalDateTime now,
                                    Coleccion coleccion,
                                    Long total_hechos,
-                                   List<HechosPorProvincia> hechosXColecciones) {
+                                   List<HechosPorProvincia> hechosPorProvincia) {
     this.fecha = now;
     this.coleccion = coleccion;
     this.total_hechos = total_hechos;
-    this.hechosXColecciones = hechosXColecciones;
+    this.hechosPorProvincia = hechosPorProvincia;
   }
 
   public LocalDateTime getFecha() {
@@ -50,7 +51,22 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     return total_hechos;
   }
 
-  public List<HechosPorProvincia> getHechosXColecciones() {
-    return hechosXColecciones;
+  public List<HechosPorProvincia> getHechosPorProvincia() {
+    return hechosPorProvincia;
+  }
+
+  @Override
+  public Map<String, String> infoExportable() {
+    Map<String, String> datos = new LinkedHashMap<>();
+
+    // campos simples
+    datos.put("id", id != null ? id.toString() : "");
+    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm")) : "");
+    datos.put("coleccion_id", coleccion != null && coleccion.getId() != null ? coleccion.getId() : "");
+    datos.put("coleccion_nombre", coleccion != null && coleccion.getTitulo() != null ? coleccion.getTitulo() : "");
+    datos.put("total_hechos", total_hechos != null ? total_hechos.toString() : "0");
+
+    // abrimos provincias en columnas
+    return HechosPorProvincia.abrirProvincias(datos, hechosPorProvincia);
   }
 }
