@@ -45,9 +45,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
       throw new NoExisteInformacionException("no se encontraron datos al buscar colecciones o hechos");
     }
 
-    List<ResultadoEstadistico> resultados = new ArrayList<>(mapResultados.values());
-
-    return resultados;
+    return new ArrayList<>(mapResultados.values());
   }
 
   private List<Hecho> recolectarDatos(LocalDateTime desde) {
@@ -78,7 +76,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
 
     // provincia con más hechos
     Map<Provincia, Long> conteoProvincia = hechosCategoria.stream()
-        .collect(groupingBy(hecho -> hecho.getProvincia(), counting()));
+        .collect(groupingBy(Hecho::getProvincia, counting()));
 
     Map.Entry<Provincia, Long> maxProvincia = conteoProvincia.entrySet().stream()
         .max(Map.Entry.comparingByValue())
