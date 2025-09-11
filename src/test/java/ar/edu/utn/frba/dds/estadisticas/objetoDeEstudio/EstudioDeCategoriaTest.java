@@ -15,7 +15,6 @@ import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -58,7 +57,7 @@ public class EstudioDeCategoriaTest {
         .orElseThrow();
 
     Assertions.assertEquals(3,
-        desastreNatural.getHechosPorProvincia().stream().mapToLong(HechosPorProvincia::getCant_hechos).max()
+        desastreNatural.getHechosPorProvincia().stream().mapToLong(HechosPorProvincia::getCantHechos).max()
             .orElseThrow(() -> new IllegalStateException("No hay hechos por provincia")));
 
     // falta la hora pico

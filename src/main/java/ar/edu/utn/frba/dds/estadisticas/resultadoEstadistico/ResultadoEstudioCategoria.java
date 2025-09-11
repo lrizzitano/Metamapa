@@ -3,11 +3,14 @@ package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "EstudioCategoria")
-public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
+public class ResultadoEstudioCategoria implements ResultadoEstadistico {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,5 +60,20 @@ public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
 
   public List<HechosPorProvincia> getHechosPorProvincia() {
     return hechosPorProvincia;
+  }
+
+  @Override
+  public Map<String, String> infoExportable() {
+    Map<String, String> datos = new LinkedHashMap<>(); // mantiene orden de insercion
+
+    // campos simples
+    datos.put("id", id != null ? id.toString() : "");
+    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm")) : "");
+    datos.put("categoria", categoria != null ? categoria : "");
+    datos.put("total_hechos", String.valueOf(total_hechos));
+    datos.put("hora_pico", hora_pico != null ? hora_pico.toString() : "");
+
+    // abro las provincias en columnas
+    return HechosPorProvincia.abrirProvincias(datos, hechosPorProvincia);
   }
 }

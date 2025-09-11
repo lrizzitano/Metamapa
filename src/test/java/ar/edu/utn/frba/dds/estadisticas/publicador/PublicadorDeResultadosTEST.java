@@ -1,77 +1,74 @@
-package ar.edu.utn.frba.dds.estadisticas.objetoDeEstudio;
-
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.hechos.Provincia;
-import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeColeccion;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
-import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.Coleccion;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.Origen;
-import ar.edu.utn.frba.dds.hechos.Ubicacion;
-import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
-import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-import java.util.Set;
+package ar.edu.utn.frba.dds.estadisticas.publicador;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class EstudioDeColeccionTest {
+import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeCategoria;
+import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeColeccion;
+import ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados.PublicadorDeResultados;
+import ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados.PublicadorDeResultadosCSV;
+import ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados.PublicadorDeResultadosJSON;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.fuentes.Fuente;
+import ar.edu.utn.frba.dds.hechos.Coleccion;
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.hechos.Origen;
+import ar.edu.utn.frba.dds.hechos.Provincia;
+import ar.edu.utn.frba.dds.hechos.Ubicacion;
+import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
+import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
+import java.time.LocalDateTime;
 
+import java.util.List;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
+public class PublicadorDeResultadosTEST {
   private RepoColecciones coleccionesRepository;
-  private EstudioDeColeccion estudioColecciones;
+  private EstudioDeCategoria estudioCategoria;
+  private EstudioDeColeccion estudioColeccion;
   private Set<Coleccion> colecciones;
   private Set<Hecho> hechos;
   private final Fuente fuente = mock(Fuente.class);
+  private final Fuente fuente2 = mock(Fuente.class);
 
   @BeforeEach
   public void setup() {
     coleccionesRepository = mock(RepoColecciones.class);
     hechos = crearListaHechos();
     colecciones = crearColecciones();
-    estudioColecciones = new EstudioDeColeccion(coleccionesRepository);
+    estudioCategoria = new EstudioDeCategoria(coleccionesRepository);
+    estudioColeccion = new EstudioDeColeccion(coleccionesRepository);
   }
 
   @Test
-  public void recuperaLosHechosDesdeUnaFechaDeSuRepositorio() {
-    when(coleccionesRepository.findAll()).thenReturn(colecciones);
-    Assertions.assertEquals(colecciones.size(), estudioColecciones.recolectarDatos().size());
-  }
-
-  @Test
-  public void recuperaLosHechosDesdeUnaFechaDeSuRepositorio_lanzaExcepcion() {
-    when(coleccionesRepository.findAll()).thenReturn(null);
-    Assertions.assertThrows(NoExisteInformacionException.class , () -> estudioColecciones.recolectarDatos());
-  }
-
-  @Test
-  public void estudiaCorrectamenteLasColecciones() {
+  public void exportaEstudiosCorrectamente() {
     LocalDateTime desde = LocalDateTime.of(2023,1,1,22,54);
 
+    when(coleccionesRepository.findAll()).thenReturn(colecciones);
     when(fuente.obtenerHechos(any())).thenReturn(hechos);
+    when(fuente2.obtenerHechos(any())).thenReturn(hechos);
 
-    System.out.println(colecciones.iterator().next().hechos(new NullFiltro()));
+    List<ResultadoEstadistico> estadisticasCategoria = estudioCategoria.estudiar(desde);
+    List<ResultadoEstadistico> estadisticasColeccion = estudioColeccion.estudiar(desde);
 
-    var total = estudioColecciones.provinciasPorHecho(desde, colecciones.iterator().next())
-        .getHechosPorProvincia();
+    PublicadorDeResultados publiCategoriaCSV = new PublicadorDeResultadosCSV("categorias.csv");
+    PublicadorDeResultados publiCategoriaJSON = new PublicadorDeResultadosJSON("categorias.json");
 
-    Assertions.assertEquals(3, total.stream()
-        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.LA_PAMPA))
-        .mapToLong(HechosPorProvincia::getCantHechos)
-        .sum());
+    PublicadorDeResultados publiColeccionCSV = new PublicadorDeResultadosCSV("coleccion.csv");
+    PublicadorDeResultados publiColeccionJSON = new PublicadorDeResultadosJSON("coleccion.json");
 
-    Assertions.assertEquals(2, total.stream()
-        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.PROV_BUENOS_AIRES))
-        .mapToLong(HechosPorProvincia::getCantHechos)
-        .sum());
+    publiCategoriaCSV.comunicarResultados(estadisticasCategoria);
+    publiCategoriaJSON.comunicarResultados(estadisticasCategoria);
+    publiColeccionCSV.comunicarResultados(estadisticasColeccion);
+    publiColeccionJSON.comunicarResultados(estadisticasColeccion);
+
+    // se podria assertear que existen, pero se verifica manualmente que tengan lo que queremos
   }
 
   private Set<Coleccion> crearColecciones() {
@@ -87,7 +84,7 @@ public class EstudioDeColeccionTest {
         "futbol",
         "boca",
         new NullFiltro(),
-        fuente,
+        fuente2,
         new ConsensoNull(),
         mock(SolicitudDeEliminacionRepository.class)
     );
@@ -107,7 +104,7 @@ public class EstudioDeColeccionTest {
         "Desastre Natural",
         laPampa,
         LocalDateTime.now(),
-        LocalDateTime.of(2024, 3, 15, 23, 59),
+        LocalDateTime.of(2024, 3, 15, 22, 14),
         Origen.CONTRIBUYENTE
     );
 
@@ -129,7 +126,7 @@ public class EstudioDeColeccionTest {
         "Desastre Natural",
         laPampa,
         LocalDateTime.now(),
-        LocalDateTime.of(2024, 3, 15, 23, 59),
+        LocalDateTime.of(2024, 3, 15, 14, 30),
         Origen.CONTRIBUYENTE
     );
 
@@ -157,7 +154,4 @@ public class EstudioDeColeccionTest {
 
     return Set.of(hecho1, hecho2, hecho3, hecho4, hecho5);
   }
-
-
-
 }

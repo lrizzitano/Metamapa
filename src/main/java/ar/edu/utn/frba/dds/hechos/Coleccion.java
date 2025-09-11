@@ -44,7 +44,6 @@ public class Coleccion{
   @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private Filtro criterioDePertenencia;
 
-
   @ManyToOne
   @JoinColumn(name = "fuente",nullable = false)
   private Fuente fuente;

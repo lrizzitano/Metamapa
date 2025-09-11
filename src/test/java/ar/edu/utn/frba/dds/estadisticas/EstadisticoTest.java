@@ -55,18 +55,14 @@ public class EstadisticoTest implements SimplePersistenceTest {
     repoColecciones.save(coleccionAux);
   }
 
-  @Disabled
   @Test
   public void test() {
     entityManager().persist(estudioColeccion);
 
-
-
-
     String provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux,fecha);
 
-    Assertions.assertTrue(true);
-    //Assertions.assertEquals("LA_PAMPA",provincia);
+    Assertions.assertEquals("LA_PAMPA",provincia);
+    System.out.println(provincia);
   }
 
 

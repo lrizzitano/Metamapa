@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.repositorios.solicitudes;
 
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class RechazosDeEliminacion {
+public class RechazosDeEliminacion implements ResultadoEstadistico {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -53,5 +55,13 @@ public class RechazosDeEliminacion {
     this.cantidadSpam += 1;
   }
 
+  @Override
+  public Map<String, String> infoExportable() {
+    return Map.of(
+        "hecho", tituloHecho,
+        "rechazos", cantidadRechazadas.toString(),
+        "spam", cantidadSpam.toString()
+    );
+  }
 }
 
