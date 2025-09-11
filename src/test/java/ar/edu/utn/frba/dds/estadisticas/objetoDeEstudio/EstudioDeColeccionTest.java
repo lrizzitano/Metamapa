@@ -1,28 +1,24 @@
 package ar.edu.utn.frba.dds.estadisticas.objetoDeEstudio;
 
-import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio.EstudioDeColeccion;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
-import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
-import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
+import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -35,6 +31,7 @@ public class EstudioDeColeccionTest {
   private EstudioDeColeccion estudioColecciones;
   private Set<Coleccion> colecciones;
   private Set<Hecho> hechos;
+  private final Fuente fuente = mock(Fuente.class);
 
   @BeforeEach
   public void setup() {
@@ -55,44 +52,47 @@ public class EstudioDeColeccionTest {
     when(coleccionesRepository.findAll()).thenReturn(null);
     Assertions.assertThrows(NoExisteInformacionException.class , () -> estudioColecciones.recolectarDatos());
   }
-  @Disabled
+
   @Test
   public void estudiaCorrectamenteLasColecciones() {
-
     LocalDateTime desde = LocalDateTime.of(2023,1,1,22,54);
-/*
-    when(coleccionesRepository.findAll()).thenReturn(colecciones);
 
-    Set<Coleccion> coleccionaAEstudiar = estudioColecciones.recolectarDatos();
+    when(fuente.obtenerHechos(any())).thenReturn(hechos);
 
-    Coleccion primeraCollecion = coleccionaAEstudiar.iterator().next();
+    System.out.println(colecciones.iterator().next().hechos(new NullFiltro()));
 
-    when(primeraCollecion.hechos(any(Filtro.class))).thenReturn(hechos);
-  */
+    ResultadoEstudioColeccion resultados =
+        estudioColecciones.pronvinciaConMasHechos(desde, colecciones.iterator().next());
 
-    Coleccion mockCo = mock(Coleccion.class);
-    when(mockCo.hechos(any(Filtro.class))).thenReturn(hechos);
 
-    ResultadoEstudioColeccion resultados = estudioColecciones.pronvinciaConMasHechos(desde,mockCo);
+    var total = resultados.getHechosXColecciones();
 
-    Assertions.assertEquals(3, resultados.getHechosXColecciones().stream().map(HechosPorProvincia::getCant_hechos).mapToLong(Long::longValue).sum());
+    Assertions.assertEquals(3, total.stream()
+        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.LA_PAMPA))
+        .mapToLong(HechosPorProvincia::getCant_hechos)
+        .sum());
+
+    Assertions.assertEquals(2, total.stream()
+        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.PROV_BUENOS_AIRES))
+        .mapToLong(HechosPorProvincia::getCant_hechos)
+        .sum());
   }
 
   private Set<Coleccion> crearColecciones() {
     Coleccion coleccion1 = new Coleccion(
         "Eventos sociales y climáticos",
         "Hechos relacionados con protestas y desastres naturales",
-        mock(Filtro.class),
-        mock(Fuente.class),
-        mock(Consenso.class),
+        new NullFiltro(),
+        fuente,
+        new ConsensoNull(),
         mock(SolicitudDeEliminacionRepository.class)
     );
     Coleccion coleccion2 = new Coleccion(
         "futbol",
         "boca",
-        mock(Filtro.class),
-        mock(Fuente.class),
-        mock(Consenso.class),
+        new NullFiltro(),
+        fuente,
+        new ConsensoNull(),
         mock(SolicitudDeEliminacionRepository.class)
     );
     return Set.of(coleccion1,coleccion2);
