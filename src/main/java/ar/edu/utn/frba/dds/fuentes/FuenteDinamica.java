@@ -56,8 +56,7 @@ public class FuenteDinamica extends Fuente {
 
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
-    return this.repositorioDeHechos.obtenerTodos().stream()
-        .filter(filtro.getAsPredicate()).collect(Collectors.toSet());
+    return this.repositorioDeHechos.obtenerHechos(filtro);
   }
 
   public void agregarHecho(Hecho hecho) {

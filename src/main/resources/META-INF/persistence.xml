@@ -26,6 +26,9 @@
         <class>ar.edu.utn.frba.dds.filtros.NullFiltro</class>
         <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion</class>
         <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeCambio</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

@@ -24,17 +24,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RepoColeccionesTest implements SimplePersistenceTest {
+public class ColeccionesRepositoryTest implements SimplePersistenceTest {
 
   private final Hecho hecho1 = new Hecho(null,"hecho1", "desc1", "cat1",
-      new Ubicacion(1.0, 2.0, null, null),  LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+      new Ubicacion(1.0, 2.0, null, null),  LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
   private final Hecho hecho2 = new Hecho(null,"hecho2", "desc2", "cat2",
-      new Ubicacion(3.0, 4.0, null, null), LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
+      new Ubicacion(3.0, 4.0, null, null), LocalDateTime.now(), LocalDate.parse("2024-01-02").atStartOfDay(), Origen.DATASET);
   private final Fuente unaFuente = mock(Fuente.class);
-  private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02"));
+  private final Filtro filtroFecha = new FiltroFechaHasta(LocalDate.parse("2024-01-02").atStartOfDay());
   private final Filtro filtroTrue = new NullFiltro();
 
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();

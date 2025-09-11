@@ -11,7 +11,7 @@ import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,8 +64,8 @@ public class SolicitudesDeCambioTest implements SimplePersistenceTest {
         "Desastre natural",
         new Ubicacion(-34.6037,
             -58.3816, null, null),
-        LocalDate.now(),
-        LocalDate.of(2023, 11, 30),
+        LocalDateTime.now(),
+        LocalDateTime.of(2023, 11, 30,11,11),
         Origen.DATASET);
     hecho.setContribuyente(usuario);
     repoHechos.agregar(hecho);

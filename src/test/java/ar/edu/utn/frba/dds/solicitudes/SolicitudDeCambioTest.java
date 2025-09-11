@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class SolicitudDeCambioTest {
 
@@ -19,7 +20,7 @@ public class SolicitudDeCambioTest {
   @Test
   void NoPuedoCrearSolicitudDeCambioSiPasaron7Dias() {
 
-    when(hechoAModificar.fechaCarga()).thenAnswer(invocation -> LocalDate.parse("2024-01-02"));
+    when(hechoAModificar.fechaCarga()).thenAnswer(invocation -> LocalDate.parse("2024-01-02").atStartOfDay());
 
     assertThrows(SolicitudDeCambioInvalidaException.class, () -> {
       new SolicitudDeCambio(hechoAModificar, hechoModificado, unUsuario);
@@ -28,7 +29,7 @@ public class SolicitudDeCambioTest {
 
   @Test
   void NoPuedoCrearSolicitudSiUsuarioNoEstaRegistrado() {
-    when(hechoAModificar.fechaCarga()).thenReturn(LocalDate.now());
+    when(hechoAModificar.fechaCarga()).thenReturn(LocalDateTime.now());
     when(unUsuario.estaRegistrado()).thenReturn(false);
 
     assertThrows(SolicitudDeCambioInvalidaException.class, () -> {
@@ -40,7 +41,7 @@ public class SolicitudDeCambioTest {
   void NoPuedoCrearSolicitudSiUsuarioNoEsQuienSubioElHecho() {
     Usuario otroUsuario = mock(Usuario.class);
 
-    when(hechoAModificar.fechaCarga()).thenReturn(LocalDate.now());
+    when(hechoAModificar.fechaCarga()).thenReturn(LocalDateTime.now());
     when(unUsuario.estaRegistrado()).thenReturn(true);
     when(hechoAModificar.contribuyente()).thenReturn(otroUsuario);
 

@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,7 +35,7 @@ public class FuenteEstatica extends Fuente {
   private Path path;
 
   @Column(name = "ultima_modificacion_estatica")
-  private LocalDate ultimaModificacion;
+  private LocalDateTime ultimaModificacion;
 
   public FuenteEstatica(String path) {
     this.path = Paths.get(path);
@@ -49,7 +50,7 @@ public class FuenteEstatica extends Fuente {
       ultimaModificacion = Files.getLastModifiedTime(path)
           .toInstant()
           .atZone(ZoneId.systemDefault())
-          .toLocalDate();
+          .toLocalDateTime();
     } catch (Exception e) {
       throw new NoSePudoLeerArchivoException(
           "Error al obtener la fecha de modificación del archivo "
@@ -87,7 +88,7 @@ public class FuenteEstatica extends Fuente {
         new Ubicacion(Double.parseDouble(fila.get("latitud")),
         Double.parseDouble(fila.get("longitud")), null, null),
         ultimaModificacion,
-        LocalDate.parse(fila.get("fecha")),
+        LocalDate.parse(fila.get("fecha")).atStartOfDay(),
         Origen.DATASET
     );
   }

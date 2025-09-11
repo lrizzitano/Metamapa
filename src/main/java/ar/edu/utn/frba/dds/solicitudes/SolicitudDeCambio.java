@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +54,7 @@ public class SolicitudDeCambio {
   public SolicitudDeCambio(){}
 
   public SolicitudDeCambio(Hecho hechoParacambiar, Hecho hechoModificado, Usuario usuario) {
-    if (hechoParacambiar.fechaCarga().isBefore(LocalDate.now().minusDays(7))) {
+    if (hechoParacambiar.fechaCarga().isBefore(LocalDateTime.now().minusDays(7))) {
       throw new SolicitudDeCambioInvalidaException("Se supero el margen de 7 dias para modificar.");
     }
     if (!usuario.estaRegistrado()) {

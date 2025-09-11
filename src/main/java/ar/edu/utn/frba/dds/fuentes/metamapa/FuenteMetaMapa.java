@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -18,7 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -37,7 +37,7 @@ public class FuenteMetaMapa extends Fuente {
     this.urlAPI = urlAPI;
 
     Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .create();
 
@@ -62,7 +62,11 @@ public class FuenteMetaMapa extends Fuente {
 
     evaluarCodigoHTTP(response);
 
-    return response.body() == null ? new HashSet<>() : response.body();
+    if (response.code() == 204 || response.body() == null) {
+      return new HashSet<>();
+    }
+
+    return response.body();
   }
 
   public Set<Hecho> obtenerHechosDeColeccion(Filtro filtro, String identificadorColeccion) {
@@ -80,8 +84,11 @@ public class FuenteMetaMapa extends Fuente {
     }
 
     evaluarCodigoHTTP(response);
+    if (response.code() == 204 || response.body() == null) {
+      return new HashSet<>();
+    }
 
-    return response.body() == null ? new HashSet<>() : response.body();
+    return response.body();
   }
 
   public void enviarSolicitudDeEliminacion(SolicitudDeEliminacion solicitud) {
@@ -98,6 +105,8 @@ public class FuenteMetaMapa extends Fuente {
     }
 
     evaluarCodigoHTTP(response);
+
+
   }
 
   public String getUrlAPI() {
@@ -105,6 +114,10 @@ public class FuenteMetaMapa extends Fuente {
   }
 
   private <T> void  evaluarCodigoHTTP(Response<T> response){
+    if (response.code() == 204) {
+      return; // no hay body, lo manejamos afuera
+    }
+
     if (!response.isSuccessful()) {
       throw new AccesoRecursoFallidoException("Respuesta no exitosa " + this.urlAPI);
     }

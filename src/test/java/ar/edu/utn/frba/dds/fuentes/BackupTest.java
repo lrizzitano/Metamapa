@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.fuentes;
 
 
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
 import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.hechos.Hecho;
@@ -20,9 +21,11 @@ import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,43 +54,40 @@ public class BackupTest {
     HechoRepository repo = mock(HechoRepository.class);
     Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1",
     new Ubicacion(1.0, 2.0, null, null),
-    LocalDate.now(), LocalDate.now(), Origen.DATASET);
+        LocalDate.now().atStartOfDay(), LocalDate.now().atStartOfDay(), Origen.DATASET);
    Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2",
        new Ubicacion(2.0, 4.0, null, null),
-       LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+       LocalDate.now().atStartOfDay().plusDays(1), LocalDate.now().atStartOfDay().minusDays(3),
        Origen.DATASET);
-   when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
-   FuenteDinamica.instance().setHechoRepository(repo);
-    Backup backup = new Backup(tempFile, LocalDateTime.now(), Duration.ZERO);
+
+    when(repo.obtenerHechos(any(NullFiltro.class))).thenReturn(Set.of(hecho1, hecho2));
+    FuenteDinamica.instance().setHechoRepository(repo);
+
+    Backup backup = new Backup(tempFile, LocalDate.now().atStartOfDay(), Duration.ZERO);
     backup.actualizar();
     String json = Files.readString(tempFile);
 
     Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .setPrettyPrinting()
         .create();
 
-    Type setType = new TypeToken<Set<Hecho>>(){}.getType();
+    Type setType = new TypeToken<Set<Hecho>>() {}.getType();
     Set<Hecho> hechos = gson.fromJson(json, setType);
 
-    assertThat(hechos)
-        .usingRecursiveComparison()
-        .isEqualTo(Set.of(hecho1, hecho2));
+    Assertions.assertEquals(Set.of(hecho1, hecho2), hechos);
   }
-
-
-
 
   @Test
   void estoNoEsUnTest() {
     HechoRepository repo = mock(HechoRepository.class);
     Hecho hecho1 = new Hecho(null,"titulo1", "desc1", "cat1",
         new Ubicacion(1.0, 2.0, null, null),
-        LocalDate.now(), LocalDate.now(), Origen.DATASET);
+        LocalDateTime.now(), LocalDateTime.now(), Origen.DATASET);
     Hecho hecho2 = new Hecho(null,"titulo2", "desc2", "cat2",
         new Ubicacion(2.0, 4.0, null, null),
-        LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+        LocalDateTime.now().plusDays(1), LocalDateTime.now().minusDays(3),
         Origen.DATASET);
     when(repo.obtenerTodos()).thenReturn(Set.of(hecho1, hecho2));
     FuenteDinamica.instance().setHechoRepository(repo);

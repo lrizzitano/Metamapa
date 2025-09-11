@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -51,10 +52,10 @@ public class FuenteEstaticaTest{
     ));
     Hecho esperado1 = new Hecho(null,"hecho1", "desc1", "cat1",
         new Ubicacion(1.0, 2.0, null, null),
-        LocalDate.now(), LocalDate.now(), Origen.DATASET);
+        LocalDateTime.now(), LocalDateTime.now(), Origen.DATASET);
     Hecho esperado2 = new Hecho(null,"hecho2", "desc2", "cat2",
         new Ubicacion(2.0, 4.0, null, null),
-        LocalDate.now().plusDays(1), LocalDate.now().minusDays(3),
+        LocalDateTime.now().plusDays(1), LocalDateTime.now().minusDays(3),
         Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
 
@@ -69,8 +70,8 @@ public class FuenteEstaticaTest{
         "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
     ));
     Hecho esperado1 = new Hecho(null, "hecho1", "desc1", "cat1",         new Ubicacion(-34.6037,
-        -58.3816, null, null), LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
-    Set<Hecho> hechos = fuente.obtenerHechos(new FiltroFechaHasta(LocalDate.parse("2024-01-02")));
+        -58.3816, null, null), LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
+    Set<Hecho> hechos = fuente.obtenerHechos(new FiltroFechaHasta(LocalDate.parse("2024-01-02").atStartOfDay()));
 
     assertEquals(hechos, Collections.singleton(esperado1));
   }
@@ -84,7 +85,7 @@ public class FuenteEstaticaTest{
     ));
     Hecho esperado2 = new Hecho(null, "hecho1", "desc2", "cat2",
         new Ubicacion(-34.6037, -58.3816, null, null),
-        LocalDate.now(), LocalDate.parse("2024-01-02"), Origen.DATASET);
+        LocalDateTime.now(), LocalDate.parse("2024-01-02").atStartOfDay(), Origen.DATASET);
     Set<Hecho> hechos = fuente.obtenerHechos(new NullFiltro());
 
     assertEquals(hechos, Collections.singleton(esperado2));

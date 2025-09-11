@@ -1,0 +1,91 @@
+package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
+
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
+import ar.edu.utn.frba.dds.hechos.Provincia;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
+import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
+import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
+import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.*;
+
+public class EstudioDeCategoria implements ObjetoDeEstudio {
+
+  RepoColecciones coleccionesRepository;
+
+  public EstudioDeCategoria(RepoColecciones coleccionesRepository) {
+    this.coleccionesRepository = coleccionesRepository;
+  }
+
+  @Override
+  public List<ResultadoEstadistico> estudiar(LocalDateTime desde) {
+    return this.estructurarInformacion(this.recolectarDatos(desde));
+  }
+
+  private List<ResultadoEstadistico> estructurarInformacion(List<Hecho> informacion) {
+
+    Map<String, ResultadoEstadistico> mapResultados = informacion.stream()
+        .collect(groupingBy(
+            Hecho::categoria, //clasificador, agrupa por esto, en analizar categoria se guarda la misma en el resultado
+            collectingAndThen(
+                toList(),
+                this::analizarHechosDeCategoria
+            )
+        ));
+
+    if (mapResultados.isEmpty()) {
+      throw new NoExisteInformacionException("no se encontraron datos al buscar colecciones o hechos");
+    }
+
+    return new ArrayList<>(mapResultados.values());
+  }
+
+  private List<Hecho> recolectarDatos(LocalDateTime desde) {
+    List<Hecho> informacion = coleccionesRepository.findAll().stream()
+        .map(coleccion -> coleccion.hechos(new FiltroFechaDesde(desde.withHour(0))))
+        .flatMap(Collection::stream)
+        .toList();
+
+    if (informacion.isEmpty()) {
+      throw new NoExisteInformacionException("no se encontraron datos al buscar colecciones o hechos");
+    }
+    return informacion;
+  }
+
+  private ResultadoEstadistico analizarHechosDeCategoria(List<Hecho> hechosCategoria) {
+
+    // setear la categoría
+    String categoria = hechosCategoria.isEmpty() ? null : hechosCategoria.get(0).categoria();
+
+    // total de hechos
+    int totalHechos = hechosCategoria.size();
+
+    // promedio horario en minutos
+    double pico_de_subida = hechosCategoria.stream()
+        .mapToInt(h -> h.fechaCarga().getHour() * 60 + h.fechaCarga().getMinute())
+        .average()
+        .orElse(0);
+
+    // provincia x hechos
+    Map<Provincia, Long> conteoProvincia = hechosCategoria.stream()
+        .collect(groupingBy(Hecho::getProvincia, counting()));
+
+    List<HechosPorProvincia> listaHechosXProvincia = conteoProvincia.entrySet()
+        .stream()
+        .map(entry -> new HechosPorProvincia(entry.getKey(), entry.getValue()))
+        .toList();
+
+    return new ResultadoEstudioCategoria
+        (LocalDateTime.now(), categoria, totalHechos, pico_de_subida, listaHechosXProvincia);
+  }
+}

@@ -16,6 +16,7 @@ import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +34,8 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDateTime.of(2023, 12, 15,6,9),
+      LocalDateTime.of(2023, 11, 30,7,8),
       Origen.DATASET);
 
   private final SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
@@ -83,7 +84,7 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   public void detectarHechoEliminado() {
     Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
         new Ubicacion(-34.6037, -58.3816, null, null),
-        LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+        LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
     repoHechos.agregar(hecho);
 
     SolicitudDeEliminacion solicitud = new SolicitudDeEliminacion(hecho.titulo(), "No me gusto, bajenlon");
@@ -98,7 +99,7 @@ public class SolicitudesDeEliminacionTest implements SimplePersistenceTest {
   public void detectarSolicitudesRechazadas() {
     Hecho hecho = new Hecho(null,"hecho1", "desc1", "cat1",
         new Ubicacion(-34.6037, -58.3816, null, null),
-        LocalDate.now(), LocalDate.parse("2024-01-01"), Origen.DATASET);
+        LocalDateTime.now(), LocalDate.parse("2024-01-01").atStartOfDay(), Origen.DATASET);
 
     repoHechos.agregar(hecho);
 
