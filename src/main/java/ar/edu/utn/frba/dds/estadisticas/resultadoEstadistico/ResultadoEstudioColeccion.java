@@ -2,17 +2,32 @@ package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 
 import ar.edu.utn.frba.dds.hechos.Coleccion;
 
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@Table(name = "EstudioColeccion")
 public class ResultadoEstudioColeccion implements ResultadoEstadistico {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "estudio_id")
+  private Long id;
+  @Column(name = "fecha")
   private LocalDateTime fecha;
+  @ManyToOne()
+  @JoinColumn(name = "coleccion_id")
   private Coleccion coleccion;
+  @Column(name = "total_hechos")
   private Long total_hechos;
+  @ElementCollection(fetch = FetchType.EAGER)
   private List<HechosPorProvincia> hechosXColecciones;
 
+
+  public ResultadoEstudioColeccion() {
+
+  }
   public ResultadoEstudioColeccion(LocalDateTime now,
                                    Coleccion coleccion,
                                    Long total_hechos,

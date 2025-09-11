@@ -1,19 +1,28 @@
 package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
 
-import ar.edu.utn.frba.dds.hechos.Provincia;
-
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+@Entity
+@Table(name = "EstudioCategoria")
 public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
 
-  private final LocalDateTime fecha;
-  private final String categoria;
-  private final int total_hechos;
-  private final LocalTime hora_pico;
-  private final List<HechosPorProvincia> hechosPorProvincia;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "estudio_id")
+  private Long id;
+  @Column(name = "fecha")
+  private LocalDateTime fecha;
+  @Column(name = "categoria")
+  private String categoria;
+  @Column(name = "total_hechos")
+  private int total_hechos;
+  @Column(name = "hora_pico")
+  private LocalTime hora_pico;
+  @ElementCollection(fetch =  FetchType.EAGER)
+  private List<HechosPorProvincia> hechosPorProvincia;
 
   public ResultadoEstudioCategoria(LocalDateTime fecha,
                                    String categoria,
@@ -25,6 +34,9 @@ public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
     this.total_hechos = total_hechos;
     this.hora_pico = LocalTime.of((int) hora_pico_minutos / 60, (int) hora_pico_minutos % 60);
     this.hechosPorProvincia =  hechosPorProvincia;
+  }
+  public ResultadoEstudioCategoria() {
+
   }
 
   public LocalDateTime getFecha() {
