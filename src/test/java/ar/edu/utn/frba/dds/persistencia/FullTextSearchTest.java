@@ -32,8 +32,8 @@ public class FullTextSearchTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDate.of(2023, 12, 15).atStartOfDay(),
+      LocalDate.of(2023, 11, 30).atStartOfDay(),
       Origen.DATASET);
 
   Hecho segundoHecho = new Hecho(
@@ -43,8 +43,8 @@ public class FullTextSearchTest implements SimplePersistenceTest {
       "Desastre natural",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDate.of(2023, 12, 15).atStartOfDay(),
+      LocalDate.of(2023, 11, 30).atStartOfDay(),
       Origen.DATASET);
 
   Hecho tercerHecho = new Hecho(
@@ -54,8 +54,8 @@ public class FullTextSearchTest implements SimplePersistenceTest {
       "Violencia estatal",
       new Ubicacion(-34.6037,
           -58.3816, null, null),
-      LocalDate.of(2023, 12, 15),
-      LocalDate.of(2023, 11, 30),
+      LocalDate.of(2023, 12, 15).atStartOfDay(),
+      LocalDate.of(2023, 11, 30).atStartOfDay(),
       Origen.DATASET);
 
   @Disabled
