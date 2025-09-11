@@ -1,5 +1,11 @@
 package ar.edu.utn.frba.dds.persistencia;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import ar.edu.utn.frba.dds.filtros.Filtro;
+import ar.edu.utn.frba.dds.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.fuentes.Fuente;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
@@ -8,12 +14,15 @@ import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class FullTextSearchTest implements SimplePersistenceTest {
 
@@ -60,7 +69,7 @@ public class FullTextSearchTest implements SimplePersistenceTest {
 
   @Disabled
   @Test
-  void fullTextSearch() {
+  void fullTextSearchMySQL() {
 
     hechosFuenteDinamica.agregar(primerHecho);
     hechosFuenteDinamica.agregar(segundoHecho);
@@ -86,6 +95,22 @@ public class FullTextSearchTest implements SimplePersistenceTest {
 
     entityManager().flush();
     entityManager().getTransaction().commit();
+  }
+
+  @Test
+  public void fullTextSearchMemoria() {
+    Fuente fuente = Mockito.spy(Fuente.class);
+    when(fuente.obtenerHechos(any(Filtro.class))).thenReturn(
+        new HashSet<Hecho>(Arrays.asList(primerHecho, segundoHecho, tercerHecho))
+    );
+
+    Assertions.assertEquals(3,fuente.obtenerHechos(new NullFiltro()).size());
+
+    Set<Hecho> incendios = fuente.obtenerHechos("incendio", new NullFiltro());
+    Set<Hecho> policiales = fuente.obtenerHechos("policial", new NullFiltro());
+
+    Assertions.assertEquals(2, incendios.size());
+    Assertions.assertEquals(1, policiales.size());
   }
 
 }
