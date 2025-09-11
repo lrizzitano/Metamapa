@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
 
+import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.hechos.Provincia;
 import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
@@ -75,22 +76,16 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
         .average()
         .orElse(0);
 
-    // provincia con más hechos
+    // provincia x hechos
     Map<Provincia, Long> conteoProvincia = hechosCategoria.stream()
         .collect(groupingBy(Hecho::getProvincia, counting()));
 
-    Map.Entry<Provincia, Long> maxProvincia = conteoProvincia.entrySet().stream()
-        .max(Map.Entry.comparingByValue())
-        .orElse(null);
-
-    if (maxProvincia == null) {
-      throw new NoExisteInformacionException("");
-    }
-
-    Provincia provincia = maxProvincia.getKey();
-    Long totalHechosProvincia = maxProvincia.getValue();
+    List<HechosPorProvincia> listaHechosXProvincia = conteoProvincia.entrySet()
+        .stream()
+        .map(entry -> new HechosPorProvincia(entry.getKey(), entry.getValue()))
+        .toList();
 
     return new ResultadoEstudioCategoria
-        (LocalDateTime.now(), categoria, totalHechos, pico_de_subida, provincia, totalHechosProvincia);
+        (LocalDateTime.now(), categoria, totalHechos, pico_de_subida, listaHechosXProvincia);
   }
 }

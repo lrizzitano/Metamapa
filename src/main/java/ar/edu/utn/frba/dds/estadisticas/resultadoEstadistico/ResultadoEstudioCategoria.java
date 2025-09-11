@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.hechos.Provincia;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
 
@@ -12,21 +13,18 @@ public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
   private final String categoria;
   private final int total_hechos;
   private final LocalTime hora_pico;
-  private final Provincia provincia_con_mas_reportes;
-  private final Long total_hechos_provincia;
+  private final List<HechosPorProvincia> hechosPorProvincia;
 
   public ResultadoEstudioCategoria(LocalDateTime fecha,
                                    String categoria,
                                    int total_hechos,
                                    double hora_pico_minutos,
-                                   Provincia provincia_con_mas_reportes,
-                                   Long total_hechos_provincia) {
+                                   List<HechosPorProvincia> hechosPorProvincia) {
     this.fecha = fecha;
     this.categoria = categoria;
     this.total_hechos = total_hechos;
     this.hora_pico = LocalTime.of((int) hora_pico_minutos / 60, (int) hora_pico_minutos % 60);
-    this.provincia_con_mas_reportes = provincia_con_mas_reportes;
-    this.total_hechos_provincia = total_hechos_provincia;
+    this.hechosPorProvincia =  hechosPorProvincia;
   }
 
   public LocalDateTime getFecha() {
@@ -45,11 +43,7 @@ public class ResultadoEstudioCategoria implements  ResultadoEstadistico{
     return hora_pico;
   }
 
-  public Provincia getProvincia_con_mas_reportes() {
-    return provincia_con_mas_reportes;
-  }
-
-  public Long getTotal_hechos_provincia() {
-    return total_hechos_provincia;
+  public List<HechosPorProvincia> getHechosPorProvincia() {
+    return hechosPorProvincia;
   }
 }
