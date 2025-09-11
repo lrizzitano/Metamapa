@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.fuentes;
 
+import ar.edu.utn.frba.dds.converters.PathToStringConverter;
 import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
 import ar.edu.utn.frba.dds.filtros.Filtro;
 import ar.edu.utn.frba.dds.hechos.Hecho;
@@ -7,6 +8,8 @@ import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
 import com.opencsv.CSVReaderHeaderAware;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.nio.file.Files;
@@ -31,6 +34,7 @@ public class FuenteEstatica extends Fuente {
   */
   public FuenteEstatica() {}
 
+  @Convert(converter = PathToStringConverter.class)
   @Column(name = "path_estatica" ,nullable = true)
   private Path path;
 
