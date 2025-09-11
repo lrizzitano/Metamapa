@@ -46,7 +46,7 @@ public class FuenteMetaMapaTest {
         .setPrettyPrinting()
         .create();
   }
-  @Disabled
+
   @Test
   public void respuestaExitosaConBodyVacioRetornaSetVacio() {
 
@@ -56,7 +56,7 @@ public class FuenteMetaMapaTest {
 
     Assertions.assertTrue(fuente.obtenerHechos(new NullFiltro()).isEmpty());
   }
-  @Disabled
+
   @Test
   public void respuestaConErrorLanzaExcepcion() {
 
@@ -67,7 +67,7 @@ public class FuenteMetaMapaTest {
     Assertions.assertThrows(AccesoRecursoFallidoException.class, ()
         -> fuente.obtenerHechos(new NullFiltro()));
   }
-  @Disabled
+
   @Test
   public void respuestaExitosaRetornaHechos() {
     Set<Hecho> hechosEsperados = new HashSet<>();
@@ -93,7 +93,7 @@ public class FuenteMetaMapaTest {
         .ignoringCollectionOrder()
         .isEqualTo(fuente.obtenerHechos(new NullFiltro()));
   }
-  @Disabled
+
   @Test
   public void seEnviaElFiltro() {
     Filtro filtro = new FiltroCategoria("hola");
@@ -105,7 +105,7 @@ public class FuenteMetaMapaTest {
     verify(getRequestedFor(urlPathEqualTo("/hechos"))
         .withQueryParam("categoria", equalTo("hola")));
   }
-  @Disabled
+
   @Test
   public void seEnviaCorrectamenteIdColeccion() {
     String idEsperado = "hola";
