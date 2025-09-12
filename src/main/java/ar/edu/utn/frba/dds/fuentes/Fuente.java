@@ -51,7 +51,7 @@ public abstract class Fuente {
 
   public Set<Hecho>  obtenerHechos(String busqueda, Filtro filtro) {
     Set<Hecho> hechosFiltrado = this.obtenerHechos(filtro);
-    return fullTextSearch(busqueda, hechosFiltrado);
+    return this.fullTextSearch(busqueda, hechosFiltrado);
   }
 
   private Set<Hecho> fullTextSearch(String busqueda, Set<Hecho> hechos) {
