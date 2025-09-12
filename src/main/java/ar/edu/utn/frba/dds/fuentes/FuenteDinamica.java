@@ -28,11 +28,11 @@ public class FuenteDinamica extends Fuente {
 
   // inyecto por setter porque es singleton (no puedo inyectar en constructor)
   // -> podria dejar de serlo e inyecto por constructor
-  void setHechoRepository(HechoRepository repository) {
+  public void setHechoRepository(HechoRepository repository) {
     this.repositorioDeHechos = repository;
   }
 
-  void setSolicitudesRepository(SolicitudDeCambioRepository repository) {
+  public void setSolicitudesRepository(SolicitudDeCambioRepository repository) {
     this.repositorioDeSolicitudes = repository;
   }
 

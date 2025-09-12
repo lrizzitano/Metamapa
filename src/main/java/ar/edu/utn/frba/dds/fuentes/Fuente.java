@@ -54,7 +54,7 @@ public abstract class Fuente {
     return this.fullTextSearch(busqueda, hechosFiltrado);
   }
 
-  private Set<Hecho> fullTextSearch(String busqueda, Set<Hecho> hechos) {
+  protected Set<Hecho> fullTextSearch(String busqueda, Set<Hecho> hechos) {
 
     Map<Integer, Hecho> docToHecho = new HashMap<>();
     int documentoId = 0;

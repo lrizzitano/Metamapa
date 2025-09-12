@@ -89,6 +89,10 @@ public class Coleccion{
     return this.streamFiltradaBase(filtro).collect(Collectors.toSet());
   }
 
+  public Set<Hecho> hechos(String busqueda, Filtro filtro) {
+    return this.streamFiltradaBase(busqueda, filtro).collect(Collectors.toSet());
+  }
+
   public Set<Hecho> hechosConsensuados(Filtro filtro) {
     return this.streamFiltradaBase(filtro)
         .filter(criterioConsenso::esConsensuado)
@@ -97,9 +101,21 @@ public class Coleccion{
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
     Set<String> eliminados = solicitudes.hechosEliminados();
+
     FiltroCompuesto filtroCompuesto =
         new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+
     return fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
+        .filter(h -> !eliminados.contains(h.titulo()));
+  }
+
+  private Stream<Hecho> streamFiltradaBase(String busqueda, Filtro filtro) {
+    Set<String> eliminados = solicitudes.hechosEliminados();
+
+    FiltroCompuesto filtroCompuesto =
+        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
+
+    return fuente.obtenerHechos(busqueda, filtroCompuesto.and(filtro)).stream()
         .filter(h -> !eliminados.contains(h.titulo()));
   }
 }
