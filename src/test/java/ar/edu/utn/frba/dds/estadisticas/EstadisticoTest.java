@@ -38,10 +38,9 @@ import java.util.List;
 
 public class EstadisticoTest implements SimplePersistenceTest {
 
-
-  RepoColecciones repoColecciones;
-  FuentesRepositoryJPA repoFuentes;
-  FuenteDinamica fuenteDinamica;
+  FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
+  RepoColecciones repoColecciones = new RepoColecciones();
+  FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
 
   HechosPorProvincia hpc1;
   HechosPorProvincia hpc2;
@@ -59,14 +58,9 @@ public class EstadisticoTest implements SimplePersistenceTest {
 
   ResultadoEstudioCategoria estudioCategoria;
 
-
-
   @BeforeEach
    void setUp() {
 
-     repoColecciones = new RepoColecciones();
-     repoFuentes = new FuentesRepositoryJPA();
-    fuenteDinamica = FuenteDinamica.instance();
 
     hpc1 = new HechosPorProvincia(Provincia.LA_PAMPA,(long)3);
      hpc2 = new HechosPorProvincia(Provincia.LA_RIOJA,(long) 2);
@@ -74,43 +68,24 @@ public class EstadisticoTest implements SimplePersistenceTest {
     hechosXprovincia = List.of(hpc1, hpc2);
     consensoNull = new ConsensoNull();
      filtroNulo = new NullFiltro();
+  }
+
+  @Test
+  public void provinciaConMasHechosDeUnaColleccion() {
+
+    estadistico = new Estadistico();
+
+    repoFuentes.agregarFuente(fuenteDinamica);
+
 
     coleccionAux = new Coleccion("prueb","Una descripcion",filtroNulo,
         fuenteDinamica,consensoNull,new SolicitudesDeEliminacionJPA());
+    repoColecciones.save(coleccionAux);
+
     fecha = LocalDateTime.now();
+
     estudioColeccion =
         new ResultadoEstudioColeccion(fecha,coleccionAux,(long)5,hechosXprovincia);
-    estudioCategoria =
-        new ResultadoEstudioCategoria(fecha,"Incendio",5, 12 ,hechosXprovincia);
-    estadistico = new Estadistico();
-
-    if(fuenteDinamica.getId() == null) {
-      repoFuentes.agregarFuente(fuenteDinamica);
-    } else {
-      entityManager().merge(fuenteDinamica);
-    }
-
-    if (coleccionAux.getId() == null) {
-      repoColecciones.save(coleccionAux);
-    } else {
-      entityManager().merge(coleccionAux);
-    }
-
-
-
-  }
-
-  @AfterEach
-  void afterEach(){
-    repoColecciones.delete(coleccionAux);
-    repoFuentes.eliminarFuente(fuenteDinamica);
-    //entityManager().createQuery("delete from ResultadoEstudioCategoria ").executeUpdate();
-    //entityManager().createQuery("delete from ResultadoEstudioColeccion ").executeUpdate();
-  }
-
-  @Disabled
-  @Test
-  public void provinciaConMasHechosDeUnaColleccion() {
 
     entityManager().persist(estudioColeccion);
 
@@ -120,10 +95,15 @@ public class EstadisticoTest implements SimplePersistenceTest {
     System.out.println(provincia);
   }
 
-
-  @Disabled
   @Test
   public void categoriaConMasHechosReportados() {
+
+    fecha = LocalDateTime.now();
+
+    estudioCategoria =
+        new ResultadoEstudioCategoria(fecha,"Incendio",5, 12 ,hechosXprovincia);
+
+    estadistico = new Estadistico();
 
     entityManager().persist(estudioCategoria);
 
@@ -135,26 +115,39 @@ public class EstadisticoTest implements SimplePersistenceTest {
 
   }
 
-    @Disabled
-    @Test
-    public void horaPicoDeReporteDeUnaCategoria(){
-      entityManager().persist(estudioCategoria);
+  @Test
+  public void horaPicoDeReporteDeUnaCategoria(){
 
-      LocalTime horaPico = estadistico.horaPicoDeReporteDeUnaCategoria("Incendio",fecha);
+    fecha = LocalDateTime.now();
 
-      Assertions.assertEquals("00:12",horaPico.toString());
-    }
+    estudioCategoria =
+        new ResultadoEstudioCategoria(fecha,"Incendio",5, 12 ,hechosXprovincia);
 
-    @Disabled
-    @Test
-    public void provinciaConMasHechosReportadosDeUnaCategoria(){
+    estadistico = new Estadistico();
 
-      entityManager().persist(estudioCategoria);
+    entityManager().persist(estudioCategoria);
 
-      String provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio",fecha);
+    LocalTime horaPico = estadistico.horaPicoDeReporteDeUnaCategoria("Incendio",fecha);
 
-      Assertions.assertEquals("LA_PAMPA",provincia);
+    Assertions.assertEquals("00:12",horaPico.toString());
+  }
 
-    }
+  @Test
+  public void provinciaConMasHechosReportadosDeUnaCategoria(){
+
+    fecha = LocalDateTime.now();
+
+    estudioCategoria =
+        new ResultadoEstudioCategoria(fecha,"Incendio",5, 12 ,hechosXprovincia);
+
+    estadistico = new Estadistico();
+
+    entityManager().persist(estudioCategoria);
+
+    String provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio",fecha);
+
+    Assertions.assertEquals("LA_PAMPA",provincia);
+
+  }
 
 }
