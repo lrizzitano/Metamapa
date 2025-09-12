@@ -99,8 +99,7 @@ class Hecho {
     +titulo
     +descripcion
     +categoria
-    +latitud
-    +longitud
+    +ubicacion
     +fechaAcontecimiento
     +fechaCarga
     +origen
@@ -197,6 +196,7 @@ interface PublicadorDeResultados {
 }
 
 interface ResultadoEstadistico {
+  Map<String, String> infoExportable();
 }
 
 class Estadistico {
