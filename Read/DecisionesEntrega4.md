@@ -83,3 +83,5 @@ Para manejar estos repositorios se definieron interfazes que los mismos deben cu
 
 
 ## Full text search
+
+Para esta entrega implementamos la funcinalidad de buscar hechos por similitud del título y descripción respecto a un término de búsqueda, tokenizando el texto presente en el título y descripción de cada hecho e indexando los hechos presentes en el sistema por estos tokens para poder hacer una búsqueda de hechos a partir de una palabra (Full-Text Search). Para esto, implementamos dos estrategias diferentes según el origen 
