@@ -5,75 +5,43 @@ skinparam componentStyle uml1
 left to right direction
 
 node "Agregador" {
-
-    database hechos
-
-    interface "Aceptar/RechazarSolicitudDeEliminacion(solicitud)" as interfazSolicitudesEliminacion
-    interface "ObtenerHechos(filtro)"
-
-    interfazSolicitudesEliminacion -- [Modelo]
-
-    "ObtenerHechos(filtro)" -- [Modelo]
-
-    [Modelo] -- hechos
+    [Modelo] as modeloAgregador
 }
 
 node "FuenteEstatica" {
 
-    interface "ObtenerHechos(filtro)" as InterfazFuenteEstatica
-
-    database Archivo
+    file Archivo
 
     [Procesador] as procesadorFuenteEstatica
 
-    InterfazFuenteEstatica -- procesadorFuenteEstatica
     procesadorFuenteEstatica  -- Archivo
 
-    [Modelo] -- InterfazFuenteEstatica
 }
 
 node "FuenteProxy" {
-    interface "ObtenerHechos(filtro)" as InterfazFuenteProxy
 
     [Procesador] as procesadorFuenteProxy
-
-    InterfazFuenteProxy -- procesadorFuenteProxy
-    [Modelo] -- InterfazFuenteProxy
 
 }
 
 node "FuenteDinamica" {
-    interface "Aceptar/RechazarSolicitudDeCambio(solicitud)" as interfazSolicitudesCambio
-    interface "Agregar/EliminarHecho(hecho)" as interfazHechos
-    interface "ObtenerHechos(filtro)" as interfazFuenteDinamica
 
-    database Hechos
-    database SolicitudesDeCambio
+    database "Hechos y Solicitudes" as DBFuenteDinamica
 
     [Procesador] as procesadorFuenteDinamica
 
-    interfazFuenteDinamica -- procesadorFuenteDinamica
-    interfazSolicitudesCambio -- procesadorFuenteDinamica
-    interfazHechos -- procesadorFuenteDinamica
-    procesadorFuenteDinamica -- Hechos
-    procesadorFuenteDinamica -- SolicitudesDeCambio
-
-    [Modelo] -- interfazFuenteDinamica
+    procesadorFuenteDinamica -- DBFuenteDinamica
 }
-
-
 
  cloud "Servicio Externo / \n Instancia MetaMapa" as conexion
  procesadorFuenteProxy -- conexion
 
- actor "Usuario" as user
- user -- "ObtenerHechos(filtro)"
+ cloud "API google" as api
+ modeloAgregador -u- api
 
- Actor "Administrador" as admin
- user <|- admin
- admin -- interfazSolicitudesEliminacion
- admin -- interfazSolicitudesCambio
- admin -- interfazHechos
+ modeloAgregador --"HTTP              " procesadorFuenteProxy
+ modeloAgregador --"HTTP     " procesadorFuenteDinamica
+ modeloAgregador --"HTTP              " procesadorFuenteEstatica
 
 
 @enduml
