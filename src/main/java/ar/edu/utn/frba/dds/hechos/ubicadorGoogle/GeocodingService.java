@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 public interface GeocodingService {
   @GET("geocode/json")
   Call<GeocodingResponse> inverseGeocode(
-      @Query("latlng") String latlng,
+      @Query(value = "latlng", encoded = true) String latlng,
       @Query("key") String apiKey,
       @Query("result_type") String resultType,
       @Query("language") String language

@@ -6,11 +6,21 @@ import ar.edu.utn.frba.dds.hechos.ServicioUbicador;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import java.text.Normalizer;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class UbicadorGoogle implements ServicioUbicador {
   Dotenv dotenv = Dotenv.load();
   String apiKey = dotenv.get("GOOGLE_API_KEY"); // importante tener el .env con la key en el root del proyecto
+  private static final Map<String, Provincia> mapa = new HashMap<>();
+
+  static {
+    for (Provincia p : Provincia.values()) {
+      mapa.put(p.name(), p);
+    }
+  }
 
   @Override
   public Provincia getProvincia(Double lat, Double lng) {
@@ -24,8 +34,21 @@ public class UbicadorGoogle implements ServicioUbicador {
 
       if (response.isSuccessful() && response.body() != null) {
         GeocodingResponse geo = response.body();
-        System.out.println("Status: " + geo.status);
-        System.out.println("Provincia: " + geo.results.get(0).formatted_address);
+        String provincia = geo.results.get(0).formatted_address;
+
+        // Normalizar: quitar tildes, pasar a mayúsculas
+        String normalized = Normalizer.normalize(provincia, Normalizer.Form.NFD)
+            .replaceAll("\\p{M}", "")      // quita acentos
+            .toUpperCase()
+            .replace("PROVINCIA DE ", "")
+            .replace("CDAD. AUTONOMA DE BUENOS AIRES", "CABA")
+            .replace(", ARGENTINA", "")
+            .trim()
+            .replace(" ", "_"); // match con formato del enum
+
+        System.out.println(normalized);
+        return mapa.getOrDefault(normalized, Provincia.PROVINCIA_DESCONOCIDA);
+
       } else {
         assert response.errorBody() != null;
         System.out.println("Error: " + response.errorBody().string());

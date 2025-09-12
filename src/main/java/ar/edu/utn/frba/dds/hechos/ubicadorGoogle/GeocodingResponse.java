@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.hechos.ubicadorGoogle;
 
 import java.util.List;
 
-class GeocodingResponse {
+public class GeocodingResponse {
   List<Result> results;
   String status;
 }
