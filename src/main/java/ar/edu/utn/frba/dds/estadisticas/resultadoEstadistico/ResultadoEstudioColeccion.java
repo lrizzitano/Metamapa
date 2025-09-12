@@ -61,7 +61,7 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
 
     // campos simples
     datos.put("id", id != null ? id.toString() : "");
-    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm")) : "");
+    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : "");
     datos.put("coleccion_id", coleccion != null && coleccion.getId() != null ? coleccion.getId().toString() : "");
     datos.put("coleccion_nombre", coleccion != null && coleccion.getTitulo() != null ? coleccion.getTitulo() : "");
     datos.put("total_hechos", total_hechos != null ? total_hechos.toString() : "0");

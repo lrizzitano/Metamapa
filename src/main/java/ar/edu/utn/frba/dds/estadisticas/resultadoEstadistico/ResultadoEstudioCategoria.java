@@ -70,7 +70,7 @@ public class ResultadoEstudioCategoria implements ResultadoEstadistico {
 
     // campos simples
     datos.put("id", id != null ? id.toString() : "");
-    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm")) : "");
+    datos.put("fecha", fecha != null ? fecha.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : "");
     datos.put("categoria", categoria != null ? categoria : "");
     datos.put("total_hechos", String.valueOf(total_hechos));
     datos.put("hora_pico", hora_pico != null ? hora_pico.toString() : "");
