@@ -27,6 +27,7 @@ entity Hecho {
     categoria
     latitud
     longitud
+    provincia
     fechaAcontecimiento
     fechaCarga
     origen <<enum>>
@@ -97,6 +98,25 @@ entity SolicitudDeCambio {
     usuario_id
     administrador_id
 }
+
+entity RechazoSolicitud {
+    solicitud_id
+    --
+    titulo
+    cantidad_de_veces
+    cantidad_de_spam
+}
+
+
+entity RechazoCambio {
+    id
+    --
+    cantidad
+    hecho_id (FK)
+}
+
+RechazoCambio |o--||Hecho
+Hecho }o--o| Usuario
 
 SolicitudDeEliminación }o-left-|| Hecho
 SolicitudDeEliminación }o--|| Usuario
