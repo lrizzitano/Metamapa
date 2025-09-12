@@ -1,9 +1,8 @@
 package ar.edu.utn.frba.dds.estadisticas;
 
 import ar.edu.utn.frba.dds.hechos.Coleccion;
+import ar.edu.utn.frba.dds.hechos.Provincia;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -11,70 +10,70 @@ public class Estadistico implements WithSimplePersistenceUnit {
 
   public Estadistico() {}
 
-  public String provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime fecha) {
-    return (String)  entityManager().createNativeQuery(
+  public Provincia provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime fecha) {
+    return entityManager().createQuery(
             "select r.provincia " +
-                "from EstudioColeccion e " +
-                "join ResultadoEstudioColeccion_hechosPorProvincia r " +
-                "  ON r.resultadoestudiocoleccion_estudio_id = e.estudio_id " +
-                "where e.fecha = :fechaP and e.coleccion_id = :coleccionID " +
+                "from ResultadoEstudioColeccion e " +
+                "join e.hechosPorProvincia r " +
+                "where e.fecha = :fechaP and e.coleccion = :coleccion " +
                 "group by r.provincia " +
-                "order by SUM(r.hechos_de_provincia) desc limit 1"
+                "order by sum(r.cant_hechos) desc",
+            Provincia.class
         )
         .setParameter("fechaP", fecha)
-        .setParameter("coleccionID", coleccion.getId())
+        .setParameter("coleccion", coleccion)
+        .setMaxResults(1)
         .getSingleResult();
   }
 
   public String categoriaConMasHechosReportados(LocalDateTime fecha) {
-    return (String) entityManager().createNativeQuery(
-            "select categoria from EstudioCategoria " +
-                "where fecha = :fecha " +
-                "group by categoria " +
-                "order by SUM(total_hechos) desc"
+    return entityManager().createQuery(
+            "select e.categoria " +
+                "from ResultadoEstudioCategoria e " +
+                "where e.fecha = :fecha " +
+                "group by e.categoria " +
+                "order by sum(e.total_hechos) desc",
+            String.class
         )
         .setParameter("fecha", fecha)
         .setMaxResults(1)
         .getSingleResult();
   }
 
-  public String provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime fecha) {
-    return (String) entityManager().createNativeQuery(
-            "select r.provincia " +
-                "from EstudioCategoria e " +
-                "join ResultadoEstudioCategoria_hechosPorProvincia r " +
-                "  ON r.resultadoestudiocategoria_estudio_id = e.estudio_id " +
+  public Provincia provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime fecha) {
+    return entityManager().createQuery(
+            "select h.provincia " +
+                "from ResultadoEstudioCategoria e " +
+                "join e.hechosPorProvincia h " +
                 "where e.fecha = :fecha and e.categoria = :categoria " +
-                "group by r.provincia,e.categoria " +
-                "order by SUM(r.hechos_de_provincia) desc limit 1"
+                "group by h.provincia " +
+                "order by sum(h.cant_hechos) desc",
+            Provincia.class
         )
         .setParameter("fecha", fecha)
         .setParameter("categoria", categoria)
+        .setMaxResults(1)
         .getSingleResult();
   }
 
   public LocalTime horaPicoDeReporteDeUnaCategoria(String categoria, LocalDateTime fecha) {
-    Object result = entityManager().createNativeQuery(
-            "select hora_pico from EstudioCategoria " +
-                "where fecha = :fecha and categoria = :categoria"
+    return entityManager().createQuery(
+            "select r.hora_pico " +
+                "from ResultadoEstudioCategoria r " +
+                "where r.fecha = :fecha and r.categoria = :categoria",
+            LocalTime.class
         )
         .setParameter("fecha", fecha)
         .setParameter("categoria", categoria)
         .getSingleResult();
-
-    if (result instanceof java.sql.Time) {
-      return ((java.sql.Time) result).toLocalTime();
-    }
-    throw new IllegalStateException("El campo hora_pico no es de tipo TIME");
   }
 
-  // TODO revisar que quede integrado con lo de los chicos
-  public int cantidadDeSpamEnSolicitudesDeEliminacion(LocalDateTime fecha) {
-    return (int) entityManager().createNativeQuery(
-            "select cant_spam from RechazosDeEliminacion " +
-                "where fecha = :fecha"
+  public long cantidadDeSpamEnSolicitudesDeEliminacion() {
+    return entityManager().createQuery(
+            "select sum(r.cantidadSpam)" +
+                "from RechazosDeEliminacion r ",
+        Long.class
         )
-        .setParameter("fecha", fecha)
         .getSingleResult();
   }
 }
