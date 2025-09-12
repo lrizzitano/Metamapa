@@ -45,7 +45,7 @@ public class Estadistico implements WithSimplePersistenceUnit {
                 "join ResultadoEstudioCategoria_hechosPorProvincia r " +
                 "  ON r.resultadoestudiocategoria_estudio_id = e.estudio_id " +
                 "where e.fecha = :fecha and e.categoria = :categoria " +
-                "group by e.categoria " +
+                "group by r.provincia,e.categoria " +
                 "order by SUM(r.hechos_de_provincia) desc limit 1"
         )
         .setParameter("fecha", fecha)
