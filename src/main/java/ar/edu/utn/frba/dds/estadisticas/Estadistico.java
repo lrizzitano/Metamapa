@@ -68,11 +68,11 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .getSingleResult();
   }
 
-  // TODO revisar que quede integrado con lo de los chicos
-  public int cantidadDeSpamEnSolicitudesDeEliminacion(LocalDateTime fecha) {
-    return (int) entityManager().createNativeQuery(
-            "select cant_spam from RechazosDeEliminacion " +
-                "where fecha = :fecha"
+  public long cantidadDeSpamEnSolicitudesDeEliminacion() {
+    return entityManager().createQuery(
+            "select sum(r.cantidadSpam)" +
+                "from RechazosDeEliminacion r ",
+        Long.class
         )
         .getSingleResult();
   }
