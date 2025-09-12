@@ -95,7 +95,7 @@ public class PublicadorDeResultadosTEST {
   private static Set<Hecho> crearListaHechos() {
 
     Ubicacion laPampa = new Ubicacion(12.2,12.2, Provincia.LA_PAMPA,null);
-    Ubicacion burzaco = new Ubicacion(12.2, 12.2, Provincia.PROV_BUENOS_AIRES,null);
+    Ubicacion burzaco = new Ubicacion(12.2, 12.2, Provincia.BUENOS_AIRES,null);
 
     Hecho hecho1 = new Hecho(
         null,

@@ -69,7 +69,7 @@ public class EstudioDeColeccionTest {
         .sum());
 
     Assertions.assertEquals(2, total.stream()
-        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.PROV_BUENOS_AIRES))
+        .filter(estadistica -> estadistica.getProvincia().equals(Provincia.BUENOS_AIRES))
         .mapToLong(HechosPorProvincia::getCantHechos)
         .sum());
   }
@@ -98,7 +98,7 @@ public class EstudioDeColeccionTest {
   private static Set<Hecho> crearListaHechos() {
 
     Ubicacion laPampa = new Ubicacion(12.2,12.2, Provincia.LA_PAMPA,null);
-    Ubicacion burzaco = new Ubicacion(12.2, 12.2, Provincia.PROV_BUENOS_AIRES,null);
+    Ubicacion burzaco = new Ubicacion(12.2, 12.2, Provincia.BUENOS_AIRES,null);
 
     Hecho hecho1 = new Hecho(
         null,

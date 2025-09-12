@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds.hechos;
 public enum Provincia {
   PROVINCIA_DESCONOCIDA,
   CABA,
-  PROV_BUENOS_AIRES,
+  BUENOS_AIRES,
   ENTRE_RIOS,
   SANTA_FE,
   CORRIENTES,
