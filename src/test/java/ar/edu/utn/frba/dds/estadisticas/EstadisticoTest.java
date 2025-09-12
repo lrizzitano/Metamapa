@@ -12,7 +12,9 @@ import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion;
 import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -76,10 +78,11 @@ public class EstadisticoTest implements SimplePersistenceTest {
     repoColecciones.save(coleccionAux);
 
     entityManager().persist(estudioColeccion);
+    entityManager().flush();
 
-    String provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux, fecha);
+    Provincia provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux, fecha);
 
-    Assertions.assertEquals("LA_PAMPA", provincia);
+    Assertions.assertEquals(Provincia.LA_PAMPA, provincia);
     System.out.println(provincia);
   }
 
@@ -87,6 +90,7 @@ public class EstadisticoTest implements SimplePersistenceTest {
   public void categoriaConMasHechosReportados() {
 
     entityManager().persist(estudioCategoria);
+    entityManager().flush();
 
     String categoria = estadistico.categoriaConMasHechosReportados(fecha);
 
@@ -100,6 +104,7 @@ public class EstadisticoTest implements SimplePersistenceTest {
   public void horaPicoDeReporteDeUnaCategoria() {
 
     entityManager().persist(estudioCategoria);
+    entityManager().flush();
 
     LocalTime horaPico = estadistico.horaPicoDeReporteDeUnaCategoria("Incendio", fecha);
 
@@ -110,11 +115,21 @@ public class EstadisticoTest implements SimplePersistenceTest {
   public void provinciaConMasHechosReportadosDeUnaCategoria() {
 
     entityManager().persist(estudioCategoria);
+    entityManager().flush();
 
-    String provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio", fecha);
+    Provincia provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio", fecha);
 
-    Assertions.assertEquals("LA_PAMPA", provincia);
+    Assertions.assertEquals(Provincia.LA_PAMPA, provincia);
 
+  }
+
+  @Test
+  public void cantidadSpam() {
+    entityManager().persist(new RechazosDeEliminacion("re interesante", 2, 1));
+    entityManager().persist(new RechazosDeEliminacion("aún más interesante", 5, 2));
+    entityManager().flush();
+
+    Assertions.assertEquals(3, estadistico.cantidadDeSpamEnSolicitudesDeEliminacion());
   }
 
 }
