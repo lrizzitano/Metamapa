@@ -79,8 +79,8 @@ Se sumaron a esta entrega la existencia de los repositorios de Colecciones y de 
 Para manejar estos repositorios se definieron interfazes que los mismos deben cumplir. Para quellos repositorios que solo realizaban operaciones CRUDE, definimos un Repositorio generico
 
 
-## COmponente estadistico
-
+## Componente estadistico
+La generacion de estadisticas se hace mediante un componente calendarizable llamado RecolectorDeInformacion. Este componente tiene dos listas polimorficas: una de de objetos de estudio y otra de publicadores de resultados. Los objetos de estudio son objetos capaces de generar estadisticas sobre algun eje particular; en principio, solicitudes, colecciones y categorias. Estos objetos de estudio devuelven una lista de objetos de tipo Resultado Estadistico, que saben como exportarse su informacion en formato Map<String, String> y que pueden ser persistidos. Esto permite exportarlo a una base de datos o a un archivo, ya sea tipo CSV o JSON. Esta exportacion se realiza a traves de los componentes de tipo PublicadorDeResultados, que son polimorficos y saben exportar ResultadosEstadisticos. Para hacer uso de esta informacion se cuenta con un componente Estadistico que usa la informacion persistida en base de datos para responder algunas preguntas interesantes.
 
 ## Full text search
 
