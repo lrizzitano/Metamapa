@@ -14,6 +14,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 
 @Entity
 @Table(name = "Filtro")
@@ -29,6 +31,9 @@ public abstract class Filtro {
   abstract public Predicate<Hecho> getAsPredicate();
 
   abstract public Map<String, String> toQueryParam();
+
+  abstract public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root,
+                                                                      CriteriaBuilder cb);
 
 }
 

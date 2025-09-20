@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +23,13 @@ public class FiltroCompuestoTest {
     public Map<String,String> toQueryParam() {
       return new HashMap<>();
     }
+
+    @Override
+    public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
+      return null;
+    }
+
+
   }
 
   @Test

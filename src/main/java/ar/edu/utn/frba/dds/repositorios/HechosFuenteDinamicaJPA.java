@@ -8,6 +8,9 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersistenceUnit {
 
@@ -26,9 +29,12 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
-    Set<Hecho> hechos = new HashSet<>(entityManager().createQuery("FROM Hecho", Hecho.class).getResultList());
+    CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+    CriteriaQuery<Hecho> query = cb.createQuery(Hecho.class);
+    Root<Hecho> root = query.from(Hecho.class);
+    query.select(root).where(filtro.toJpaPredicate(root, cb));
 
-    return hechos.stream().filter(filtro.getAsPredicate()).collect(Collectors.toSet());
+    return new HashSet<>(entityManager().createQuery(query).getResultList());
   }
 
   @Override

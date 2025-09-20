@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 
 @Entity
 @DiscriminatorValue("compuesto")
@@ -40,5 +42,14 @@ public class FiltroCompuesto extends Filtro {
     Map<String, String> query = new HashMap<>();
     filtros.forEach(f -> query.putAll(f.toQueryParam()));
     return query;
+  }
+
+  @Override
+  public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
+    return cb.and(
+        filtros.stream()
+            .map(f -> f.toJpaPredicate(root, cb))
+            .toArray(javax.persistence.criteria.Predicate[]::new)
+    );
   }
 }

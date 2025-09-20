@@ -7,6 +7,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
+
 @Entity
 @DiscriminatorValue("categoria")
 public class FiltroCategoria extends Filtro {
@@ -27,5 +30,10 @@ public class FiltroCategoria extends Filtro {
   @Override
   public Map<String, String> toQueryParam() {
     return Map.of("categoria", categoria);
+  }
+
+  @Override
+  public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
+    return cb.equal(root.get("categoria"), categoria);
   }
 }

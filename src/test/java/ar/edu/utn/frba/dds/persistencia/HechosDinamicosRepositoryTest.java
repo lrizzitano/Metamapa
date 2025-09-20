@@ -1,6 +1,9 @@
 package ar.edu.utn.frba.dds.persistencia;
 
 import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
+import ar.edu.utn.frba.dds.filtros.FiltroCategoria;
+import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
+import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.hechos.Hecho;
 import ar.edu.utn.frba.dds.hechos.Origen;
 import ar.edu.utn.frba.dds.hechos.Ubicacion;
@@ -8,6 +11,7 @@ import ar.edu.utn.frba.dds.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import static org.apache.commons.lang3.BooleanUtils.forEach;
 
 public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
@@ -47,7 +53,7 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
       new Ubicacion(-34.6037,
           -58.3816, null, null),
       LocalDateTime.of(2023, 12, 15,11,11),
-      LocalDateTime.of(2023, 11, 30,11,11),
+      LocalDateTime.of(2022, 11, 30,11,11),
       Origen.DATASET);
 
   Hecho tercerHecho = new Hecho(
@@ -133,6 +139,32 @@ public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
     hechosFuenteDinamica.agregar(primerHecho);
     hechosFuenteDinamica.marcarComoRevisado(primerHecho);
     Assertions.assertFalse(hechosFuenteDinamica.obtenerNoRevisados().contains(primerHecho));
+  }
+
+  @Test
+  void filtraEnSql() {
+    hechosFuenteDinamica.agregar(primerHecho);
+    hechosFuenteDinamica.agregar(segundoHecho);
+    hechosFuenteDinamica.agregar(tercerHecho);
+
+    var hechos = hechosFuenteDinamica.obtenerHechos(new FiltroCategoria("Desastre natural"));
+
+    Assertions.assertEquals(Set.of(primerHecho, segundoHecho), hechos);
+  }
+
+  @Test
+  void filtraCompuestoEnSql() {
+    hechosFuenteDinamica.agregar(primerHecho);
+    hechosFuenteDinamica.agregar(segundoHecho);
+    hechosFuenteDinamica.agregar(tercerHecho);
+
+    var hechos = hechosFuenteDinamica.obtenerHechos(
+        new FiltroCompuesto(List.of(
+            new FiltroCategoria("Desastre natural"),
+            new FiltroFechaDesde(LocalDateTime.of(2023,10,1,0,0))))
+    );
+
+    Assertions.assertEquals(Set.of(primerHecho), hechos);
   }
 
 }
