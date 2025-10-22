@@ -1,7 +1,8 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.Logger;
-import ar.edu.utn.frba.dds.Routes;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
+import ar.edu.utn.frba.dds.server.configuracion.HandlebarsRender;
+import ar.edu.utn.frba.dds.server.configuracion.Routes;
 import io.javalin.Javalin;
 
 public class Server {
@@ -37,7 +38,7 @@ public class Server {
 
       /* juanma tira tu magia de desarrollo */
       // primero definir el handler de errores por seguridad
-      // ErrorHandler.registrarErroresGlobales(app,logger /* con loggear error */)
+      // ExceptionHandler.definirManejoDeException(app,logger /* con loggear error */)
 
       Routes.routearApp(app);
 

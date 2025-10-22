@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.server.configuracion;
 import io.javalin.Javalin;
 
 public class Routes {
