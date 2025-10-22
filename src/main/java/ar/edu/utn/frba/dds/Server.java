@@ -10,28 +10,29 @@ public class Server {
 
     try {
       Javalin app = Javalin.create(config -> {
+
+        config.events.serverStarting(() -> {
+          logger.info("Iniciando Servidor");
+        });
+        config.events.serverStarted(() -> {
+          logger.info("Servidor Iniciado");
+        });
+        config.events.serverStopping(() -> {
+          logger.info("Deteniendo Servidor");
+        });
+        config.events.serverStopped(() -> {
+          logger.info("Servidor Detenido");
+        });
+
         config.requestLogger.http(logger::loggearRequest);
         config.router.ignoreTrailingSlashes = true; // /ruta = /ruta/
         config.router.treatMultipleSlashesAsSingleSlash = true; // ruta//x = ruta/x
         config.router.caseInsensitiveRoutes = true; // /ruta = /RUTA
       });
 
-      app.events(event -> {
-        event.serverStarting(() -> {
-          logger.info("Iniciando Servidor");
-        });
-        event.serverStarted(() -> {
-          logger.info("Servidor Iniciado");
-        });
-        event.serverStopping(() -> {
-          logger.info("Deteniendo Servidor");
-        });
-        event.serverStopped(() -> {
-          logger.info("Servidor Detenido");
-        });
-      });
 
       /* juanma tira tu magia de desarrollo */
+      // primero definir el handler de errores por seguridad
       // ErrorHandler.registrarErroresGlobales(app,logger /* con loggear error */)
 
       Routes.routearApp(app);
