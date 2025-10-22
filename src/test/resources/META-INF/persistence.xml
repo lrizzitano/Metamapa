@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="simple-persistence-unit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.Consenso</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsenso</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsensoAbsoluto</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMayoriaSimple</class>
+        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMultiplesMenciones</class>
+        <class>ar.edu.utn.frba.dds.hechos.Coleccion</class>
+        <class>ar.edu.utn.frba.dds.usuarios.Usuario</class>
+        <class>ar.edu.utn.frba.dds.usuarios.Administrador</class>
+        <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion</class>
+        <class>ar.edu.utn.frba.dds.hechos.Hecho</class>
+        <class>ar.edu.utn.frba.dds.filtros.Filtro</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroCategoria</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroCompuesto</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaDesde</class>
+        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaHasta</class>
+        <class>ar.edu.utn.frba.dds.filtros.NullFiltro</class>
+        <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion</class>
+        <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeCambio</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria</class>
+        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia</class>
+
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="use_sql_comments" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
