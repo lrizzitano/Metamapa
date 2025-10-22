@@ -1,12 +1,14 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.server;
 
+import ar.edu.utn.frba.dds.Logger;
+import ar.edu.utn.frba.dds.Routes;
 import io.javalin.Javalin;
 
 public class Server {
 
   public static void main(String[] args) {
 
-    Logger logger = new Logger();
+     Logger logger = new Logger();
 
     try {
       Javalin app = Javalin.create(config -> {
@@ -23,6 +25,8 @@ public class Server {
         config.events.serverStopped(() -> {
           logger.info("Servidor Detenido");
         });
+
+        config.fileRenderer(HandlebarsRender.INSTANCE);
 
         config.requestLogger.http(logger::loggearRequest);
         config.router.ignoreTrailingSlashes = true; // /ruta = /ruta/
