@@ -1,9 +1,10 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import ar.edu.utn.frba.dds.server.configuracion.HandlebarsRender;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import ar.edu.utn.frba.dds.server.configuracion.Routes;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
 
 public class Server {
 
@@ -27,7 +28,14 @@ public class Server {
           logger.info("Servidor Detenido");
         });
 
-        config.fileRenderer(HandlebarsRender.INSTANCE);
+        config.fileRenderer(new HandlebarsRender());
+        config.staticFiles.add(staticConfig -> {
+          staticConfig.hostedPath = "/";
+          staticConfig.directory = "src/main/resources"; // adjust path as needed
+          staticConfig.location = Location.EXTERNAL;
+        });
+        // para dev, en prod usar:
+        //config.staticFiles.add("/", Location.CLASSPATH);
 
         config.requestLogger.http(logger::loggearRequest);
         config.router.ignoreTrailingSlashes = true; // /ruta = /ruta/
