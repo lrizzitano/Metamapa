@@ -1,4 +1,4 @@
-<form id="signinModal" method="POST" action="/login">
+<form id="signin" method="POST" action="/login">
 
     <label for="usuario">Usuario</label>
     <input type="text" name="usuario" id="usuario" placeholder="PabloTheKernelGOAT">
@@ -6,7 +6,7 @@
     <label for="password">Contraseña</label>
     <input type="password" name="password" id="password" placeholder="vedia1234">
 
-   <button onclick="switchModal(this,'recuperarCuentaModal')">te olvidaste la contraseña</button>
+   <button onclick="switchModal('recuperarCuentaModal')">te olvidaste la contraseña</button>
 
     <button type="submit">Login</button>
 </form>
