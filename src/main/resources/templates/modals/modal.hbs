@@ -1,5 +1,5 @@
 <!-- Layout Modal -->
-<div class="modal">
-    <button onclick="cerrarModal()">&times;</button> <!--&times; es la x de cerrar -->
-    {{ modal }}
+<div id="{{ modal.[id] }}Modal" class="modal">
+    <button onclick="closeModal()">&times;</button> <!--&times; es la x de cerrar -->
+    {{ modal.[contenido] }}
 </div>
