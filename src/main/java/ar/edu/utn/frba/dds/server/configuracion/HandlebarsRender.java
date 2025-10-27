@@ -26,7 +26,6 @@ public class HandlebarsRender implements FileRenderer {
   @Override
   public String render(@NotNull String filePath, @NotNull Map<String, ?> model, @NotNull Context ctx) {
     try {
-      System.out.println("Rendering template: " + filePath);
       Template template = handlebars.compile(filePath);
       return template.apply(model);
     } catch (Exception e) {
