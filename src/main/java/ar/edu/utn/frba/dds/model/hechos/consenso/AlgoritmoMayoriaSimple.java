@@ -1,13 +1,15 @@
-package ar.edu.utn.frba.dds.hechos.consenso;
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.Hecho;
+package ar.edu.utn.frba.dds.model.hechos.consenso;
+
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.Math.ceil;
 

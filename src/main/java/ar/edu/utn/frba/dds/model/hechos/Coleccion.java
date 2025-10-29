@@ -1,13 +1,14 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.model.hechos;
 
-import static java.util.Objects.requireNonNull;
-
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.filtros.FiltroCompuesto;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.consenso.Consenso;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
-import org.hibernate.annotations.Cascade;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeEliminacionRepository;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.util.Collections;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.hibernate.annotations.Cascade;
+
+import static java.util.Objects.requireNonNull;
 @Entity
 @Table(name = "Coleccion")
 public class Coleccion{

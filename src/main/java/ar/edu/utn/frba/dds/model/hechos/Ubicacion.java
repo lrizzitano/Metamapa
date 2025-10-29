@@ -1,10 +1,10 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.model.hechos;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.util.Objects;
 
 @Embeddable
 public class Ubicacion {

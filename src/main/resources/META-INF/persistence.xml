@@ -8,29 +8,31 @@
     <persistence-unit name="simple-persistence-unit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.Consenso</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.ConsensoNull</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsenso</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoConsensoAbsoluto</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMayoriaSimple</class>
-        <class>ar.edu.utn.frba.dds.hechos.consenso.AlgoritmoMultiplesMenciones</class>
-        <class>ar.edu.utn.frba.dds.hechos.Coleccion</class>
-        <class>ar.edu.utn.frba.dds.usuarios.Usuario</class>
-        <class>ar.edu.utn.frba.dds.usuarios.Administrador</class>
-        <class>ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion</class>
-        <class>ar.edu.utn.frba.dds.hechos.Hecho</class>
-        <class>ar.edu.utn.frba.dds.filtros.Filtro</class>
-        <class>ar.edu.utn.frba.dds.filtros.FiltroCategoria</class>
-        <class>ar.edu.utn.frba.dds.filtros.FiltroCompuesto</class>
-        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaDesde</class>
-        <class>ar.edu.utn.frba.dds.filtros.FiltroFechaHasta</class>
-        <class>ar.edu.utn.frba.dds.filtros.NullFiltro</class>
-        <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion</class>
-        <class>ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeCambio</class>
-        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion</class>
-        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria</class>
-        <class>ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia</class>
+        <class>ar.edu.utn.frba.dds.model.fuentes.Fuente</class>
+        <class>ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica</class>
+        <class>ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.Consenso</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsenso</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsensoAbsoluto</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMayoriaSimple</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMultiplesMenciones</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.Coleccion</class>
+        <class>ar.edu.utn.frba.dds.model.usuarios.Usuario</class>
+        <class>ar.edu.utn.frba.dds.model.usuarios.Administrador</class>
+        <class>ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion</class>
+        <class>ar.edu.utn.frba.dds.model.hechos.Hecho</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.Filtro</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.FiltroCategoria</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta</class>
+        <class>ar.edu.utn.frba.dds.model.filtros.NullFiltro</class>
+        <class>ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeEliminacion</class>
+        <class>ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeCambio</class>
+        <class>ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion</class>
+        <class>ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria</class>
+        <class>ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.HechosPorProvincia</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.hechos.ubicadorGoogle;
+package ar.edu.utn.frba.dds.model.hechos.ubicadorGoogle;
 
 import java.util.List;
 

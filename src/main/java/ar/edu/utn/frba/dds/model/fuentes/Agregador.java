@@ -1,23 +1,20 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.model.fuentes;
 
-import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("agregador")

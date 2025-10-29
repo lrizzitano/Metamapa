@@ -4,11 +4,8 @@ import ar.edu.utn.frba.dds.server.exceptions.ErrorRenderizadoException;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
-import io.javalin.rendering.FileRenderer;
-
 import io.javalin.http.Context;
-
-
+import io.javalin.rendering.FileRenderer;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 

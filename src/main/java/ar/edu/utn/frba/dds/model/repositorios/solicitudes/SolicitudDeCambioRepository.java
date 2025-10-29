@@ -1,7 +1,7 @@
-package ar.edu.utn.frba.dds.repositorios.solicitudes;
+package ar.edu.utn.frba.dds.model.repositorios.solicitudes;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
 import java.util.Map;
 import java.util.Set;
 

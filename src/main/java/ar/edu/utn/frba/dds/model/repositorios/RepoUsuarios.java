@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
-import ar.edu.utn.frba.dds.usuarios.Usuario;
+import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 
 public class RepoUsuarios extends RepoGenerico<Usuario> {
   public RepoUsuarios() {

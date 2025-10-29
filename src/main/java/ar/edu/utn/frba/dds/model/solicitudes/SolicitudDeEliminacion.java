@@ -1,12 +1,18 @@
-package ar.edu.utn.frba.dds.solicitudes;
+package ar.edu.utn.frba.dds.model.solicitudes;
 
-import ar.edu.utn.frba.dds.execpciones.SolicitudInvalidaException;
-import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
-import ar.edu.utn.frba.dds.usuarios.Administrador;
-
-import javax.persistence.*;
+import ar.edu.utn.frba.dds.model.execpciones.SolicitudInvalidaException;
+import ar.edu.utn.frba.dds.model.execpciones.SolicitudYaResueltaException;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.model.usuarios.Administrador;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "SolicitudDeEliminacion")

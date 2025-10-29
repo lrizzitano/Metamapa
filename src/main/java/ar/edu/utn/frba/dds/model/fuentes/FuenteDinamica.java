@@ -1,15 +1,15 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.model.fuentes;
 
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.HechoRepository;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeCambio;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("dinamica")

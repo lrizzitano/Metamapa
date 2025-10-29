@@ -1,13 +1,20 @@
-package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
+package ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico;
 
-import org.hibernate.annotations.Cascade;
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "EstudioCategoria")

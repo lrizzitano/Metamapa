@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
+package ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam;
 
 public class Vecino {
   public double distancia;

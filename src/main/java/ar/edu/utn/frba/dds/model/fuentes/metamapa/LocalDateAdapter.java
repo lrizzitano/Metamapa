@@ -1,10 +1,9 @@
-package ar.edu.utn.frba.dds.fuentes.metamapa;
+package ar.edu.utn.frba.dds.model.fuentes.metamapa;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

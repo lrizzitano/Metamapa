@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
-import ar.edu.utn.frba.dds.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import java.util.HashSet;
 import java.util.Set;
 

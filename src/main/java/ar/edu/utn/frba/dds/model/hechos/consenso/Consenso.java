@@ -1,9 +1,11 @@
-package ar.edu.utn.frba.dds.hechos.consenso;
+package ar.edu.utn.frba.dds.model.hechos.consenso;
 
-import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.repositorios.FuentesRepository;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import org.hibernate.annotations.Cascade;
+import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -18,10 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)

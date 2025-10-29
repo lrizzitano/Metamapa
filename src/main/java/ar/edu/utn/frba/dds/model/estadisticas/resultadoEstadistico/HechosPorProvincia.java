@@ -1,13 +1,12 @@
-package ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico;
+package ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico;
 
-import ar.edu.utn.frba.dds.hechos.Provincia;
-
+import ar.edu.utn.frba.dds.model.hechos.Provincia;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.util.List;
-import java.util.Map;
 
 @Embeddable
 public class HechosPorProvincia {

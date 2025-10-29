@@ -1,17 +1,12 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.model.fuentes;
 
-import ar.edu.utn.frba.dds.converters.PathToStringConverter;
-import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.Origen;
-import ar.edu.utn.frba.dds.hechos.Ubicacion;
+import ar.edu.utn.frba.dds.model.converters.PathToStringConverter;
+import ar.edu.utn.frba.dds.model.execpciones.NoSePudoLeerArchivoException;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.hechos.Origen;
+import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
 import com.opencsv.CSVReaderHeaderAware;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Converter;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +18,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("estatica")

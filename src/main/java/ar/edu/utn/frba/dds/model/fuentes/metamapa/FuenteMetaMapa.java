@@ -1,25 +1,25 @@
-package ar.edu.utn.frba.dds.fuentes.metamapa;
+package ar.edu.utn.frba.dds.model.fuentes.metamapa;
 
-import ar.edu.utn.frba.dds.execpciones.AccesoRecursoFallidoException;
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.model.execpciones.AccesoRecursoFallidoException;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Set;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Entity
 @DiscriminatorValue("meta_mapa")

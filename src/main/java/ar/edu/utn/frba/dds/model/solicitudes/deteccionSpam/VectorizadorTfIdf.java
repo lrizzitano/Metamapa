@@ -1,6 +1,4 @@
-package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
-
-import static java.lang.Math.log;
+package ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static java.lang.Math.log;
 
 public class VectorizadorTfIdf {
   List<String> vocabulario = new ArrayList<>(); // usamos una lista para estandarizar el orden de las palabras

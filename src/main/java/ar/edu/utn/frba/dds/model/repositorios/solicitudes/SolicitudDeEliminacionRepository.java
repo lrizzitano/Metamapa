@@ -1,9 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios.solicitudes;
+package ar.edu.utn.frba.dds.model.repositorios.solicitudes;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
-import java.util.List;
-import java.util.Map;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
 import java.util.Set;
 
 public interface SolicitudDeEliminacionRepository {

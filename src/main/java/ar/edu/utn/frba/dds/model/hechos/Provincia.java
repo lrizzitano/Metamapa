@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.hechos;
+package ar.edu.utn.frba.dds.model.hechos;
 
 public enum Provincia {
   PROVINCIA_DESCONOCIDA,

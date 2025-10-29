@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
-import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;

@@ -1,7 +1,8 @@
 package ar.edu.utn.frba.dds.server.configuracion;
+
 import io.javalin.Javalin;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Routes {
 

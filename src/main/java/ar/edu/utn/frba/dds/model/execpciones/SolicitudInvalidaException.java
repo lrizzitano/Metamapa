@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.execpciones;
+package ar.edu.utn.frba.dds.model.execpciones;
 
 public class SolicitudInvalidaException extends RuntimeException {
 

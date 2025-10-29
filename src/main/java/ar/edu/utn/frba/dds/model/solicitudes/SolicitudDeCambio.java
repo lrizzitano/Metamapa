@@ -1,12 +1,11 @@
-package ar.edu.utn.frba.dds.solicitudes;
+package ar.edu.utn.frba.dds.model.solicitudes;
 
-import ar.edu.utn.frba.dds.execpciones.SolicitudDeCambioInvalidaException;
-import ar.edu.utn.frba.dds.execpciones.SolicitudYaResueltaException;
-import ar.edu.utn.frba.dds.fuentes.FuenteDinamica;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.usuarios.Administrador;
-import ar.edu.utn.frba.dds.usuarios.Usuario;
-import java.time.LocalDate;
+import ar.edu.utn.frba.dds.model.execpciones.SolicitudDeCambioInvalidaException;
+import ar.edu.utn.frba.dds.model.execpciones.SolicitudYaResueltaException;
+import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.usuarios.Administrador;
+import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

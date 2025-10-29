@@ -1,8 +1,9 @@
-package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
+package ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam;
 
-import static java.lang.Math.sqrt;
 import java.util.Comparator;
 import java.util.List;
+
+import static java.lang.Math.sqrt;
 
 public class ClasificadorKnn {
   List<VectorEtiquetado> vectoresDeEntrenamiento;

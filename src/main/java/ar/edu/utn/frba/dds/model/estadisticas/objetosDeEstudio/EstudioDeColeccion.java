@@ -1,15 +1,14 @@
-package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
+package ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio;
 
-import ar.edu.utn.frba.dds.hechos.Provincia;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.HechosPorProvincia;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
-import ar.edu.utn.frba.dds.execpciones.NoExisteInformacionException;
-import ar.edu.utn.frba.dds.filtros.FiltroFechaDesde;
-import ar.edu.utn.frba.dds.hechos.Coleccion;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.repositorios.RepoColecciones;
-
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.HechosPorProvincia;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
+import ar.edu.utn.frba.dds.model.execpciones.NoExisteInformacionException;
+import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
+import ar.edu.utn.frba.dds.model.hechos.Coleccion;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.hechos.Provincia;
+import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;

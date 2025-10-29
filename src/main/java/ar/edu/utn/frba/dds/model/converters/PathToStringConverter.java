@@ -1,8 +1,8 @@
-package ar.edu.utn.frba.dds.converters;
+package ar.edu.utn.frba.dds.model.converters;
 
+import java.nio.file.Path;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.nio.file.Path;
 
 @Converter(autoApply = true)
 public class PathToStringConverter implements AttributeConverter<Path, String> {

@@ -1,8 +1,7 @@
-package ar.edu.utn.frba.dds.estadisticas.objetosDeEstudio;
+package ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio;
 
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.RechazosDeEliminacion;
-import ar.edu.utn.frba.dds.repositorios.solicitudes.SolicitudDeEliminacionRepository;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 

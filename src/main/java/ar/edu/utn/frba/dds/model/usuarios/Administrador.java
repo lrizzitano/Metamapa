@@ -1,6 +1,7 @@
-package ar.edu.utn.frba.dds.usuarios;
+package ar.edu.utn.frba.dds.model.usuarios;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 import static java.util.Objects.requireNonNull;
 

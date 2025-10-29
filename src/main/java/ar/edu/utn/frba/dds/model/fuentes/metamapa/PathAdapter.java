@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.fuentes.metamapa;
+package ar.edu.utn.frba.dds.model.fuentes.metamapa;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.fuentes.demo;
+package ar.edu.utn.frba.dds.model.fuentes.demo;
 
 import java.net.URL;
 import java.time.Instant;

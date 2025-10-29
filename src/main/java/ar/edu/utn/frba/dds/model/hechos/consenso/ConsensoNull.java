@@ -1,9 +1,9 @@
-package ar.edu.utn.frba.dds.hechos.consenso;
+package ar.edu.utn.frba.dds.model.hechos.consenso;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import java.time.LocalDateTime;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.time.LocalDateTime;
 @Entity
 @DiscriminatorValue("No hay consenso")
 public class ConsensoNull extends Consenso {

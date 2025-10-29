@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.calendarizables;
+package ar.edu.utn.frba.dds.model.calendarizables;
 
-import ar.edu.utn.frba.dds.repositorios.CalendarizablesRepository;
+import ar.edu.utn.frba.dds.model.repositorios.CalendarizablesRepository;
 
 public class ActualizadorCalendarizables {
   public static void main(String[] args) {

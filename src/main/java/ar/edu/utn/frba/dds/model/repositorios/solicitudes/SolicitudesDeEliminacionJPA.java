@@ -1,17 +1,15 @@
-package ar.edu.utn.frba.dds.repositorios.solicitudes;
+package ar.edu.utn.frba.dds.model.repositorios.solicitudes;
 
-import static java.util.Objects.requireNonNull;
-
-import ar.edu.utn.frba.dds.repositorios.RepoGenerico;
-import ar.edu.utn.frba.dds.solicitudes.SolicitudDeEliminacion;
-import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.DetectorDeSpam;
-import ar.edu.utn.frba.dds.solicitudes.deteccionSpam.NullDetector;
+import ar.edu.utn.frba.dds.model.repositorios.RepoGenerico;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam.DetectorDeSpam;
+import ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam.NullDetector;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 public class SolicitudesDeEliminacionJPA extends RepoGenerico<SolicitudDeEliminacion> implements SolicitudDeEliminacionRepository, WithSimplePersistenceUnit {
 

@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios.solicitudes;
+package ar.edu.utn.frba.dds.model.repositorios.solicitudes;
 
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;

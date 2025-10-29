@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.calendarizables;
+package ar.edu.utn.frba.dds.model.calendarizables;
 
 import java.time.LocalDateTime;
 

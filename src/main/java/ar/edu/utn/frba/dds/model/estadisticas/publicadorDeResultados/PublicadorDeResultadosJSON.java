@@ -1,5 +1,5 @@
-package ar.edu.utn.frba.dds.estadisticas.publicadorDeResultados;
-import ar.edu.utn.frba.dds.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+package ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstadistico;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;

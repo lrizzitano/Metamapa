@@ -1,13 +1,11 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
-import ar.edu.utn.frba.dds.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.execpciones.NoSePuedeEliminarUnHechoQueNoExisteException;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;

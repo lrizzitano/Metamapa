@@ -1,8 +1,7 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import java.util.Set;
 
 public interface HechoRepository {

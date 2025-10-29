@@ -1,10 +1,9 @@
-package ar.edu.utn.frba.dds.solicitudes.deteccionSpam;
-
-import java.util.List;
+package ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam;
 
 import com.opencsv.CSVReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LectorDataset {
 

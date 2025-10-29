@@ -1,15 +1,15 @@
-package ar.edu.utn.frba.dds.hechos.consenso;
+package ar.edu.utn.frba.dds.model.hechos.consenso;
 
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("absoluto")

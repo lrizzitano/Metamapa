@@ -1,15 +1,15 @@
-package ar.edu.utn.frba.dds.hechos.ubicadorGoogle;
+package ar.edu.utn.frba.dds.model.hechos.ubicadorGoogle;
 
+import ar.edu.utn.frba.dds.model.hechos.Provincia;
+import ar.edu.utn.frba.dds.model.hechos.ServicioUbicador;
 import io.github.cdimascio.dotenv.Dotenv;
-import ar.edu.utn.frba.dds.hechos.Provincia;
-import ar.edu.utn.frba.dds.hechos.ServicioUbicador;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class UbicadorGoogle implements ServicioUbicador {
   Dotenv dotenv = Dotenv.load();

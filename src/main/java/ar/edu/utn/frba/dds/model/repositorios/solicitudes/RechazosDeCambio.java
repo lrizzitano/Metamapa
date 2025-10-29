@@ -1,8 +1,12 @@
-package ar.edu.utn.frba.dds.repositorios.solicitudes;
+package ar.edu.utn.frba.dds.model.repositorios.solicitudes;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
-
-import javax.persistence.*;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class RechazosDeCambio {

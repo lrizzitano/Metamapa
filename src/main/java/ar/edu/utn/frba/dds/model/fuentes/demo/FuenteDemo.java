@@ -1,18 +1,11 @@
-package ar.edu.utn.frba.dds.fuentes.demo;
+package ar.edu.utn.frba.dds.model.fuentes.demo;
 
-import ar.edu.utn.frba.dds.filtros.Filtro;
-import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.fuentes.Fuente;
-import ar.edu.utn.frba.dds.hechos.Hecho;
-import ar.edu.utn.frba.dds.hechos.Origen;
-import ar.edu.utn.frba.dds.hechos.Ubicacion;
-import net.bytebuddy.asm.Advice;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.hechos.Origen;
+import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -23,6 +16,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("demo")

@@ -1,7 +1,6 @@
-package ar.edu.utn.frba.dds.repositorios;
+package ar.edu.utn.frba.dds.model.repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;

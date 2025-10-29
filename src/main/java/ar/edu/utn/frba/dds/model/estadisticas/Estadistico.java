@@ -1,7 +1,7 @@
-package ar.edu.utn.frba.dds.estadisticas;
+package ar.edu.utn.frba.dds.model.estadisticas;
 
-import ar.edu.utn.frba.dds.hechos.Coleccion;
-import ar.edu.utn.frba.dds.hechos.Provincia;
+import ar.edu.utn.frba.dds.model.hechos.Coleccion;
+import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.execpciones;
+package ar.edu.utn.frba.dds.model.execpciones;
 
 public class SolicitudDeCambioInvalidaException extends RuntimeException {
   public SolicitudDeCambioInvalidaException(String message) {

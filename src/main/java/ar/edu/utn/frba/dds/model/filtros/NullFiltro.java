@@ -1,11 +1,11 @@
-package ar.edu.utn.frba.dds.filtros;
+package ar.edu.utn.frba.dds.model.filtros;
 
-import ar.edu.utn.frba.dds.hechos.Hecho;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
+import java.util.Map;
+import java.util.function.Predicate;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.util.Map;
-import java.util.function.Predicate;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Root;
 

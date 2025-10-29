@@ -1,16 +1,15 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.model.fuentes;
 
-import ar.edu.utn.frba.dds.calendarizables.Calendarizable;
-import ar.edu.utn.frba.dds.filtros.NullFiltro;
-import ar.edu.utn.frba.dds.fuentes.metamapa.LocalDateAdapter;
-import ar.edu.utn.frba.dds.fuentes.metamapa.PathAdapter;
+import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.model.fuentes.metamapa.LocalDateAdapter;
+import ar.edu.utn.frba.dds.model.fuentes.metamapa.PathAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Backup implements Calendarizable {

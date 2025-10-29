@@ -1,6 +1,6 @@
-package ar.edu.utn.frba.dds.fuentes;
+package ar.edu.utn.frba.dds.model.fuentes;
 
-import ar.edu.utn.frba.dds.execpciones.NoSePudoLeerArchivoException;
+import ar.edu.utn.frba.dds.model.execpciones.NoSePudoLeerArchivoException;
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
