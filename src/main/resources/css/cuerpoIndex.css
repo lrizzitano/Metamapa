@@ -1,0 +1,152 @@
+.cuerpo-index{
+    background-color: rebeccapurple;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.seccion-filtros{
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    width: 100%;
+    height: 5.5rem;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 0.05rem black solid ;
+}
+
+.contenedor-hechos-mapaYcolecciones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #ffffff;
+    height: 100%;
+}
+.contenedor-hechos{
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    height: 100%;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 0.05rem solid black;
+}
+.barra-scroll{
+    width: 5%;
+    background-color: #aeacac;
+    height: 95%;
+    margin-right:0.08rem;
+    border-radius: 0.5rem;
+
+}
+
+.hechos{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.hecho{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+    width: 100%;
+    height: 20%;
+    background-color: #7a7878;
+}
+
+.contenedor-mapa-colecciones{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #dcdcdc;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.contenedor-colecciones{
+    display: flex;
+    width: 100%;
+    height: 15%;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    border-top: 0.05rem solid black;
+}
+
+.contenedor-mapa{
+    display: flex;
+    width: 100%;
+    height: 85%;
+    background-color: #e0e8ed;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-filtros{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.filtro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 0.5rem;
+    height: 85%;
+    width: 13%;
+    font-size: 0.2rem;
+    border: 0.05rem solid #51af49;
+}
+.filtro label{
+    font-size: small;
+}
+.filtro input,select{
+    height: auto;
+    width: 80%;
+}
+
+
+.contenedor-colecciones{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.contenedor-colecciones button{
+    border: 0.07rem solid #ffffff;
+    cursor: pointer;
+    width: 28%;
+    height: 50%;
+    color: #ffffff;
+    border-radius:0.3rem;
+    margin: 5%;
+    font-size: 1rem;
+    background-color: #18681d;
+}
+
+.contenedor-colecciones button:hover{
+    transform: scale(1.1,1.1);
+    border: 0.07rem solid #18681d;
+    color: #18681d;
+    background-color: #ffffff;
+}

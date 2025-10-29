@@ -73,11 +73,11 @@
 }
 
 
-form input{
+form input,select{
     width: 70%;
     height: 6%;
     border-radius: 0.3rem;
-    border: 0.05rem #51af49 solid;
+    border: 0.05rem #18681d solid;
     margin-top: 0;
 }
 form label{

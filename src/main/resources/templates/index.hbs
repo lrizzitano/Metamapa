@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/modal.css">
         <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/cuerpoIndex.css">
         <script src="/js/app.js"></script>
     </head>
 
@@ -15,21 +16,25 @@
 
     <body>
 
-    <header class="header">
-        <h1 class="titulo-header">Metamapa</h1>
-        <div class="botones-header">
-        <!-- Comento el if pq rompe, habría que hacer login primero
-        {{#if autenticado}}
-            {{> templates/headers/headerUsuario }}
-        {{else}}
-            {{> templates/headers/headerSinSesion }}
-        {{/if}}
-        -->
-            {{> templates/headers/headerSinSesion }}
+        <header class="header">
+            <h1 class="titulo-header">Metamapa</h1>
+            <div class="botones-header">
+            <!-- Comento el if pq rompe, habría que hacer login primero
+            {{#if autenticado}}
+                {{> templates/headers/headerUsuario }}
+            {{else}}
+                {{> templates/headers/headerSinSesion }}
+            {{/if}}
+            -->
+                {{> templates/headers/headerSinSesion }}
 
-        </div>
-        <button class="subir-hecho-boton">Subir Hecho</button>
-    </header>
+            </div>
+            <button class="subir-hecho-boton">Subir Hecho</button>
+        </header>
+
+        <section class="contenedor-cuerpo-index">
+            {{> templates/mapaPagina/mapaPagina }}
+        </section>
 
     </body>
 
