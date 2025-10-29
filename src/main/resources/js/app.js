@@ -4,8 +4,8 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('active')
 }
-function switchModal(nextModalID) {
-  const currentID = extractID(this);
-  if (currentID) closeModal(this);
+
+function switchModal(currentModalID, nextModalID) {
+  if (currentModalID) closeModal(currentModalID);
   openModal(nextModalID);
 }

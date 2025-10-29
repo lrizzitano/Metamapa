@@ -3,8 +3,8 @@
     <button onclick="openModal('subirHechoModal')">Subir Hecho</button>
     <button onclick="openModal('crearSolicitudDeEliminacionModal')">Crear Solicitud de Eliminacion</button>
     <!-- Para armar estos partials hay que hacer dos cosas. Primero contruir la vista del modal usando el layout "modal" con su respectivo partial de contenido (para esto usamos el map<string,object). Y segundo incluir esa porcion de vista en esta -->
-    {{> subirHechoModal }}
-    {{> crearSolicitudDeEliminacionModal }}
+    {{> templates/modals/subirHechoModal }}
+    {{> templates/modals/crearSolicitudDeEliminacionModal }}
 
     {{#if esAdmin}}
         <button onclick="openModal('fuentesModal')">Fuentes</button>
@@ -12,9 +12,9 @@
         <button onclick="openModal('solicitudesDeCambioModal')">Solicitudes de Cambio</button>
         <button onclick="openModal('solicitudesDeEliminacionModal')">Solicitudes de Eliminacion</button>
 
-        {{> fuentesModal }}
-        {{> coleccionesModal }}
-        {{> solicitudesDeCambioModal }}
-        {{> solicitudesDeEliminacionModal }}
+        {{> templates/modals/fuentesModal }}
+        {{> templates/modals/coleccionesModal }}
+        {{> templates/modals/solicitudesDeCambioModal }}
+        {{> templates/modals/solicitudesDeEliminacionModal }}
     {{/if}}
 </div>

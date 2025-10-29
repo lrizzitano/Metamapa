@@ -1,12 +1,21 @@
-<form id="signin" method="POST" action="/login">
+<div class ="modal" id="signinModal">
+    <div class="backdrop" onclick="closeModal('signinModal')"></div>
+    <div class="panel">
+        <h2>Iniciar Sesión</h2>
 
-    <label for="usuario">Usuario</label>
-    <input type="text" name="usuario" id="usuario" placeholder="PabloTheKernelGOAT">
+        <form id="signin" method="POST" action="/login">
 
-    <label for="password">Contraseña</label>
-    <input type="password" name="password" id="password" placeholder="vedia1234">
+            <label for="usuario">Usuario</label>
+            <input type="text" name="usuario" id="usuario" placeholder="PabloTheKernelGOAT">
 
-   <button onclick="switchModal('recuperarCuentaModal')">te olvidaste la contraseña</button>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" placeholder="vedia1234">
+            <button type="submit">Login</button>
 
-    <button type="submit">Login</button>
-</form>
+
+            <button type="button" onclick="switchModal('signinModal', 'recuperarCuentaModal')">Te olvidaste la contraseña</button>
+            <button type="button" onclick="switchModal('signinModal', 'signupModal')">No tenés cuenta</button>
+
+        </form>
+    </div>
+</div>

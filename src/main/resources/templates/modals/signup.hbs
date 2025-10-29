@@ -1,22 +1,33 @@
-<form id="signup" method="POST" action="/usuario">
+<div class ="modal" id="signupModal">
+    <div class="backdrop" onclick="closeModal('signupModal')"></div>
+    <div class="panel">
+        <h2>Crear Cuenta</h2>
 
-    <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" id="nombre" placeholder="Pablo">
+        <form id="signup" method="POST" action="/usuario">
 
-    <label for="apellido">Apellido</label>
-    <input type="text" name="apellido" id="apellido" placeholder="Garbarino">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Pablo">
 
-    <label for="fechaDeNacimiento">Fecha de nacimiento</label>
-    <input type="date" name="fechaDeNacimiento" id="fechaDeNacimiento">
+            <label for="apellido">Apellido</label>
+            <input type="text" name="apellido" id="apellido" placeholder="Garbarino">
 
-    <label for="nombreDeUsuario">Nombre de usuario</label>
-    <input type="text" name="nombreDeUsuario" id="nombreDeUsuario" placeholder="PabloTheKernelGOAT">
+            <label for="fechaDeNacimiento">Fecha de nacimiento</label>
+            <input type="date" name="fechaDeNacimiento" id="fechaDeNacimiento">
 
-    <label for="emailDeUsuario">Email de usuario</label>
-    <input type="email" name="emailDeUsuario" id="emailDeUsuario" placeholder="pablete@gmail.com">
+            <label for="nombreDeUsuario">Nombre de usuario</label>
+            <input type="text" name="nombreDeUsuario" id="nombreDeUsuario" placeholder="PabloTheKernelGOAT">
 
-    <label for="password">Contraseña</label>
-    <input type="password" name="password" id="password" placeholder="vedia1234">
+            <label for="emailDeUsuario">Email de usuario</label>
+            <input type="email" name="emailDeUsuario" id="emailDeUsuario" placeholder="pablete@gmail.com">
 
-    <button type="submit">Signup</button>
-</form>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" placeholder="vedia1234">
+
+            <button type="submit">Signup</button>
+
+            <button type="button" onclick="switchModal('signupModal', 'signinModal')">Ya tenés cuenta</button>
+
+        </form>
+
+    </div>
+</div>

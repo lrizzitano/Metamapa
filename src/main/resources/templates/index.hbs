@@ -14,16 +14,15 @@
     <body>
 
     <header class="header">
+        <!-- Comento el if pq rompe, habría que hacer login primero
         {{#if autenticado}}
-            {{> headerUsuario }}
+            {{> templates/headers/headerUsuario }}
         {{else}}
-            {{> headerSinSesion }}
+            {{> templates/headers/headerSinSesion }}
         {{/if}}
+        -->
+        {{> templates/headers/headerSinSesion }}
     </header>
-
-        {{> navegadorDeHechos }}
-
-        {{> footer }}
 
     </body>
 
