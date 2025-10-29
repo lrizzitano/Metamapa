@@ -9,7 +9,7 @@ html,body{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background-color: #b2b2fa;
+    background-color: #18681d;
     width: 100%;
     height: auto;
     align-items: center;
@@ -29,5 +29,6 @@ html,body{
     color: white;
     font-family: "Roboto Light";
     font-size: 2rem;
+
 }
 
