@@ -5,15 +5,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{title}}</title>
-        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/modal.css">
+        <link rel="stylesheet" href="/css/header.css">
         <script src="/js/app.js"></script>
     </head>
 
-    <h1>Metamapa</h1>
+
 
     <body>
 
     <header class="header">
+        <h1 class="titulo-header">Metamapa</h1>
+        <div class="botones-header">
         <!-- Comento el if pq rompe, habría que hacer login primero
         {{#if autenticado}}
             {{> templates/headers/headerUsuario }}
@@ -21,7 +25,8 @@
             {{> templates/headers/headerSinSesion }}
         {{/if}}
         -->
-        {{> templates/headers/headerSinSesion }}
+            {{> templates/headers/headerSinSesion }}
+        <div/>
     </header>
 
     </body>

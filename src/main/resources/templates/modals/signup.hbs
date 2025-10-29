@@ -1,9 +1,9 @@
 <div class ="modal" id="signupModal">
     <div class="backdrop" onclick="closeModal('signupModal')"></div>
-    <div class="panel">
+    <div class="panel sign-up">
         <h2>Crear Cuenta</h2>
 
-        <form id="signup" method="POST" action="/usuario">
+        <form class="form-sign-up" id="signup" method="POST" action="/usuario">
 
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre" placeholder="Pablo">
@@ -23,10 +23,11 @@
             <label for="password">Contraseña</label>
             <input type="password" name="password" id="password" placeholder="vedia1234">
 
-            <button type="submit">Signup</button>
+             <div class="botones-form">
+                <button type="submit">Signup</button>
 
-            <button type="button" onclick="switchModal('signupModal', 'signinModal')">Ya tenés cuenta</button>
-
+                <button type="button" onclick="switchModal('signupModal', 'signinModal')">Ya tenés cuenta</button>
+            </div>
         </form>
 
     </div>

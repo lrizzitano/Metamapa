@@ -1,0 +1,24 @@
+.header-sin-sesion{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+    height: 4rem;
+}
+
+.header-sin-sesion button{
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0.02rem 0.02rem white;
+    width: 28%;
+    height: 50%;
+    color: white;
+    border-radius:0.3rem;
+    margin: 5%;
+    font-size: 1rem;
+    background-color: #6b6bf6;
+}
+.header-sin-sesion button:hover{
+    transform: scale(1.15,1.15);
+}
