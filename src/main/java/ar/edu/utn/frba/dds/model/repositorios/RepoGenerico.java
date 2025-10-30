@@ -20,6 +20,10 @@ public class RepoGenerico<T> implements WithSimplePersistenceUnit {
         .getResultStream().collect(Collectors.toSet());
   }
 
+  public T find(Long id) {
+    return entitityManager.find(entityClass, id);
+  }
+
   public void save(T entity) {
     entitityManager.persist(entity);
   }

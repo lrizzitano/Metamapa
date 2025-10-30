@@ -80,6 +80,10 @@ public class Coleccion{
     return id;
   }
 
+  public void setSolicitudes(SolicitudDeEliminacionRepository solicitudes) {
+    this.solicitudes = solicitudes;
+  }
+
   public void setCriterioConsenso(Consenso criterioConsenso) {
     this.criterioConsenso = criterioConsenso;
   }
