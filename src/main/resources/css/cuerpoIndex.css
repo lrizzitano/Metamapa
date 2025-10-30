@@ -67,6 +67,9 @@
     max-width: 17rem;
 }
 
+.hecho:hover{
+    background-color: #e9fbe8;
+}
 .contenedor-mapa-colecciones{
     display: flex;
     flex-direction: column;
@@ -116,6 +119,7 @@
 .filtro input,select{
     height: auto;
     width: 80%;
+    cursor: pointer;
 }
 
 
