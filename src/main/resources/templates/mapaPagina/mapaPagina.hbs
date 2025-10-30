@@ -19,27 +19,23 @@
     </section>
     <section class="contenedor-hechos-mapaYcolecciones">
         <div class="contenedor-hechos">
-            <div class="hechos">
-                <div class="hecho">
-                    hechos 1
-                </div>
-                <div class="hecho">
-                    hecho 2
-                </div>
-            </div>
-            <div class="barra-scroll">
-
-            </div>
+            {{> templates/hechos}}
         </div>
         <div class="contenedor-mapa-colecciones">
             <div class="contenedor-mapa">
                 mapa
             </div>
             <div class="contenedor-colecciones">
-                <button class="boton-collecion">Milagros impensados</button>
-                <button class="boton-collecion">Desastres naturales</button>
-                <button class="boton-collecion">Monumentos historicos</button>
-                <button class="boton-collecion">Sucesos policiales</button>
+                {{#each colecciones}}
+                    <button
+                            class="boton-collecion"
+                            hx-get="/{{id}}"
+                            hx-target=".contenedor-hechos"
+                            hx-swap="innerHTML"
+                    >
+                        {{titulo}}
+                    </button>
+                {{/each}}
             </div>
         </div>
     </section>
