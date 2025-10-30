@@ -126,8 +126,19 @@ public class SetupData implements WithSimplePersistenceUnit {
       new NullFiltro(),  fuente1,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
       new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  static final Coleccion collecion3 = new Coleccion("Coleccion 3", "desc2",
+      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  static final Coleccion collecion4 = new Coleccion("Coleccion 4", "desc2",
+      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  static final Coleccion collecion5 = new Coleccion("Coleccion 5", "desc2",
+      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  static final Coleccion collecion6 = new Coleccion("Coleccion 6", "desc2",
+      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  static final Coleccion collecion7 = new Coleccion("Coleccion 7", "desc2",
+      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
 
-  static final Set<Coleccion> colecciones = Set.of(collecion1, collecion2);
+  static final Set<Coleccion> colecciones = Set.of(collecion1, collecion2,collecion3,collecion4,
+      collecion5,collecion6,collecion7);
 
   public void setup() {
     withTransaction(() -> {
@@ -138,6 +149,11 @@ public class SetupData implements WithSimplePersistenceUnit {
       ColeccionesRepository colecRepo = new ColeccionesRepository();
       colecRepo.persist(collecion1);
       colecRepo.persist(collecion2);
+      colecRepo.persist(collecion3);
+      colecRepo.persist(collecion4);
+      colecRepo.persist(collecion5);
+      colecRepo.persist(collecion6);
+      colecRepo.persist(collecion7);
     });
   }
 }
