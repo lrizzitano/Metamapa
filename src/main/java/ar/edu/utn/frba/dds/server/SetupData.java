@@ -119,23 +119,29 @@ public class SetupData implements WithSimplePersistenceUnit {
       Origen.CONTRIBUYENTE
   );
 
-  static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7);
+  static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7,hecho8,hecho9);
   static final Fuente fuente1 = new FuenteMock(Set.of(hecho1, hecho2, hecho3));
   static final Fuente fuente2 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7,hecho8,hecho9));
+  static final Fuente fuente3 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7));
+  static final Fuente fuente4 = new FuenteMock(Set.of(hecho4, hecho5 ));
+  static final Fuente fuente5 = new FuenteMock(Set.of(hecho4 ));
+  static final Fuente fuente6 = new FuenteMock(Set.of(hecho1, hecho2, hecho3,hecho4, hecho5, hecho6, hecho7,hecho8,hecho9));
+  static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3,hecho4, hecho5));
+
   static final Coleccion collecion1 = new Coleccion("Coleccion 1", "desc1",
       new NullFiltro(),  fuente1,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
       new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion3 = new Coleccion("Coleccion 3", "desc2",
-      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+      new NullFiltro(),  fuente3,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion4 = new Coleccion("Coleccion 4", "desc2",
-      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+      new NullFiltro(),  fuente4,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion5 = new Coleccion("Coleccion 5", "desc2",
-      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+      new NullFiltro(),  fuente5,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion6 = new Coleccion("Coleccion 6", "desc2",
-      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+      new NullFiltro(),  fuente6,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion7 = new Coleccion("Coleccion 7", "desc2",
-      new NullFiltro(),  fuente2,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+      new NullFiltro(),  fuente7,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
 
   static final Set<Coleccion> colecciones = Set.of(collecion1, collecion2,collecion3,collecion4,
       collecion5,collecion6,collecion7);
@@ -145,6 +151,11 @@ public class SetupData implements WithSimplePersistenceUnit {
       FuentesRepositoryJPA fuenteRepo = new FuentesRepositoryJPA();
       fuenteRepo.persist(fuente1);
       fuenteRepo.persist(fuente2);
+      fuenteRepo.persist(fuente3);
+      fuenteRepo.persist(fuente4);
+      fuenteRepo.persist(fuente5);
+      fuenteRepo.persist(fuente6);
+      fuenteRepo.persist(fuente7);
 
       ColeccionesRepository colecRepo = new ColeccionesRepository();
       colecRepo.persist(collecion1);
