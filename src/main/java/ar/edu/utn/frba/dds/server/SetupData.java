@@ -97,9 +97,31 @@ public class SetupData implements WithSimplePersistenceUnit {
       Origen.CONTRIBUYENTE
   );
 
+  static private final Hecho hecho8 = new Hecho(
+      null,
+      "Adulto aprende a volar",
+      "grande cpu 10",
+      "Milagro",
+      burzaco,
+      LocalDateTime.now(),
+      LocalDateTime.of(2023, 3, 15, 23, 59),
+      Origen.CONTRIBUYENTE
+  );
+
+  static private final Hecho hecho9 = new Hecho(
+      null,
+      "Adulto deja de volar y cae del cielo",
+      "grande cpu 10",
+      "Milagro",
+      burzaco,
+      LocalDateTime.now(),
+      LocalDateTime.of(2023, 3, 15, 23, 59),
+      Origen.CONTRIBUYENTE
+  );
+
   static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7);
   static final Fuente fuente1 = new FuenteMock(Set.of(hecho1, hecho2, hecho3));
-  static final Fuente fuente2 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7));
+  static final Fuente fuente2 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7,hecho8,hecho9));
   static final Coleccion collecion1 = new Coleccion("Coleccion 1", "desc1",
       new NullFiltro(),  fuente1,new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
