@@ -2,7 +2,7 @@
     <div class="backdrop" onclick="closeModal('signupModal')"></div>
     <div class="panel sign-up">
         <div class="titulo-boton-modal">
-            <button id="boton-cerrar" type="button" onclick="closeModal('signupModal')">Volver</button>
+            <button class="boton-secundario" id="boton-cerrar" type="button" onclick="closeModal('signupModal')">Volver</button>
             <h2>Crear Cuenta</h2>
         </div>
         <form class="form-sign-up" id="signup" method="POST" action="/usuario">
@@ -26,9 +26,9 @@
             <input type="password" name="password" id="passwordSignUp" placeholder="vedia1234">
 
              <div class="botones-form">
-                <button type="submit">Crear</button>
+                <button class="boton-secundario" type="submit">Crear</button>
 
-                <button type="button" onclick="switchModal('signupModal', 'signinModal')">Ya tengo cuenta</button>
+                <button class="boton-secundario" type="button" onclick="switchModal('signupModal', 'signinModal')">Ya tengo cuenta</button>
             </div>
         </form>
 

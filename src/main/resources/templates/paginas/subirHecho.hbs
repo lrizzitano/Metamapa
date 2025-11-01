@@ -1,7 +1,57 @@
+{{#partial "dependencias"}}
+    <link rel="stylesheet" href="/css/subirHecho.css">
+{{/partial}}
+
 {{#partial "contenido"}}
     <section class="contenedor-subir-hecho">
-        <div>
+        <div class="panel subir-hecho">
+            <div class="contenedor-titulo-volver">
+                <button class="boton-secundario volver">volver</button>
+                <h2>Subir nuevo hecho</h2>
+                <button class="boton-secundario relleno">volver</button>
+            </div>
+            <form class="form subir-hecho">
 
+                <label>Titulo</label>
+                <input type="text" placeholder="Elija un titulo"></input>
+
+                <label>Categoria</label>
+                <select>
+                    <option value="" disabled selected>Seleccione una categoria</option>>
+                    <option value="incendios">Incendios</option>
+                </select>
+
+                <label>Fecha</label>
+                <input type="date"></input>
+
+                <label>Descripcion</label>
+                <input type="text" placeholder="Describa el hecho"/>
+
+                <label>Provincia</label>
+                <select>
+                    <option value="" disabled selected>Elija la provincia</option>
+                    <option value="chaco">Chaco</option>
+                </select>
+
+                <label>Multimedio</label>
+                <input type="image"/>
+
+                <div class="contenedor-latitud-longitud">
+                    <div class="contenedor-latitud">
+                        <label>Latitud</label>
+                        <input type="number"/>
+                    </div>
+
+                    <div class="contenedor-longitud">
+                        <label>Longitud</label>
+                        <input type="number"/>
+                    </div>
+                </div>
+                <div class="botones-form subir-hecho">
+                    <button class="boton-secundario subir-hecho" type="button">Subir</button>
+                </div>
+
+            </form>
         </div>
     </section>
 {{/partial}}

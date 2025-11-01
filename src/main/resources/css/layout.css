@@ -59,3 +59,71 @@ body{
     height: 100%;
     overflow:hidden;
 }
+
+form input,select{
+    width: 70%;
+    height: 6%;
+    border-radius: 0.3rem;
+    border: 0.05rem var(--color-principal) solid;
+    margin-top: 0;
+}
+form label{
+    font-size: 1.3rem;
+    border-bottom: 0.02rem #7a7878 solid;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+.botones-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    width: 100%;
+    height: 25%;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secundario);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 50%;
+    height: 70%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    font-family: "Roboto Light";
+}
+
+.panel h2 {
+    margin-top: 0;
+    background-color: var(--color-principal);
+    width: 80%;
+    border-radius: 0.5rem;
+    color: var(--color-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    height: 3rem;
+}
+
+.boton-secundario{
+    border: none;
+    cursor: pointer;
+    color: var(--color-secundario);
+    box-shadow: 0.02rem 0.02rem white;
+    width: 28%;
+    height: 50%;
+    border-radius:0.3rem;
+    margin: 5%;
+    font-size: 1rem;
+    background-color: var(--color-acento);
+}
+.boton-secundario:hover{
+    transform: scale(1.15,1.15);
+}
