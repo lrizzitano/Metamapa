@@ -11,7 +11,7 @@ public class Server {
   public static void main(String[] args) {
 
      Logger logger = new Logger();
-
+  
     try {
       Javalin app = Javalin.create(config -> {
 

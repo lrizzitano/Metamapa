@@ -1,3 +1,15 @@
+{{#partial "dependencias"}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <link rel="stylesheet" href="/css/mapa.css">
+    <script src="/js/mapa.js"></script>
+{{/partial}}
+
+{{#partial "contenido" }}
 <div class="cuerpo-index">
     <section class="seccion-filtros">
         <form class="form-filtros">
@@ -23,7 +35,7 @@
         </div>
         <div class="contenedor-mapa-colecciones">
             <div class="contenedor-mapa">
-                mapa
+                <div id="map"></div>
             </div>
             <div class="contenedor-colecciones">
                 {{#each colecciones}}
@@ -40,3 +52,6 @@
         </div>
     </section>
 </div>
+{{/partial}}
+
+{{> templates/layout}}
