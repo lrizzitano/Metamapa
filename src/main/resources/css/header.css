@@ -1,3 +1,5 @@
+@import url('variables.css');
+
 .header-sin-sesion{
     display: flex;
     align-items: center;
@@ -9,15 +11,14 @@
 .header-sin-sesion button{
     border: none;
     cursor: pointer;
-    color: white;
+    color: var(--color-secundario);
     box-shadow: 0.02rem 0.02rem white;
     width: 28%;
     height: 50%;
-    color: white;
     border-radius:0.3rem;
     margin: 5%;
     font-size: 1rem;
-    background-color: #51af49;
+    background-color: var(--color-acento);
 }
 .header-sin-sesion button:hover{
     transform: scale(1.15,1.15);

@@ -1,3 +1,6 @@
+@import url('variables.css');
+
+
 .cuerpo-index{
     background-color: rebeccapurple;
     display: flex;
@@ -10,7 +13,7 @@
 .seccion-filtros{
     display: flex;
     flex-direction: row;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     width: 100%;
     min-height: 5.5rem;
     align-items: center;
@@ -24,7 +27,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     height: 100%;
     overflow: hidden;
 }
@@ -33,7 +36,7 @@
     flex-direction: row;
     width: 25%;
     height:100%;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     align-items: center;
     justify-content: center;
     border-right: 0.05rem solid black;
@@ -47,7 +50,7 @@
     flex-direction: column;
     justify-content: flex-start;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -60,10 +63,10 @@
     margin: 2%;
     width: 100%;
     height: 20%;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     cursor: pointer;
     border-radius: 0.5rem;
-    border-color: #51af49;
+    border-color: var(--color-principal);
     min-height: 7rem;
     max-width: 17rem;
     padding: 0;
@@ -71,7 +74,7 @@
 
 .hecho h1{
     width: 100%;
-    background-color: #51af49;
+    background-color: var(--color-principal);
     margin: 0;
     font-size: medium;
     color: #272727;
@@ -90,7 +93,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #dcdcdc;
+    background-color: var(--color-secundario);
     width: 100%;
     height: 100%;
     align-items: center;
@@ -103,7 +106,7 @@
     display: flex;
     width: 100%;
     height: 85%;
-    background-color: #e0e8ed;
+    background-color: var(--color-secundario);
     align-items: center;
     justify-content: center;
 }
@@ -122,12 +125,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    background-color: white;
+    background-color: var(--color-secundario);
     border-radius: 0.5rem;
     height: 85%;
     width: 13%;
     font-size: 0.2rem;
-    border: 0.05rem solid #51af49;
+    border: 0.05rem solid var(--color-acento);
 }
 .filtro label{
     font-size: small;
@@ -143,7 +146,7 @@
     display: flex;
     width: 100%;
     height: 15%;
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
     align-items: center;
     justify-content: flex-start;
     border-top: 0.05rem solid black;
@@ -153,22 +156,22 @@
 }
 
 .contenedor-colecciones button{
-    border: 0.07rem solid #ffffff;
+    border: 0.07rem solid var(--color-secundario);
     cursor: pointer;
     width: 28%;
     height: 50%;
     min-width: 10rem;
     min-height: 3.5rem;
-    color: #ffffff;
+    color: var(--color-secundario);
     border-radius:0.3rem;
     margin: 2%;
     font-size: 1rem;
-    background-color: #18681d;
+    background-color: var(--color-principal);
 }
 
 .contenedor-colecciones button:hover{
     transform: scale(1.1,1.1);
-    border: 0.07rem solid #18681d;
-    color: #18681d;
+    border: 0.07rem solid var(--color-acento);
+    color: var(--color-acento);
     background-color: #ffffff;
 }
