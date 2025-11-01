@@ -30,7 +30,10 @@
                 {{> templates/headers/headerSinSesion }}
 
             </div>
-            <button class="subir-hecho-boton">Subir Hecho</button>
+            <button class="subir-hecho-boton"
+                    hx-get="navegar/hechos/nuevo"
+                    hx-trigger="click"
+                    hx-push-url="true">Subir Hecho</button>
         </header>
 
         <main class="contenedor-cuerpo-index">

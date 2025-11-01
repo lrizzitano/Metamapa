@@ -37,5 +37,18 @@ public class Router implements WithSimplePersistenceUnit {
       model.put("hechos", coleccion.hechos(new NullFiltro()));
       ctx.render("templates/paginas/mapa/hechos", model);
     });
+
+
+    //Soy boludo o no encontre forma mejor idk
+    app.get("navegar/hechos/nuevo", ctx -> {
+      ctx.header("HX-Redirect","/hechos/nuevo");
+    });
+
+    app.get("/hechos/nuevo", ctx -> {
+      ctx.render("templates/paginas/subirHecho");
+    });
+
   }
+
+
 }
