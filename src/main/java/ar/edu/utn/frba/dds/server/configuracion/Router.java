@@ -26,7 +26,7 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/", ctx -> {
       Map<String, Object> model = new HashMap<>();
       model.put("colecciones", new ColeccionesRepository().findAll());
-      ctx.render("templates/mapaPagina/mapaPagina", model);
+      ctx.render("templates/paginas/mapa/mapaPagina", model);
     });
 
     app.get("/{id}", ctx -> {
@@ -35,7 +35,7 @@ public class Router implements WithSimplePersistenceUnit {
       coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
       Map<String, Object> model = new HashMap<>();
       model.put("hechos", coleccion.hechos(new NullFiltro()));
-      ctx.render("templates/hechos", model);
+      ctx.render("templates/paginas/mapa/hechos", model);
     });
   }
 }
