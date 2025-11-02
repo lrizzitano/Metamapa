@@ -15,11 +15,23 @@
                 <label>Titulo</label>
                 <input type="text" placeholder="Elija un titulo"></input>
 
-                <label>Categoria</label>
-                <select>
-                    <option value="" disabled selected>Seleccione una categoria</option>>
-                    <option value="incendios">Incendios</option>
-                </select>
+                <div class="contenedor-doble latitud-longitud">
+                    <div>
+                        <label>Categoria</label>
+                        <select>
+                            <option value="" disabled selected>Seleccione una categoria</option>>
+                            <option value="incendios">Incendios</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Coleccion</label>
+                        <select>
+                            <option value="" disabled selected>Seleccione una coleccion</option>>
+                            <option value="incendios">Desastres naturales</option>
+                        </select>
+                    </div>
+                </div>
 
                 <label>Fecha</label>
                 <input type="date"></input>
@@ -36,7 +48,7 @@
                 <label>Multimedio</label>
                 <input type="text"/>
 
-                <div class="contenedor-latitud-longitud">
+                <div class="contenedor-doble latitud-longitud">
                     <div class="contenedor-latitud">
                         <label>Latitud</label>
                         <input type="number"/>
