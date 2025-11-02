@@ -127,3 +127,13 @@ form label{
 .boton-secundario:hover{
     transform: scale(1.15,1.15);
 }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: underline;
+}
