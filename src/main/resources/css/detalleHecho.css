@@ -1,14 +1,12 @@
 .contenedor.detalle-hecho{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
+    justify-content: center;
     background-color: var(--color-secundario);
     z-index: 1001;
-    height: 85%;
-    width: 80%;
+    height: 90%;
+    width: 85%;
     border-radius: 3rem;
-    padding: 1%;
 }
 
 .contenedor.titulo-cerrar{
@@ -16,17 +14,23 @@
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
+}
+.contenedor.titulo-cerrar button{
+    width: 3%;
+    height: 30%;
+    margin: 0;
 }
 
 .contenedor.cuerpo-detalle-hecho{
     display: flex;
     width: 100%;
     flex-direction: row;
-
     justify-content: space-between;
     height: 100%;
     align-items: center;
+
 }
 
 .contenedor.descripcion-datos-solicitudes{
@@ -42,7 +46,7 @@
     width: 45%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
 
@@ -65,4 +69,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.contenedor.principal{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 90%;
+    height: 90%;
+}
+
+.boton-secundario.solicitud-eliminacion{
+    background-color: var(--color-principal);
+    margin-left: 0;
 }
