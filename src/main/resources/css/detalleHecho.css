@@ -16,27 +16,26 @@
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    background-color: var(--color-principal);
+
 }
 
 .contenedor.cuerpo-detalle-hecho{
     display: flex;
     width: 100%;
     flex-direction: row;
-    background-color: #249ee5;
+
     justify-content: space-between;
     height: 100%;
     align-items: center;
 }
 
-.contenedor.descripcion-silicitdues{
+.contenedor.descripcion-datos-solicitudes{
     width: 55%;
     height: 100%;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
-    background-color: darkseagreen;
+
 }
 
 .contenedor.imagen-info{
@@ -46,10 +45,24 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: red;
+
 }
 .contenedor.imagen{
     width: 80%;
     height: 65%;
-    background-color: var(--color-secundario);
+    background-color: var(--color-principal);
+}
+
+.contendor.datos-solicitudes{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height:auto;
+
+}
+
+.contenedor.imagen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
