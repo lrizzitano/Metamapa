@@ -73,7 +73,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "cpu 10 salva una familia en un edificio en llamas",
       "grande cpu 10",
       "Milagro",
-      burzaco,
+      saladillo,
       LocalDateTime.now(),
       LocalDateTime.of(2023, 3, 15, 23, 59),
       Origen.CONTRIBUYENTE
@@ -84,7 +84,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "hiurgvhgbniuoesa5",
       "grande cpu 10",
       "Milagro",
-      burzaco,
+      rioChico,
       LocalDateTime.now(),
       LocalDateTime.of(2023, 3, 15, 23, 59),
       Origen.CONTRIBUYENTE
@@ -95,7 +95,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "ggere",
       "grande cpu 10",
       "Milagro",
-      burzaco,
+      cutralco,
       LocalDateTime.now(),
       LocalDateTime.of(2023, 3, 15, 23, 59),
       Origen.CONTRIBUYENTE
@@ -106,7 +106,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "Adulto aprende a volar",
       "grande cpu 10",
       "Milagro",
-      burzaco,
+      rioChico,
       LocalDateTime.now(),
       LocalDateTime.of(2023, 3, 15, 23, 59),
       Origen.CONTRIBUYENTE
@@ -117,7 +117,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "Adulto deja de volar y cae del cielo",
       "grande cpu 10",
       "Milagro",
-      burzaco,
+      sanLuis,
       LocalDateTime.now(),
       LocalDateTime.of(2023, 3, 15, 23, 59),
       Origen.CONTRIBUYENTE
