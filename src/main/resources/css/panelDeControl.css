@@ -8,15 +8,28 @@ main {
 }
 
 .navegacion {
-    background: var(--color-acento);
+    background: var(--color-secundario);
     height: fit-content;
     width: 30%;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     padding: 32px;
+    border: solid 0.1rem var(--color-principal);
+}
+
+.navegacion h2{
+    color: var(--color-principal);
+    border-bottom:0.05rem solid var(--color-texto) ;
+}
+.navegacion p{
+    color: var(--color-acento);
+}
+
+.navegacion p:hover{
+    color: var(--color-texto);
 }
 
 .contenido{
-    background: var(--color-acento);
+    background: var(--color-secundario);
     height: auto;
     width: 70%;
     overflow-y: scroll;
