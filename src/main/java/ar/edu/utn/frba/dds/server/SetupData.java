@@ -17,8 +17,12 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class SetupData implements WithSimplePersistenceUnit {
-  static private final Ubicacion laPampa = new Ubicacion(12.2,12.2, Provincia.LA_PAMPA,null);
-  static private final Ubicacion burzaco = new Ubicacion(12.2, 12.2, Provincia.BUENOS_AIRES,null);
+  static private final Ubicacion laPampa = new Ubicacion(-25.8666139, -60.5564475, Provincia.LA_PAMPA,null);
+  static private final Ubicacion burzaco = new Ubicacion(-34.23, -57.73, Provincia.BUENOS_AIRES,null);
+  static private final Ubicacion saladillo = new Ubicacion(-35.65,-59.56, Provincia.BUENOS_AIRES,null);
+  static private final Ubicacion sanLuis = new Ubicacion(-32.81,-65.85, Provincia.SAN_LUIS,null);
+  static private final Ubicacion cutralco = new Ubicacion(-38.97,-69.61, Provincia.NEUQUEN,null);
+  static private final Ubicacion rioChico = new Ubicacion(-47.43,-71.38, Provincia.SANTA_CRUZ,null);
 
   static private final Hecho hecho1 = new Hecho(
       null,
