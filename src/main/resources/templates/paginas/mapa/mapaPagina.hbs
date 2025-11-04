@@ -6,48 +6,48 @@
 {{/partial}}
 
 {{#partial "contenido" }}
-<div class="cuerpo-index">
-    <section class="seccion-filtros">
-        <form class="form-filtros">
-            <div class="filtro fecha-desde">
-                <label>Fecha Desde</label>
-                <input type="date"></input>
+    <div class="cuerpo-index">
+        <section class="seccion-filtros">
+            <form class="form-filtros">
+                <div class="filtro fecha-desde">
+                    <label>Fecha Desde</label>
+                    <input type="date"></input>
+                </div>
+                <div class="filtro fecha-hasta">
+                    <label>Fecha Hasta</label>
+                    <input type="date"></input>
+                </div>
+                <div class="filtro categoria">
+                    <label>Categoria</label>
+                    <select class="select-categoria">
+                        <option value="Incendios">Incendios</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+        <section class="contenedor-hechos-mapaYcolecciones">
+            <div class="contenedor-hechos">
+                {{> templates/paginas/mapa/hechos}}
             </div>
-            <div class="filtro fecha-hasta">
-                <label>Fecha Hasta</label>
-                <input type="date"></input>
+            <div class="contenedor-mapa-colecciones">
+                <div class="contenedor-mapa">
+                    <div id="map"></div>
+                </div>
+                <div class="contenedor-colecciones">
+                    {{#each colecciones}}
+                        <button
+                                class="boton-collecion"
+                                hx-get="/colecciones/{{id}}/hechos"
+                                hx-target=".contenedor-hechos"
+                                hx-swap="innerHTML"
+                        >
+                            {{titulo}}
+                        </button>
+                    {{/each}}
+                </div>
             </div>
-            <div class="filtro categoria">
-                <label>Categoria</label>
-                <select class="select-categoria">
-                    <option value="Incendios">Incendios</option>
-                </select>
-            </div>
-        </form>
-    </section>
-    <section class="contenedor-hechos-mapaYcolecciones">
-        <div class="contenedor-hechos">
-            {{> templates/paginas/mapa/hechos}}
-        </div>
-        <div class="contenedor-mapa-colecciones">
-            <div class="contenedor-mapa">
-                <div id="map"></div>
-            </div>
-            <div class="contenedor-colecciones">
-                {{#each colecciones}}
-                    <button
-                            class="boton-collecion"
-                            hx-get="/colecciones/{{id}}/hechos"
-                            hx-target=".contenedor-hechos"
-                            hx-swap="innerHTML"
-                    >
-                        {{titulo}}
-                    </button>
-                {{/each}}
-            </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 {{/partial}}
 
 {{> templates/layout}}

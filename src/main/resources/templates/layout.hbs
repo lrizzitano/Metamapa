@@ -16,11 +16,12 @@
         {{#block "dependencias"}}
         {{/block}}
     </head>
-    <body>
 
-        <header class="header">
+    <header class="header">
+        <a href="/">
             <h1 class="titulo-header">Metamapa</h1>
-            <div class="botones-header">
+        </a>
+        <div class="botones-header">
             <!-- Comento el if pq rompe, habría que hacer login primero
             {{#if autenticado}}
                 {{> templates/headers/headerUsuario }}
@@ -29,22 +30,20 @@
             {{/if}}
             -->
 
-                {{> templates/headers/headerSinSesion }}
+            {{> templates/headers/headerUsuario }}
 
-            </div>
-            <a href="/hechos/nuevo">
+        </div>
+        <a href="/hechos/nuevo">
             <button class="boton">
                 Subir Hecho
             </button>
-            </a>
-        </header>
+        </a>
+    </header>
 
-        <main class="contenedor-cuerpo-index">
-            {{#block "contenido"}}
-            {{/block}}
-        </main>
-
-    </body>
+    <main class="contenedor-cuerpo-index">
+        {{#block "contenido"}}
+        {{/block}}
+    </main>
 
 </html>
 

@@ -41,7 +41,19 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.get("/panelDeControl", ctx -> {
-      ctx.render("templates/paginas/panelDeControl");
+      ctx.render("templates/paginas/panelDeControl/panel");
+    });
+
+    app.get("/panelDeControl/colecciones", ctx -> {
+      ctx.render("templates/paginas/panelDeControl/verColecciones");
+    });
+
+    app.get("/panelDeControl/colecciones/nueva", ctx -> {
+      ctx.render("templates/paginas/panelDeControl/crearColeccion");
+    });
+
+    app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion");
     });
 
   }
