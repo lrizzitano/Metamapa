@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <!-- (SPA) -->
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{title}}</title>
-        <link rel="stylesheet" href="/css/layout.css">
-        <link rel="stylesheet" href="/css/modales.css">
-        <link rel="stylesheet" href="/css/header.css">
-        <link rel="stylesheet" href="/css/mapaPagina.css">
-        <link rel="stylesheet" href="/css/detalleHecho.css">
-        <script src="/js/app.js"></script>
-        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/modales.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/mapaPagina.css">
+    <link rel="stylesheet" href="/css/detalleHecho.css">
+    <script src="/js/app.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
-        {{#block "dependencias"}}
-        {{/block}}
-    </head>
-    <body>
+    {{#block "dependencias"}}
+    {{/block}}
+</head>
+<body>
 
-        <header class="header">
-            <h1 class="titulo-header">Metamapa</h1>
-            <div class="botones-header">
-            <!-- Comento el if pq rompe, habría que hacer login primero
+<header class="header">
+    <a href="/">
+        <h1 class="titulo-header">Metamapa</h1>
+    </a>
+    <div class="botones-header">
+        <!-- Comento el if pq rompe, habría que hacer login primero
             {{#if autenticado}}
-                {{> templates/headers/headerUsuario }}
-            {{else}}
-                {{> templates/headers/headerSinSesion }}
-            {{/if}}
+            {{> templates/headers/headerUsuario }}
+        {{else}}
+            {{> templates/headers/headerSinSesion }}
+        {{/if}}
             -->
 
         {{> templates/headers/headerUsuario}}
 
-            </div>
-            <a href="/hechos/nuevo">
-            <button class="boton">
-                Subir Hecho
-            </button>
-            </a>
-        </header>
+    </div>
+    <a href="/hechos/nuevo">
+        <button class="boton">
+            Subir Hecho
+        </button>
+    </a>
+</header>
 
-        <main class="contenedor-cuerpo-index">
-            {{#block "contenido"}}
-            {{/block}}
-        </main>
+<main class="contenedor-cuerpo-index">
+    {{#block "contenido"}}
+    {{/block}}
+</main>
 
-    </body>
+</body>
 
 </html>
 
