@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/panelDeControl.css">
+
+{{#partial "contenido"}}
+    <div class="navegacion">
+        <h2 style="text-align: center">Panel De Control</h2>
+
+        <h2>Colecciones</h2>
+
+        <a href="/panelDeControl/colecciones">
+            <p class="bold link-seccion">Ver Colecciones</p>
+        </a>
+        <a  href="/panelDeControl/colecciones/nueva">
+            <p class="bold link-seccion">Crear Coleccion</p>
+        </a>
+
+        <h2>Solicitudes</h2>
+
+        <a  href="/panelDeControl/solicitudesDeEliminacion">
+            <p class="bold link-seccion">Solicitudes de Eliminación</p>
+        </a>
+    </div>
+
+    <div class="contenido">
+        {{#block "seccion"}}
+        {{/block}}
+    </div>
+{{/partial}}
+
+{{> templates/layout}}
