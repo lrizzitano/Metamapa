@@ -75,20 +75,6 @@ form label{
     height: 25%;
 }
 
-.panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-secundario);
-    padding: 2rem;
-    border-radius: 8px;
-    width: 50%;
-    height: 70%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-}
-
 .panel h2 {
     margin-top: 0;
     background-color: var(--color-principal);

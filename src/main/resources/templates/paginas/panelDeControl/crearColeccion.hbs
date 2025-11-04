@@ -1,5 +1,54 @@
+<link rel="stylesheet" href="/css/form.css">
+
 {{#partial "seccion"}}
-    <h1>Hola soy un form de crear coleccion</h1>
+    <section class="contenedor-form">
+        <div class="panel">
+            <form class="form" style="width: 100%">
+
+                <label>Titulo</label>
+                <input type="text" placeholder="Elija un titulo"></input>
+
+                <label>Descripcion</label>
+                <input type="text" class="largo" placeholder="Descripción de la colección"/>
+
+                <label>Criterio de Pertenencia</label>
+                <div class="contenedor-doble">
+                    <div>
+                        <label>Categoria</label>
+                        <input type="text" placeholder="Categoría"/>
+                    </div>
+
+                    <div>
+                        <label>Desde</label>
+                        <input style="width: fit-content" type="date" placeholder="Fecha anterior"/>
+                    </div>
+
+                    <div>
+                        <label>Hasta</label>
+                        <input style="width: fit-content" type="date" placeholder="Fecha porterior"/>
+                    </div>
+                </div>
+
+                <label>Fuentes</label>
+                <select multiple>
+                    <option value="metamapa">MetaMapa</option>
+                    <option value="proxy">Proxy</option>
+                    <option value="dinamica">Dinamica</option>
+                </select>
+
+                <label>Criterio de Consenso</label>
+                <select>
+                    <option value="" selected>Sin Consenso</option>
+                    <option value="absoluto">Absoluto</option>
+                    <option value="mayoriaSimple">Mayoría Simple</option>
+                    <option value="multiplesMenciones">Multiples Menciones</option>
+                </select>
+
+                <button class="boton secundario" type="button">Subir</button>
+
+            </form>
+        </div>
+    </section>
 {{/partial}}
 
 {{> templates/paginas/panelDeControl/panel}}

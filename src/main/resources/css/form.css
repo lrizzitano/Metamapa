@@ -17,12 +17,20 @@
     margin: 0 0 16px 0;
 }
 
-.panel{
+
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secundario);
+    padding: 2rem;
+    border-radius: 8px;
     width: 100%;
     height: 100%;
-    justify-content: flex-start;
-    margin: 0;
-    padding: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
 }
 .panel h2{
     margin:0;
@@ -40,6 +48,7 @@
     align-items: center;
     justify-content: space-around;
     margin: 0 0 auto 0;
+    width: 70%;
 }
 .contenedor-doble div{
     display: flex;

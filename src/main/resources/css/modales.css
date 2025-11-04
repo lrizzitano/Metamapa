@@ -21,6 +21,20 @@
     height: 100%;
 }
 
+.panel.sign-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secundario);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 50%;
+    height: 70%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
 .backdrop {
     position: absolute;
     top: 0;
@@ -30,15 +44,6 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 0;
 }
-
-
-
-
-.panel.sign-up{
-    width: 100%;
-    height:95%;
-}
-
 
 .modal form{
     display: flex;
