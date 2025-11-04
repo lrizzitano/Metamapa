@@ -1,33 +1,30 @@
 
 <div class="modal" id="modificarColeccion">
     <div class="backdrop" onclick="closeModal('modificarColeccion')"></div>
-    <div class="panel sign-in">
+    <div class="panel modificar-coleccion" style="height: auto">
         <h2>Modificar Coleccion</h2>
 
-        <form class="form-sign-in" id="signin" method="POST" action="/login">
+        <form class="form-sign-in" id="modificar" method="POST" action="/colecciones">
 
             <label class="titulo-label" for="titulo">Titulo</label>
-            <input type="text" class="titulo-input" id="titulo" placeholder="Titulo actual">
+            <p  class="titulo-input" id="titulo">Titulo de la coleccion</p>
 
             <label for="descripcion">Descripcion</label>
-            <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion actual">
+            <p  name="descripcion" id="descripcion" >Descripcion de la coleccion</p>
 
             <label for="criterios">Criterio de pertenencia</label>
             <div class="contenedor lateral">
                 <div class="contenedor vertical">
                     <label for="fecha-desde">Fecha desde</label>
-                    <input type="date" name="fecha-desde" id="fecha-desde">
+                    <p  name="fecha-desde" id="fecha-desde">Fecha desde col</p>
                 </div>
                 <div class="contenedor vertical">
                     <label for="fecha-hasta">Fecha hasta</label>
-                    <input type="date" name="fecha-hasta" id="fecha-hasta">
+                    <p  name="fecha-hasta" id="fecha-hasta">Fecha hasta c</p>
                 </div>
                 <div class="contenedor vertical">
                     <label for="categoria">Categoria</label>
-                    <select id="categoria">
-                        <option selected>Fuente actual</option>
-                        <option>Desastres naturales</option>
-                    </select>
+                    <p  name="categoria" id="categoria">Categoria de la col</p>
                 </div>
             </div>
 
