@@ -30,7 +30,7 @@ main {
     width: fit-content;
 }
 
-.colecciones{
+.contenedor.cartas{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -39,7 +39,7 @@ main {
     overflow: hidden;
 }
 
-.boton.coleccion{
+.contenedor.carta{
     color: var(--color-principal);
     border: 0.05rem solid var(--color-principal);
     background-color: var(--color-secundario);
@@ -47,10 +47,11 @@ main {
     height: auto;
 }
 
-.boton.coleccion:hover{
+.contenedor.carta:hover{
     transform: scale(1,1);
+    cursor: auto;
 }
 
-.boton.coleccion p,h2{
+.contenedor.carta p,h2,h1{
     font-size: small;
 }
