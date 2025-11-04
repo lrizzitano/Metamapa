@@ -2,38 +2,48 @@
 <div class ="modal" id="detalleHecho">
     <div class="backdrop" onclick="closeModal('detalleHecho')"></div>
     <div class="contenedor detalle-hecho">
-        <div class="contenedor titulo-cerrar">
-            <h1>TITULO</h1>
-            <button type="button">X</button>
+        <div class="contenedor principal">
+
+            <div class="contenedor titulo-cerrar">
+                <h1>TITULO POCO CREIBLE</h1>
+                <button type="button" class="boton-secundario" onclick="closeModal('detalleHecho')">X</button>
+            </div>
+
+            <section class="contenedor cuerpo-detalle-hecho">
+
+                <section class="contenedor descripcion-datos-solicitudes">
+                    <div class="contendor descripcion">
+                        <p class="descripcion">Si te cuento lo que paso te quedas loco de por vida mi amigo mio
+                            Si te cuento lo que paso te quedas loco de por vida mi amigo mio
+                            Si te cuento lo que paso te quedas loco de por vida mi amigo mio
+                            Si te cuento lo que paso te quedas loco de por vida mi amigo mio</p>
+                    </div>
+                    <div class="contendor datos-solicitudes">
+                        <p><b>Categoria:</b> Locuras locas</p>
+                        <p><b>Provincia:</b> Neuquen</p>
+                        <p><b>Autor:</b> Ulises</p>
+                        <a>
+                            <button class="boton secundario"
+                                    hx-get="navegar/solicitudesDeEliminacion/nueva?hecho=Hecho Lamentablemente Falso"
+                                    hx-trigger="click"
+                                    hx-push-url="true">
+                                Solicitar eliminacion
+                            </button>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="contenedor imagen-info">
+                    <div class="contenedor imagen">
+                        <p>imagen</p>
+                    </div>
+                    <p><b>Fecha publicada:</b> 22/10/25</p>
+                    <p><b>Fecha del suceso:</b> 10/1/25</p>
+                </section>
+
+            </section>
+
         </div>
-        <section class="contenedor cuerpo-detalle-hecho">
-
-            <section class="contenedor descripcion-datos-solicitudes">
-                <div class="contendor descripcion">
-                    <p class="descripcion">Si te cuento lo que paso te quedas loco de por vida mi amigo mio
-                        Si te cuento lo que paso te quedas loco de por vida mi amigo mio
-                        Si te cuento lo que paso te quedas loco de por vida mi amigo mio
-                        Si te cuento lo que paso te quedas loco de por vida mi amigo mio</p>
-                </div>
-                <div class="contendor datos-solicitudes">
-                    <p>Categoria: Locuras locas</p>
-                    <p>Provincia: Neuquen</p>
-                    <p>Autor: Ulises</p>
-                    <a>
-                        <button >Solicitar eliminacion</button>
-                    </a>
-                </div>
-            </section>
-
-            <section class="contenedor imagen-info">
-                <div class="contenedor imagen">
-                    <p>imagen</p>
-                </div>
-                <h3>Fecha publicada: 22/10/25</h3>
-                <h3>Fecha del suceso: 10/1/25</h3>
-            </section>
-
-        </section>
 
     </div>
 </div>

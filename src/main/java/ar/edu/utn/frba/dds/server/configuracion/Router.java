@@ -31,5 +31,25 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/subirHecho");
     });
 
+    app.get("navegar/solicitudesDeEliminacion/nueva", ctx -> {
+      String hecho = ctx.queryParam("hecho");
+      ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
+    });
+
+    app.get("/solicitudesDeEliminacion/nueva", ctx -> {
+      String paramHecho = ctx.queryParam("hecho");
+      Map<String, Object> model = new HashMap<>();
+      model.put("hecho", paramHecho);
+      ctx.render("templates/paginas/nuevaSolicitudDeEliminacion", model);
+    });
+
+    app.get("navegar/usuarios/nuevo", ctx -> {
+      ctx.header("HX-Redirect","/usuarios/nuevo");
+    });
+
+    app.get("/usuarios/nuevo", ctx -> {
+      ctx.render("templates/paginas/registrarse");
+    });
+
   }
 }

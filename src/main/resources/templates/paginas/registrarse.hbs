@@ -1,0 +1,51 @@
+{{#partial "dependencias"}}
+    <link rel="stylesheet" href="/css/form.css">
+{{/partial}}
+
+{{#partial "contenido"}}
+    <section class="contenedor-form">
+        <div class="panel">
+            <div class="contenedor-titulo-volver">
+
+                <div class="contenedor-titulo izq">
+                    <a class="enlace" href="/">
+                        <button class="boton secundario">
+                            volver
+                        </button>
+                    </a>
+                </div>
+
+                <h2>Registrarse</h2>
+
+                <div class="contenedor-titulo der">
+                    <button class="boton-secundario relleno">volver</button>
+                </div>
+            </div>
+            <form class="form" id="signup" method="POST" action="/usuario">
+
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Pablo">
+
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" id="apellido" placeholder="Garbarino">
+
+                <label for="fechaDeNacimiento">Fecha de nacimiento</label>
+                <input type="date" name="fechaDeNacimiento" id="fechaDeNacimiento">
+
+                <label for="nombreDeUsuario">Nombre de usuario</label>
+                <input type="text" name="nombreDeUsuario" id="nombreDeUsuario" placeholder="PabloTheKernelGOAT">
+
+                <label for="emailDeUsuario">Email de usuario</label>
+                <input type="email" name="emailDeUsuario" id="emailDeUsuario" placeholder="pablete@gmail.com">
+
+                <label for="passwordSignUp">Contraseña</label>
+                <input type="password" name="password" id="passwordSignUp" placeholder="vedia1234">
+
+                <button class="boton secundario" type="submit">Crear Cuenta</button>
+
+            </form>
+        </div>
+    </section>
+{{/partial}}
+
+{{> templates/layout}}
