@@ -1,10 +1,11 @@
 <div class="header-sin-sesion">
 
     <button class="boton" onclick="openModal('signinModal')">Iniciar Sesión</button>
-    <button class="boton"
-            hx-get="navegar/usuarios/nuevo"
-            hx-trigger="click"
-            hx-push-url="true">Registrarse</button>
+    <a class="enlace" href="/usuarios/nuevo">
+        <button class="boton">
+            Registrarse
+        </button>
+    </a>
     <button class="boton" onclick="openModal('detalleHecho')">HECHO-PRUEBA</button>
 
     {{> templates/modals/iniciarSesion }}

@@ -25,17 +25,8 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/colecciones/{id}/hechos",
         ctx -> ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx)));
 
-    //Soy boludo o no encontre forma mejor idk
-    app.get("navegar/hechos/nuevo", ctx ->
-      ctx.header("HX-Redirect","/hechos/nuevo"));
-
     app.get("/hechos/nuevo", ctx -> {
       ctx.render("templates/paginas/subirHecho");
-    });
-
-    app.get("navegar/solicitudesDeEliminacion/nueva", ctx -> {
-      String hecho = ctx.queryParam("hecho");
-      ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
     });
 
     app.get("/solicitudesDeEliminacion/nueva", ctx -> {
@@ -43,10 +34,6 @@ public class Router implements WithSimplePersistenceUnit {
       Map<String, Object> model = new HashMap<>();
       model.put("hecho", paramHecho);
       ctx.render("templates/paginas/nuevaSolicitudDeEliminacion", model);
-    });
-
-    app.get("navegar/usuarios/nuevo", ctx -> {
-      ctx.header("HX-Redirect","/usuarios/nuevo");
     });
 
     app.get("/usuarios/nuevo", ctx -> {

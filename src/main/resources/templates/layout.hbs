@@ -29,13 +29,14 @@
             {{/if}}
             -->
 
-                {{> templates/headers/headerUsuario }}
+                {{> templates/headers/headerSinSesion }}
 
             </div>
-            <button class="boton"
-                    hx-get="navegar/hechos/nuevo"
-                    hx-trigger="click"
-                    hx-push-url="true">Subir Hecho</button>
+            <a href="/hechos/nuevo">
+            <button class="boton">
+                Subir Hecho
+            </button>
+            </a>
         </header>
 
         <main class="contenedor-cuerpo-index">
