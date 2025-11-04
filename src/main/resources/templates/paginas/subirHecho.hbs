@@ -1,15 +1,15 @@
 {{#partial "dependencias"}}
-    <link rel="stylesheet" href="/css/subirHecho.css">
+    <link rel="stylesheet" href="/css/form.css">
 {{/partial}}
 
 {{#partial "contenido"}}
-    <section class="contenedor-subir-hecho">
-        <div class="panel subir-hecho">
+    <section class="contenedor-form">
+        <div class="panel">
             <div class="contenedor-titulo-volver">
 
                 <div class="contenedor-titulo izq">
                     <a class="enlace" href="/">
-                        <button class="boton-secundario volver">
+                        <button class="boton secundario">
                             volver
                         </button>
                     </a>
@@ -21,7 +21,7 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form subir-hecho">
+            <form class="form">
 
                 <label>Titulo</label>
                 <input type="text" placeholder="Elija un titulo"></input>
@@ -48,7 +48,7 @@
                 <input type="date"></input>
 
                 <label>Descripcion</label>
-                <input type="text" placeholder="Describa el hecho"/>
+                <input type="text" class="largo" placeholder="Describa el hecho"/>
 
                 <label>Provincia</label>
                 <select>
@@ -70,9 +70,7 @@
                         <input type="number"/>
                     </div>
                 </div>
-                <div class="botones-form subir-hecho">
-                    <button class="boton-secundario subir-hecho" type="button">Subir</button>
-                </div>
+                <button class="boton secundario" type="button">Subir</button>
 
             </form>
         </div>

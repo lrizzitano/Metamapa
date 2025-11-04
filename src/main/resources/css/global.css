@@ -1,0 +1,60 @@
+:root {
+    --color-principal: #18681d;
+    --color-secundario: #f1faf7;
+    --color-acento: #249ee5;
+    --color-texto: #757575;
+    --color-texto-negrita: #1E1E1E;
+
+    font: normal 1rem "Roboto Light", sans-serif;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
+}
+
+h1 {
+    font-size: 72px;
+    font-weight: bold;
+    margin:  1rem 0 1rem 0;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0.75rem 0 0 0;
+}
+
+p {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 1rem 0 0 0;
+}
+
+p.bold {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.boton{
+    cursor: pointer;
+    color: var(--color-secundario);
+    height: 2.5rem;
+    padding: 0 16px;
+    border: none;
+    width: auto;
+    border-radius:0.3rem;
+    background-color: var(--color-acento);
+}
+
+.boton:hover{
+    transform: scale(1.2,1.2);
+}
+
+.boton.secundario{
+    margin: 16px 0 0 0;
+    background-color: var(--color-principal);
+}

@@ -1,4 +1,4 @@
-@import url('variables.css');
+@import url('global.css');
 
 
 .cuerpo-index{
@@ -77,7 +77,6 @@
     background-color: var(--color-principal);
     margin: 0;
     font-size: medium;
-    color: #272727;
     text-align: center;
 }
 .hecho p{
@@ -118,6 +117,10 @@
     justify-content: space-around;
     align-items: center;
     height: 100%;
+}
+
+.form-filtros label {
+    margin: 8px ;
 }
 
 .filtro{

@@ -1,11 +1,13 @@
 <div class="header-sin-sesion">
 
-    <button class="boton-secundario" onclick="openModal('signinModal')">Iniciar Sesión</button>
-    <button class="boton-secundario" onclick="openModal('signupModal')">Registrarse</button>
-    <button class="boton-secundario" onclick="openModal('detalleHecho')">HECHO-PRUEBA</button>
+    <button class="boton" onclick="openModal('signinModal')">Iniciar Sesión</button>
+    <button class="boton"
+            hx-get="navegar/usuarios/nuevo"
+            hx-trigger="click"
+            hx-push-url="true">Registrarse</button>
+    <button class="boton" onclick="openModal('detalleHecho')">HECHO-PRUEBA</button>
 
-    {{> templates/modals/signin }}
-    {{> templates/modals/signup }}
+    {{> templates/modals/iniciarSesion }}
     {{> templates/modals/detalleHecho}}
 
 </div>
