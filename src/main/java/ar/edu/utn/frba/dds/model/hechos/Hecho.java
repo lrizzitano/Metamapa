@@ -2,6 +2,8 @@ package ar.edu.utn.frba.dds.model.hechos;
 
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -137,5 +139,22 @@ public class Hecho {
 
     public Provincia getProvincia() {
         return ubicacion.getProvincia();
+    }
+
+    Double getLatitud() {
+        return this.ubicacion.latitud;
+    }
+
+    Double getLongitud() {
+        return this.ubicacion.longitud;
+    }
+
+    public Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("titulo", titulo);
+        map.put("descripcion", descripcion);
+        map.put("latitud", String.valueOf(ubicacion.getLatitud()));
+        map.put("longitud", String.valueOf(ubicacion.getLongitud()));
+        return map;
     }
 }
