@@ -1,0 +1,51 @@
+
+<div class="modal" id="modificarColeccion">
+    <div class="backdrop" onclick="closeModal('modificarColeccion')"></div>
+    <div class="panel sign-in">
+        <h2>Modificar Coleccion</h2>
+
+        <form class="form-sign-in" id="signin" method="POST" action="/login">
+
+            <label class="titulo-label" for="titulo">Titulo</label>
+            <input type="text" class="titulo-input" id="titulo" placeholder="Titulo actual">
+
+            <label for="descripcion">Descripcion</label>
+            <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion actual">
+
+            <label for="criterios">Criterio de pertenencia</label>
+            <div class="contenedor lateral">
+                <div class="contenedor vertical">
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="date" name="fecha-desde" id="fecha-desde">
+                </div>
+                <div class="contenedor vertical">
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="date" name="fecha-hasta" id="fecha-hasta">
+                </div>
+                <div class="contenedor vertical">
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria">
+                        <option selected>Fuente actual</option>
+                        <option>Desastres naturales</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="fuente">Fuente</label>
+            <select id="fuente">
+                <option selected >Fuente actual</option>
+                <option>Estatica</option>
+            </select>
+
+            <label for="consenso">Criterio de consenso</label>
+            <select id="consenso">
+                <option selected >Consenso actual</option>
+                <option>Mayoria simple</option>
+            </select>
+
+            <div class="botones-form" style="justify-content: center">
+                <button class="boton secundario" type="submit">Modificar</button>
+            </div>
+        </form>
+    </div>
+</div>

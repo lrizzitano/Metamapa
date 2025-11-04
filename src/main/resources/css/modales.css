@@ -72,3 +72,21 @@
     color: var(--color-principal);
     background-color: var(--color-secundario);
 }
+
+.contenedor.lateral{
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 0 auto 0;
+}
+
+.contenedor.vertical{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 0 auto 0;
+    width: 100%;
+}

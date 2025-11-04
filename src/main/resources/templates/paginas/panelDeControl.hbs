@@ -1,3 +1,9 @@
-<div>
-    PANEL
-</div>
+{{#partial "contenido"}}
+    <div>
+        PANEL
+    </div>
+    <button class="boton" onclick="openModal('modificarColeccion')">Modificar Coleccion</button>
+{{/partial}}
+
+{{> templates/layout}}
+{{> templates/modals/modificarColeccion}}
