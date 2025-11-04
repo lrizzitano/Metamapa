@@ -53,5 +53,9 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/registrarse");
     });
 
+    app.get("/panelDeControl", ctx -> {
+      ctx.render("templates/paginas/panelDeControl");
+    });
+
   }
 }

@@ -1,17 +1,17 @@
 <div>
+    <a class="enlace" href="/panelDeControl">
+        <button class="boton">Panel de control</button>
+    </a>
 
-    <button onclick="openModal('subirHechoModal')">Subir Hecho</button>
-    <button onclick="openModal('crearSolicitudDeEliminacionModal')">Crear Solicitud de Eliminacion</button>
-    <!-- Para armar estos partials hay que hacer dos cosas. Primero contruir la vista del modal usando el layout "modal" con su respectivo partial de contenido (para esto usamos el map<string,object). Y segundo incluir esa porcion de vista en esta -->
-    {{> templates/modals/subirHechoModal }}
-    {{> templates/modals/crearSolicitudDeEliminacionModal }}
-
+    <!--
     {{#if esAdmin}}
-        <button onclick="openModal('fuentesModal')">Fuentes</button>
-
-        {{> templates/modals/fuentesModal }}
-        {{> templates/modals/coleccionesModal }}
-        {{> templates/modals/solicitudesDeCambioModal }}
-        {{> templates/modals/solicitudesDeEliminacionModal }}
+        <a>
+            <button >Panel de control</button>
+        </a>
+        {{else}}
+        <a>
+            <button>b</button>
+        </a>
     {{/if}}
+    -->
 </div>
