@@ -19,6 +19,7 @@ main {
     background: var(--color-acento);
     height: auto;
     width: 70%;
+    overflow-y: scroll;
 }
 
 .link-seccion {
@@ -27,4 +28,29 @@ main {
     border: 0.1rem solid var(--color-secundario);
     border-radius: 0.5rem;
     width: fit-content;
+}
+
+.colecciones{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:center;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.boton.coleccion{
+    color: var(--color-principal);
+    border: 0.05rem solid var(--color-principal);
+    background-color: var(--color-secundario);
+    width: auto;
+    height: auto;
+}
+
+.boton.coleccion:hover{
+    transform: scale(1,1);
+}
+
+.boton.coleccion p,h2{
+    font-size: small;
 }
