@@ -21,3 +21,19 @@ function crearModalColeccion(boton) {
   modal.querySelector('.descripcion').textContent = descripcion
 
 }
+
+function crearModalDetalleHecho(boton){
+  openModal('detalleHecho');
+  const modal = document.getElementById('detalleHecho');
+
+
+  modal.querySelector('.titulo').textContent = boton.dataset.titulo;
+  modal.querySelector('.descripcion').textContent = boton.dataset.descripcion;
+  modal.querySelector('.multimedia').src = boton.dataset.multimedia;
+  modal.querySelector('.fechaAcontecimiento').textContent = boton.dataset.fechaAcontecimiento;
+  modal.querySelector('.fechaCarga').textContent = boton.dataset.fechaCarga;
+  modal.querySelector('.categoria').textContent= boton.dataset.categoria;
+  modal.querySelector('.contribuyente').textContent= boton.dataset.contribuyente;
+  modal.querySelector('.provincia').textContent =boton.dataset.provincia;
+
+}

@@ -50,11 +50,7 @@
     flex-direction: column;
 
 }
-.contenedor.imagen{
-    width: 80%;
-    height: 65%;
-    background-color: var(--color-principal);
-}
+
 
 .contendor.datos-solicitudes{
     display: flex;
@@ -68,6 +64,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.multimedia{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .contenedor.principal{

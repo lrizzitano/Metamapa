@@ -5,7 +5,7 @@
         <div class="contenedor principal">
 
             <div class="contenedor titulo-cerrar">
-                <h1>TITULO POCO CREIBLE</h1>
+                <h1 class="titulo"></h1>
                 <button type="button" class="boton secundario cerra" onclick="closeModal('detalleHecho')">X</button>
             </div>
 
@@ -19,9 +19,9 @@
                             Si te cuento lo que paso te quedas loco de por vida mi amigo mio</p>
                     </div>
                     <div class="contendor datos-solicitudes">
-                        <p><b>Categoria:</b> Locuras locas</p>
-                        <p><b>Provincia:</b> Neuquen</p>
-                        <p><b>Autor:</b> Ulises</p>
+                        <p><b>Categoria:</b> <span class="categoria"></span> </p>
+                        <p><b>Provincia:</b> <span class="provincia"></span> </p>
+                        <p><b>Autor:</b> <span class="contribuyente"></span> </p>
                         <a>
                             <button class="boton secundario"
                                     hx-get="navegar/solicitudesDeEliminacion/nueva?hecho=Hecho Lamentablemente Falso"
@@ -35,10 +35,10 @@
 
                 <section class="contenedor imagen-info">
                     <div class="contenedor imagen">
-                        <p>imagen</p>
+                        <img class="multimedia" src="">
                     </div>
-                    <p><b>Fecha publicada:</b> 22/10/25</p>
-                    <p><b>Fecha del suceso:</b> 10/1/25</p>
+                    <p ><b>Fecha publicada: </b> <span class="fechaCarga"></span> </p>
+                    <p><b>Fecha del suceso: </b> <span class="fechaAcontecimiento"></span> </p>
                 </section>
 
             </section>
