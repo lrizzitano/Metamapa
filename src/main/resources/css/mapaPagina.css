@@ -108,19 +108,19 @@
 
 .card-hecho-contenedor-imagen {
     width: 100%;
-    aspect-ratio: 1;         /* Mantiene el contenedor cuadrado */
-    overflow: hidden;        /* Oculta el exceso de la imagen */
-    display: flex;           /* Centra la imagen (opcional) */
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .card-hecho-contenedor-imagen img {
-    height: 100%;            /* Ocupar todo el alto */
-    width: 100%;             /* Asegurar que llene el ancho también */
-    object-fit: cover;       /* Recorta proporcionalmente sin deformar */
-    object-position: center; /* Centrar el recorte */
-    display: block;          /* Evita espacios fantasma por inline images */
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 
