@@ -14,16 +14,14 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.addEventListener('htmx:afterSwap', (event) => {
         if (event.target.classList.contains('contenedor-hechos')) {
             markers.forEach(marker => marker.remove());
-            event.target.querySelectorAll('.hecho').forEach(btn => {
+            event.target.querySelectorAll('.card-hecho').forEach(btn => {
                 if (!btn.dataset.markerCreated) {
-                    const h1 = btn.querySelector('h1');
-                    const pTags = btn.querySelectorAll('p');
-                    const latLong = pTags[1].textContent.split(" : ");
-                    const lon = parseFloat(latLong[0])
-                    const lat = parseFloat(latLong[1])
+                    const titulo = btn.querySelector('#titulo');
+                    const lon = parseFloat(btn.querySelector('#longitud').textContent);
+                    const lat = parseFloat(btn.querySelector('#latitud').textContent);
                     marker = new maplibregl.Marker()
                         .setLngLat([lon, lat])
-                        .setPopup(new maplibregl.Popup().setText(h1.textContent))
+                        .setPopup(new maplibregl.Popup().setText(titulo.textContent))
                         .addTo(map);
                     markers.push(marker);
 
