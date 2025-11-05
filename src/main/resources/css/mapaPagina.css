@@ -75,6 +75,7 @@
 
 .card-hecho p {
     margin: 0;
+    font-size: 12px;
 }
 
 .card-hecho-contenido {
@@ -85,8 +86,11 @@
 }
 
 .card-hecho-multimedia-fecha {
+    display: flex;
+    flex-direction: column;
     width: 30%;
     text-align: center;
+    gap: 8px;
 }
 
 .card-hecho-titulo-subtitulo {

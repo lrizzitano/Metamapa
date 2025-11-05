@@ -2,7 +2,7 @@
     --color-principal: #18681d;
     --color-secundario: #f1faf7;
     --color-acento: #249ee5;
-    --color-texto: #757575;
+    --color-texto: #5c5b5b;
     --color-texto-negrita: #1E1E1E;
 
     font: normal 1rem "Roboto Light", sans-serif;
@@ -29,13 +29,12 @@ h2 {
 }
 
 p {
-    font-size: 12px;
+    font-size: 20px;
     font-weight: normal;
     margin: 1rem 0 0 0;
 }
 
 p.bold {
-    font-size: 12px;
     font-weight: bold;
 }
 

@@ -1,15 +1,15 @@
 {{#partial "seccion"}}
-    <div class="colecciones">
+    <div class="contenedor cartas colecciones">
     {{#each colecciones}}
-        <div class="boton coleccion">
+        <div class="boton contenedor carta coleccion">
             <div class="contenedor vertical" style="align-items: start">
                 <h2><b>{{titulo}}</b></h2>
-                <p>Descripcion</p>
-                <p><b>Categoria:</b> Locuras locas</p>
-                <p><b>Desde:</b> Neuquen</p>
-                <p><b>Hasta:</b> Ulises</p>
-                <p><b>Fuentes:</b> Neuquen</p>
-                <p><b>Consenso:</b> Ulises</p>
+                <p>{{descripcion}}</p>
+                <p><b>Categoria:</b> {{criterioDePertenencia}}</p>
+                <p><b>Desde:</b> {{criterioDePertenencia}}</p>
+                <p><b>Hasta:</b> {{criterioDePertenencia}}</p>
+                <p><b>Fuente:</b> {{fuente}}</p>
+                <p><b>Consenso:</b> {{criterioConsenso}}</p>
                 <button class="boton secundario" style="margin-bottom: 0.5rem"
                         onclick="openModal('modificarColeccion')">Editar</button>
             </div>

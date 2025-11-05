@@ -1,6 +1,6 @@
 <div class="hechos">
     {{#each hechos}}
-        <button class="card-hecho">
+        <button class="card-hecho" type="button" onclick="openModal('detalleHecho')">
             <div class="card-hecho-contenido">
                 <div class="card-hecho-multimedia-fecha">
                     <div class="card-hecho-contenedor-imagen">
@@ -29,3 +29,5 @@
         </button>
     {{/each}}
 </div>
+
+{{> templates/modals/detalleHecho}}
