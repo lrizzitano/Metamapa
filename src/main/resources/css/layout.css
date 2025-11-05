@@ -29,7 +29,8 @@ body{
 .botones-header{
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: end;
+    gap: 16px;
     width: 60%;
     height: auto;
 }

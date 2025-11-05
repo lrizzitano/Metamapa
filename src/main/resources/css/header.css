@@ -2,8 +2,6 @@
 
 .header-sin-sesion{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 50%;
-    height: 4rem;
+    align-items: end;
+    gap: 16px;
 }
