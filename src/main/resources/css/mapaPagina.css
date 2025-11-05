@@ -1,7 +1,7 @@
 @import url('global.css');
 
 
-.cuerpo-index{
+.cuerpo-index {
     background-color: rebeccapurple;
     display: flex;
     flex-direction: column;
@@ -10,18 +10,19 @@
     justify-content: center;
     align-items: center;
 }
-.seccion-filtros{
+
+.seccion-filtros {
     display: flex;
     flex-direction: row;
     background-color: var(--color-secundario);
     width: 100%;
-    min-height: 5.5rem;
+    height: fit-content;
     align-items: center;
     justify-content: center;
-    border-bottom: 0.05rem black solid ;
+    border-bottom: 0.05rem black solid;
 }
 
-.contenedor-hechos-mapaYcolecciones{
+.contenedor-hechos-mapaYcolecciones {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -31,11 +32,12 @@
     height: 100%;
     overflow: hidden;
 }
-.contenedor-hechos{
+
+.contenedor-hechos {
     display: flex;
     flex-direction: row;
     width: 25%;
-    height:100%;
+    height: 100%;
     background-color: var(--color-secundario);
     align-items: center;
     justify-content: center;
@@ -43,7 +45,7 @@
     overflow: hidden;
 }
 
-.hechos{
+.hechos {
     width: 95%;
     display: flex;
     align-items: center;
@@ -55,40 +57,78 @@
     overflow-y: auto;
 }
 
-.hecho{
+.card-hecho {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     margin: 2%;
     width: 100%;
-    height: 20%;
+    height: fit-content;
     background-color: var(--color-secundario);
     cursor: pointer;
     border-radius: 0.5rem;
     border-color: var(--color-principal);
-    min-height: 7rem;
-    max-width: 17rem;
-    padding: 0;
+    gap: 8px;
+    padding: 8px;
 }
 
-.hecho h1{
-    width: 100%;
-    background-color: var(--color-principal);
+.card-hecho p {
     margin: 0;
-    font-size: medium;
-    text-align: center;
-}
-.hecho p{
-    text-align: start;
-    margin-left: 2%;
-    font-size: medium;
+    font-size: 12px;
 }
 
-.hecho:hover{
+.card-hecho-contenido {
+    display: flex;
+    flex-direction: row;
+    text-align: start;
+    gap: 8px;
+}
+
+.card-hecho-multimedia-fecha {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    text-align: center;
+    gap: 8px;
+}
+
+.card-hecho-titulo-subtitulo {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 8px;
+}
+
+.card-hecho-categoria {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.card-hecho-contenedor-imagen {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-hecho-contenedor-imagen img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+
+.hecho:hover {
     background-color: #e9fbe8;
 }
-.contenedor-mapa-colecciones{
+
+.contenedor-mapa-colecciones {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -98,10 +138,7 @@
     align-items: center;
 }
 
-
-
-
-.contenedor-mapa{
+.contenedor-mapa {
     display: flex;
     width: 100%;
     height: 85%;
@@ -110,42 +147,50 @@
     justify-content: center;
 }
 
-.form-filtros{
+.form-filtros {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
     height: 100%;
 }
 
 .form-filtros label {
-    margin: 8px ;
+    margin: 3px;
+    border-bottom: 0;
+    width: fit-content;
 }
 
-.filtro{
+.filtro {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: space-around;
-    background-color: var(--color-secundario);
     border-radius: 0.5rem;
-    height: 85%;
+    height: fit-content;
     width: 13%;
     font-size: 0.2rem;
-    border: 0.05rem solid var(--color-acento);
+    margin: 8px;
 }
-.filtro label{
+
+.filtro.buscador {
+    width: 20%;
+    padding: 0 8px;
+}
+
+.filtro label {
     font-size: small;
 }
-.filtro input,select{
+
+.filtro input, select {
     height: auto;
     width: 80%;
     cursor: pointer;
 }
 
 
-.contenedor-colecciones{
+.contenedor-colecciones {
     display: flex;
     width: 100%;
     height: 15%;
@@ -158,7 +203,7 @@
     flex-direction: row;
 }
 
-.contenedor-colecciones button{
+.contenedor-colecciones button {
     border: 0.07rem solid var(--color-secundario);
     cursor: pointer;
     width: 28%;
@@ -166,14 +211,14 @@
     min-width: 10rem;
     min-height: 3.5rem;
     color: var(--color-secundario);
-    border-radius:0.3rem;
+    border-radius: 0.3rem;
     margin: 2%;
     font-size: 1rem;
     background-color: var(--color-principal);
 }
 
-.contenedor-colecciones button:hover{
-    transform: scale(1.1,1.1);
+.contenedor-colecciones button:hover {
+    transform: scale(1.1, 1.1);
     border: 0.07rem solid var(--color-acento);
     color: var(--color-acento);
     background-color: #ffffff;

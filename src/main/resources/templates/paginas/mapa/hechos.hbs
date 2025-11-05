@@ -1,12 +1,30 @@
 <div class="hechos">
     {{#each hechos}}
-        <button class="hecho" type="button" onclick="openModal('detalleHecho')">
-            <h1>{{titulo}}</h1>
-            <p>{{descripcion}}</p>
+        <button class="card-hecho" type="button" onclick="openModal('detalleHecho')">
+            <div class="card-hecho-contenido">
+                <div class="card-hecho-multimedia-fecha">
+                    <div class="card-hecho-contenedor-imagen">
+                        <img src={{multimedia}} alt="Imagen del hecho">
+                    </div>
+                    <p>{{fechaAcontecimiento}}</p>
+                </div>
 
-            <div class="invisible">
-                En ubicacion:
-                <p>{{longitud}} : {{latitud}}</p>
+                <div class="card-hecho-titulo-subtitulo">
+                    <p id="titulo"><b>{{titulo}}</b></p>
+                    <p>{{descripcion}}</p>
+                </div>
+            </div>
+
+            <div class="card-hecho-categoria">
+                <p><b>Categoría: </b></p>
+                <p>{{categoria}}</p>
+            </div>
+
+            <div class="invisible" id="longitud">
+                {{longitud}}
+            </div>
+            <div class="invisible" id="latitud">
+                {{latitud}}
             </div>
         </button>
     {{/each}}
