@@ -13,54 +13,56 @@ import java.time.LocalDateTime;
 
 public class HechosController implements WithSimplePersistenceUnit, TransactionalOps {
   public void subirHecho(Context ctx) {
-      String titulo = ctx.formParam("titulo");
-      String descripcion = ctx.formParam("descripcion");
-      String categoria = ctx.formParam("categoria");
-      String provinciaStr = ctx.formParam("provincia");
-      String latStr = ctx.formParam("latitud");
-      String lngStr = ctx.formParam("longitud");
-      String fechaStr = ctx.formParam("fecha_hecho");
+    String titulo = ctx.formParam("titulo");
+    String descripcion = ctx.formParam("descripcion");
+    String categoria = ctx.formParam("categoria");
+    String provinciaStr = ctx.formParam("provincia");
+    String latStr = ctx.formParam("latitud");
+    String lngStr = ctx.formParam("longitud");
+    String fechaStr = ctx.formParam("fecha_hecho");
 
-      // validaciones
-      if (titulo == null || titulo.isBlank() ||
-          descripcion == null || descripcion.isBlank() ||
-          categoria == null || categoria.isBlank() ||
-          provinciaStr == null || provinciaStr.isBlank() ||
-          latStr == null || latStr.isBlank() ||
-          lngStr == null || lngStr.isBlank() ||
-          fechaStr == null || fechaStr.isBlank()) {
-        new Logger().info("falta uno");
-        ctx.redirect("/hechos/nuevo");
-        return;
-      }
+    // validaciones
+    if (titulo == null || titulo.isBlank() ||
+        descripcion == null || descripcion.isBlank() ||
+        categoria == null || categoria.isBlank() ||
+        provinciaStr == null || provinciaStr.isBlank() ||
+        latStr == null || latStr.isBlank() ||
+        lngStr == null || lngStr.isBlank() ||
+        fechaStr == null || fechaStr.isBlank()) {
+      new Logger().info("falta uno");
+      ctx.redirect("/hechos/nuevo");
+      return;
+    }
 
-      try {
-        double latitud = Double.parseDouble(latStr);
-        double longitud = Double.parseDouble(lngStr);
-        Provincia provincia = Provincia.valueOf(provinciaStr);
-        LocalDateTime fechaAcontecimiento = LocalDateTime.parse(fechaStr);
+    try {
+      double latitud = Double.parseDouble(latStr);
+      double longitud = Double.parseDouble(lngStr);
+      Provincia provincia = Provincia.valueOf(provinciaStr);
+      LocalDateTime fechaAcontecimiento = LocalDateTime.parse(fechaStr);
 
-        Ubicacion ubicacion = new Ubicacion(latitud, longitud, provincia, null);
-        LocalDateTime fechaCarga = LocalDateTime.now();
-        Origen origen = Origen.CONTRIBUYENTE;
+      Ubicacion ubicacion = new Ubicacion(latitud, longitud, provincia, null);
+      LocalDateTime fechaCarga = LocalDateTime.now();
+      Origen origen = Origen.CONTRIBUYENTE;
 
-        Hecho hecho = new Hecho(
-            null,               // id
-            titulo,
-            descripcion,
-            categoria,
-            ubicacion,
-            fechaCarga,
-            fechaAcontecimiento,
-            origen
-        );
+      Hecho hecho = new Hecho(
+          null,               // id
+          titulo,
+          descripcion,
+          categoria,
+          ubicacion,
+          fechaCarga,
+          fechaAcontecimiento,
+          origen
+      );
 
+      withTransaction(() -> {
         new HechosFuenteDinamicaJPA().agregar(hecho);
-        ctx.redirect("/");
+      });
+      ctx.redirect("/");
 
-      } catch (Exception e) {
-        new Logger().info("Error al crear hecho: " + e.getMessage());
-        ctx.redirect("/hechos/nuevo");
-      }
+    } catch (Exception e) {
+      new Logger().info("Error al crear hecho: " + e.getMessage());
+      ctx.redirect("/hechos/nuevo");
+    }
   }
 }
