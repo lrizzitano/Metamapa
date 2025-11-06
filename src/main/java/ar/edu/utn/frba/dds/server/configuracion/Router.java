@@ -61,11 +61,6 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion");
     });
 
-//    app.get("/solicitudesDeEliminacion/nueva", ctx -> {
-//      String hecho = ctx.queryParam("hecho");
-//      ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
-//    });
-
     app.post("/hechos", hechosController::subirHecho);
 
     app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud);
