@@ -35,5 +35,6 @@ function crearModalDetalleHecho(boton){
   modal.querySelector('.categoria').textContent= boton.dataset.categoria;
   modal.querySelector('.contribuyente').textContent= boton.dataset.contribuyente;
   modal.querySelector('.provincia').textContent =boton.dataset.provincia;
+  modal.querySelector('.boton-solicitar-eliminacion').href="/solicitudesDeEliminacion/nueva?hecho=" + boton.dataset.titulo;
 
 }
