@@ -1,11 +1,13 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.ColeccionesController;
+import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.HomeController;
 import ar.edu.utn.frba.dds.server.SetupData;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Router implements WithSimplePersistenceUnit {
@@ -14,6 +16,7 @@ public class Router implements WithSimplePersistenceUnit {
     new SetupData().setup();
     HomeController homeController = new HomeController();
     ColeccionesController coleccionesController = new ColeccionesController();
+    HechosController hechosController = new HechosController();
 
     app.before(ctx -> {
       entityManager().clear();
@@ -61,5 +64,7 @@ public class Router implements WithSimplePersistenceUnit {
       String hecho = ctx.queryParam("hecho");
       ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
     });
+
+    app.post("/hechos", hechosController::subirHecho);
   }
 }

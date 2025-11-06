@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
+import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteMock;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
@@ -11,6 +12,8 @@ import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
+import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
+import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.time.LocalDateTime;
@@ -124,7 +127,7 @@ public class SetupData implements WithSimplePersistenceUnit {
   );
 
   static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9);
-  static final Fuente fuente1 = new FuenteMock(Set.of(hecho1, hecho2, hecho3));
+  static final FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
   static final Fuente fuente2 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
   static final Fuente fuente3 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7));
   static final Fuente fuente4 = new FuenteMock(Set.of(hecho4, hecho5));
@@ -132,8 +135,9 @@ public class SetupData implements WithSimplePersistenceUnit {
   static final Fuente fuente6 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
   static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5));
 
-  static final Coleccion collecion1 = new Coleccion("Coleccion 1", "desc1",
-      new NullFiltro(), fuente1, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  // por algun motivo no esta trayendo bien los hechos dinamicos
+  static final Coleccion collecion1 = new Coleccion("Coleccion Hechos dinamicos", "desc1",
+      new NullFiltro(), fuenteDinamica, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
       new NullFiltro(), fuente2, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion3 = new Coleccion("Coleccion 3", "desc2",
@@ -163,7 +167,7 @@ public class SetupData implements WithSimplePersistenceUnit {
 
     withTransaction(() -> {
       FuentesRepositoryJPA fuenteRepo = new FuentesRepositoryJPA();
-      fuenteRepo.persist(fuente1);
+      fuenteRepo.persist(fuenteDinamica);
       fuenteRepo.persist(fuente2);
       fuenteRepo.persist(fuente3);
       fuenteRepo.persist(fuente4);

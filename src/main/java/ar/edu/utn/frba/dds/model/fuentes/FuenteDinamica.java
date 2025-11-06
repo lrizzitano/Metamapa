@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.model.fuentes;
 import ar.edu.utn.frba.dds.model.filtros.Filtro;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
+import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeCambioRepository;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
 import java.util.Set;
@@ -20,8 +21,8 @@ public class FuenteDinamica extends Fuente {
   @Transient
   private static final FuenteDinamica instance = new FuenteDinamica();
 
-  @Transient
-  private HechoRepository repositorioDeHechos;
+  @Transient // la verdad no se pq no persistimos pero esto se pierde al traer de la base
+  private HechoRepository repositorioDeHechos = new HechosFuenteDinamicaJPA(); // hardcodeado por ahora
 
   @Transient
   private SolicitudDeCambioRepository repositorioDeSolicitudes;

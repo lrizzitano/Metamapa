@@ -21,57 +21,68 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form">
+            <form class="form" action="/hechos" method="POST">
 
-                <label>Titulo</label>
-                <input type="text" placeholder="Elija un titulo"></input>
+                <label for="titulo">Titulo</label>
+                <input id="titulo" type="text" placeholder="Elija un titulo" name="titulo">
 
                 <div class="contenedor-doble latitud-longitud">
-                    <div>
-                        <label>Categoria</label>
-                        <select>
-                            <option value="" disabled selected>Seleccione una categoria</option>>
-                            <option value="incendios">Incendios</option>
-                        </select>
-                    </div>
 
-                    <div>
-                        <label>Coleccion</label>
-                        <select>
-                            <option value="" disabled selected>Seleccione una coleccion</option>>
-                            <option value="incendios">Desastres naturales</option>
-                        </select>
-                    </div>
+                    <label for="categoria">Categoria</label>
+                    <input id="categoria" type="text" placeholder="Elija una categoria" name="categoria">
+
                 </div>
 
-                <label>Fecha</label>
-                <input type="date"></input>
+                <label for="fecha_hecho">Fecha</label>
+                <input id="fecha_hecho" name="fecha_hecho" type="datetime-local">
 
-                <label>Descripcion</label>
-                <input type="text" class="largo" placeholder="Describa el hecho"/>
+                <label for="descripcion">Descripcion</label>
+                <input id="descripcion" type="text" placeholder="Describa el hecho" name="descripcion">
 
-                <label>Provincia</label>
-                <select>
-                    <option value="" disabled selected>Elija la provincia</option>
-                    <option value="chaco">Chaco</option>
+                <label for="provincia">Provincia:</label>
+                <select id="provincia" name="provincia" required>
+                    <option value="PROVINCIA_DESCONOCIDA">Provincia desconocida</option>
+                    <option value="CABA">CABA</option>
+                    <option value="BUENOS_AIRES">Buenos Aires</option>
+                    <option value="ENTRE_RIOS">Entre Ríos</option>
+                    <option value="SANTA_FE">Santa Fe</option>
+                    <option value="CORRIENTES">Corrientes</option>
+                    <option value="MISIONES">Misiones</option>
+                    <option value="FORMOSA">Formosa</option>
+                    <option value="CHACO">Chaco</option>
+                    <option value="SANTIAGO_DEL_ESTERO">Santiago del Estero</option>
+                    <option value="TUCUMAN">Tucumán</option>
+                    <option value="SALTA">Salta</option>
+                    <option value="JUJUY">Jujuy</option>
+                    <option value="CATAMARCA">Catamarca</option>
+                    <option value="LA_RIOJA">La Rioja</option>
+                    <option value="SAN_JUAN">San Juan</option>
+                    <option value="SAN_LUIS">San Luis</option>
+                    <option value="MENDOZA">Mendoza</option>
+                    <option value="CORDOBA">Córdoba</option>
+                    <option value="LA_PAMPA">La Pampa</option>
+                    <option value="NEUQUEN">Neuquén</option>
+                    <option value="RIO_NEGRO">Río Negro</option>
+                    <option value="CHUBUT">Chubut</option>
+                    <option value="SANTA_CRUZ">Santa Cruz</option>
+                    <option value="TIERRA_DEL_FUEGO">Tierra del Fuego</option>
                 </select>
 
-                <label>Multimedio</label>
-                <input type="text"/>
+                <label for="multimedia">Multimedio</label>
+                <input id="multimedia" type="text" placeholder="Link a multimedia" name="multimedia"/>
 
                 <div class="contenedor-doble latitud-longitud">
                     <div class="contenedor-latitud">
-                        <label>Latitud</label>
-                        <input type="number"/>
+                        <label for="latitud">Latitud</label>
+                        <input id="latitud" type="number" name="latitud"/>
                     </div>
 
                     <div class="contenedor-longitud">
-                        <label>Longitud</label>
-                        <input type="number"/>
+                        <label for="longitud">Latitud</label>
+                        <input id="longitud" type="number" name="longitud"/>
                     </div>
                 </div>
-                <button class="boton secundario" type="button">Subir</button>
-
+                <button class="boton secundario" type="submit">Subir</button>
             </form>
         </div>
     </section>
