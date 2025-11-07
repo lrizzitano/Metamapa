@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
+import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
@@ -10,6 +11,7 @@ import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -36,18 +38,17 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       filtro.and(new FiltroCategoria(categoria));
     }
 
-    LocalDateTime fechaDesde = null;
-    LocalDateTime fechaHasta = null;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    LocalDate fechaDesde = null;
+    LocalDate fechaHasta = null;
 
     try {
       if (fechaDesdeStr != null && !fechaDesdeStr.isEmpty()) {
-        fechaDesde = LocalDateTime.parse(fechaDesdeStr, formatter);
-        filtro.and(new FiltroFechaDesde(fechaDesde));
+        fechaDesde = LocalDate.parse(fechaDesdeStr);
+        filtro.and(new FiltroFechaDesde(fechaDesde.atStartOfDay()));
       }
       if (fechaHastaStr != null && !fechaHastaStr.isEmpty()) {
-        fechaHasta = LocalDateTime.parse(fechaHastaStr, formatter);
-        filtro.and(new FiltroFechaDesde(fechaHasta));
+        fechaHasta = LocalDate.parse(fechaHastaStr);
+        filtro.and(new FiltroFechaHasta(fechaHasta.atStartOfDay()));
         new Logger().info("llegue a armar el filtro fechaHasta".concat(fechaHasta.toString()));
       }
     } catch (DateTimeParseException e) {
@@ -59,7 +60,9 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     withTransaction(() -> {
       Coleccion coleccion = colecciones.find(id);
       coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
-      Set<HechoDTO> hechos = coleccion.hechos(titulo, filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
+      // coleccion.hechos(titulo, filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
+      // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
+      Set<HechoDTO> hechos = coleccion.hechos(filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
       model.put("hechos", hechos);
     });
 
