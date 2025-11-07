@@ -90,5 +90,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/colecciones",coleccionesController::subirColeccion,Rol.ADMIN);
 
+    app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMIN);
+
   }
 }

@@ -109,65 +109,29 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     try{
       //Consenso
-
-      Consenso consensoNuevo;
-
-      if(consenso.equals("sinConsenso")){
-        consensoNuevo = new ConsensoNull();
-      }
-      else{
-
-        LocalDateTime proximaActualizacion = LocalDateTime.now().plusDays(1);
-        FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
-        AlgoritmoConsenso algoritmo = new AlgoritmoConsensoAbsoluto();
-        if(consenso.equals("absoluto")){
-          algoritmo = new AlgoritmoConsensoAbsoluto();
-        }
-        if(consenso.equals("mayoriaSimple")){
-          algoritmo = new AlgoritmoMayoriaSimple();
-        }
-        if(consenso.equals("multiplesMenciones")){
-          algoritmo = new AlgoritmoMultiplesMenciones();
-        }
-
-        consensoNuevo = new Consenso(algoritmo,proximaActualizacion,repoFuentes);
-
-      }
+      Consenso consensoNuevo = obtenerConsenso(consenso);
+      new Logger().info("Nuevo consenso seteado" + consensoNuevo);
 
       //RepoSolicitudes de eliminacion
       SolicitudesDeEliminacionJPA repoSolicitudesDeEliminacion = new SolicitudesDeEliminacionJPA();
 
       //Fuente
-      Fuente fuenteNueva = FuenteDinamica.instance();
-      if(fuente.equals("dinamica")){
-        fuenteNueva = FuenteDinamica.instance();
-      }
-      if(fuente.equals("metamapa")){ //TODO: que la url llegue con el form
-        fuenteNueva = new FuenteMetaMapa("/url");
-      }
-      if(fuente.equals("estatica")){ //TODO: que el archivo llegue en el form. Podria haber muchos?
-        Path tempFile = Files.createTempFile("hechos", ".csv");
-        fuenteNueva = new FuenteEstatica(tempFile.toString());
-      }
-      if(fuente.equals("proxy")){ //TODO: Q onda esta fuente ayuda
-        fuenteNueva = new FuenteDemo();
-      }
+      Fuente fuenteNueva = obtenerfuente(fuente);
+      new Logger().info("Neuva fuente seteada" + fuenteNueva);
+
 
       //Filtro Criterio pertenencia
       FiltroCompuesto criterioPertenencia = new FiltroCompuesto();
 
-      new Logger().info("VINO " + categoria);
 
       if( categoria != null || !categoria.isEmpty() ||
            fechaAnterior != null || !fechaAnterior.isEmpty() ||
           fechaPosterior != null || !fechaPosterior.isEmpty()){
 
-        new Logger().info("LLEGANDO " + categoria);
+
         if (categoria != null && !categoria.isEmpty()) {
           criterioPertenencia.and(new FiltroCategoria(categoria));
 
-          new Logger().info("ENTRE " + categoria);
-          new Logger().info("EFCHA" + fechaAnterior);
         }
         //Error en las fechas
         try {
@@ -205,4 +169,99 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     }
 
   }
+  public void modificarColeccion(Context ctx){
+
+    try{
+      Long id = Long.parseLong(ctx.pathParam("id"));
+      String consenso = ctx.formParam("consenso");
+      String fuente = ctx.formParam("fuente");
+
+      if ((consenso == null || consenso.isBlank())
+          && (fuente == null || fuente.isBlank())){
+        new Logger().info("Faltan campos por completar");
+        ctx.redirect("/panelDeControl/colecciones");
+        return;
+      }
+
+      RepoColecciones repoColecciones = new RepoColecciones();
+      Coleccion coleccion = repoColecciones.find(id);
+
+      if(consenso != null )
+      {
+        Consenso nuevoConsenso = obtenerConsenso(consenso);
+        coleccion.setCriterioConsenso(nuevoConsenso);
+        new Logger().info("Nuevo consenso seteado modificado a" + nuevoConsenso);
+      }
+
+      if(fuente != null )
+      {
+        Fuente nuevaFuente = obtenerfuente(fuente);
+        coleccion.setFuente(nuevaFuente);
+        new Logger().info("Neuva fuente seteada modificada a nashe" + nuevaFuente);
+      }
+
+      withTransaction(() -> {
+        repoColecciones.update(coleccion);
+      });
+      ctx.redirect("/panelDeControl/colecciones");
+    }
+    catch (Exception e) {
+      new Logger().info("Error al Mofidicar la coleccion: " + e.getMessage());
+      ctx.redirect("/panelDeControl/colecciones/nueva");
+    }
+
+  }
+
+  public Consenso obtenerConsenso(String consenso) {
+
+    Consenso consensoNuevo;
+
+    if(consenso.equals("sinConsenso")){
+      consensoNuevo = new ConsensoNull();
+    }
+    else{
+
+      LocalDateTime proximaActualizacion = LocalDateTime.now().plusDays(1);
+      FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
+      AlgoritmoConsenso algoritmo = new AlgoritmoConsensoAbsoluto();
+
+      if(consenso.equals("absoluto")){
+        algoritmo = new AlgoritmoConsensoAbsoluto();
+      }
+      if(consenso.equals("mayoriaSimple")){
+        algoritmo = new AlgoritmoMayoriaSimple();
+      }
+      if(consenso.equals("multiplesMenciones")){
+        algoritmo = new AlgoritmoMultiplesMenciones();
+      }
+
+      consensoNuevo = new Consenso(algoritmo,proximaActualizacion,repoFuentes);
+
+    }
+
+    return consensoNuevo;
+  }
+
+  public Fuente obtenerfuente(String fuente){
+
+    Fuente fuenteNueva = FuenteDinamica.instance();
+
+    if(fuente.equals("dinamica")){
+      fuenteNueva = FuenteDinamica.instance();
+    }
+    if(fuente.equals("metamapa")){ //TODO: que la url llegue con el form
+      fuenteNueva = new FuenteMetaMapa("/url");
+    }
+    if(fuente.equals("estatica")){ //TODO: que el archivo llegue en el form. Podria haber muchos?
+      Path tempFile=null;
+      try{ tempFile= Files.createTempFile("hechos", ".csv");}
+      catch(Exception e){new Logger().info("Error abirnedo el archivo csv");}
+
+      fuenteNueva = new FuenteEstatica(tempFile.toString());
+    }
+
+    return fuenteNueva;
+
+  }
+
 }

@@ -16,9 +16,13 @@ function crearModalColeccion(boton) {
 
   const titulo = boton.dataset.titulo;
   const descripcion = boton.dataset.descripcion;
+  const id = boton.dataset.id;
 
   modal.querySelector('.titulo').textContent = titulo
   modal.querySelector('.descripcion').textContent = descripcion
+
+  modal.querySelector('.form.editar.coleccion')
+      .action = "/colecciones/" + encodeURIComponent(id);
 
 }
 

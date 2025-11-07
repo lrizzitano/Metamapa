@@ -88,6 +88,10 @@ public class Coleccion{
     this.criterioConsenso = criterioConsenso;
   }
 
+  public void setFuente(Fuente fuente){
+    this.fuente = fuente;
+  }
+
   public Set<Hecho> hechos(Filtro filtro) {
     return this.streamFiltradaBase(filtro).collect(Collectors.toSet());
   }
