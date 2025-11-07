@@ -1,0 +1,57 @@
+package ar.edu.utn.frba.dds.server.autenticacion;
+
+import ar.edu.utn.frba.dds.server.exceptions.SesionInvalidaException;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.JWTVerifier;
+import io.javalin.http.Context;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+
+public class Autenticador {
+
+  private final Algorithm algoritmo;
+
+  public Autenticador(Algorithm algoritmo) {
+
+    this.algoritmo = algoritmo;
+  }
+
+  public void verificarFirma(Context ctx) {
+
+    var token = ctx.header("authorization");
+
+    try {
+      JWTVerifier verifier = JWT.require(algoritmo)
+          .withIssuer("metamapa")
+          .acceptLeeway(3600)
+          .build();
+
+      var decodedJWT = verifier.verify(token);
+
+      ctx.attribute("rol", decodedJWT.getClaim("rol")); // pasamos el rol
+
+    } catch (JWTVerificationException exception){
+      throw new SesionInvalidaException("La informacion de la sesión es invalida", exception);
+    }
+  }
+
+  public String crearSesion(/*informacion de usuario*/){
+    try {
+
+      return JWT.create()
+          .withIssuer("metamapa")
+          .withExpiresAt(Instant.now().plus(15, ChronoUnit.MINUTES))
+          .withIssuedAt(Instant.now())
+          .withClaim("rol", "XXX")
+          .sign(algoritmo);
+
+    } catch (JWTCreationException exception){
+      throw new SesionInvalidaException("Ocurrio un error al generar la sesión", exception);
+    }
+  }
+}

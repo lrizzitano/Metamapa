@@ -1,8 +1,8 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.server.configuracion.HandlebarsRender;
-import ar.edu.utn.frba.dds.server.configuracion.Logger;
-import ar.edu.utn.frba.dds.server.configuracion.Router;
+import ar.edu.utn.frba.dds.server.autenticacion.Autenticador;
+import ar.edu.utn.frba.dds.server.autenticacion.FactoryAutenticador;
+import ar.edu.utn.frba.dds.server.configuracion.*;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 
@@ -15,6 +15,7 @@ public class Server {
     try {
       Javalin app = Javalin.create(config -> {
 
+        // Eventos
         config.events.serverStarting(() -> {
           logger.info("Iniciando Servidor");
         });
@@ -28,25 +29,32 @@ public class Server {
           logger.info("Servidor Detenido");
         });
 
+        // Renderizado
         config.fileRenderer(new HandlebarsRender());
         config.staticFiles.add(staticConfig -> {
           staticConfig.hostedPath = "/";
           staticConfig.directory = "src/main/resources"; // adjust path as needed
           staticConfig.location = Location.EXTERNAL;
         });
+
         // para dev, en prod usar:
         //config.staticFiles.add("/", Location.CLASSPATH);
 
+        // Logger
         config.requestLogger.http(logger::loggearRequest);
+        config.appData(AppKeys.LOGGER, logger);
+
+        // Autenticador
+        config.appData(AppKeys.AUTENTICADOR, new FactoryAutenticador().crearAutenticador());
+
+        // Varias
         config.router.ignoreTrailingSlashes = true; // /ruta = /ruta/
         config.router.treatMultipleSlashesAsSingleSlash = true; // ruta//x = ruta/x
         config.router.caseInsensitiveRoutes = true; // /ruta = /RUTA
       });
 
-
-      /* juanma tira tu magia de desarrollo */
       // primero definir el handler de errores por seguridad
-      // ExceptionHandler.definirManejoDeException(app,logger /* con loggear error */)
+      new ExcepcionesHandler().definirManejoDeExcepciones(app);
 
       new Router().routearApp(app);
 
