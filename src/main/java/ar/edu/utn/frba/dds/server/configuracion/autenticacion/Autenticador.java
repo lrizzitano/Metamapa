@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.server.autenticacion;
+package ar.edu.utn.frba.dds.server.configuracion.autenticacion;
 
 import ar.edu.utn.frba.dds.server.exceptions.SesionInvalidaException;
 import com.auth0.jwt.JWT;
@@ -10,6 +10,8 @@ import io.javalin.http.Context;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
+import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.SINSESION;
 
 
 public class Autenticador {
@@ -25,6 +27,11 @@ public class Autenticador {
 
     var token = ctx.header("authorization");
 
+    if(token == null){
+      ctx.attribute("rol", SINSESION);
+      return;
+    }
+
     try {
       JWTVerifier verifier = JWT.require(algoritmo)
           .withIssuer("metamapa")
@@ -33,7 +40,7 @@ public class Autenticador {
 
       var decodedJWT = verifier.verify(token);
 
-      ctx.attribute("rol", decodedJWT.getClaim("rol")); // pasamos el rol
+      ctx.attribute("rol", decodedJWT.getClaim("rol"));
 
     } catch (JWTVerificationException exception){
       throw new SesionInvalidaException("La informacion de la sesión es invalida", exception);
