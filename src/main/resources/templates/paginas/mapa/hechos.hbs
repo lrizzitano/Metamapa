@@ -1,16 +1,7 @@
 <div class="hechos">
     {{#each hechos}}
         <button class="card-hecho" type="button"
-                data-multimedia="{{multimedia}}"
-                data-fechaAcontecimiento="{{fechaAcontecimiento}}"
-                data-titulo="{{titulo}}"
-                data-descripcion="{{descripcion}}"
-                data-categoria="{{categoria}}"
-                data-latitud="{{latitud}}"
-                data-longitud="{{longitud}}"
-                data-fechaCarga="{{fechaCarga}}"
-                data-provincia="{{provincia}}"
-                data-contribuyente="{{contribuyente.nombre}}"
+                data-hecho='{{json this}}'
                 onclick="crearModalDetalleHecho(this)">
 
             <div class="card-hecho-contenido">

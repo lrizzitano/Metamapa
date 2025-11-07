@@ -22,19 +22,20 @@ function crearModalColeccion(boton) {
 
 }
 
-function crearModalDetalleHecho(boton){
+function crearModalDetalleHecho(boton) {
   openModal('detalleHecho');
   const modal = document.getElementById('detalleHecho');
+  const hecho = JSON.parse(boton.dataset.hecho);
 
+  modal.querySelector('.titulo').textContent = hecho.titulo;
+  modal.querySelector('.descripcion').textContent = hecho.descripcion;
+  modal.querySelector('.multimedia').src = hecho.multimedia;
+  modal.querySelector('.fechaAcontecimiento').textContent = hecho.fechaAcontecimiento;
+  modal.querySelector('.fechaCarga').textContent = hecho.fechaCarga;
+  modal.querySelector('.categoria').textContent = hecho.categoria;
+  modal.querySelector('.contribuyente').textContent = hecho.contribuyente;
+  modal.querySelector('.provincia').textContent = hecho.provincia;
 
-  modal.querySelector('.titulo').textContent = boton.dataset.titulo;
-  modal.querySelector('.descripcion').textContent = boton.dataset.descripcion;
-  modal.querySelector('.multimedia').src = boton.dataset.multimedia;
-  modal.querySelector('.fechaAcontecimiento').textContent = boton.dataset.fechaAcontecimiento;
-  modal.querySelector('.fechaCarga').textContent = boton.dataset.fechaCarga;
-  modal.querySelector('.categoria').textContent= boton.dataset.categoria;
-  modal.querySelector('.contribuyente').textContent= boton.dataset.contribuyente;
-  modal.querySelector('.provincia').textContent =boton.dataset.provincia;
-  modal.querySelector('.boton-solicitar-eliminacion').href="/solicitudesDeEliminacion/nueva?hecho=" + boton.dataset.titulo;
-
+  modal.querySelector('.boton-solicitar-eliminacion')
+    .href = "/solicitudesDeEliminacion/nueva?hecho=" + encodeURIComponent(hecho.titulo);
 }
