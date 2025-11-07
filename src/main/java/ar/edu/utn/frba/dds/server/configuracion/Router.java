@@ -88,7 +88,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud, Rol.ADMIN);
 
-    app.post("/colecciones",coleccionesController::subirColeccion);
+    app.post("/colecciones",coleccionesController::subirColeccion,Rol.ADMIN);
 
   }
 }

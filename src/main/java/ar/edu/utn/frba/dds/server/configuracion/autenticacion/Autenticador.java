@@ -12,7 +12,7 @@ import io.javalin.http.Context;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.USUARIO;
+import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.ADMIN;
 
 
 public class Autenticador {
@@ -29,7 +29,7 @@ public class Autenticador {
     var token = ctx.header("authorization");
 
     if(token == null){
-      ctx.attribute(AppKeys.ROL.toString(), USUARIO);
+      ctx.attribute(AppKeys.ROL.toString(), ADMIN);
       return;
     }
 
