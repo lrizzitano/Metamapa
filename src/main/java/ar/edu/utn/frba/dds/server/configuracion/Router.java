@@ -5,11 +5,14 @@ import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.HomeController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.server.SetupData;
+import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.SINSESION;
 
 public class Router implements WithSimplePersistenceUnit {
 
@@ -24,6 +27,8 @@ public class Router implements WithSimplePersistenceUnit {
       entityManager().clear();
       ctx.appData(AppKeys.AUTENTICADOR).verificarFirma(ctx);
     });
+
+    app.beforeMatched(Autorizador::validarPermisos);
 
     app.get("/", ctx ->
       ctx.render("templates/paginas/mapa/mapaPagina", homeController.show(ctx)));

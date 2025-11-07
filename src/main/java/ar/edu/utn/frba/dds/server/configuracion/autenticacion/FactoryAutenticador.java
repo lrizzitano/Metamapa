@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.server.autenticacion;
+package ar.edu.utn.frba.dds.server.configuracion.autenticacion;
 
 import com.auth0.jwt.algorithms.Algorithm;
 

@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
-import ar.edu.utn.frba.dds.server.autenticacion.Autenticador;
+import ar.edu.utn.frba.dds.server.configuracion.autenticacion.Autenticador;
 import io.javalin.config.Key;
 
 public class AppKeys {
