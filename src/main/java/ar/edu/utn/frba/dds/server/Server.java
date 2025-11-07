@@ -57,7 +57,7 @@ public class Server {
 
       new Router().routearApp(app);
 
-      app.start();
+      app.start(7023);
 
     } catch (Exception e) {
 
