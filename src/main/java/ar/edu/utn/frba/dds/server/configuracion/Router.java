@@ -65,11 +65,14 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion");
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", solicitudesDeEliminacionController.verSolicitudes(ctx));
     });
 
     app.post("/hechos", hechosController::subirHecho);
 
     app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud);
+
+    app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud);
+
   }
 }

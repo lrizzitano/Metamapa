@@ -65,6 +65,10 @@ public class SolicitudDeEliminacion {
     return responsable;
   }
 
+  public void setSolicitudes(SolicitudesDeEliminacionJPA solicitudes) {
+    this.solicitudes = solicitudes;
+  }
+
   public void aceptar(Administrador admin) {
     if (this.responsable != null) {
       throw new SolicitudYaResueltaException();
