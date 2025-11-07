@@ -10,27 +10,36 @@
     <div class="cuerpo-index">
         <section class="seccion-filtros">
 
-            <form class="form-filtros">
+            <form
+                    class="form-filtros"
+                    hx-get="#"
+                    hx-target=".contenedor-hechos"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+            >
+
 
                 <div class="filtro buscador">
-                    <label>Titulo</label>
-                    <input type="text" placeholder="Buscar por titulo"></input>
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" placeholder="Buscar por título">
                 </div>
 
                 <div class="filtro fecha-desde">
-                    <label>Fecha Desde</label>
-                    <input type="date"></input>
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="datetime-local" id="fecha-desde" name="fecha-desde">
                 </div>
+
                 <div class="filtro fecha-hasta">
-                    <label>Fecha Hasta</label>
-                    <input type="date"></input>
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="datetime-local" id="fecha-hasta" name="fecha-hasta">
                 </div>
+
                 <div class="filtro categoria">
-                    <label>Categoria</label>
-                    <select class="select-categoria">
-                        <option value="Incendios">Incendios</option>
-                    </select>
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" placeholder="Ej: Incendios">
                 </div>
+
+                <button id="btn-filtro" disabled type="submit">Filtrar</button>
             </form>
         </section>
         <section class="contenedor-hechos-mapaYcolecciones">
@@ -48,7 +57,8 @@
                                 hx-get="/colecciones/{{id}}/hechos"
                                 hx-target=".contenedor-hechos"
                                 hx-swap="innerHTML"
-                                hx-replace-url="true">
+                                hx-push-url="true"
+                                onclick=actualizarRutaFormFiltros({{id}})>
 
                             {{titulo}}
                         </button>

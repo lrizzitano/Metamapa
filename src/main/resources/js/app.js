@@ -38,3 +38,9 @@ function crearModalDetalleHecho(boton){
   modal.querySelector('.boton-solicitar-eliminacion').href="/solicitudesDeEliminacion/nueva?hecho=" + boton.dataset.titulo;
 
 }
+
+function actualizarRutaFormFiltros(id) {
+  const form = document.querySelector('.form-filtros');
+  form.setAttribute('hx-get', `/colecciones/${id}/hechos`);
+  document.getElementById('btn-filtro').disabled = false;
+}
