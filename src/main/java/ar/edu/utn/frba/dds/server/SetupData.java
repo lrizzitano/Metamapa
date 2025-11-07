@@ -135,8 +135,7 @@ public class SetupData implements WithSimplePersistenceUnit {
   static final Fuente fuente6 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
   static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5));
 
-  // por algun motivo no esta trayendo bien los hechos dinamicos
-  static final Coleccion collecion1 = new Coleccion("Coleccion Hechos dinamicos", "desc1",
+  static final Coleccion collecion1 = new Coleccion("Hechos dinamicos", "desc1",
       new NullFiltro(), fuenteDinamica, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
       new NullFiltro(), fuente2, new ConsensoNull(), new SolicitudesDeEliminacionJPA());

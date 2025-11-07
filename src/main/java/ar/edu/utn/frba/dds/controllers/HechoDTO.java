@@ -15,7 +15,6 @@ public class HechoDTO {
   private final String fechaCarga;
   private final String origen;
   private final String multimedia;
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
   public HechoDTO(Hecho hecho) {
     this.id = hecho.id();
@@ -24,6 +23,7 @@ public class HechoDTO {
     this.categoria = hecho.categoria();
     this.longitud = hecho.longitud();
     this.latitud = hecho.latitud();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     this.fechaAcontecimiento = hecho.fechaAcontecimiento().format(formatter);
     this.fechaCarga = hecho.fechaCarga().format(formatter);
     this.origen = hecho.origen().name();
@@ -60,7 +60,5 @@ public class HechoDTO {
   public String multimedia() {
     return multimedia;
   }
-  public DateTimeFormatter formatter() {
-    return formatter;
-  }
+
 }

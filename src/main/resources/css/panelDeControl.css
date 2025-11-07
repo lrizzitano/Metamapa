@@ -3,41 +3,50 @@ main {
     flex-direction: row;
     height: auto;
     width: auto;
-    padding: 32px 64px;
-    gap: 64px;
+    padding: 32px;
+    gap: 32px;
 }
 
 .navegacion {
     background: var(--color-secundario);
     height: fit-content;
-    width: 30%;
+    display:flex;
+    flex-direction: column;
     border-radius: 0.5rem;
-    padding: 32px;
+    padding: 0 16px;
     border: solid 0.1rem var(--color-principal);
 }
 
 .navegacion h2{
     color: var(--color-principal);
     border-bottom:0.05rem solid var(--color-texto) ;
+    width: auto;
 }
 .navegacion p{
     color: var(--color-acento);
+    display: inline-block;
+    width: max-content;
 }
 
 .navegacion p:hover{
     color: var(--color-texto);
 }
 
+.navegacion a{
+    display: inline-block;
+    width: fit-content;
+}
+
 .contenido{
     background: var(--color-secundario);
     height: auto;
-    width: 70%;
+    width: 100%;
     overflow-y: scroll;
 }
 
 .link-seccion {
-    margin: 8px 32px;
-    padding: 0 8px;
+    margin: 8px 0 8px 32px;
+    padding: 0 0 0 8px;
     border: 0.1rem solid var(--color-secundario);
     border-radius: 0.5rem;
     width: fit-content;
@@ -53,11 +62,15 @@ main {
 }
 
 .contenedor.carta{
-    color: var(--color-principal);
+    color: var(--color-texto);
     border: 0.05rem solid var(--color-principal);
     background-color: var(--color-secundario);
-    width: auto;
+    width: 29%;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 8px 8px 8px;
 }
 
 .contenedor.carta:hover{
@@ -67,4 +80,11 @@ main {
 
 .contenedor.carta p,h2,h1{
     font-size: small;
+}
+
+.card-solicitud-botones {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
 }

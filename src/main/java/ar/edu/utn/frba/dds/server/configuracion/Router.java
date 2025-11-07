@@ -8,7 +8,6 @@ import ar.edu.utn.frba.dds.server.SetupData;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Router implements WithSimplePersistenceUnit {
@@ -27,8 +26,16 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/", ctx ->
       ctx.render("templates/paginas/mapa/mapaPagina", homeController.show(ctx)));
 
-    app.get("/colecciones/{id}/hechos",
-        ctx -> ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx)));
+    app.get("/colecciones/{id}/hechos", ctx -> {
+      if(ctx.header("HX-Request") != null) {
+        ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx));
+      }
+      else {
+        Map<String, Object> model = homeController.show(ctx);
+        model.putAll(coleccionesController.hechos(ctx));
+        ctx.render("templates/paginas/mapa/mapaPagina", model);
+      }
+    });
 
     app.get("/hechos/nuevo", ctx -> {
       ctx.render("templates/paginas/subirHecho");
@@ -58,16 +65,14 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion");
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", solicitudesDeEliminacionController.verSolicitudes(ctx));
     });
-
-//    app.get("/solicitudesDeEliminacion/nueva", ctx -> {
-//      String hecho = ctx.queryParam("hecho");
-//      ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
-//    });
 
     app.post("/hechos", hechosController::subirHecho);
 
     app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud);
+
+    app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud);
+
   }
 }

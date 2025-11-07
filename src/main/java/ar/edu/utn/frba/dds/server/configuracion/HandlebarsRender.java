@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.server.exceptions.ErrorRenderizadoException;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
+import com.google.gson.Gson;
 import io.javalin.http.Context;
 import io.javalin.rendering.FileRenderer;
 import java.util.Map;
@@ -16,7 +17,10 @@ public class HandlebarsRender implements FileRenderer {
   public HandlebarsRender() {
     //para dev, lee en .hbs de disco siempre, sirve para ir cambiándolo sin reiniciar
     FileTemplateLoader loader = new FileTemplateLoader("src/main/resources", ".hbs");
+
     this.handlebars = new Handlebars(loader);
+    this.handlebars.registerHelper("json", (context, options)
+        -> new Gson().toJson(context));
   }
 
   @NotNull

@@ -17,19 +17,19 @@ body {
 }
 
 h1 {
-    font-size: 72px;
+    font-size: 32px;
     font-weight: bold;
     margin:  1rem 0 1rem 0;
 }
 
 h2 {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
     margin: 0.75rem 0 0 0;
 }
 
 p {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
     margin: 1rem 0 0 0;
 }
@@ -58,6 +58,11 @@ p.bold {
     background-color: var(--color-principal);
 }
 
+.boton.terciario {
+    margin: 16px 0 0 0;
+    background-color: var(--color-texto);
+}
+
 .invisible{
     visibility: hidden;
     display: none;
@@ -69,7 +74,7 @@ p.bold {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin: 0 0 auto 0;
+    margin: 0;
 }
 
 .contenedor.vertical{
