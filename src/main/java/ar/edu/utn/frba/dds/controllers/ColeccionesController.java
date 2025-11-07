@@ -59,7 +59,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     withTransaction(() -> {
       Coleccion coleccion = colecciones.find(id);
       coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
-      Set<HechoDTO> hechos = coleccion.hechos(filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
+      Set<HechoDTO> hechos = coleccion.hechos(titulo, filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
       model.put("hechos", hechos);
     });
 
