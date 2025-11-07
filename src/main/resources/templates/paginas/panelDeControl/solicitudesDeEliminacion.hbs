@@ -1,21 +1,30 @@
 {{#partial "seccion"}}
     <div class="contenedor cartas solicitudes">
 
-            <div class="contenedor carta vertical solicitud" style="padding: 0.5rem">
-                <div>
-                    HECHO SOLICITADO
+        {{#each solicitudes}}
+
+            <div class="contenedor boton carta solicitud">
+                <div class="card-solicitud-detalles">
+                    <h2>
+                        {{tituloHecho}}
+                    </h2>
+
+                    <p><b>Fundamentacion:</b> {{fundamento}} </p>
+
                 </div>
 
-                <p ><b>Fundamentacion: </b> Me ofende Me ofende Me ofende Me ofende
-                    Me ofende Me ofende Me ofende Me ofende Me ofende Me ofende Me ofende
-                    Me ofende Me ofende Me ofende Me ofende Me ofende Me ofende </p>
-
+                <!--            Not so restfull of me, pero no se como diferenciar los dos posts si no-->
                 <div class="contenedor lateral">
-                    <button class="boton secundario" type="button">Rechazar</button>
-                    <button class="boton secundario" type="button">Aceptar</button>
+                    <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
+                        <div class="card-solicitud-botones">
+                            <input type="submit" class="boton terciario" value="Rechazar">
+                            <input type="submit" class="boton secundario" value="Aceptar">
+                        </div>
+                    </form>
                 </div>
             </div>
 
+        {{/each}}
     </div>
 {{/partial}}
 

@@ -121,4 +121,7 @@ public class Coleccion{
     return fuente.obtenerHechos(busqueda, filtroCompuesto.and(filtro)).stream()
         .filter(h -> !eliminados.contains(h.titulo()));
   }
+  public Fuente getFuente(){
+    return this.fuente;
+  }
 }

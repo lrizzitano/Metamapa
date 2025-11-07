@@ -21,15 +21,16 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form" style="height: 50%">
+            <form class="form" action="/solicitudesDeEliminacion" method="POST" style="height: 50%">
 
-                <label>Titulo</label>
+                <label for="hecho">Hecho</label>
                 <p class="bold"> {{hecho}} </p>
+                <input type="hidden" id="hecho" name="hecho" value="{{hecho}}">
 
-                <label>Fundamentacion</label>
-                <input type="text" class="largo" placeholder="Motivos de eliminación"/>
+                <label for="fundamentacion">Fundamentacion</label>
+                <input type="text" id="fundamentacion" name="fundamentacion" class="largo" placeholder="Motivos de eliminación"/>
 
-                <button class="boton secundario" type="button">Subir</button>
+                <button class="boton secundario" type="submit">Subir</button>
 
             </form>
         </div>

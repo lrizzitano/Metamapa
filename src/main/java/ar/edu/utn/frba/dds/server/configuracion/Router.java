@@ -1,7 +1,9 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.ColeccionesController;
+import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.HomeController;
+import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.autenticacion.Autenticador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
@@ -18,6 +20,8 @@ public class Router implements WithSimplePersistenceUnit {
     Key<Autenticador> autenticador = AppKeys.AUTENTICADOR;
     HomeController homeController = new HomeController();
     ColeccionesController coleccionesController = new ColeccionesController();
+    HechosController hechosController = new HechosController();
+    SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
 
     app.before(ctx -> {
       entityManager().clear();
@@ -28,8 +32,16 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/", ctx ->
       ctx.render("templates/paginas/mapa/mapaPagina", homeController.show(ctx)));
 
-    app.get("/colecciones/{id}/hechos",
-        ctx -> ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx)));
+    app.get("/colecciones/{id}/hechos", ctx -> {
+      if(ctx.header("HX-Request") != null) {
+        ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx));
+      }
+      else {
+        Map<String, Object> model = homeController.show(ctx);
+        model.putAll(coleccionesController.hechos(ctx));
+        ctx.render("templates/paginas/mapa/mapaPagina", model);
+      }
+    });
 
     app.get("/hechos/nuevo", ctx -> {
       ctx.render("templates/paginas/subirHecho");
@@ -67,13 +79,14 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion");
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", solicitudesDeEliminacionController.verSolicitudes(ctx));
     });
 
+    app.post("/hechos", hechosController::subirHecho);
 
-    app.get("navegar/solicitudesDeEliminacion/nueva", ctx -> {
-      String hecho = ctx.queryParam("hecho");
-      ctx.header("HX-Redirect","/solicitudesDeEliminacion/nueva?hecho=" + hecho);
-    });
+    app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud);
+
+    app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud);
+
   }
 }
