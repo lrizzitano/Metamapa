@@ -10,6 +10,8 @@ import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminaci
 import ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam.NullDetector;
 import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +33,7 @@ class SolicitudesTest implements SimplePersistenceTest {
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
   private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho.titulo(), "null");
-  private Administrador administrador = new Administrador();
+  private Administrador administrador = new Administrador("a", "a", "a", LocalDate.now(), "a");
 
   @BeforeEach
   void setUp() {
@@ -66,7 +68,7 @@ class SolicitudesTest implements SimplePersistenceTest {
     solicitud.rechazar(administrador);
 
     Assertions.assertThrows(SolicitudYaResueltaException.class, () -> {
-      solicitud.rechazar(administrador);;
+      solicitud.rechazar(administrador);
     });
   }
 

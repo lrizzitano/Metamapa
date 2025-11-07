@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,7 +31,7 @@ public class FuenteDinamicaTest {
   @Test
   void AgregarHechoModificaUsuarioQueCreoElHechoPasaASerContribuyente()
   {
-    Usuario juanma = new Usuario("JUANMANUEL!","Brawstars",12);
+    Usuario juanma = new Usuario("JUANMANUEL!","juanma","Brawstars", LocalDate.now(),"a");
     when(unHecho.contribuyente()).thenReturn(juanma);
 
     fuenteDinamica.agregarHecho(unHecho);

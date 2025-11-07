@@ -78,7 +78,7 @@ public class FullTextSearchColeccionTest implements SimplePersistenceTest {
 
   }
 
-  Usuario contribuyente = new Usuario("Luli", "Ofman", 25);
+  Usuario contribuyente = new Usuario("Lulii", "Luli", "Ofman", LocalDate.now(), "a");
 
   // === Hechos guardados en DB ===
 

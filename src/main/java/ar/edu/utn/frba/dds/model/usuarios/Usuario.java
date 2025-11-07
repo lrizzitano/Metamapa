@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.model.usuarios;
 
+import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Usuario")
@@ -19,22 +22,25 @@ import javax.persistence.Table;
 public class Usuario {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String usuario;
   @Column(name = "nombre")
   private String nombre;
   @Column(name = "apellido")
   private String apellido;
   @Column(name = "edad")
-  private int edad;
+  private LocalDate fechaNacimiento;
   @Column(name = "esContribuyente")
   private boolean esContribuyente = false;
+  @Column(name = "password")
+  private String password;
 
   public Usuario() {}
-  public Usuario(String nombre, String apellido, Integer edad) {
+  public Usuario(String usuario, String nombre, String apellido, LocalDate fechaNacimiento, String password) {
+    this.usuario = usuario;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.edad = edad;
+    this.fechaNacimiento = fechaNacimiento;
+    this.password = password;
   }
 
   public String getNombre() {
@@ -45,8 +51,8 @@ public class Usuario {
     return apellido;
   }
 
-  public int getEdad() {
-    return edad;
+  public LocalDate getEdad() {
+    return fechaNacimiento;
   }
 
   public boolean esContribuyente() {

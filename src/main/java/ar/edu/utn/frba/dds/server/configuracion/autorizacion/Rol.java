@@ -4,6 +4,6 @@ import io.javalin.security.RouteRole;
 
 public enum Rol implements RouteRole {
   USUARIO,
-  ADMIN,
+  ADMINISTRADOR,
   METAMAPA;
 }
