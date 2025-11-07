@@ -16,9 +16,8 @@ public class Autorizador {
 
   private static boolean tieneElRolMinimo(RouteRole requerido, Rol rolUsuario) {
     return switch (rolUsuario) {
-      case ADMIN -> requerido == ADMIN || requerido == USUARIO || requerido == SINSESION;
-      case USUARIO -> requerido == USUARIO || requerido == SINSESION;
-      case SINSESION -> requerido == SINSESION;
+      case ADMIN -> requerido == ADMIN || requerido == USUARIO;
+      case USUARIO -> requerido == USUARIO;
       case METAMAPA -> requerido == METAMAPA;
     };
   }
