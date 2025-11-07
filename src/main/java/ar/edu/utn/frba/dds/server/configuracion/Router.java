@@ -2,13 +2,14 @@ package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.ColeccionesController;
 import ar.edu.utn.frba.dds.controllers.HechosController;
-import ar.edu.utn.frba.dds.controllers.HomeController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
+import ar.edu.utn.frba.dds.controllers.UsuarioController;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,29 +18,26 @@ public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
     new SetupData().setup();
-    HomeController homeController = new HomeController();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
+    UsuarioController usuarioController = new UsuarioController();
 
-    app.before(ctx -> {
-      entityManager().clear();
-      ctx.appData(AppKeys.AUTENTICADOR).verificarFirma(ctx);
-    });
+    app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
     app.beforeMatched(Autorizador::validarPermisos);
 
     app.get("/", ctx ->
-      ctx.render("templates/paginas/mapa/mapaPagina", homeController.show(ctx)), Rol.USUARIO);
+      {
+        ctx.render("templates/paginas/mapa/mapaPagina", this.modelLayout(ctx));
+      }, Rol.USUARIO);
 
     app.get("/colecciones/{id}/hechos", ctx -> {
       if(ctx.header("HX-Request") != null) {
         ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx));
       }
       else {
-        Map<String, Object> model = homeController.show(ctx);
-        model.putAll(coleccionesController.hechos(ctx));
-        ctx.render("templates/paginas/mapa/mapaPagina", model);
+        ctx.render("templates/paginas/mapa/mapaPagina", this.modelLayout(ctx));
       }
     }, Rol.USUARIO);
 
@@ -58,20 +56,20 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/registrarse");
     }, Rol.USUARIO);
 
-    app.post("/usuario", ctx -> {
-      // validar que no existe otro usuario con los mismo datos
-        // si existe lo redirigimos al formulario con un cartel informativo
-      // sino guardarlo en la base
-      // generamos el token con su rol y se lo devolvemos
-      // lo redirigimos a la pantalla principal
-    }, Rol.USUARIO);
+    //app.post("/usuario", ctx -> {
+    //  usuarioController.registrarUsuario(ctx);
+    //  // validar que no existe otro usuario con los mismo datos
+    //  // si existe lo redirigimos al formulario con un cartel informativo
+    //  // sino guardarlo en la base
+    //  // generamos el token con su rol y se lo devolvemos
+    //}, Rol.USUARIO);
 
     app.get("/panelDeControl", ctx -> {
       ctx.render("templates/paginas/panelDeControl/panel");
     }, Rol.ADMIN);
 
     app.get("/panelDeControl/colecciones", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/verColecciones",homeController.show(ctx));
+      ctx.render("templates/paginas/panelDeControl/verColecciones", coleccionesController.colecciones(ctx));
     }, Rol.ADMIN);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
@@ -92,5 +90,13 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMIN);
 
+  }
+
+  private Map<String, Object> modelLayout(Context ctx)
+  {
+    ColeccionesController coleccionesController = new ColeccionesController();
+    Map<String, Object> model = coleccionesController.colecciones(ctx);
+    model.putAll(coleccionesController.colecciones(ctx));
+    return model;
   }
 }

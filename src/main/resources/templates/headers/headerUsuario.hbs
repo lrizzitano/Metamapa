@@ -1,17 +1,8 @@
 <div>
-    <a class="enlace" href="/panelDeControl">
-        <button class="boton">Panel de control</button>
-    </a>
 
-    <!--
-    {{#if esAdmin}}
-        <a>
-            <button >Panel de control</button>
+    {{#unless esAdmin}}
+        <a class="enlace" href="/panelDeControl">
+            <button class="boton">Panel de control</button>
         </a>
-        {{else}}
-        <a>
-            <button>b</button>
-        </a>
-    {{/if}}
-    -->
+    {{/unless}}
 </div>

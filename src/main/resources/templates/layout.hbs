@@ -23,15 +23,12 @@
         <h1 class="titulo-header">Metamapa</h1>
     </a>
     <div class="botones-header">
-        <!-- Comento el if pq rompe, habría que hacer login primero
-            {{#if autenticado}}
+
+        {{#if autenticado}}
             {{> templates/headers/headerUsuario }}
         {{else}}
             {{> templates/headers/headerSinSesion }}
         {{/if}}
-            -->
-
-        {{> templates/headers/headerUsuario}}
 
         <a href="/hechos/nuevo">
             <button class="boton" style="background-color: #a52b2b">

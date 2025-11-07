@@ -18,8 +18,6 @@ import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
-import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryMemoria;
-import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
@@ -27,12 +25,9 @@ import io.javalin.http.Context;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.time.LocalDate;
-import net.bytebuddy.asm.Advice;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +35,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ColeccionesController implements WithSimplePersistenceUnit, TransactionalOps {
+
+  public Map <String, Object> colecciones(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("colecciones", new ColeccionesRepository().findAll());
+    return model;
+  }
+
   public Map <String, Object> hechos(Context ctx) {
     Long id = Long.parseLong(ctx.pathParam("id"));
     Map<String, Object> model = new HashMap<>();

@@ -6,13 +6,14 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import io.javalin.http.Context;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.ADMIN;
+import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.USUARIO;
 
 
 public class Autenticador {
@@ -24,13 +25,12 @@ public class Autenticador {
     this.algoritmo = algoritmo;
   }
 
-  public void verificarFirma(Context ctx) {
+  public DecodedJWT verificarFirma(Context ctx) {
 
     var token = ctx.header("authorization");
 
     if(token == null){
-      ctx.attribute(AppKeys.ROL, ADMIN);
-      return;
+      return null;
     }
 
     try {
@@ -39,9 +39,7 @@ public class Autenticador {
           .acceptLeeway(3600)
           .build();
 
-      var decodedJWT = verifier.verify(token);
-
-      ctx.attribute(AppKeys.ROL, decodedJWT.getClaim(AppKeys.ROL));
+      return verifier.verify(token);
 
     } catch (JWTVerificationException exception){
       throw new SesionInvalidaException("La informacion de la sesión es invalida", exception);
