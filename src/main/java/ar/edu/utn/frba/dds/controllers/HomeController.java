@@ -7,13 +7,11 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeController implements WithSimplePersistenceUnit, TransactionalOps {
+public class HomeController implements WithSimplePersistenceUnit {
   public Map<String, Object> show(Context ctx)  {
     Map<String, Object> model = new HashMap<>();
 
-    withTransaction(() -> {
-      model.put("colecciones", new ColeccionesRepository().findAll());
-    });
+    model.put("colecciones", new ColeccionesRepository().findAll());
 
     return model;
   }
