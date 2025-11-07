@@ -63,11 +63,11 @@ public class SetupData implements WithSimplePersistenceUnit {
   static private final Hecho hecho4 = new Hecho(
       null,
       "tornado en burzaco",
-      "Tornado vuela señora de su reposera",
+      "TORNADO LOCO vuela a señora de su reposera",
       "Desastre Natural",
       burzaco,
       LocalDateTime.now(),
-      LocalDateTime.of(2024, 3, 15, 23, 59),
+      LocalDateTime.of(2024, 9, 15, 23, 59),
       Origen.CONTRIBUYENTE
   );
 

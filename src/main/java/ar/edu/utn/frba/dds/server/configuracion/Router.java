@@ -74,5 +74,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud);
 
+    app.post("/colecciones",coleccionesController::subirColeccion);
+
   }
 }

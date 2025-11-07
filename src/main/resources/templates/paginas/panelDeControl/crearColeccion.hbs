@@ -3,48 +3,49 @@
 {{#partial "seccion"}}
     <section class="contenedor-form">
         <div class="panel">
-            <form class="form" style="width: 100%">
+            <form class="form" style="width: 100%" action="/colecciones" method="POST">
 
-                <label>Titulo</label>
-                <input type="text" placeholder="Elija un titulo"></input>
+                <label for="titulo">Titulo</label>
+                <input id="titulo" name="titulo" type="text" placeholder="Elija un titulo">
 
-                <label>Descripcion</label>
-                <input type="text" class="largo" placeholder="Descripción de la colección"/>
+                <label for="descripcion">Descripcion</label>
+                <input  id="descripcion" name="descripcion" type="text" class="largo" placeholder="Descripción de la colección"/>
 
                 <label>Criterio de Pertenencia</label>
                 <div class="contenedor-doble">
                     <div>
-                        <label>Categoria</label>
-                        <input type="text" placeholder="Categoría"/>
+                        <label for="categoria">Categoria</label>
+                        <input id="categoria" name="categoria" type="text" placeholder="Categoría"/>
                     </div>
 
                     <div>
-                        <label>Desde</label>
-                        <input style="width: fit-content" type="date" placeholder="Fecha anterior"/>
+                        <label for="fechaAnterior">Desde</label>
+                        <input id="fechaAnterior" name="fechaAnterior" style="width: fit-content" type="date" placeholder="Fecha anterior"/>
                     </div>
 
                     <div>
-                        <label>Hasta</label>
-                        <input style="width: fit-content" type="date" placeholder="Fecha porterior"/>
+                        <label for="fechaPosterior">Hasta</label>
+                        <input id="fechaPosterior" name="fechaPosterior" style="width: fit-content" type="date" placeholder="Fecha porterior"/>
                     </div>
                 </div>
 
-                <label>Fuentes</label>
-                <select multiple>
+                <label for="fuente">Fuentes</label>
+                <select id="fuente" name="fuente" multiple>
                     <option value="metamapa">MetaMapa</option>
                     <option value="proxy">Proxy</option>
                     <option value="dinamica">Dinamica</option>
+                    <option value="estatica">Estatica</option>
                 </select>
 
-                <label>Criterio de Consenso</label>
-                <select>
-                    <option value="" selected>Sin Consenso</option>
+                <label for="consenso">Criterio de Consenso</label>
+                <select id="consenso" name="consenso">
+                    <option value="sinConsenso" selected>Sin Consenso</option>
                     <option value="absoluto">Absoluto</option>
                     <option value="mayoriaSimple">Mayoría Simple</option>
                     <option value="multiplesMenciones">Multiples Menciones</option>
                 </select>
 
-                <button class="boton secundario" type="button">Subir</button>
+                <button class="boton secundario" type="submit">Subir</button>
 
             </form>
         </div>

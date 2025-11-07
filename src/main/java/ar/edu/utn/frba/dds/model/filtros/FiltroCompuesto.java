@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -16,8 +17,8 @@ import javax.persistence.criteria.Root;
 @DiscriminatorValue("compuesto")
 public class FiltroCompuesto extends Filtro {
 
-  @ManyToMany
-  private final List<Filtro> filtros;
+  @ManyToMany(cascade = CascadeType.ALL)
+  private List<Filtro> filtros;
 
   public FiltroCompuesto() {
     filtros = new ArrayList<>();
