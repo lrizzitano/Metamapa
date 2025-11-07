@@ -5,10 +5,8 @@ import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.HomeController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.server.SetupData;
-import ar.edu.utn.frba.dds.server.autenticacion.Autenticador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
-import io.javalin.config.Key;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +15,6 @@ public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
     new SetupData().setup();
-    Key<Autenticador> autenticador = AppKeys.AUTENTICADOR;
     HomeController homeController = new HomeController();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
@@ -25,9 +22,8 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.before(ctx -> {
       entityManager().clear();
+      ctx.appData(AppKeys.AUTENTICADOR).verificarFirma(ctx);
     });
-
-    app.beforeMatched(ctx -> ctx.appData(autenticador).verificarFirma(ctx));
 
     app.get("/", ctx ->
       ctx.render("templates/paginas/mapa/mapaPagina", homeController.show(ctx)));
