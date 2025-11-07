@@ -29,7 +29,7 @@ public class Autenticador {
     var token = ctx.header("authorization");
 
     if(token == null){
-      ctx.attribute(AppKeys.ROL.toString(), ADMIN);
+      ctx.attribute(AppKeys.ROL, ADMIN);
       return;
     }
 
@@ -41,7 +41,7 @@ public class Autenticador {
 
       var decodedJWT = verifier.verify(token);
 
-      ctx.attribute(AppKeys.ROL.toString(), decodedJWT.getClaim(AppKeys.ROL.toString()));
+      ctx.attribute(AppKeys.ROL, decodedJWT.getClaim(AppKeys.ROL));
 
     } catch (JWTVerificationException exception){
       throw new SesionInvalidaException("La informacion de la sesión es invalida", exception);
@@ -55,7 +55,7 @@ public class Autenticador {
           .withIssuer("metamapa")
           .withExpiresAt(Instant.now().plus(15, ChronoUnit.MINUTES))
           .withIssuedAt(Instant.now())
-          .withClaim(AppKeys.ROL.toString(), "XXX")
+          .withClaim(AppKeys.ROL, "XXX")
           .sign(algoritmo);
 
     } catch (JWTCreationException exception){
