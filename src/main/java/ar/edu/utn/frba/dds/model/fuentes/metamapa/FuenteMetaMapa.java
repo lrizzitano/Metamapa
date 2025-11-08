@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +38,8 @@ public class FuenteMetaMapa extends Fuente {
     this.urlAPI = urlAPI;
 
     Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .create();
 

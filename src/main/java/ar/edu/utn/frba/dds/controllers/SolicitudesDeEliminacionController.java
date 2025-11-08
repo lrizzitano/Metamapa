@@ -7,6 +7,8 @@ import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +55,7 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
     solicitud.setSolicitudes(solicitudes);
 
     //TODO Traer la data del admin cuando resolvamos las sesiones
-    Administrador admin = new Administrador("Ad", "Ministrador", 16);
+    Administrador admin = new Administrador("Ad","a", "Ministrador", LocalDate.now(), "contrasenia");
 
     if (ctx.formParam("Aceptar") != null) {
       withTransaction(() -> {

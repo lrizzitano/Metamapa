@@ -40,7 +40,7 @@ public class ColeccionesRepositoryTest implements SimplePersistenceTest {
 
   private final RepoUsuarios repoUsuarios = new RepoUsuarios();
   private SolicitudDeEliminacion solicitud =  new SolicitudDeEliminacion(hecho1.titulo(), "null");
-  private Administrador administrador = new Administrador();
+  private Administrador administrador = new Administrador("a", "a", "a", LocalDate.now(), "a");
 
   private final SolicitudesDeEliminacionJPA solicitudesRepo = new SolicitudesDeEliminacionJPA();
   private final HechosFuenteDinamicaJPA hechos = new HechosFuenteDinamicaJPA();

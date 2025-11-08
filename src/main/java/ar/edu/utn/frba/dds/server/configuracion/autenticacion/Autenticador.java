@@ -1,6 +1,8 @@
 package ar.edu.utn.frba.dds.server.configuracion.autenticacion;
 
+import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.AppKeys;
+import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
 import ar.edu.utn.frba.dds.server.exceptions.SesionInvalidaException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -46,14 +48,14 @@ public class Autenticador {
     }
   }
 
-  public String crearSesion(/*informacion de usuario*/){
+  public String crearSesion(Usuario usuario, Context ctx) {
     try {
 
       return JWT.create()
           .withIssuer("metamapa")
           .withExpiresAt(Instant.now().plus(15, ChronoUnit.MINUTES))
           .withIssuedAt(Instant.now())
-          .withClaim(AppKeys.ROL, "XXX")
+          .withClaim(AppKeys.ROL, usuario.getClass().getSimpleName().toUpperCase())
           .sign(algoritmo);
 
     } catch (JWTCreationException exception){
