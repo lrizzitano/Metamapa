@@ -3,14 +3,14 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.AppKeys;
-import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
 import ar.edu.utn.frba.dds.server.exceptions.FaltaAtributoDeUsuarioException;
 import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 
 import java.time.LocalDate;
 
-public class UsuarioController {
+public class UsuarioController implements WithSimplePersistenceUnit {
 
   RepoUsuarios repoUsuarios;
 
@@ -39,15 +39,16 @@ public class UsuarioController {
       fechaDeNacimiento = LocalDate.parse(ctx.formParam("fechaDeNacimiento"));
     }
 
-    Usuario usuario = new Usuario(
-        ctx.formParam("nombreDeUsuario"),
-        ctx.formParam("nombre"),
-        ctx.formParam("apellido"),
-        fechaDeNacimiento,
-        ctx.formParam("password")
-    );
-    repoUsuarios.save(usuario);
-
-    ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
+    withTransaction(()-> {
+      Usuario usuario = new Usuario(
+          ctx.formParam("nombreDeUsuario"),
+          ctx.formParam("nombre"),
+          ctx.formParam("apellido"),
+          fechaDeNacimiento,
+          ctx.formParam("password")
+      );
+      repoUsuarios.save(usuario);
+      ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
+    });
   }
 }
