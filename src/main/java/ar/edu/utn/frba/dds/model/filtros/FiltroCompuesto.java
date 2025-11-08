@@ -53,4 +53,9 @@ public class FiltroCompuesto extends Filtro {
             .toArray(javax.persistence.criteria.Predicate[]::new)
     );
   }
+
+  @Override
+  public String getNombre() {
+    return filtros.stream().map(Filtro::getNombre).reduce(String::concat).orElse("");
+  }
 }

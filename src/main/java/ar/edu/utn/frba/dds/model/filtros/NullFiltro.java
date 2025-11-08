@@ -30,4 +30,9 @@ public class NullFiltro extends Filtro {
   public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
     return cb.conjunction();
   }
+
+  @Override
+  public String getNombre() {
+    return " Nulo ";
+  }
 }

@@ -34,6 +34,7 @@ public abstract class Filtro {
   abstract public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root,
                                                                       CriteriaBuilder cb);
 
+  public abstract String getNombre();
 }
 
 

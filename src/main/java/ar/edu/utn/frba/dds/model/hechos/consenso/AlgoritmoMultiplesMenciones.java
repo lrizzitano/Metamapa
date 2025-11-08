@@ -43,4 +43,9 @@ public class AlgoritmoMultiplesMenciones extends AlgoritmoConsenso{
   private boolean compartenAtributos(List<Hecho> hechos) {
     return hechos.stream().distinct().count() == 1;
   }
+
+  @Override
+  public String getNombre(){
+    return "Multiples Menciones";
+  }
 }

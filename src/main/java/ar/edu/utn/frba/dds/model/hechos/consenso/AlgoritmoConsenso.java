@@ -26,4 +26,6 @@ public abstract class AlgoritmoConsenso {
   private Long id;
 
   abstract Set<Hecho> getHechosConsensuados(Set<Fuente> fuentes);
+
+  public abstract String getNombre();
 }

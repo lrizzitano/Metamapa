@@ -80,6 +80,8 @@ public class Coleccion{
     return id;
   }
 
+  public Consenso getConsenso() {return criterioConsenso;}
+
   public void setSolicitudes(SolicitudDeEliminacionRepository solicitudes) {
     this.solicitudes = solicitudes;
   }
@@ -127,5 +129,9 @@ public class Coleccion{
   }
   public Fuente getFuente(){
     return this.fuente;
+  }
+
+  public Filtro getCriterioDePertenencia(){
+    return this.criterioDePertenencia;
   }
 }

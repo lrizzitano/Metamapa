@@ -43,4 +43,9 @@ public class AlgoritmoMayoriaSimple extends AlgoritmoConsenso{
         .map(Map.Entry::getKey)
         .collect(Collectors.toSet());
   }
+
+  @Override
+  public String getNombre(){
+    return "Mayoria Simple";
+  }
 }
