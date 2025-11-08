@@ -48,15 +48,17 @@ public class Autenticador {
     }
   }
 
-  public String crearSesion(Usuario usuario, Context ctx) {
+  public void crearSesion(Usuario usuario, Context ctx) {
     try {
 
-      return JWT.create()
+      var token = JWT.create()
           .withIssuer("metamapa")
           .withExpiresAt(Instant.now().plus(15, ChronoUnit.MINUTES))
           .withIssuedAt(Instant.now())
           .withClaim(AppKeys.ROL, usuario.getClass().getSimpleName().toUpperCase())
           .sign(algoritmo);
+
+      ctx.header("Authorization", token);
 
     } catch (JWTCreationException exception){
       throw new SesionInvalidaException("Ocurrio un error al generar la sesión", exception);
