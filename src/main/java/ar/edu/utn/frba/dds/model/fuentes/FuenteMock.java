@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.model.fuentes;
 import ar.edu.utn.frba.dds.model.filtros.Filtro;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class FuenteMock extends Fuente {
 
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
-    return hechos;
+    return hechos.stream().filter(filtro.getAsPredicate()).collect(java.util.stream.Collectors.toSet());
   }
 
   @Override
