@@ -39,6 +39,10 @@ public class Usuario {
     this.password = password;
   }
 
+  public String getUsuario() {
+    return usuario;
+  }
+
   public String getNombre() {
     return nombre;
   }
@@ -49,6 +53,10 @@ public class Usuario {
 
   public LocalDate getEdad() {
     return fechaNacimiento;
+  }
+
+  public String getPassword() {
+    return password;
   }
 
   public boolean esContribuyente() {

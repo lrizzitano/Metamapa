@@ -9,14 +9,7 @@ public class RepoUsuarios extends RepoGenerico<Usuario> {
     super(Usuario.class);
   }
 
-  public List<Usuario> findByNombre(String nombre) {
-    return entityManager().createQuery(
-            "select u " +
-                "from Usuario u " +
-                "where u.nombre = :nombre",
-            Usuario.class
-        )
-        .setParameter("nombre", nombre)
-        .getResultList();
+  public Usuario findByNombre(String nombre) {
+    return entityManager().find(Usuario.class, nombre);
   }
 }

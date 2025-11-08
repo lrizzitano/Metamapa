@@ -6,16 +6,17 @@
         <form class="form-sign-in" id="signin" method="POST" action="/login">
 
             <label class="usuario-label" for="usuario">Usuario</label>
-            <input type="text" class="usuario-input" id="usuario" placeholder="PabloTheKernelGOAT">
+            <input type="text" class="usuario-input" name="nombreDeUsuario" id="usuario" placeholder="PabloTheKernelGOAT">
 
-            <label for="passwordSignIn">Contraseña</label>
-            <input type="password" name="password" id="passwordSignIn" placeholder="vedia1234">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" placeholder="vedia1234">
             <div class="botones-form">
-                <button class="boton secundario" type="submit">Login</button>
                 <button class="boton secundario"
+                        type="button"
                         hx-get="navegar/usuarios/nuevo"
                         hx-trigger="click"
                         hx-push-url="true">Registrarse</button>
+                <button class="boton principal" type="submit">Login</button>
             </div>
         </form>
     </div>

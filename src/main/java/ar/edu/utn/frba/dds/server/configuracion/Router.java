@@ -61,6 +61,11 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.redirect("/");
     }, Rol.USUARIO);
 
+    app.post("/login", ctx -> {
+      usuarioController.iniciarSesion(ctx);
+      ctx.redirect("/");
+    });
+
     app.get("/panelDeControl", ctx -> {
       ctx.render("templates/paginas/panelDeControl/panel");
     }, Rol.ADMINISTRADOR);

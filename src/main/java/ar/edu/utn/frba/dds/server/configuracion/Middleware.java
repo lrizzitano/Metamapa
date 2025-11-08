@@ -23,8 +23,8 @@ public class Middleware implements WithSimplePersistenceUnit {
     Map<String, Object> model = new HashMap<>();
 
     if(jwt == null) {
-      model.put(AppKeys.AUTENTICADO, true);
-      model.put(AppKeys.ESADMIN, true);
+      model.put(AppKeys.AUTENTICADO, false);
+      model.put(AppKeys.ESADMIN, false);
     }  else {
       model.put(AppKeys.AUTENTICADO, true);
       model.put(AppKeys.ESADMIN, jwt.getClaim(AppKeys.ROL).asString().equals(Rol.ADMINISTRADOR.toString()));
