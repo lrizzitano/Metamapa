@@ -56,13 +56,10 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/registrarse");
     }, Rol.USUARIO);
 
-    //app.post("/usuario", ctx -> {
-    //  usuarioController.registrarUsuario(ctx);
-    //  // validar que no existe otro usuario con los mismo datos
-    //  // si existe lo redirigimos al formulario con un cartel informativo
-    //  // sino guardarlo en la base
-    //  // generamos el token con su rol y se lo devolvemos
-    //}, Rol.USUARIO);
+    app.post("/usuario", ctx -> {
+      usuarioController.registrarUsuario(ctx);
+      ctx.redirect("/");
+    }, Rol.USUARIO);
 
     app.get("/panelDeControl", ctx -> {
       ctx.render("templates/paginas/panelDeControl/panel");
