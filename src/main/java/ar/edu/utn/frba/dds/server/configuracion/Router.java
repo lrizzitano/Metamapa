@@ -52,7 +52,7 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/nuevaSolicitudDeEliminacion", model);
     });
 
-    app.get("/usuario/nuevo", ctx -> {
+    app.get("/usuarios/nuevo", ctx -> {
       ctx.render("templates/paginas/registrarse");
     }, Rol.USUARIO);
 
