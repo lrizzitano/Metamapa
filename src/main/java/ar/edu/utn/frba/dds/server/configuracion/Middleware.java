@@ -38,7 +38,7 @@ public class Middleware implements WithSimplePersistenceUnit {
     ctx.attribute(AppKeys.MODEL, model);
 
     if(jwt == null) {
-      ctx.attribute(AppKeys.ROL, Rol.ADMIN);
+      ctx.attribute(AppKeys.ROL, Rol.ADMINISTRADOR);
     } else {
       ctx.attribute(AppKeys.ROL, jwt.getClaim(AppKeys.ROL));
     }
