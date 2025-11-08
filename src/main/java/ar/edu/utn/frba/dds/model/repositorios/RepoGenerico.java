@@ -9,30 +9,29 @@ public class RepoGenerico<T> implements WithSimplePersistenceUnit {
 
   private final Class<T> entityClass;
 
-  private final EntityManager entitityManager = entityManager();
-
   protected RepoGenerico(Class<T> entityClass) {
     this.entityClass = entityClass;
   }
 
   public Set<T> findAll() {
-    return entitityManager.createQuery("from " + entityClass.getSimpleName(), entityClass)
+    return entityManager().createQuery("from " + entityClass.getSimpleName(), entityClass)
         .getResultStream().collect(Collectors.toSet());
   }
 
   public T find(Long id) {
-    return entitityManager.find(entityClass, id);
+    return entityManager().find(entityClass, id);
   }
 
   public void save(T entity) {
-    entitityManager.persist(entity);
+    entityManager().persist(entity);
+    System.out.println(entityManager());
   }
 
   public T update(T entity) {
-    return entitityManager.merge(entity);
+    return entityManager().merge(entity);
   }
 
   public void delete(T entity) {
-    entitityManager.remove(entity);
+    entityManager().remove(entity);
   }
 }

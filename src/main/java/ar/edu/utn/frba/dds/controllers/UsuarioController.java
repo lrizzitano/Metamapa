@@ -9,7 +9,6 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class UsuarioController implements WithSimplePersistenceUnit {
 
@@ -20,56 +19,52 @@ public class UsuarioController implements WithSimplePersistenceUnit {
   }
 
   public void registrarUsuario(Context ctx) {
-
-    if(ctx.formParam("nombreDeUsuario") == null || ctx.formParam("nombreDeUsuario").isBlank()) { // juanma se reire pero sin el isBlank no funciona
+    var username = ctx.formParam("nombreDeUsuario");
+    if (username == null || username.isBlank()) {
       throw new FaltaAtributoDeUsuarioException("Falta el nombre de usuario");
     }
 
-    if(ctx.formParam("password") == null || ctx.formParam("password").isBlank()) {
+    var password = ctx.formParam("password");
+    if(password == null || password.isBlank()) {
       throw new FaltaAtributoDeUsuarioException("Falta el password de usuario");
     }
 
-    if(repoUsuarios.findByNombre(ctx.formParam("nombreDeUsuario")) != null) {
-      throw new UsuarioExistenteException("Ya existe un usuario con ese nombre");
-    }
+    var fechaDeNacimiento = ctx.formParam("fechaNacimiento");
+    //Date.parse no anda en variables, qué lenguaje eh.
 
-    LocalDate fechaDeNacimiento;
-    if(ctx.formParam("fechaDeNacimiento") == null) {
-      fechaDeNacimiento = null;
-    } else {
-      fechaDeNacimiento = LocalDate.parse(ctx.formParam("fechaDeNacimiento"));
-    }
-
-    withTransaction(()-> {
-      Usuario usuario = new Usuario(
-          ctx.formParam("nombreDeUsuario"),
-          ctx.formParam("nombre"),
-          ctx.formParam("apellido"),
-          fechaDeNacimiento,
-          ctx.formParam("password")
-      );
+    String finalFechaDeNacimiento = (fechaDeNacimiento == null || fechaDeNacimiento.isBlank()) ? null : fechaDeNacimiento;
+    Usuario usuario = new Usuario(
+        username,
+        ctx.formParam("nombre"),
+        ctx.formParam("apellido"),
+        finalFechaDeNacimiento == null ? null : LocalDate.parse(finalFechaDeNacimiento),
+        password
+    );
+    withTransaction(() -> {
+      if(repoUsuarios.findByUsername(username) != null) {
+        throw new UsuarioExistenteException("Ya existe un usuario con ese nombre");
+      }
       repoUsuarios.save(usuario);
-      ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
     });
 
+    ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
   }
 
   public void iniciarSesion(Context ctx) {
 
-    ctx.appData(AppKeys.LOGGER).info("USUARIOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-    repoUsuarios.findAll().forEach(u -> {ctx.appData(AppKeys.LOGGER).info(u.getUsuario());});
-
     if(ctx.formParam("password") == null){
       throw new FaltaAtributoDeUsuarioException("Falta el password de usuario");
     }
+
     if(ctx.formParam("nombreDeUsuario") == null) {
       throw new FaltaAtributoDeUsuarioException("Falta el nombre de usuario");
     }
 
-    Usuario usuario = repoUsuarios.findByNombre(ctx.formParam("nombreDeUsuario"));
+    Usuario usuario = repoUsuarios.findByUsername(ctx.formParam("nombreDeUsuario"));
     if(usuario == null) {
       throw new UsuarioExistenteException("No existe un usuario con ese nombre");
     }
+
     if(!usuario.getPassword().equals(ctx.formParam("password"))) {
       throw new UsuarioExistenteException("Password incorrecta");
     }
