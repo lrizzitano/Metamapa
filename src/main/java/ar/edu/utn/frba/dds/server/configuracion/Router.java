@@ -87,6 +87,8 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMINISTRADOR);
 
+    app.delete("/colecciones/{id}",coleccionesController::eliminarColeccion,Rol.ADMINISTRADOR);
+
   }
 
   private Map<String, Object> modelLayout(Context ctx)

@@ -270,4 +270,17 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
   }
 
+  public void eliminarColeccion(Context ctx) {
+    Long id = Long.parseLong(ctx.pathParam("id"));
+
+    withTransaction(() -> {
+      RepoColecciones repoColecciones = new RepoColecciones();
+      Coleccion coleccion = repoColecciones.find(id);
+      repoColecciones.delete(coleccion);
+    });
+
+    ctx.header("HX-Redirect", "/panelDeControl/colecciones");
+    ctx.status(204);
+  }
+
 }

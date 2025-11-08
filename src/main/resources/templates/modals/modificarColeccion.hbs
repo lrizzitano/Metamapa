@@ -1,4 +1,3 @@
-
 <div class="modal" id="modificarColeccion">
     <div class="backdrop" onclick="closeModal('modificarColeccion')"></div>
     <div class="panel modificar-coleccion" style="height: auto">
@@ -45,7 +44,15 @@
             </select>
 
             <div class="botones-form" style="justify-content: space-around">
-                <button class="boton secundario eliminar" style="background-color: var(--color-texto) " type="submit">Eliminar</button>
+                <button
+                        hx-target="body"
+                        hx-swap="none"
+                        class="boton secundario eliminar"
+                        style="background-color: var(--color-texto) "
+                        type="button"
+                >
+                    Eliminar
+                </button>
                 <button class="boton secundario" type="submit">Modificar</button>
             </div>
         </form>

@@ -26,7 +26,12 @@ function crearModalColeccion(boton) {
   modal.querySelector('.fuente').value = coleccion.fuente
 
   const form = modal.querySelector('.form.editar.coleccion');
-  form.action = "/colecciones/" + id;
+  form.action = `/colecciones/${encodeURIComponent(coleccion.id)}`;
+
+  const deleteButton = modal.querySelector('.boton.secundario.eliminar');
+  deleteButton.setAttribute('hx-delete', `/colecciones/${encodeURIComponent(coleccion.id)}`);
+  htmx.process(deleteButton);
+
 
 }
 
