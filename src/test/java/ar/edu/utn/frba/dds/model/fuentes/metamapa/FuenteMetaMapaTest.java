@@ -40,7 +40,8 @@ public class FuenteMetaMapaTest {
   public static void setup(WireMockRuntimeInfo wmRuntimeInfo) {
     fuente = new FuenteMetaMapa(wmRuntimeInfo.getHttpBaseUrl());
     gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .setPrettyPrinting()
         .create();
