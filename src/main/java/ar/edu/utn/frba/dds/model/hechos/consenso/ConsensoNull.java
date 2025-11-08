@@ -25,4 +25,8 @@ public class ConsensoNull extends Consenso {
   @Override
   public void actualizar() {
   }
+
+  public String getNombre(){
+    return "Consenso nulo";
+  }
 }

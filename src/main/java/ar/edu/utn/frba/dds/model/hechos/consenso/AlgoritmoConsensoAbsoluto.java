@@ -28,4 +28,9 @@ public class AlgoritmoConsensoAbsoluto extends AlgoritmoConsenso {
     }
     return consensuados;
   }
+
+  @Override
+  public String getNombre(){
+    return "Absoluto";
+  }
 }

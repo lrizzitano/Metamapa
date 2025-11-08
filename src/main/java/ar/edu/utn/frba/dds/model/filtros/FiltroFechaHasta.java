@@ -38,4 +38,9 @@ public class FiltroFechaHasta extends Filtro {
     return cb.lessThanOrEqualTo(root.get("fechaAcontecimiento"), fecha);
 
   }
+
+  @Override
+  public String getNombre() {
+    return " Fecha hasta: " + fecha.toString();
+  }
 }

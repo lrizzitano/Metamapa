@@ -36,4 +36,9 @@ public class FiltroCategoria extends Filtro {
   public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
     return cb.equal(root.get("categoria"), categoria);
   }
+
+  @Override
+  public String getNombre() {
+    return " Categoria: " + categoria;
+  }
 }

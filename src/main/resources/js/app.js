@@ -17,13 +17,15 @@ function crearModalColeccion(boton) {
   const coleccion = JSON.parse(boton.dataset.coleccion);
   const id = coleccion.id
 
-  console.log(coleccion.fuente)
+
 
   modal.querySelector('.titulo').textContent = coleccion.titulo
   modal.querySelector('.descripcion').textContent = coleccion.descripcion
 
   modal.querySelector('.fuente').textContent = coleccion.fuente
   modal.querySelector('.fuente').value = coleccion.fuente
+
+  modal.querySelector('.criterioPertenencia').textContent = coleccion.criterioPertenencia
 
   const form = modal.querySelector('.form.editar.coleccion');
   form.action = `/colecciones/${encodeURIComponent(coleccion.id)}`;

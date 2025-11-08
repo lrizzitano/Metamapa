@@ -8,20 +8,15 @@ public class ColeccionDTO {
   private final String descripcion;
   private final String fuente;
   private final String consenso;
-
-  private final String fechaDesde;
-  private final String fechaHasta;
-  private final String categoria;
+  private final String criterioPertenencia;
 
   public ColeccionDTO(Coleccion coleccion) {
     this.id=coleccion.getId();
     this.titulo = coleccion.getTitulo();
     this.descripcion = coleccion.getDescripcion();
     this.fuente = coleccion.getFuente().getNombre();
-    this.consenso = "";
-    this.fechaDesde = "a";
-    this.fechaHasta = "b";
-    this.categoria = "c";
+    this.consenso = coleccion.getConsenso().getNombre();
+    this.criterioPertenencia = coleccion.getCriterioDePertenencia().getNombre();
   }
 
   public Long id(){return id;}
@@ -29,8 +24,7 @@ public class ColeccionDTO {
   public String descripcion(){return descripcion;}
   public String fuente(){return fuente;}
   public String consenso(){return consenso;}
-  public String fechaDesde(){return fechaDesde;}
-  public String fechaHasta(){return fechaHasta;}
-  public String categoria(){return categoria;}
+  public String criterioPertenencia(){return criterioPertenencia;}
+
 
 }

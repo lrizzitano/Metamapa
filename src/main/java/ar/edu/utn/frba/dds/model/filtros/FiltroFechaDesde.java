@@ -37,4 +37,9 @@ public class FiltroFechaDesde extends Filtro {
   public javax.persistence.criteria.Predicate toJpaPredicate(Root<Hecho> root, CriteriaBuilder cb) {
     return cb.greaterThanOrEqualTo(root.get("fechaAcontecimiento"), fecha);
   }
+
+  @Override
+  public String getNombre() {
+    return " Fecha desde: " + fecha.toString();
+  }
 }

@@ -76,4 +76,8 @@ public class Consenso implements Calendarizable {
   public boolean esConsensuado(Hecho hecho) {
     return this.hechosConsensuados.contains(hecho);
   }
+
+  public String getNombre(){
+    return algoritmoConsenso.getNombre();
+  }
 }
