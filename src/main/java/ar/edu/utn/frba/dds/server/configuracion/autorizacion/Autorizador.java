@@ -16,6 +16,14 @@ public class Autorizador {
       return; // no controlar archivos estáticos
     }
 
+    if(ctx.attribute(AppKeys.ROL) == null) {
+      return;
+    }
+
+    if (ctx.routeRoles().isEmpty()) {
+      return;
+    }
+
     if(!tieneElRolMinimo(ctx.routeRoles().iterator().next(), ctx.attribute(AppKeys.ROL))) { // el autenticador define los roles en app.before
       throw new UsuarioNoAutorizadoException("El usuario no cuenta con los permisos para acceder a esa ruta");
     }
