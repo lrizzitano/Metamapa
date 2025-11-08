@@ -27,6 +27,11 @@ public class FiltroCompuestoTest {
       return null;
     }
 
+    @Override
+    public String getNombre() {
+      return "";
+    }
+
 
   }
 
