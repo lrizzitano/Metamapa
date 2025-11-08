@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.model.fuentes;
 
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.metamapa.LocalDateAdapter;
+import ar.edu.utn.frba.dds.model.fuentes.metamapa.LocalDateTimeAdapter;
 import ar.edu.utn.frba.dds.model.fuentes.metamapa.PathAdapter;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
@@ -66,7 +67,8 @@ public class BackupTest {
     String json = Files.readString(tempFile);
 
     Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .setPrettyPrinting()
         .create();

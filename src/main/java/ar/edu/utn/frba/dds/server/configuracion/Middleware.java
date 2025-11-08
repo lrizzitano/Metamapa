@@ -27,7 +27,7 @@ public class Middleware implements WithSimplePersistenceUnit {
       model.put(AppKeys.ESADMIN, true);
     }  else {
       model.put(AppKeys.AUTENTICADO, true);
-      model.put(AppKeys.ESADMIN, jwt.getClaim(AppKeys.ROL).asString().equals(Rol.ADMIN.toString()));
+      model.put(AppKeys.ESADMIN, jwt.getClaim(AppKeys.ROL).asString().equals(Rol.ADMINISTRADOR.toString()));
     }
 
     return model;

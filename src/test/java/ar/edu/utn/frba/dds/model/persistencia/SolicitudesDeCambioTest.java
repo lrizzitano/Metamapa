@@ -10,6 +10,8 @@ import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesFuenteDinam
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -53,7 +55,7 @@ public class SolicitudesDeCambioTest implements SimplePersistenceTest {
   @Test
   public void detectarContadorDeRechazosDeUnHecho() {
 
-    Usuario  usuario = new Usuario("Peperino", "Pomoro", 43);
+    Usuario  usuario = new Usuario("pepe", "Peperino", "Pomoro", LocalDate.now(), "A");
     repoUsuarios.save(usuario);
 
     Hecho hecho = new Hecho(

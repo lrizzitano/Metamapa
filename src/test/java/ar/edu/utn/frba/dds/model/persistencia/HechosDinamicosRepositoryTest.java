@@ -11,6 +11,8 @@ import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class HechosDinamicosRepositoryTest implements SimplePersistenceTest {
 
   HechoRepository hechosFuenteDinamica;
-  Usuario usuario = new Usuario("Peperino", "Pomoro", 43);
+  Usuario usuario = new Usuario("pepe", "Peperino","Pomoro", LocalDate.now(), "a");
 
   @BeforeEach
   public void setUp() {

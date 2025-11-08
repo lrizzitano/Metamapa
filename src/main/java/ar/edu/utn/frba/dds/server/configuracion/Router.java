@@ -52,7 +52,7 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/nuevaSolicitudDeEliminacion", model);
     });
 
-    app.get("/usuario/nuevo", ctx -> {
+    app.get("/usuarios/nuevo", ctx -> {
       ctx.render("templates/paginas/registrarse");
     }, Rol.USUARIO);
 
@@ -66,29 +66,29 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/panelDeControl", ctx -> {
       ctx.render("templates/paginas/panelDeControl/panel");
-    }, Rol.ADMIN);
+    }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones", ctx -> {
       ctx.render("templates/paginas/panelDeControl/verColecciones", coleccionesController.colecciones(ctx));
-    }, Rol.ADMIN);
+    }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
       ctx.render("templates/paginas/panelDeControl/crearColeccion");
-    }, Rol.ADMIN);
+    }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
       ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", solicitudesDeEliminacionController.verSolicitudes(ctx));
-    }, Rol.ADMIN);
+    }, Rol.ADMINISTRADOR);
 
     app.post("/hechos", hechosController::subirHecho, Rol.USUARIO);
 
     app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud, Rol.USUARIO);
 
-    app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud, Rol.ADMIN);
+    app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud, Rol.ADMINISTRADOR);
 
-    app.post("/colecciones",coleccionesController::subirColeccion,Rol.ADMIN);
+    app.post("/colecciones",coleccionesController::subirColeccion,Rol.ADMINISTRADOR);
 
-    app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMIN);
+    app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMINISTRADOR);
 
   }
 
