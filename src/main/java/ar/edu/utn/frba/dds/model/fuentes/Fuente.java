@@ -102,4 +102,5 @@ public abstract class Fuente {
     }
   }
 
+  public abstract String getNombre();
 }

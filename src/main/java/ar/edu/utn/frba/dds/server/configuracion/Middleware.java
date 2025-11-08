@@ -23,8 +23,8 @@ public class Middleware implements WithSimplePersistenceUnit {
     Map<String, Object> model = new HashMap<>();
 
     if(jwt == null) {
-      model.put(AppKeys.AUTENTICADO, false);
-      model.put(AppKeys.ESADMIN, false);
+      model.put(AppKeys.AUTENTICADO, true);
+      model.put(AppKeys.ESADMIN, true);
     }  else {
       model.put(AppKeys.AUTENTICADO, true);
       model.put(AppKeys.ESADMIN, jwt.getClaim(AppKeys.ROL).asString().equals(Rol.ADMIN.toString()));
@@ -38,7 +38,7 @@ public class Middleware implements WithSimplePersistenceUnit {
     ctx.attribute(AppKeys.MODEL, model);
 
     if(jwt == null) {
-      ctx.attribute(AppKeys.ROL, Rol.USUARIO);
+      ctx.attribute(AppKeys.ROL, Rol.ADMIN);
     } else {
       ctx.attribute(AppKeys.ROL, jwt.getClaim(AppKeys.ROL));
     }

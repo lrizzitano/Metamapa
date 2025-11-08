@@ -38,7 +38,11 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
   public Map <String, Object> colecciones(Context ctx) {
     Map<String, Object> model = new HashMap<>();
-    model.put("colecciones", new ColeccionesRepository().findAll());
+
+    Set<ColeccionDTO> colecciones = new ColeccionesRepository().findAll()
+        .stream().map(ColeccionDTO::new).collect(Collectors.toSet());
+
+    model.put("colecciones", colecciones);
     return model;
   }
 

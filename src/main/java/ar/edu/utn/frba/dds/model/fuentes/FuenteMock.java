@@ -27,4 +27,9 @@ public class FuenteMock extends Fuente {
   public Set<Hecho> obtenerHechos(Filtro filtro) {
     return hechos;
   }
+
+  @Override
+  public String getNombre(){
+    return "Mock";
+  }
 }

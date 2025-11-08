@@ -61,6 +61,7 @@ public class HechoDTO {
   public String origen() {
     return origen;
   }
+  public String provincia() {return provincia;}
   public String multimedia() {
     return multimedia;
   }

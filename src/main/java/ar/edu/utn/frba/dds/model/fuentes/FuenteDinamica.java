@@ -76,4 +76,9 @@ public class FuenteDinamica extends Fuente {
   public void eliminarHecho(Hecho hecho) {
     this.repositorioDeHechos.eliminar(hecho);
   }
+
+  @Override
+  public String getNombre(){
+    return "Dinamica";
+  };
 }

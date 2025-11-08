@@ -86,4 +86,9 @@ public class FuenteDemo extends Fuente implements Calendarizable {
         Origen.MANUAL
     );
   }
+
+  @Override
+  public String getNombre(){
+    return "Estatica";
+  }
 }

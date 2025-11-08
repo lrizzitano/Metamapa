@@ -77,6 +77,11 @@ public class Agregador extends Fuente implements Calendarizable  {
   public void setFrecuencia(Duration frecuencia) {
     this.frecuencia = frecuencia;
   }
+
+  @Override
+  public String getNombre(){
+    return "Estatica";
+  }
 }
 
 

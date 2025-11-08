@@ -122,4 +122,9 @@ public class FuenteMetaMapa extends Fuente {
       throw new AccesoRecursoFallidoException("Respuesta no exitosa " + this.urlAPI);
     }
   }
+
+  @Override
+  public String getNombre(){
+    return "Estatica";
+  }
 }

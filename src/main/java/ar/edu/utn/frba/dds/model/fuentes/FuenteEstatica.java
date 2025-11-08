@@ -95,4 +95,9 @@ public class FuenteEstatica extends Fuente {
         Origen.DATASET
     );
   }
+
+  @Override
+  public String getNombre(){
+    return "Estatica";
+  }
 }

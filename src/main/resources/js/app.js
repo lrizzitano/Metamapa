@@ -14,15 +14,19 @@ function crearModalColeccion(boton) {
   openModal('modificarColeccion')
   const modal = document.getElementById('modificarColeccion')
 
-  const titulo = boton.dataset.titulo;
-  const descripcion = boton.dataset.descripcion;
-  const id = boton.dataset.id;
+  const coleccion = JSON.parse(boton.dataset.coleccion);
+  const id = coleccion.id
 
-  modal.querySelector('.titulo').textContent = titulo
-  modal.querySelector('.descripcion').textContent = descripcion
+  console.log(coleccion.fuente)
 
-  modal.querySelector('.form.editar.coleccion')
-      .action = "/colecciones/" + encodeURIComponent(id);
+  modal.querySelector('.titulo').textContent = coleccion.titulo
+  modal.querySelector('.descripcion').textContent = coleccion.descripcion
+
+  modal.querySelector('.fuente').textContent = coleccion.fuente
+  modal.querySelector('.fuente').value = coleccion.fuente
+
+  const form = modal.querySelector('.form.editar.coleccion');
+  form.action = "/colecciones/" + id;
 
 }
 
