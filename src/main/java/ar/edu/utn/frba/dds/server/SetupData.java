@@ -14,8 +14,11 @@ import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -182,6 +185,8 @@ public class SetupData implements WithSimplePersistenceUnit {
       colecRepo.persist(collecion5);
       colecRepo.persist(collecion6);
       colecRepo.persist(collecion7);
+
+      new RepoUsuarios().persist(new Administrador("Ad","a", "Ministrador", LocalDate.now(), "contrasenia"));
     });
   }
 }

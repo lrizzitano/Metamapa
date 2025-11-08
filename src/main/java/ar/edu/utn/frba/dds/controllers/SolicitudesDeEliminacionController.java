@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
 import ar.edu.utn.frba.dds.model.usuarios.Administrador;
@@ -55,7 +56,7 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
     solicitud.setSolicitudes(solicitudes);
 
     //TODO Traer la data del admin cuando resolvamos las sesiones
-    Administrador admin = new Administrador("Ad","a", "Ministrador", LocalDate.now(), "contrasenia");
+    Administrador admin = (Administrador) new RepoUsuarios().findAll().stream().toList().get(0);
 
     if (ctx.formParam("Aceptar") != null) {
       withTransaction(() -> {
