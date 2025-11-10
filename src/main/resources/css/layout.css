@@ -23,7 +23,7 @@ body{
     width: 100%;
     height: auto;
     align-items: center;
-    border-bottom: 0.05rem black solid;
+    border-bottom: 3px solid #14591d;
 }
 
 .botones-header{
@@ -38,6 +38,8 @@ body{
 .titulo-header {
     color: var(--color-secundario);
     font-size: 2rem;
+    font-family: "Segoe UI", Arial, sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .contenedor-cuerpo-index{

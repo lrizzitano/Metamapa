@@ -19,7 +19,7 @@
     height: fit-content;
     align-items: center;
     justify-content: center;
-    border-bottom: 0.05rem black solid;
+    border-bottom: 0.05rem solid rgba(169, 169, 169, 0.29);
 }
 
 .contenedor-hechos-mapaYcolecciones {
@@ -38,11 +38,11 @@
     flex-direction: row;
     width: 25%;
     height: 100%;
-    background-color: var(--color-secundario);
+    background-color: white;
     align-items: center;
     justify-content: center;
-    border-right: 0.05rem solid black;
     overflow: hidden;
+    border-right: 0.05rem solid rgba(169, 169, 169, 0.29);;
 }
 
 .hechos {
@@ -52,7 +52,7 @@
     flex-direction: column;
     justify-content: flex-start;
     height: 100%;
-    background-color: var(--color-secundario);
+    background-color: white;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -197,7 +197,7 @@
     background-color: var(--color-secundario);
     align-items: center;
     justify-content: flex-start;
-    border-top: 0.05rem solid black;
+    border-top: 0.05rem solid rgba(169, 169, 169, 0.29);
     overflow-x: auto;
     overflow-y: hidden;
     flex-direction: row;
