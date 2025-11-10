@@ -40,6 +40,16 @@ body{
     font-size: 2rem;
     font-family: "Segoe UI", Arial, sans-serif;
     letter-spacing: 0.5px;
+    animation: tituloColor 2.5s ease-in-out;
+}
+
+@keyframes tituloColor {
+    0%{
+        color: var(--color-principal);
+    }
+    100%{
+        color: var(--color-secundario);
+    }
 }
 
 .contenedor-cuerpo-index{
