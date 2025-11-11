@@ -75,7 +75,7 @@ public class Router implements WithSimplePersistenceUnit {
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/crearColeccion");
+      ctx.render("templates/paginas/panelDeControl/crearColeccion",coleccionesController.fuentes());
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {

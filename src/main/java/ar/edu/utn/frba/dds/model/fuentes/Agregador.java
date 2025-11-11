@@ -80,7 +80,7 @@ public class Agregador extends Fuente implements Calendarizable  {
 
   @Override
   public String getNombre(){
-    return "Estatica";
+    return "Agregador";
   }
 }
 

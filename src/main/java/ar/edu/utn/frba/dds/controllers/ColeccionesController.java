@@ -1,4 +1,5 @@
 package ar.edu.utn.frba.dds.controllers;
+import ar.edu.utn.frba.dds.model.filtros.Filtro;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
@@ -10,6 +11,7 @@ import ar.edu.utn.frba.dds.model.fuentes.FuenteEstatica;
 import ar.edu.utn.frba.dds.model.fuentes.demo.FuenteDemo;
 import ar.edu.utn.frba.dds.model.fuentes.metamapa.FuenteMetaMapa;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsenso;
 import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsensoAbsoluto;
 import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMayoriaSimple;
@@ -30,6 +32,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -100,12 +103,12 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     String categoria = ctx.formParam("categoria");
     String fechaAnterior = ctx.formParam("fechaAnterior");
     String fechaPosterior = ctx.formParam("fechaPosterior");
-    String fuente = ctx.formParam("fuente");
+    Long fuenteID = Long.parseLong(ctx.formParam("fuente"));
     String consenso = ctx.formParam("consenso");
 
     if (titulo == null || titulo.isBlank()
     || descripcion == null || descripcion.isBlank()
-    || fuente == null || fuente.isBlank()
+    || fuenteID == null
     || consenso == null || consenso.isBlank()) {
       new Logger().info("Faltan campos por completar");
       ctx.redirect("/panelDeControl/colecciones/nueva");
@@ -122,7 +125,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       SolicitudesDeEliminacionJPA repoSolicitudesDeEliminacion = new SolicitudesDeEliminacionJPA();
 
       //Fuente
-      Fuente fuenteNueva = obtenerfuente(fuente);
+      Fuente fuenteNueva = obtenerfuente(fuenteID);
       new Logger().info("Neuva fuente seteada" + fuenteNueva);
 
 
@@ -180,10 +183,10 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     try{
       Long id = Long.parseLong(ctx.pathParam("id"));
       String consenso = ctx.formParam("consenso");
-      String fuente = ctx.formParam("fuente");
+      Long fuente = Long.parseLong(ctx.formParam("fuente"));
 
       if ((consenso == null || consenso.isBlank())
-          && (fuente == null || fuente.isBlank())){
+          && (fuente == null)){
         new Logger().info("Faltan campos por completar");
         ctx.redirect("/panelDeControl/colecciones");
         return;
@@ -248,26 +251,15 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     return consensoNuevo;
   }
 
-  public Fuente obtenerfuente(String fuente){
+  public Fuente obtenerfuente(Long id ){
 
-    Fuente fuenteNueva = FuenteDinamica.instance();
+    FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
 
-    if(fuente.equals("dinamica")){
-      fuenteNueva = FuenteDinamica.instance();
-    }
-    if(fuente.equals("metamapa")){ //TODO: que la url llegue con el form
-      fuenteNueva = new FuenteMetaMapa("/url");
-    }
-    if(fuente.equals("estatica")){ //TODO: que el archivo llegue en el form. Podria haber muchos?
-      Path tempFile=null;
-      try{ tempFile= Files.createTempFile("hechos", ".csv");}
-      catch(Exception e){new Logger().info("Error abirnedo el archivo csv");}
+    Fuente fuente;
 
-      fuenteNueva = new FuenteEstatica(tempFile.toString());
-    }
+    fuente = repoFuentes.find(id);
 
-    return fuenteNueva;
-
+    return fuente;
   }
 
   public void eliminarColeccion(Context ctx) {
@@ -281,6 +273,19 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     ctx.header("HX-Redirect", "/panelDeControl/colecciones");
     ctx.status(204);
+  }
+
+  public Map<String, Object> fuentes() {
+    FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
+    Map<String, Object> model = new HashMap<>();
+
+    withTransaction(() -> {
+      Set<Fuente> fuentes = repoFuentes.obtenerFuentes();
+      Set<FuenteDTO> fuentesDTO = fuentes.stream().map(FuenteDTO::new).collect(Collectors.toSet());
+      model.put("fuentes", fuentesDTO);
+    });
+
+    return model;
   }
 
 }
