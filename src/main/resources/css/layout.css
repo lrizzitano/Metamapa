@@ -49,7 +49,6 @@ body{
     font-size: 2rem;
     font-family: "Segoe UI", Arial, sans-serif;
     letter-spacing: 0.13rem;
-    border-bottom: 0.04rem solid white;
 }
 
 @keyframes aparecer {
