@@ -231,7 +231,7 @@
     border-radius: 0.8rem;
     margin: 2%;
     font-size: 1rem;
-    background-color: var(--color-principal);
+    background-color: var(--color-acento);
 }
 
 .contenedor-colecciones button.activo{
