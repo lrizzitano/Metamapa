@@ -10,10 +10,9 @@ import java.security.interfaces.RSAPublicKey;
 
 public class FactoryAutenticador {
 
-  public FactoryAutenticador(){}
+  public FactoryAutenticador() {}
 
-  public Autenticador crearAutenticador(){
-
+  public Autenticador crearAutenticador() {
     try {
       KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
       generator.initialize(2048); // tamaño de clave razonable
@@ -29,3 +28,4 @@ public class FactoryAutenticador {
     return null;
   }
 }
+
