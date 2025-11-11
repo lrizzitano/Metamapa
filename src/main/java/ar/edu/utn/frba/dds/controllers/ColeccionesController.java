@@ -169,7 +169,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         new RepoColecciones().save(coleccion);
       });
 
-      ctx.redirect("/panelDeControl");
+      ctx.redirect("/panelDeControl/colecciones/nueva");
 
 
     } catch (Exception e) {

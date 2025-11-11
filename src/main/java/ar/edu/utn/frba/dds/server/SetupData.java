@@ -19,8 +19,10 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -145,19 +147,16 @@ public class SetupData implements WithSimplePersistenceUnit {
   static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5));
 
   private final Fuente fuente8Estatica = crearFuente8Estatica();
+
   private Fuente crearFuente8Estatica() {
     try {
-      Path tempFile = Files.createTempFile("hechos", ".csv");
-
-      Files.write(tempFile, List.of(
-          "\"titulo\",\"descripcion\",\"categoria\",\"latitud\",\"longitud\",\"fecha\"",
-          "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
-          "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
-      ));
-
-      return new FuenteEstatica(tempFile.toString());
-    } catch (IOException e) {
-      throw new RuntimeException("Error creando fuente estatica", e);
+      var resource = getClass().getClassLoader().getResource("hechosEstatica1.csv");
+      if (resource == null) {
+        throw new FileNotFoundException("Archivo hechosEstatica1.csv no encontrado en resources");
+      }
+      return new FuenteEstatica(Paths.get(resource.toURI()).toString());
+    } catch (Exception e) {
+      throw new RuntimeException("Error cargando fuente8Estatica", e);
     }
   }
 
