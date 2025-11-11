@@ -14,11 +14,11 @@
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
 }
 .contenedor.titulo-cerrar button{
-    height: 30%;
+    height: 2rem;
     margin: 0;
 }
 

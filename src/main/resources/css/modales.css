@@ -29,8 +29,8 @@
     background-color: var(--color-secundario);
     padding: 2rem;
     border-radius: 8px;
-    width: 50%;
-    height: 70%;
+    width: 30%;
+    height: 30%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1001;
 }
@@ -55,7 +55,9 @@
     align-items: center;
 }
 
+.panel.sign-in{
 
+}
 
 .panel.sign-up label{
     font-size: 1rem;
