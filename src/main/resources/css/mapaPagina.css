@@ -241,3 +241,40 @@
     color: var(--color-acento);
     background-color: var(--color-secundario);
 }
+
+.contenedor.vertical.precarga{
+    justify-content: center;
+    margin-left: 1rem;
+    min-width: 22rem;
+    height: 80%;
+}
+.contenedor.vertical.precarga p{
+    margin-bottom: 2rem;
+    padding: 3%;
+    text-align: center;
+    color: var(--color-texto-negrita);
+    font-size: 1.2rem;
+}
+
+.ping{
+    animation: caer 2s infinite ease-in-out alternate-reverse;
+    width: 5rem;
+    height: 5rem;
+}
+
+@keyframes caer {
+    from {
+        transform: translateY(20px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+
+}
+
+.mapita{
+    width: 7rem;
+    height: 7rem;
+    margin-top: 1rem;
+
+}
