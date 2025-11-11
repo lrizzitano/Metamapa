@@ -185,12 +185,6 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       String consenso = ctx.formParam("consenso");
       Long fuente = Long.parseLong(ctx.formParam("fuente"));
 
-      if ((consenso == null || consenso.isBlank())
-          && (fuente == null)){
-        new Logger().info("Faltan campos por completar");
-        ctx.redirect("/panelDeControl/colecciones");
-        return;
-      }
 
       RepoColecciones repoColecciones = new RepoColecciones();
       Coleccion coleccion = repoColecciones.find(id);
@@ -202,12 +196,9 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         new Logger().info("Nuevo consenso seteado modificado a" + nuevoConsenso);
       }
 
-      if(fuente != null )
-      {
-        Fuente nuevaFuente = obtenerfuente(fuente);
-        coleccion.setFuente(nuevaFuente);
-        new Logger().info("Neuva fuente seteada modificada a nashe" + nuevaFuente);
-      }
+      Fuente nuevaFuente = obtenerfuente(fuente);
+      coleccion.setFuente(nuevaFuente);
+      new Logger().info("Neuva fuente seteada modificada a nashe" + nuevaFuente);
 
       withTransaction(() -> {
         repoColecciones.update(coleccion);
@@ -265,8 +256,9 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
   public void eliminarColeccion(Context ctx) {
     Long id = Long.parseLong(ctx.pathParam("id"));
 
+    RepoColecciones repoColecciones = new RepoColecciones();
+
     withTransaction(() -> {
-      RepoColecciones repoColecciones = new RepoColecciones();
       Coleccion coleccion = repoColecciones.find(id);
       repoColecciones.delete(coleccion);
     });

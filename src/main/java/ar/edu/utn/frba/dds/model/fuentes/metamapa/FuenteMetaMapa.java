@@ -127,6 +127,6 @@ public class FuenteMetaMapa extends Fuente {
 
   @Override
   public String getNombre(){
-    return "MetaMapa";
+    return "MetaMapa"  + " - ID: " + id;
   }
 }
