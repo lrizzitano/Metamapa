@@ -17,13 +17,8 @@ function crearModalColeccion(boton) {
   const coleccion = JSON.parse(boton.dataset.coleccion);
   const id = coleccion.id
 
-
-
   modal.querySelector('.titulo').textContent = coleccion.titulo
   modal.querySelector('.descripcion').textContent = coleccion.descripcion
-
-  modal.querySelector('.fuente').textContent = coleccion.fuente
-  modal.querySelector('.fuente').value = coleccion.fuente
 
   modal.querySelector('.criterioPertenencia').textContent = coleccion.criterioPertenencia
 

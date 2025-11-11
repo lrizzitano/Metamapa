@@ -2,7 +2,6 @@
 
 
 .cuerpo-index {
-    background-color: rebeccapurple;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -19,7 +18,7 @@
     height: fit-content;
     align-items: center;
     justify-content: center;
-    border-bottom: 0.05rem black solid;
+    border-bottom: 0.05rem solid rgba(169, 169, 169, 0.29);
 }
 
 .contenedor-hechos-mapaYcolecciones {
@@ -41,8 +40,8 @@
     background-color: var(--color-secundario);
     align-items: center;
     justify-content: center;
-    border-right: 0.05rem solid black;
     overflow: hidden;
+    border-right: 0.05rem solid rgba(169, 169, 169, 0.29);;
 }
 
 .hechos {
@@ -65,7 +64,7 @@
     margin: 2%;
     width: 100%;
     height: fit-content;
-    background-color: var(--color-secundario);
+    background-color: white;
     cursor: pointer;
     border-radius: 0.5rem;
     border-color: var(--color-principal);
@@ -113,6 +112,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0.4rem;
 }
 
 .card-hecho-contenedor-imagen img {
@@ -197,7 +197,7 @@
     background-color: var(--color-secundario);
     align-items: center;
     justify-content: flex-start;
-    border-top: 0.05rem solid black;
+    border-top: 0.05rem solid rgba(169, 169, 169, 0.29);
     overflow-x: auto;
     overflow-y: hidden;
     flex-direction: row;

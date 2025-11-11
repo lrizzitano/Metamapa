@@ -16,12 +16,9 @@
                 <p class="criterioPertenencia"></p>
             </div>
 
-            <label for="fuente"><b>Fuente</b></label>
+            <label for="fuente"><b>Fuentes</b></label>
             <select id="fuente" name="fuente" multiple>
-                <option class="fuente" value=""></option>
-                <option value="metamapa">MetaMapa</option>
-                <option value="dinamica">Dinamica</option>
-                <option value="estatica">Estatica</option>
+                {{> templates/paginas/panelDeControl/fuentes}}
             </select>
 
             <label for="consenso"><b>Criterio de consenso</b></label>
@@ -37,7 +34,6 @@
                         hx-target="body"
                         hx-swap="none"
                         class="boton secundario eliminar"
-                        style="background-color: var(--color-texto) "
                         type="button"
                 >
                     Eliminar
