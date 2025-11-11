@@ -100,7 +100,7 @@ public class Router implements WithSimplePersistenceUnit {
   {
     ColeccionesController coleccionesController = new ColeccionesController();
     Map<String, Object> model = coleccionesController.colecciones(ctx);
-    model.putAll(coleccionesController.colecciones(ctx));
+    model.putAll(ctx.attribute(AppKeys.MODEL)); // Siempre va a existir porque el model se prepara en el middleware
     return model;
   }
 }

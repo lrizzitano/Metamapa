@@ -36,11 +36,13 @@ public class Middleware implements WithSimplePersistenceUnit {
   private void definirAtributosDelContex(Context ctx, Map<String, Object> model, DecodedJWT jwt) {
 
     ctx.attribute(AppKeys.MODEL, model);
-
+    ctx.appData(AppKeys.LOGGER).info("Atributos del Contex");
     if(jwt == null) {
-      ctx.attribute(AppKeys.ROL, Rol.ADMINISTRADOR);
+      ctx.appData(AppKeys.LOGGER).info("SIN TOKEN");
+      ctx.attribute(AppKeys.ROL, Rol.USUARIO);
     } else {
-      ctx.attribute(AppKeys.ROL, jwt.getClaim(AppKeys.ROL));
+      ctx.appData(AppKeys.LOGGER).info("CON TOKEN");
+      ctx.attribute(AppKeys.ROL, jwt.getClaim(AppKeys.ROL).as(Rol.class));
     }
 
   }
