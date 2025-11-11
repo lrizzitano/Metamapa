@@ -53,7 +53,8 @@
                 <div class="contenedor-colecciones">
                     {{#each colecciones}}
                         <button
-                                class="boton-collecion"
+                                class="boton-coleccion"
+                                id="boton-coleccion-{{id}}"
                                 hx-get="/colecciones/{{id}}/hechos"
                                 hx-target=".contenedor-hechos"
                                 hx-swap="innerHTML"

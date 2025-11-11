@@ -226,9 +226,14 @@
     background-color: var(--color-principal);
 }
 
+.contenedor-colecciones button.activo{
+    border: 0.07rem solid var(--color-acento);
+    color: var(--color-acento);
+    background-color: var(--color-secundario);}
+
 .contenedor-colecciones button:hover {
     transform: scale(1.1, 1.1);
     border: 0.07rem solid var(--color-acento);
     color: var(--color-acento);
-    background-color: #ffffff;
+    background-color: var(--color-secundario);
 }

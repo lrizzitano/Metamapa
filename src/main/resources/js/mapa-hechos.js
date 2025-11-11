@@ -2,7 +2,6 @@ let map;
 let markers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("hola")
 
   initMap();
   const hechosIniciales = document.querySelector(".contenedor-hechos");
