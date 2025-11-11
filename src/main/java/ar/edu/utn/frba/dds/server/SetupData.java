@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.server;
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
+import ar.edu.utn.frba.dds.model.fuentes.FuenteEstatica;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteMock;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
@@ -18,9 +19,14 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
+import ar.edu.utn.frba.dds.model.execpciones.NoSePudoLeerArchivoException;
+import java.io.IOException;
 
 public class SetupData implements WithSimplePersistenceUnit {
   static private final Ubicacion laPampa = new Ubicacion(-25.8666139, -60.5564475, Provincia.LA_PAMPA, null);
@@ -138,6 +144,24 @@ public class SetupData implements WithSimplePersistenceUnit {
   static final Fuente fuente6 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
   static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5));
 
+  private final Fuente fuente8Estatica = crearFuente8Estatica();
+  private Fuente crearFuente8Estatica() {
+    try {
+      Path tempFile = Files.createTempFile("hechos", ".csv");
+
+      Files.write(tempFile, List.of(
+          "\"titulo\",\"descripcion\",\"categoria\",\"latitud\",\"longitud\",\"fecha\"",
+          "\"hecho1\",\"desc1\",\"cat1\",\"1.0\",\"2.0\",\"2024-01-01\"",
+          "\"hecho2\",\"desc2\",\"cat2\",\"3.0\",\"4.0\",\"2024-01-02\""
+      ));
+
+      return new FuenteEstatica(tempFile.toString());
+    } catch (IOException e) {
+      throw new RuntimeException("Error creando fuente estatica", e);
+    }
+  }
+
+
   static final Coleccion collecion1 = new Coleccion("Hechos dinamicos", "desc1",
       new NullFiltro(), fuenteDinamica, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
@@ -152,11 +176,13 @@ public class SetupData implements WithSimplePersistenceUnit {
       new NullFiltro(), fuente6, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   static final Coleccion collecion7 = new Coleccion("Coleccion 7", "desc2",
       new NullFiltro(), fuente7, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  private final Coleccion collecion8 = new Coleccion("Estatica",
+      "Esta coleccion trae hechos de un csv",
+      new NullFiltro(), fuente8Estatica, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  private final Set<Coleccion> colecciones = Set.of(collecion1, collecion2, collecion3, collecion4,
+      collecion5, collecion6, collecion7,collecion8);
 
-  static final Set<Coleccion> colecciones = Set.of(collecion1, collecion2, collecion3, collecion4,
-      collecion5, collecion6, collecion7);
-
-  public void setup() {
+  public void setup()  {
     hecho1.setMultimedia("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.prensalibre.com%2Fwp-content%2Fuploads%2F2022%2F06%2FLluvia-12-2.jpg%3Fquality%3D52&f=1&nofb=1&ipt=31f7daa0a83e74837d4f3c1765b3ca5c424d62fe004a2aea6a806cc0ac235e4c");
     hecho2.setMultimedia("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcorrientealterna.unam.mx%2Fwp-content%2Fuploads%2F2022%2F09%2FInundacion-Tula-Hidalgo.jpeg&f=1&nofb=1&ipt=37a989c042665a2f2f8c441dd16c83caea2f1ebac60b430052d2a4b9c472898f");
     hecho3.setMultimedia("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.a24.com%2Fp%2Ff366775f9ca227c56c0afc08fcda2ff1%2Fadjuntos%2F296%2Fimagenes%2F008%2F949%2F0008949932%2F1200x675%2Fsmart%2Festerosdelibera-incendio-corrientesjpg.jpg");
@@ -176,6 +202,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       fuenteRepo.persist(fuente5);
       fuenteRepo.persist(fuente6);
       fuenteRepo.persist(fuente7);
+      fuenteRepo.persist(fuente8Estatica);
 
       ColeccionesRepository colecRepo = new ColeccionesRepository();
       colecRepo.persist(collecion1);
@@ -185,8 +212,10 @@ public class SetupData implements WithSimplePersistenceUnit {
       colecRepo.persist(collecion5);
       colecRepo.persist(collecion6);
       colecRepo.persist(collecion7);
+      colecRepo.persist(collecion8);
 
       new RepoUsuarios().persist(new Administrador("Ad","a", "Ministrador", LocalDate.now(), "contrasenia"));
     });
   }
+
 }
