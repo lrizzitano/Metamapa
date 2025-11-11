@@ -221,17 +221,13 @@
 }
 
 .contenedor-colecciones button {
-    border: 0.07rem solid var(--color-secundario);
-    cursor: pointer;
     width: 28%;
     height: 50%;
     min-width: 10rem;
     min-height: 3.2rem;
-    color: var(--color-secundario);
     border-radius: 0.8rem;
     margin: 2%;
     font-size: 1rem;
-    background-color: var(--color-acento);
 }
 
 .contenedor-colecciones button.activo{

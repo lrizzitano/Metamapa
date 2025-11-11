@@ -51,6 +51,7 @@ p.bold {
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 1rem;
     box-shadow: 0.07rem 0.15rem rgb(0,0,0,0.1);
+    margin-top: 1%;
 }
 
 
@@ -66,8 +67,14 @@ p.bold {
     background-color: var(--color-principal);
 }
 
-.boton.secundario.eliminar{
+.boton.eliminar{
     background-color: grey;
+}
+
+.boton.eliminar:hover{
+    color: var(--color-acento);
+    background-color: white;
+    border: 0.05rem solid var(--color-acento);
 }
 
 .boton.secundario:hover{
@@ -102,4 +109,8 @@ p.bold {
     justify-content: space-around;
     margin: 0 0 auto 0;
     width: 100%;
+}
+
+.boton.subir{
+    width: 10%;
 }

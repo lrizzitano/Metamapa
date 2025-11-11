@@ -55,8 +55,8 @@ function actualizarRutaFormFiltros(id) {
   form.setAttribute('hx-get', `/colecciones/${id}/hechos`);
   document.getElementById('btn-filtro').disabled = false;
 
-  for (const boton of document.getElementsByClassName('boton-coleccion')){
+  for (const boton of document.getElementsByClassName('boton')){
     boton.classList.remove('activo');
   }
-  document.getElementById(`boton-coleccion-${id}`).classList.add('activo');
+  document.getElementById(`boton-${id}`).classList.add('activo');
 }
