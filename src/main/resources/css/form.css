@@ -17,6 +17,17 @@
     margin: 0 0 16px 0;
 }
 
+.form.subir-hecho {
+    width: 80%;
+}
+
+.form-subir-hecho-contenido{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    margin: 0 0 16px 0;
+}
 
 
 .panel {
@@ -83,5 +94,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.form-campos-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.form-mapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.contenedor-mapa {
+    width: 70%;
+    height: 70%;
+    background-color: var(--color-secundario);
+    align-items: center;
+    justify-content: center;
+}
+
+#map{
+    border-radius: 32px;
 }
 

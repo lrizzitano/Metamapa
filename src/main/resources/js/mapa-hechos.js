@@ -55,13 +55,16 @@ function updateMarkers(container) {
     const hecho = btn.hecho;
     const { latitud, longitud, titulo } = hecho;
 
+    const puntoMapa = document.createElement('div')
+    puntoMapa.className = 'punto-mapa'
+
     const popup = new maplibregl.Popup({
-      offset: 25,
+      offset: 10,
       closeButton: false,
       closeOnClick: false
     }).setText(titulo);
 
-    const marker = new maplibregl.Marker()
+    const marker = new maplibregl.Marker({element: puntoMapa})
       .setLngLat([longitud, latitud])
       .addTo(map);
 
