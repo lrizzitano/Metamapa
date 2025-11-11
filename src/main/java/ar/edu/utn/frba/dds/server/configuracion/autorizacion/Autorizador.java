@@ -16,10 +16,6 @@ public class Autorizador {
       return; // no controlar archivos estáticos
     }
 
-    if(ctx.attribute(AppKeys.ROL) == null) {
-      return;
-    }
-
     if (ctx.routeRoles().isEmpty()) {
       return;
     }

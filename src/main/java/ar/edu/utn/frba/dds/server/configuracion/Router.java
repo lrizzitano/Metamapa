@@ -71,11 +71,15 @@ public class Router implements WithSimplePersistenceUnit {
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/verColecciones", coleccionesController.colecciones(ctx));
+      Map<String,Object> model = coleccionesController.colecciones(ctx);
+
+      model.putAll(coleccionesController.fuentes());
+
+      ctx.render("templates/paginas/panelDeControl/verColecciones",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/crearColeccion");
+      ctx.render("templates/paginas/panelDeControl/crearColeccion",coleccionesController.fuentes());
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
@@ -100,7 +104,7 @@ public class Router implements WithSimplePersistenceUnit {
   {
     ColeccionesController coleccionesController = new ColeccionesController();
     Map<String, Object> model = coleccionesController.colecciones(ctx);
-    model.putAll(coleccionesController.colecciones(ctx));
+    model.putAll(ctx.attribute(AppKeys.MODEL)); // Siempre va a existir porque el model se prepara en el middleware
     return model;
   }
 }

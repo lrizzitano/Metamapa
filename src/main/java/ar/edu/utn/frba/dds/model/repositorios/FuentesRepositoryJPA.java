@@ -20,4 +20,8 @@ public class FuentesRepositoryJPA implements FuentesRepository, WithSimplePersis
   public void eliminarFuente(Fuente entity) {
     entityManager().remove(entity);
   }
+
+  public Fuente find(Long id){
+    return entityManager().find(Fuente.class, id);
+  }
 }

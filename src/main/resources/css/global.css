@@ -1,6 +1,6 @@
 :root {
     --color-principal: #18681d;
-    --color-secundario: #f1faf7;
+    --color-secundario: #f2f8f6;
     --color-acento: #249ee5;
     --color-texto: #5c5b5b;
     --color-texto-negrita: #1E1E1E;
@@ -14,6 +14,7 @@ body {
     padding: 0;
     background-color: var(--color-secundario);
     color: var(--color-texto);
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 h1 {
@@ -47,15 +48,32 @@ p.bold {
     width: auto;
     border-radius:0.3rem;
     background-color: var(--color-acento);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 1rem;
+    box-shadow: 0.07rem 0.15rem rgb(0,0,0,0.1);
 }
+
 
 .boton:hover{
     transform: scale(1.1,1.1);
+    color: var(--color-acento);
+    background-color: white;
+    border: 0.05rem solid var(--color-acento);
 }
 
 .boton.secundario{
     margin: 16px 0 0 0;
     background-color: var(--color-principal);
+}
+
+.boton.secundario.eliminar{
+    background-color: grey;
+}
+
+.boton.secundario:hover{
+    color: var(--color-acento);
+    background-color: white;
+    border: 0.05rem solid var(--color-acento);
 }
 
 .boton.terciario {
