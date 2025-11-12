@@ -46,13 +46,24 @@ function parseHechos(container) {
   });
 }
 
+function crearPopupHTML(titulo, imagen) {
+  // como son todos los popups iguales decidi meterlo aca (+simple)
+  // si a futuro queremos que sean diferentes/es mas complejo, podriamos sacarlo a otro archivo
+  return `
+    <div style="display:flex;align-items:center;gap:5px;">
+      ${imagen ? `<img src="${imagen}" style="width:40%;height:auto;border-radius:4px;">` : ''}
+      <div>${titulo}</div>
+    </div>
+  `;
+}
+
 function updateMarkers(container) {
   markers.forEach(m => m.remove());
   markers = [];
 
   container.querySelectorAll(".card-hecho").forEach(btn => {
     const hecho = btn.hecho;
-    const { latitud, longitud, titulo } = hecho;
+    const { latitud, longitud, titulo, imagen } = hecho;
 
     const puntoMapa = document.createElement('div')
     puntoMapa.className = 'punto-mapa'
@@ -61,7 +72,7 @@ function updateMarkers(container) {
       offset: 10,
       closeButton: false,
       closeOnClick: false
-    }).setText(titulo);
+    }).setHTML(crearPopupHTML(titulo, imagen));
 
     const marker = new maplibregl.Marker({element: puntoMapa})
       .setLngLat([longitud, latitud])
