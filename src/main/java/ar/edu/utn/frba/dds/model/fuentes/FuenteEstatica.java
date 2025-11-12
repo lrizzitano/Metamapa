@@ -1,11 +1,14 @@
 package ar.edu.utn.frba.dds.model.fuentes;
 
+import ar.edu.utn.frba.dds.controllers.utils.YoutubeLinkParser;
 import ar.edu.utn.frba.dds.model.converters.PathToStringConverter;
 import ar.edu.utn.frba.dds.model.execpciones.NoSePudoLeerArchivoException;
 import ar.edu.utn.frba.dds.model.filtros.Filtro;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
+import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import com.opencsv.CSVReaderHeaderAware;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,8 +31,8 @@ import javax.persistence.Entity;
 public class FuenteEstatica extends Fuente {
   /*
   Como pre-condición para funcionar correctamente, se asume que el archivo CSV ingresado
-  tiene 6 columnas: título, descripción, categoría, latitud, longitud, fecha
-  Además no tiene valores nulos y la fecha respeta el formato yyyy-mm-dd
+  tiene 9 columnas: título, descripción, categoría, latitud, longitud, provincia, fecha, imagen, video
+  Además no tiene valores nulos (salvo, tal vez, en video) y la fecha respeta el formato yyyy-mm-dd
   */
   public FuenteEstatica() {}
 
@@ -83,17 +86,27 @@ public class FuenteEstatica extends Fuente {
   }
 
   public Hecho crearHechoDesdeFila(Map<String, String> fila) {
-    return new Hecho(
-        null, // creo que tiene sentido que un hecho de una fuente externa tenga id en null
+    Hecho hecho = new Hecho(
+        null,
         fila.get("titulo"),
         fila.get("descripcion"),
         fila.get("categoria"),
-        new Ubicacion(Double.parseDouble(fila.get("latitud")),
-        Double.parseDouble(fila.get("longitud")), null, null),
+        new Ubicacion(
+            Double.parseDouble(fila.get("latitud")),
+            Double.parseDouble(fila.get("longitud")),
+            Provincia.parseProvincia(fila.get("provincia")),
+            null),
         ultimaModificacion,
         LocalDate.parse(fila.get("fecha")).atStartOfDay(),
         Origen.DATASET
     );
+    hecho.setImagen(fila.get("imagen"));
+    if (fila.get("video") != null && !fila.get("video").isBlank()) {
+      // todo: desacoplarse del formato de youtube
+      hecho.setVideo(YoutubeLinkParser.obtenerVideoEmbebible(fila.get("video")));
+    }
+
+    return hecho;
   }
 
   @Override
