@@ -59,14 +59,14 @@ public class Autenticador {
           .withClaim(AppKeys.ROL, usuario.getClass().getSimpleName().toUpperCase())
           .sign(algoritmo);
 
-        ctx.cookie(this.crearCookie(token, 15 * 60));
+        ctx.cookie(this.crearCookie(token, 60 * 60));
 
     } catch (JWTCreationException exception) {
       throw new SesionInvalidaException("Ocurrió un error al generar la sesión", exception);
     }
   }
 
-  private Cookie crearCookie(String token, int age) {
+  public Cookie crearCookie(String token, int age) {
     Cookie cookie = new Cookie("token", token);
     cookie.setMaxAge(age);      // 15 minutos
     cookie.setPath("/");            // disponible en toda la app
