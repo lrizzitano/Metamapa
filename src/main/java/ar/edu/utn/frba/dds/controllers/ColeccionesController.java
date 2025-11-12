@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
+import ar.edu.utn.frba.dds.model.fuentes.Agregador;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteEstatica;
@@ -26,11 +27,14 @@ import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import net.bytebuddy.asm.Advice;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +95,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       // coleccion.hechos(titulo, filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
       // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
       Set<HechoDTO> hechos = coleccion.hechos(filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
+      new Logger().info("Nashe " + hechos);
       model.put("hechos", hechos);
     });
 
@@ -125,15 +130,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       SolicitudesDeEliminacionJPA repoSolicitudesDeEliminacion = new SolicitudesDeEliminacionJPA();
 
       //Fuente
-      Fuente fuenteNueva=null;
-
-      if(idfuentes.size()>1){
-
-      }
-      else{
-        fuenteNueva = obtenerfuente(idfuentes.get(0));
-        new Logger().info("Neuva fuente seteada" + fuenteNueva);
-      }
+      Fuente fuenteNueva = getFuente(idfuentes);
 
 
       //Filtro Criterio pertenencia
@@ -185,6 +182,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     }
 
   }
+
   public void modificarColeccion(Context ctx){
 
     try{
@@ -203,15 +201,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         new Logger().info("Nuevo consenso seteado modificado a" + nuevoConsenso);
       }
 
-      Fuente fuenteNueva=null;
-
-      if(idfuentes.size()>1){
-
-      }
-      else{
-        fuenteNueva = obtenerfuente(idfuentes.get(0));
-        new Logger().info("Neuva fuente seteada" + fuenteNueva);
-      }
+      Fuente fuenteNueva = getFuente(idfuentes);
 
       coleccion.setFuente(fuenteNueva);
 
@@ -294,6 +284,28 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     });
 
     return model;
+  }
+
+  private Fuente getFuente(List<Long> idfuentes) {
+    Fuente fuenteNueva;
+    FuentesRepositoryJPA fuentesRepository = new FuentesRepositoryJPA();
+
+    if(idfuentes.size()>1){
+      Set<Fuente> fuentes = idfuentes.stream().map(fuentesRepository::find).collect(Collectors.toSet());
+      Agregador nuevoAgregador = new Agregador(fuentes, LocalDateTime.now().plusDays(1), Duration.ofDays(1));
+      nuevoAgregador.actualizar();
+
+      withTransaction(()->{
+        fuentesRepository.agregarFuente(nuevoAgregador);
+      });
+
+      fuenteNueva = nuevoAgregador;
+    }
+    else{
+      fuenteNueva = obtenerfuente(idfuentes.get(0));
+      new Logger().info("Neuva fuente seteada" + fuenteNueva);
+    }
+    return fuenteNueva;
   }
 
 }
