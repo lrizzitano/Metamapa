@@ -3,7 +3,7 @@
     <div class="panel modificar-coleccion" style="height: auto">
         <h2>Modificar Coleccion</h2>
 
-        <form class="form editar coleccion" id="modificar" method="POST">
+        <form class="form editar coleccion" id="modificar" hx-target="#error-modificar-coleccion">
 
             <label class="titulo-label" for="titulo"><b>Titulo</b></label>
             <p  class="titulo" ></p>
@@ -28,6 +28,8 @@
                 <option value="mayoriaSimple">Mayoría Simple</option>
                 <option value="multiplesMenciones">Multiples Menciones</option>
             </select>
+
+            <span id="error-modificar-coleccion" class="contenedor-mensaje-error"></span>
 
             <div class="botones-form" style="justify-content: space-around">
                 <button

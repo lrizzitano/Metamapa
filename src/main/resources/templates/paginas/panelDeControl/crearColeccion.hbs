@@ -3,7 +3,7 @@
 {{#partial "seccion"}}
     <section class="contenedor-form">
         <div class="panel">
-            <form class="form" style="width: 100%" action="/colecciones" method="POST">
+            <form class="form" style="width: 100%" hx-post="/colecciones" hx-target="#error-crear-coleccion">
 
                 <label for="titulo">Titulo</label>
                 <input id="titulo" name="titulo" type="text" placeholder="Elija un titulo">
@@ -43,6 +43,8 @@
                     <option value="mayoriaSimple">Mayoría Simple</option>
                     <option value="multiplesMenciones">Multiples Menciones</option>
                 </select>
+
+                <span id="error-crear-coleccion" class="contenedor-mensaje-error"></span>
 
                 <button class="boton subir" type="submit">Subir</button>
 

@@ -20,8 +20,8 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
 
     if (hecho == null || hecho.isBlank() ||
         fundamentacion == null || fundamentacion.isBlank()) {
-      new Logger().info("falta informacion de la solicitud de eliminacion");
-      ctx.redirect("/solicitudesDeEliminacion/nueva?hecho=" + hecho);
+      new Logger().info("Falta informacion de la solicitud de eliminacion");
+      ctx.result("Falta informacion de la solicitud de eliminacion");
       return;
     }
 
@@ -32,10 +32,13 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
         new SolicitudesDeEliminacionJPA().nuevaSolicitud(solicitudDeEliminacion);
       });
 
-      ctx.redirect("/");
+      ctx.header("HX-Redirect", "/");
+
     } catch (Exception e) {
       new Logger().info("Error al crear solicitud de eliminacion: " + e.getMessage());
-      ctx.redirect("/solicitudesDeEliminacion/nueva?hecho=" + hecho);
+      ctx.result("Error al crear solicitud de eliminacion");
+
+
     }
   }
 

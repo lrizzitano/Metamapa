@@ -52,6 +52,7 @@ p.bold {
     font-size: 1rem;
     box-shadow: 0.07rem 0.15rem rgb(0,0,0,0.1);
     margin-top: 1%;
+    align-content: center;
 }
 
 

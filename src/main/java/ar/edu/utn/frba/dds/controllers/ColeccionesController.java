@@ -116,7 +116,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     || idfuentes == null
     || consenso == null || consenso.isBlank()) {
       new Logger().info("Faltan campos por completar");
-      ctx.redirect("/panelDeControl/colecciones/nueva");
+      ctx.result("Campos incompletos");
       return;
     }
 
@@ -173,12 +173,12 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         new RepoColecciones().save(coleccion);
       });
 
-      ctx.redirect("/panelDeControl/colecciones/nueva");
+      ctx.header("HX-Redirect", "/panelDeControl/colecciones");
 
 
     } catch (Exception e) {
       new Logger().info("Error al crear la coleccion: " + e.getMessage());
-      ctx.redirect("/panelDeControl/colecciones/nueva");
+      ctx.result("Error al crear coleccion");
     }
 
   }
@@ -209,11 +209,11 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       withTransaction(() -> {
         repoColecciones.update(coleccion);
       });
-      ctx.redirect("/panelDeControl/colecciones");
+      ctx.header("HX-Redirect", "/panelDeControl/colecciones");
     }
     catch (Exception e) {
       new Logger().info("Error al Mofidicar la coleccion: " + e.getMessage());
-      ctx.redirect("/panelDeControl/colecciones/nueva");
+      ctx.result("Error al Modificar la coleccion");
     }
 
   }

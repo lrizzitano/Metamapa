@@ -21,7 +21,7 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form" id="signup" method="POST" action="/usuario">
+            <form class="form" id="signup" hx-post="/usuario" hx-target="#error-registrarse">
 
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre">
@@ -37,6 +37,8 @@
 
                 <label for="password">Contraseña</label>
                 <input type="password" name="password" id="password" placeholder="Ingrese su contraseña">
+
+                <span id="error-registrarse" class="contenedor-mensaje-error"></span>
 
                 <button class="boton principal" type="submit">Crear Cuenta</button>
 

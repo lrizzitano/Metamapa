@@ -131,6 +131,11 @@ a:visited {
     text-decoration: underline;
 }
 
+.contenedor-mensaje-error{
+    min-height: 21px;
+    color: red;
+}
+
 /*
 
 .boton.subir-hecho{

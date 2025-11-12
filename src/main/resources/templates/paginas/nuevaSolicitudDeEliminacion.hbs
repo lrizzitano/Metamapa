@@ -21,7 +21,7 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form" action="/solicitudesDeEliminacion" method="POST" style="height: 50%">
+            <form class="form" hx-post="/solicitudesDeEliminacion" hx-target="#error-solicitud-eliminacion" style="height: 50%">
 
                 <label for="hecho">Hecho</label>
                 <p class="bold"> {{hecho}} </p>
@@ -29,6 +29,8 @@
 
                 <label for="fundamentacion">Fundamentacion</label>
                 <input type="text" id="fundamentacion" name="fundamentacion" class="largo" placeholder="Motivos de eliminación"/>
+
+                <span id="error-solicitud-eliminacion" class="contenedor-mensaje-error"></span>
 
                 <button class="boton secundario" type="submit">Subir</button>
 

@@ -56,15 +56,9 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/registrarse");
     }, Rol.USUARIO);
 
-    app.post("/usuario", ctx -> {
-      usuarioController.registrarUsuario(ctx);
-      ctx.redirect("/");
-    }, Rol.USUARIO);
+    app.post("/usuario", usuarioController::registrarUsuario, Rol.USUARIO);
 
-    app.post("/login", ctx -> {
-      usuarioController.iniciarSesion(ctx);
-      ctx.redirect("/");
-    });
+    app.post("/login", usuarioController::iniciarSesion);
 
     app.get("/panelDeControl", ctx -> {
       ctx.render("templates/paginas/panelDeControl/panel");
