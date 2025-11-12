@@ -52,7 +52,7 @@
 }
 
 
-.contendor.datos-solicitudes{
+.contenedor.datos-solicitudes{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
