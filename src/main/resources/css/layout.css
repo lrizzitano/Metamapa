@@ -161,10 +161,10 @@ a:visited {
 
 }
 .perfil img{
-    width: 2.7rem;
-    height: 2.7rem;
+    width: 2.9rem;
+    height: 2.9rem;
     box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
-    border-radius: 45%;
+    border-radius: 50%;
 }
 
 .contenedor.vertical.perfil-info:hover .contenedor.vertical.infoUsuario {
