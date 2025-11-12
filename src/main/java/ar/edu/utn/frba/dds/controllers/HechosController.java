@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.controllers.utils.YoutubeLinkParser;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
@@ -20,15 +21,18 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
     String latStr = ctx.formParam("latitud");
     String lngStr = ctx.formParam("longitud");
     String fechaStr = ctx.formParam("fecha_hecho");
+    String imagen = ctx.formParam("imagen");
+    String video = ctx.formParam("video");
 
-    // validaciones
+    // validaciones de lo obligatorio (video es opcional)
     if (titulo == null || titulo.isBlank() ||
         descripcion == null || descripcion.isBlank() ||
         categoria == null || categoria.isBlank() ||
         provinciaStr == null || provinciaStr.isBlank() ||
         latStr == null || latStr.isBlank() ||
         lngStr == null || lngStr.isBlank() ||
-        fechaStr == null || fechaStr.isBlank()) {
+        fechaStr == null || fechaStr.isBlank() ||
+        imagen == null || imagen.isBlank()) {
       new Logger().info("falta uno");
       ctx.redirect("/hechos/nuevo");
       return;
@@ -54,6 +58,12 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
           fechaAcontecimiento,
           origen
       );
+
+      hecho.setImagen(imagen);
+
+      if (video != null && !video.isBlank()) {
+        hecho.setVideo(YoutubeLinkParser.obtenerVideoEmbebible(video));
+      }
 
       withTransaction(() -> {
         new HechosFuenteDinamicaJPA().agregar(hecho);
