@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import kotlin.text.UStringsKt;
 
 @Entity
 @Table(name = "Hecho")
@@ -39,13 +40,15 @@ public class Hecho {
     @Enumerated(EnumType.STRING)
     @Column(name = "origen")
     private Origen origen;
-    @Column(name = "multimedia")
-    private String multimedia;
     @ManyToOne()
     @JoinColumn(name = "contribuyente_id")
     private Usuario contribuyente;
     @Column(name = "fueRevisado")
     private Boolean fueRevisado;
+    @Column(name = "imagen")
+    private String imagen;
+    @Column(name = "video")
+    private String video;
 
     public Hecho() {}
     public Hecho(
@@ -65,7 +68,7 @@ public class Hecho {
         this.fechaCarga = Objects.requireNonNull(fechaCarga, "fechaCarga no puede ser null");
         this.fechaAcontecimiento = Objects.requireNonNull(fechaAcontecimiento, "fechaAcontecimiento no puede ser null");
         this.origen = Objects.requireNonNull(origen, "origen no puede ser null");
-        this.multimedia = null;
+        this.video = null;
         this.contribuyente = null;
         this.fueRevisado = false;
     }
@@ -100,8 +103,11 @@ public class Hecho {
     public Origen origen() {
         return origen;
     }
-    public String multimedia() {
-        return multimedia;
+    public String video() {
+        return video;
+    }
+    public String imagen() {
+        return imagen;
     }
     public Usuario contribuyente() {
         return contribuyente;
@@ -114,8 +120,12 @@ public class Hecho {
         this.contribuyente = contribuyente;
     }
 
-    public void setMultimedia(String multimedia) {
-        this.multimedia = multimedia;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public void setId(Long id){

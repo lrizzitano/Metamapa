@@ -14,7 +14,8 @@ public class HechoDTO {
   private final String fechaAcontecimiento;
   private final String fechaCarga;
   private final String origen;
-  private final String multimedia;
+  private final String video;
+  private final String imagen;
   private final String provincia;
   private final String contribuyente;
 
@@ -29,7 +30,8 @@ public class HechoDTO {
     this.fechaAcontecimiento = hecho.fechaAcontecimiento().format(formatter);
     this.fechaCarga = hecho.fechaCarga().format(formatter);
     this.origen = hecho.origen().name();
-    this.multimedia = hecho.multimedia();
+    this.video = hecho.video();
+    this.imagen = hecho.imagen();
     this.provincia=hecho.getProvincia().toString();
     this.contribuyente= contribuyente(hecho);
   }
@@ -62,9 +64,10 @@ public class HechoDTO {
     return origen;
   }
   public String provincia() {return provincia;}
-  public String multimedia() {
-    return multimedia;
+  public String video() {
+    return video;
   }
+  public String imagen() { return imagen; }
   public String contribuyente(Hecho hecho){
     if(hecho.contribuyente()==null){
       return "Anonimo";

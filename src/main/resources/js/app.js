@@ -38,9 +38,16 @@ function crearModalDetalleHecho(boton) {
   const modal = document.getElementById('detalleHecho');
   const hecho = JSON.parse(boton.dataset.hecho);
 
+  const video = modal.querySelector('.multimedia-video');
+  video.hidden = true; // lo escondo por si habia uno puesto de antes
+
   modal.querySelector('.titulo').textContent = hecho.titulo;
   modal.querySelector('.descripcion').textContent = hecho.descripcion;
-  modal.querySelector('.multimedia').src = hecho.multimedia;
+  modal.querySelector('.multimedia-imagen').src = hecho.imagen;
+  if (hecho.video) { // la unica que requiere if pq es opcional
+    video.src = hecho.video;
+    video.hidden = false;
+  }
   modal.querySelector('.fechaAcontecimiento').textContent = hecho.fechaAcontecimiento;
   modal.querySelector('.fechaCarga').textContent = hecho.fechaCarga;
   modal.querySelector('.categoria').textContent = hecho.categoria;
