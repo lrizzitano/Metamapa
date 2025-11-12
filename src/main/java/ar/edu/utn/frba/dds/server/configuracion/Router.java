@@ -4,6 +4,8 @@ import ar.edu.utn.frba.dds.controllers.ColeccionesController;
 import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.controllers.UsuarioController;
+import ar.edu.utn.frba.dds.controllers.UsuarioDTO;
+import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
@@ -99,6 +101,8 @@ public class Router implements WithSimplePersistenceUnit {
     ColeccionesController coleccionesController = new ColeccionesController();
     Map<String, Object> model = coleccionesController.colecciones(ctx);
     model.putAll(ctx.attribute(AppKeys.MODEL)); // Siempre va a existir porque el model se prepara en el middleware
+    UsuarioDTO usuario = ctx.sessionAttribute("usuario");
+    model.put("usuario", usuario);
     return model;
   }
 }

@@ -8,6 +8,8 @@ import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UsuarioController implements WithSimplePersistenceUnit {
 
@@ -26,7 +28,7 @@ public class UsuarioController implements WithSimplePersistenceUnit {
       return;
     }
 
-    var fechaDeNacimiento = ctx.formParam("fechaNacimiento");
+    var fechaDeNacimiento = ctx.formParam("fechaDeNacimiento");
     //Date.parse no anda en variables, qué lenguaje eh.
 
     String finalFechaDeNacimiento = (fechaDeNacimiento == null || fechaDeNacimiento.isBlank()) ? null : fechaDeNacimiento;
@@ -34,7 +36,7 @@ public class UsuarioController implements WithSimplePersistenceUnit {
         username,
         ctx.formParam("nombre"),
         ctx.formParam("apellido"),
-        finalFechaDeNacimiento == null ? null : LocalDate.parse(finalFechaDeNacimiento),
+        finalFechaDeNacimiento == null ? null : LocalDate.parse(fechaDeNacimiento),
         password
     );
     withTransaction(() -> {
@@ -45,6 +47,9 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     });
 
     ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
+    Usuario usuarioPersistido = repoUsuarios.findByUsername(username);
+    UsuarioDTO usuarioDTO = new UsuarioDTO(usuarioPersistido);
+    ctx.sessionAttribute("usuario", usuarioDTO);
     ctx.header("HX-Redirect", "/");
   }
 
@@ -55,6 +60,8 @@ public class UsuarioController implements WithSimplePersistenceUnit {
       ctx.result("Usuario o contraseña incorrectos");
     } else {
       ctx.appData(AppKeys.AUTENTICADOR).crearSesion(usuario, ctx);
+      UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+      ctx.sessionAttribute("usuario", usuarioDTO);
       ctx.header("HX-Redirect", "/");
     }
 
