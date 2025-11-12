@@ -70,8 +70,10 @@ public class Agregador extends Fuente implements Calendarizable  {
 
   @Override
   public Set<Hecho> obtenerHechos(Filtro filtro) {
-    return this.hechos.stream()
-        .filter(filtro.getAsPredicate()).collect(Collectors.toSet());
+
+  return this.fuentes.stream()
+      .flatMap(f -> f.obtenerHechos(filtro).stream())
+      .collect(Collectors.toSet());
   }
 
   public void setFrecuencia(Duration frecuencia) {
