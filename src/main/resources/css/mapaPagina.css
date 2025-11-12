@@ -34,13 +34,13 @@
 
 .contenedor-hechos {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     min-width: 17.5rem;
     width: 25%;
     height: 100%;
     background-color: var(--color-secundario);
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
     border-right: 0.08rem solid rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
@@ -52,7 +52,7 @@
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    height: min-content;
     background-color: var(--color-secundario);
     overflow-x: hidden;
     overflow-y: auto;
@@ -90,6 +90,7 @@
     flex-direction: row;
     text-align: start;
     gap: 8px;
+    width: 100%;
 }
 
 .card-hecho-multimedia-fecha {
@@ -244,9 +245,8 @@
 
 .contenedor.vertical.precarga{
     justify-content: center;
-    margin-left: 1rem;
-    min-width: 22rem;
     height: 80%;
+    width: 60%;
 }
 .contenedor.vertical.precarga p{
     margin-bottom: 2rem;
