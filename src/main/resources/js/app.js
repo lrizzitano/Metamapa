@@ -39,7 +39,7 @@ function crearModalDetalleHecho(boton) {
 
   modal.querySelector('.titulo').textContent = hecho.titulo;
   modal.querySelector('.descripcion').textContent = hecho.descripcion;
-  modal.querySelector('.multimedia').src = hecho.multimedia;
+  modal.querySelector('.multimedia-imagen').src = hecho.imagen;
   modal.querySelector('.fechaAcontecimiento').textContent = hecho.fechaAcontecimiento;
   modal.querySelector('.fechaCarga').textContent = hecho.fechaCarga;
   modal.querySelector('.categoria').textContent = hecho.categoria;
