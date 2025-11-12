@@ -103,12 +103,12 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     String categoria = ctx.formParam("categoria");
     String fechaAnterior = ctx.formParam("fechaAnterior");
     String fechaPosterior = ctx.formParam("fechaPosterior");
-    Long fuenteID = Long.parseLong(ctx.formParam("fuente"));
+    List<Long> idfuentes = ctx.formParams("fuente").stream().map(Long::parseLong).toList();
     String consenso = ctx.formParam("consenso");
 
     if (titulo == null || titulo.isBlank()
     || descripcion == null || descripcion.isBlank()
-    || fuenteID == null
+    || idfuentes == null
     || consenso == null || consenso.isBlank()) {
       new Logger().info("Faltan campos por completar");
       ctx.redirect("/panelDeControl/colecciones/nueva");
@@ -125,8 +125,15 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       SolicitudesDeEliminacionJPA repoSolicitudesDeEliminacion = new SolicitudesDeEliminacionJPA();
 
       //Fuente
-      Fuente fuenteNueva = obtenerfuente(fuenteID);
-      new Logger().info("Neuva fuente seteada" + fuenteNueva);
+      Fuente fuenteNueva=null;
+
+      if(idfuentes.size()>1){
+
+      }
+      else{
+        fuenteNueva = obtenerfuente(idfuentes.get(0));
+        new Logger().info("Neuva fuente seteada" + fuenteNueva);
+      }
 
 
       //Filtro Criterio pertenencia
@@ -183,7 +190,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     try{
       Long id = Long.parseLong(ctx.pathParam("id"));
       String consenso = ctx.formParam("consenso");
-      Long fuente = Long.parseLong(ctx.formParam("fuente"));
+      List<Long> idfuentes = ctx.formParams("fuente").stream().map(Long::parseLong).toList();
 
 
       RepoColecciones repoColecciones = new RepoColecciones();
@@ -196,9 +203,18 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         new Logger().info("Nuevo consenso seteado modificado a" + nuevoConsenso);
       }
 
-      Fuente nuevaFuente = obtenerfuente(fuente);
-      coleccion.setFuente(nuevaFuente);
-      new Logger().info("Neuva fuente seteada modificada a nashe" + nuevaFuente);
+      Fuente fuenteNueva=null;
+
+      if(idfuentes.size()>1){
+
+      }
+      else{
+        fuenteNueva = obtenerfuente(idfuentes.get(0));
+        new Logger().info("Neuva fuente seteada" + fuenteNueva);
+      }
+
+      coleccion.setFuente(fuenteNueva);
+
 
       withTransaction(() -> {
         repoColecciones.update(coleccion);
