@@ -137,16 +137,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       Origen.CONTRIBUYENTE
   );
 
-  static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9);
-  static final FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
-  static final Fuente fuente2 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
-  static final Fuente fuente3 = new FuenteMock(Set.of(hecho4, hecho5, hecho6, hecho7));
-  static final Fuente fuente4 = new FuenteMock(Set.of(hecho4, hecho5));
-  static final Fuente fuente5 = new FuenteMock(Set.of(hecho4));
-  static final Fuente fuente6 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9));
-  static final Fuente fuente7 = new FuenteMock(Set.of(hecho1, hecho2, hecho3, hecho4, hecho5));
-
-  private final Fuente fuente8Estatica = crearFuente8Estatica();
+   private final Fuente fuente8Estatica = crearFuente8Estatica();
 
   private Fuente crearFuente8Estatica() {
     try {
@@ -160,20 +151,28 @@ public class SetupData implements WithSimplePersistenceUnit {
     }
   }
 
+  static final Set<Hecho> hechos = Set.of(hecho1, hecho2, hecho3, hecho4, hecho5, hecho6, hecho7, hecho8, hecho9);
+  static final FuenteDinamica fuenteDinamica = FuenteDinamica.instance();
+  private final Fuente fuente2 = fuente8Estatica;
+  private final Fuente fuente3 = fuente8Estatica;
+  private final Fuente fuente4 = fuente8Estatica;
+  private final Fuente fuente5 = fuente8Estatica;
+  private final Fuente fuente6 = fuente8Estatica;
+  private final Fuente fuente7 = fuente8Estatica;
 
-  static final Coleccion collecion1 = new Coleccion("Hechos dinamicos", "desc1",
+  private final Coleccion collecion1 = new Coleccion("Hechos dinamicos", "desc1",
       new NullFiltro(), fuenteDinamica, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
+  private final Coleccion collecion2 = new Coleccion("Coleccion 2", "desc2",
       new NullFiltro(), fuente2, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion3 = new Coleccion("Coleccion 3", "desc2",
+  private final Coleccion collecion3 = new Coleccion("Coleccion 3", "desc2",
       new NullFiltro(), fuente3, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion4 = new Coleccion("Coleccion 4", "desc2",
+  private final Coleccion collecion4 = new Coleccion("Coleccion 4", "desc2",
       new NullFiltro(), fuente4, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion5 = new Coleccion("Coleccion 5", "desc2",
+  private final Coleccion collecion5 = new Coleccion("Coleccion 5", "desc2",
       new NullFiltro(), fuente5, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion6 = new Coleccion("Coleccion 6", "desc2",
+  private final Coleccion collecion6 = new Coleccion("Coleccion 6", "desc2",
       new NullFiltro(), fuente6, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  static final Coleccion collecion7 = new Coleccion("Coleccion 7", "desc2",
+  private final Coleccion collecion7 = new Coleccion("Coleccion 7", "desc2",
       new NullFiltro(), fuente7, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   private final Coleccion collecion8 = new Coleccion("Estatica",
       "Esta coleccion trae hechos de un csv",
@@ -193,6 +192,12 @@ public class SetupData implements WithSimplePersistenceUnit {
     hecho9.setMultimedia("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.noticiaspuebla.mx%2Fwp-content%2Fuploads%2F2023%2F02%2FMomento-exacto-de-la-caida-de-Edgar.webp&f=1&nofb=1&ipt=3c56a7aa692e55dcfe479b2d86dd5615bccfc3907decfdf88b46ca8bc26476e6");
 
     withTransaction(() -> {
+      HechosFuenteDinamicaJPA repoHechos =new HechosFuenteDinamicaJPA();
+      repoHechos.persist(hecho1);
+      repoHechos.persist(hecho2);
+      repoHechos.persist(hecho3);
+      repoHechos.persist(hecho4);
+
       FuentesRepositoryJPA fuenteRepo = new FuentesRepositoryJPA();
       fuenteRepo.persist(fuenteDinamica);
       fuenteRepo.persist(fuente2);
