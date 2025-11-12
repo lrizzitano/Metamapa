@@ -136,6 +136,15 @@ a:visited {
     color: red;
 }
 
+.contenedor.vertical.perfil-info{
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+}
+
 .perfil{
     background-color: var(--color-principal);
     width: auto;
@@ -144,13 +153,50 @@ a:visited {
     cursor: pointer;
 }
 
+
+
+
 .perfil:hover{
     transform: scale(1.1,1.1);
+
 }
 .perfil img{
     width: 2.7rem;
     height: 2.7rem;
+    box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
+    border-radius: 45%;
 }
+
+.contenedor.vertical.perfil-info:hover .contenedor.vertical.infoUsuario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+
+.contenedor.vertical.infoUsuario:hover{
+    display: flex;
+}
+
+.contenedor.vertical.infoUsuario{
+    display: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    z-index: 1000;
+    top: 107%;
+    left: 100%;
+    min-width: 10rem;
+    background-color: white;
+    transform: translateX(-63%);
+    padding: 0.8rem;
+    border-radius: 1rem;
+    box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
+}
+
+
 /*
 
 .boton.subir-hecho{

@@ -50,7 +50,7 @@ p.bold {
     background-color: var(--color-acento);
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 1rem;
-    box-shadow: 0.07rem 0.15rem rgb(0,0,0,0.1);
+    box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
     align-content: center;
 }
 
@@ -71,7 +71,7 @@ p.bold {
     background-color: grey;
 }
 
-.boton.eliminar:hover{
+.boton.terciario:hover{
     color: var(--color-acento);
     background-color: white;
     border: 0.05rem solid var(--color-acento);
@@ -84,7 +84,6 @@ p.bold {
 }
 
 .boton.terciario {
-    margin: 16px 0 0 0;
     background-color: var(--color-texto);
 }
 
