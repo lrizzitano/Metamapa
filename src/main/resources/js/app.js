@@ -38,16 +38,23 @@ function crearModalDetalleHecho(boton) {
   const modal = document.getElementById('detalleHecho');
   const hecho = JSON.parse(boton.dataset.hecho);
 
-  const video = modal.querySelector('.multimedia-video');
-  video.hidden = true; // lo escondo por si habia uno puesto de antes
+  const slideVideo = document.querySelector('.slide-video');
+  // probe ocultando el div de controles pero parece que el display:flex tiene prioridad sobre el hidden
+  const controles = document.querySelectorAll('.controles a');
+  const iframe = document.querySelector('.multimedia-video');
+
+  if (hecho.video) { // la unica que requiere if pq es opcional
+    iframe.src = hecho.video;
+    slideVideo.hidden = false;
+    controles.forEach(control => control.hidden = false);
+  } else {
+    slideVideo.hidden = true; // lo escondo por si habia uno puesto de antes
+    controles.forEach(control => control.hidden = true);
+  }
 
   modal.querySelector('.titulo').textContent = hecho.titulo;
   modal.querySelector('.descripcion').textContent = hecho.descripcion;
   modal.querySelector('.multimedia-imagen').src = hecho.imagen;
-  if (hecho.video) { // la unica que requiere if pq es opcional
-    video.src = hecho.video;
-    video.hidden = false;
-  }
   modal.querySelector('.fechaAcontecimiento').textContent = hecho.fechaAcontecimiento;
   modal.querySelector('.fechaCarga').textContent = hecho.fechaCarga;
   modal.querySelector('.categoria').textContent = hecho.categoria;
