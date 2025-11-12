@@ -65,6 +65,7 @@ body{
     gap: 16px;
     width: 60%;
     height: auto;
+    align-items: center;
 }
 
 .contenedor-cuerpo-index{
