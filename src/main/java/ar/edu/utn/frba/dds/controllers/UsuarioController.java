@@ -3,10 +3,13 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.AppKeys;
+import ar.edu.utn.frba.dds.server.configuracion.autenticacion.Autenticador;
+import ar.edu.utn.frba.dds.server.configuracion.autenticacion.FactoryAutenticador;
 import ar.edu.utn.frba.dds.server.exceptions.FaltaAtributoDeUsuarioException;
 import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
+import io.javalin.http.Cookie;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +67,14 @@ public class UsuarioController implements WithSimplePersistenceUnit {
       ctx.sessionAttribute("usuario", usuarioDTO);
       ctx.header("HX-Redirect", "/");
     }
+
+  }
+
+  public void cerrarSesion(Context ctx) {
+    Autenticador autenticador = new FactoryAutenticador().crearAutenticador();
+    ctx.cookie(autenticador.crearCookie("",0));
+    ctx.sessionAttribute("usuario", null);
+    ctx.redirect("/");
 
   }
 }
