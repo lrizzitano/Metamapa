@@ -25,7 +25,7 @@
                     <button class="boton-secundario relleno">volver</button>
                 </div>
             </div>
-            <form class="form subir-hecho" action="/hechos" method="POST">
+            <form class="form subir-hecho" hx-post="/hechos" hx-target="#error-subir-hecho">
 
                 <div class="form-subir-hecho-contenido">
 
@@ -93,6 +93,8 @@
                     </div>
 
                 </div>
+
+                <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
 
                 <button class="boton subir" type="submit">Subir</button>
             </form>

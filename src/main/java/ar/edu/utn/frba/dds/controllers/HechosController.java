@@ -33,8 +33,8 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
         lngStr == null || lngStr.isBlank() ||
         fechaStr == null || fechaStr.isBlank() ||
         imagen == null || imagen.isBlank()) {
-      new Logger().info("falta uno");
-      ctx.redirect("/hechos/nuevo");
+      new Logger().info("Campos incompletos");
+      ctx.result("Campos incompletos");
       return;
     }
 
@@ -68,11 +68,12 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
       withTransaction(() -> {
         new HechosFuenteDinamicaJPA().agregar(hecho);
       });
-      ctx.redirect("/");
+      ctx.header("HX-Redirect", "/");
+
 
     } catch (Exception e) {
       new Logger().info("Error al crear hecho: " + e.getMessage());
-      ctx.redirect("/hechos/nuevo");
+      ctx.result("Error al crear hecho");
     }
   }
 }
