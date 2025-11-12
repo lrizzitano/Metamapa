@@ -26,7 +26,7 @@ function crearModalColeccion(boton) {
   form.setAttribute('hx-post', `/colecciones/${encodeURIComponent(coleccion.id)}`);
   htmx.process(form);
 
-  const deleteButton = modal.querySelector('.boton.eliminar');
+  const deleteButton = modal.querySelector('.boton.terciario.eliminar');
   deleteButton.setAttribute('hx-delete', `/colecciones/${encodeURIComponent(coleccion.id)}`);
   htmx.process(deleteButton);
 

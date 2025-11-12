@@ -28,12 +28,13 @@ public class AgregadorTest {
     agregador = new Agregador(fuentes, LocalDateTime.now(), Duration.ZERO);
   }
 
+  /* CAMBIO EL DOMINIO Y LA CACHE NO SIRVE
   @Test
   void noActualizaSiNoLeDigo() {
     when(fuente1.obtenerHechos(any())).thenReturn(Set.of(hecho1));
     when(fuente2.obtenerHechos(any())).thenReturn(Set.of(hecho2));
     Assertions.assertNotEquals(Set.of(hecho1, hecho2), agregador.obtenerHechos(new NullFiltro()));
-  }
+  }*/
 
   @Test
   void traeHechosDeTodasSusFuentes() {

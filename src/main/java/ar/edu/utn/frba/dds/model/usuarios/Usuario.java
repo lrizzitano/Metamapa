@@ -43,6 +43,13 @@ public class Usuario {
     return usuario;
   }
 
+  public String getFechaDeNacimiento() {
+    if (fechaNacimiento != null) {
+      return fechaNacimiento.toString();
+    }
+    return "Sin fecha";
+  }
+
   public String getNombre() {
     return nombre;
   }

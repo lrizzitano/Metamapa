@@ -211,7 +211,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       colecRepo.persist(collecion7);
       colecRepo.persist(collecion8);
 
-      new RepoUsuarios().persist(new Administrador("Ad","a", "Ministrador", LocalDate.now(), "contrasenia"));
+      new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });
   }
 

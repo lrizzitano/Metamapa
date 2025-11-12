@@ -36,6 +36,20 @@
                 Subir Hecho
             </button>
         </a>
+        {{#if autenticado}}
+            <div class="contenedor vertical perfil-info">
+                <button class="perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3034/3034577.png">
+                </button>
+                <div class="contenedor vertical infoUsuario">
+                    <p><b>Nombre: </b>{{usuario.nombre}} </p>
+                    <p><b>Apellido: </b>{{usuario.apellido}}</p>
+                    <p><b>Usuario: </b>{{usuario.usuario}}</p>
+                    <p><b>Nacimiento: </b>{{usuario.fechaDeNacimiento}}</p>
+                    <button class="boton terciario">Cerrar sesion</button>
+                </div>
+            </div>
+        {{/if}}
     </div>
 </header>
 
