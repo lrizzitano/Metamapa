@@ -136,6 +136,21 @@ a:visited {
     color: red;
 }
 
+.perfil{
+    background-color: var(--color-principal);
+    width: auto;
+    height: auto;
+    border: none;
+    cursor: pointer;
+}
+
+.perfil:hover{
+    transform: scale(1.1,1.1);
+}
+.perfil img{
+    width: 2.7rem;
+    height: 2.7rem;
+}
 /*
 
 .boton.subir-hecho{
