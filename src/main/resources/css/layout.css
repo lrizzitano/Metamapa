@@ -21,9 +21,7 @@ body{
     letter-spacing: 0.13rem;
     text-shadow: 0.07rem 0.15rem rgb(0,0,0,0.15);
 }
-.titulo-header:hover{
-    transform:scale(1.05,1.05);
-}
+
 @keyframes aparecer {
     from {
         opacity: 0;
@@ -39,13 +37,14 @@ body{
     animation: aparecer 1.3s ease-in-out;
 }
 
+.contenedor.lateral.logo-titulo:hover{
+    transform: scale(1.05,1.05);
+}
+
 .logo{
     width: auto;
     margin-right: 1rem;
     height:3rem;
-}
-.logo:hover{
-    transform: scale(1.05,1.05);
 }
 
 .header{
