@@ -2,9 +2,11 @@ package ar.edu.utn.frba.dds.model.fuentes.metamapa;
 
 import ar.edu.utn.frba.dds.model.execpciones.AccesoRecursoFallidoException;
 import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -31,34 +33,44 @@ public class FuenteMetaMapa extends Fuente {
   @Column(name = "url_api_metamapa")
   private  String urlAPI;
 
-  @Transient
-  private  Retrofit retrofit;
-
   public FuenteMetaMapa(String urlAPI) {
     this.urlAPI = urlAPI;
+  }
 
+  // inicializacion lazy del cliente
+  // se crea para cada request, medio tosco, pero es la unica manera pq si lo tenes como atributo
+  //  transient lo perdes al ir a la base de datos y volver (vuelve y es null)
+  // => lo configuras cada vez que lo usas y fue
+  Retrofit getClienteRetroFit(String url) {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
         .registerTypeAdapter(Path.class, new PathAdapter())
         .create();
 
-    this.retrofit = new Retrofit.Builder()
-                                .baseUrl(urlAPI)
-                                .addConverterFactory(GsonConverterFactory.create(gson))
-                                .build();
+    return new Retrofit.Builder()
+        .baseUrl(urlAPI)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build();
   }
 
   @Override
-  public Set<Hecho> obtenerHechos(Filtro filtro) {
-    IMetaMapa metaMapa = retrofit.create(IMetaMapa.class);
+    public Set<Hecho> obtenerHechos(Filtro filtro) {
+    new Logger().info(">>> Iniciando obtenerHechos");
+
+    IMetaMapa metaMapa = this.getClienteRetroFit(urlAPI).create(IMetaMapa.class);
+    new Logger().info(">>> IMetaMapa creado");
+
     Call<Set<Hecho>> request = metaMapa.obtenerHechos(filtro.toQueryParam());
+    new Logger().info(">>> Request creado: " + request.request().url());
 
     Response<Set<Hecho>> response;
-
     try {
+      new Logger().info(">>> Ejecutando request.execute()...");
       response = request.execute();
+      new Logger().info(">>> Request ejecutado - Código: " + response.code());
     } catch (IOException e) {
+      new Logger().info(">>> Error en execute: " + e.getMessage());
       throw new AccesoRecursoFallidoException("Error al obtener hechos de la API: " + this.urlAPI);
     }
 
@@ -72,7 +84,7 @@ public class FuenteMetaMapa extends Fuente {
   }
 
   public Set<Hecho> obtenerHechosDeColeccion(Filtro filtro, String identificadorColeccion) {
-    IMetaMapa metaMapa = retrofit.create(IMetaMapa.class);
+    IMetaMapa metaMapa = this.getClienteRetroFit(urlAPI).create(IMetaMapa.class);
     Call<Set<Hecho>> request = metaMapa.obtenerHechosDeColeccion(identificadorColeccion,
         filtro.toQueryParam());
 
@@ -94,7 +106,7 @@ public class FuenteMetaMapa extends Fuente {
   }
 
   public void enviarSolicitudDeEliminacion(SolicitudDeEliminacion solicitud) {
-    IMetaMapa metaMapa = retrofit.create(IMetaMapa.class);
+    IMetaMapa metaMapa = this.getClienteRetroFit(urlAPI).create(IMetaMapa.class);
     Call<Void> request = metaMapa.enviarSolicitudDeEliminacion(solicitud);
 
     Response<Void> response;
