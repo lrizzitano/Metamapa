@@ -165,7 +165,6 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-top: 10px;
     align-items: center;
 }
 
@@ -189,10 +188,41 @@
 
 .contenedor.controles-solicitud button{
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.2rem;
+    align-items: center;
+}
+.contenedor.controles-solicitud img{
+    max-width: 2rem;
+    max-height: 2rem;
 }
 
 .contenedor.ver-mapa{
-    width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+
+.contenedor.ver-mapa img{
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+    animation: subirYCaer 1.5s alternate-reverse ;
+    animation-iteration-count: 4;
+}
+
+@keyframes subirYCaer {
+    from {
+        transform: translateY(-10px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+
+}
+
+.boton.terciario.solicitud img{
+    max-height: 1.3rem;
+    max-width: 1.3rem;
 }
