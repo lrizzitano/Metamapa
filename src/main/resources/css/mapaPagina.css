@@ -292,7 +292,6 @@
 .punto-mapa.maplibregl-marker.maplibregl-marker-anchor-center{
     width: 1.3rem;
     height: 1.3rem;
-    transition: 1s;
 }
 
 .punto-mapa.maplibregl-marker.maplibregl-marker-anchor-center:hover{
