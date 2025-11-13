@@ -6,6 +6,8 @@ import ar.edu.utn.frba.dds.model.hechos.Origen;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
+import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
+import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
@@ -58,6 +60,14 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
           fechaAcontecimiento,
           origen
       );
+
+      UsuarioDTO usuarioDTO = ctx.sessionAttribute("usuario");
+
+      if (usuarioDTO != null) {
+        String username =  usuarioDTO.usuario();
+        Usuario usuario = new RepoUsuarios().findByUsername(username);
+        hecho.setContribuyente(usuario);
+      }
 
       hecho.setImagen(imagen);
 

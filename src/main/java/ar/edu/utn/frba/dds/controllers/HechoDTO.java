@@ -33,7 +33,12 @@ public class HechoDTO {
     this.video = hecho.video();
     this.imagen = hecho.imagen();
     this.provincia=hecho.getProvincia().toString();
-    this.contribuyente= contribuyente(hecho);
+
+    if(hecho.contribuyente()==null){
+      this.contribuyente = "Anonimo";
+    }else {
+      this.contribuyente = hecho.contribuyente().getUsuario();
+    }
   }
 
   public Long id() {
@@ -68,11 +73,7 @@ public class HechoDTO {
     return video;
   }
   public String imagen() { return imagen; }
-  public String contribuyente(Hecho hecho){
-    if(hecho.contribuyente()==null){
-      return "Anonimo";
-  }else {
-      return hecho.contribuyente().getNombre();
-    }}
-
+  public String contribuyente() {
+    return this.contribuyente;
+  }
 }
