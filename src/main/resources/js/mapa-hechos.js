@@ -68,9 +68,14 @@ function crearPopupHTML(titulo, imagen) {
   // como son todos los popups iguales decidi meterlo aca (+simple)
   // si a futuro queremos que sean diferentes/es mas complejo, podriamos sacarlo a otro archivo
   return `
-    <div style="display:flex;align-items:center;gap:5px;">
-      ${imagen ? `<img src="${imagen}" style="width:40%;height:auto;border-radius:4px;">` : ''}
-      <div>${titulo}</div>
+    <div style="display:flex;align-items:center;gap:5px;flex-direction:column;padding: 0:
+    border-radius:2.5rem;justify-content: flex-start;width: 100%;height: 100%">
+    
+      <p style="margin: 0;text-align: center;width: 90%;color: var(--color-texto-negrita);
+       font-weight: 400;font-size: 0.95rem;border-bottom: solid 0.05rem var(--color-principal);
+       font-family: "Segoe UI", Arial, sans-serif">${titulo}</p>
+       
+      ${imagen ? `<img src="${imagen}" style="width:60%;height:auto;border-radius:4px;">` : ''}
     </div>
   `;
 }
