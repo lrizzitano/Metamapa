@@ -52,14 +52,16 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
 
   public void resolverSolicitud(Context ctx) {
     Long id = Long.parseLong(ctx.pathParam("id"));
+    UsuarioDTO usuario = ctx.sessionAttribute("usuario");
+    String usuarioAdmin =  usuario.usuario();
+
     SolicitudesDeEliminacionJPA solicitudes = new SolicitudesDeEliminacionJPA();
 
     SolicitudDeEliminacion solicitud = solicitudes.find(id);
     //Al no persistirse el repo de solicitudes se lo debo inyectar antes de usarlo
     solicitud.setSolicitudes(solicitudes);
 
-    //TODO Traer la data del admin cuando resolvamos las sesiones
-    Administrador admin = (Administrador) new RepoUsuarios().findAll().stream().toList().get(0);
+    Administrador admin = (Administrador) new RepoUsuarios().findByUsername(usuarioAdmin);
 
     if (ctx.formParam("Aceptar") != null) {
       withTransaction(() -> {

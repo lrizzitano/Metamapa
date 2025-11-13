@@ -12,9 +12,11 @@ import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Router implements WithSimplePersistenceUnit {
 
@@ -44,13 +46,15 @@ public class Router implements WithSimplePersistenceUnit {
     }, Rol.USUARIO);
 
     app.get("/hechos/nuevo", ctx -> {
-      ctx.render("templates/paginas/subirHecho");
+      Map<String, Object> model = mantenerSesion(ctx,null);
+      ctx.render("templates/paginas/subirHecho",model);
     }, Rol.USUARIO);
 
     app.get("/solicitudesDeEliminacion/nueva", ctx -> {
       String paramHecho = ctx.queryParam("hecho");
       Map<String, Object> model = new HashMap<>();
       model.put("hecho", paramHecho);
+      model = mantenerSesion(ctx,model);
       ctx.render("templates/paginas/nuevaSolicitudDeEliminacion", model);
     });
 
@@ -65,23 +69,28 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/usuarios/sinSesion",usuarioController::cerrarSesion);
 
     app.get("/panelDeControl", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/panel");
+      Map<String, Object> model = mantenerSesion(ctx,null);
+      ctx.render("templates/paginas/panelDeControl/panel",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones", ctx -> {
       Map<String,Object> model = coleccionesController.colecciones(ctx);
-
+      model = mantenerSesion(ctx,model);
       model.putAll(coleccionesController.fuentes());
 
       ctx.render("templates/paginas/panelDeControl/verColecciones",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/crearColeccion",coleccionesController.fuentes());
+      Map<String,Object> model = coleccionesController.fuentes();
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/crearColeccion",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
-      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", solicitudesDeEliminacionController.verSolicitudes(ctx));
+      Map<String,Object> model = solicitudesDeEliminacionController.verSolicitudes(ctx);
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", model);
     }, Rol.ADMINISTRADOR);
 
     app.post("/hechos", hechosController::subirHecho, Rol.USUARIO);
@@ -98,13 +107,25 @@ public class Router implements WithSimplePersistenceUnit {
 
   }
 
+  private static Map<String, Object> mantenerSesion(Context ctx, Map<String, Object> model) {
+
+    if(model == null){
+       model = Objects.requireNonNull(ctx.attribute(AppKeys.MODEL));
+    }
+    else{
+      model.putAll(Objects.requireNonNull(ctx.attribute(AppKeys.MODEL)));
+    }
+
+    UsuarioDTO usuario = ctx.sessionAttribute("usuario");
+    model.put("usuario", usuario);
+    return model;
+  }
+
   private Map<String, Object> modelLayout(Context ctx)
   {
     ColeccionesController coleccionesController = new ColeccionesController();
     Map<String, Object> model = coleccionesController.colecciones(ctx);
-    model.putAll(ctx.attribute(AppKeys.MODEL)); // Siempre va a existir porque el model se prepara en el middleware
-    UsuarioDTO usuario = ctx.sessionAttribute("usuario");
-    model.put("usuario", usuario);
+    model = mantenerSesion(ctx,model);
     return model;
   }
 }

@@ -68,8 +68,8 @@ public class Autenticador {
 
   public Cookie crearCookie(String token, int age) {
     Cookie cookie = new Cookie("token", token);
-    cookie.setMaxAge(age);      // 15 minutos
-    cookie.setPath("/");            // disponible en toda la app
+    cookie.setMaxAge(age);      // 60 minutos
+    cookie.setPath("/");
     cookie.setHttpOnly(true);       // bloquea acceso desde JS
     cookie.setSecure(false);        // en true, la cookie solo se envia por protocolo https
     return cookie;
