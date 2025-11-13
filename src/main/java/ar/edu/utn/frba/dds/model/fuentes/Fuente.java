@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -54,52 +55,8 @@ public abstract class Fuente {
   }
 
   protected Set<Hecho> fullTextSearch(String busqueda, Set<Hecho> hechos) {
-
-    Map<Integer, Hecho> docToHecho = new HashMap<>();
-    int documentoId = 0;
-
-    IndexWriter writer = null;
-    Directory memoryIndex = new RAMDirectory();
-
-    try {
-
-      writer = new IndexWriter(memoryIndex, new IndexWriterConfig(new StandardAnalyzer()));
-
-      for (Hecho hecho : hechos) {
-        Document document = new Document();
-        document.add(new TextField("titulo", hecho.titulo(), Field.Store.YES));
-        document.add(new TextField("descripcion", hecho.descripcion(), Field.Store.YES));
-        writer.addDocument(document);
-        docToHecho.put(documentoId++, hecho);
-      }
-
-      writer.close();
-
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-
-    try (IndexReader reader = DirectoryReader.open(memoryIndex)) {
-
-      IndexSearcher searcher = new IndexSearcher(reader);
-
-      Query query = MultiFieldQueryParser.parse(
-          new String[]{busqueda, busqueda},
-          new String[]{"titulo", "descripcion"},
-          new StandardAnalyzer()
-      );
-
-      TopDocs topDocs = searcher.search(query, 10);
-
-      Set<Hecho> resultados = new LinkedHashSet<>();
-
-      for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
-        resultados.add(docToHecho.get(scoreDoc.doc));
-      }
-      return resultados;
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    return hechos.stream().filter(h -> (h.titulo()+h.descripcion()).contains(busqueda))
+        .collect(Collectors.toSet());
   }
 
   public abstract String getNombre();
