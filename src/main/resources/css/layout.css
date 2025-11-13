@@ -155,6 +155,9 @@ a:visited {
     border: none;
     cursor: pointer;
     transition: 0.45s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

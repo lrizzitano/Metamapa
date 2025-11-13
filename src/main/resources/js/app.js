@@ -60,6 +60,8 @@ function crearModalDetalleHecho(boton) {
   modal.querySelector('.categoria').textContent = hecho.categoria;
   modal.querySelector('.contribuyente').textContent = hecho.contribuyente;
   modal.querySelector('.provincia').textContent = hecho.provincia;
+  modal.querySelector('.latitud').textContent = hecho.latitud;
+  modal.querySelector('.longitud').textContent = hecho.longitud;
 
   modal.querySelector('.boton-solicitar-eliminacion')
     .href = "/solicitudesDeEliminacion/nueva?hecho=" + encodeURIComponent(hecho.titulo);
