@@ -41,39 +41,39 @@ public class HechoDTO {
     }
   }
 
-  public Long id() {
+  public Long getId() {
     return id;
   }
-  public String titulo() {
+  public String getTitulo() {
     return titulo;
   }
-  public String descripcion() {
+  public String getDescripcion() {
     return descripcion;
   }
-  public String categoria() {
+  public String getCategoria() {
     return categoria;
   }
-  public double latitud() {
+  public double getLatitud() {
     return latitud;
   }
-  public double longitud() {
+  public double getLongitud() {
     return longitud;
   }
-  public String fechaAcontecimiento() {
+  public String getFechaAcontecimiento() {
     return fechaAcontecimiento;
   }
-  public String fechaCarga() {
+  public String getFechaCarga() {
     return fechaCarga;
   }
-  public String origen() {
+  public String getOrigen() {
     return origen;
   }
-  public String provincia() {return provincia;}
-  public String video() {
+  public String getProvincia() {return provincia;}
+  public String getVideo() {
     return video;
   }
-  public String imagen() { return imagen; }
-  public String contribuyente() {
+  public String getImagen() { return imagen; }
+  public String getContribuyente() {
     return this.contribuyente;
   }
 }
