@@ -58,11 +58,13 @@
                             <p><b>Categoria:</b> <span class="categoria"></span> </p>
                             <p><b>Provincia:</b> <span class="provincia"></span> </p>
                             <p><b>Autor:</b> <span class="contribuyente"></span> </p>
+                            <span class="latitud" style="display: none"></span>
+                            <span class="longitud" style="display: none"></span>
                         </div>
                         <div class="contenedor ver-mapa">
                             <img  src="https://cdn-icons-png.flaticon.com/128/149/149060.png">
                             <a>
-                                <button class="boton ver-mapa">Ver en mapa</button>
+                                <button class="boton ver-mapa" onclick="zoomHecho();closeModal('detalleHecho')">Ver en mapa</button>
                             </a>
                         </div>
                     </div>

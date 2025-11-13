@@ -20,6 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
   
 });
 
+function zoomHecho(){
+
+  const stringLatitud =document.getElementById("detalleHecho")
+      .querySelector(".latitud");
+  const stringLongitud =document.getElementById("detalleHecho")
+      .querySelector(".longitud");
+
+  const latitud = parseFloat(stringLatitud.textContent.trim());
+  const longitud = parseFloat(stringLongitud.textContent.trim());
+
+  map.flyTo({
+    center: [longitud, latitud],
+    zoom: 13,
+    speed: 1.2,
+    curve: 1.5,
+    essential: true
+  });
+}
 
 function initMap() {
   if (map) map.remove();
@@ -91,4 +109,8 @@ function updateMarkers(container) {
 
     markers.push(marker);
   });
+
+
+
+
 }
