@@ -207,10 +207,10 @@
 
 
 .contenedor.ver-mapa img{
-    max-height: 2.5rem;
-    max-width: 2.5rem;
+    max-height: 2.2rem;
+    max-width: 2.2rem;
     animation: subirYCaer 1.5s alternate-reverse ;
-    animation-iteration-count: 4;
+    animation-iteration-count: 2;
 }
 
 @keyframes subirYCaer {

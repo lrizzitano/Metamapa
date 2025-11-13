@@ -33,7 +33,7 @@ function zoomHecho(){
   map.flyTo({
     center: [longitud, latitud],
     zoom: 13,
-    speed: 1.2,
+    speed: 1.3,
     curve: 1.5,
     essential: true
   });
