@@ -5,14 +5,12 @@ import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.controllers.UsuarioController;
 import ar.edu.utn.frba.dds.controllers.UsuarioDTO;
-import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +36,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/colecciones/{id}/hechos", ctx -> {
       if(ctx.header("HX-Request") != null) {
-        ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechos(ctx));
+        ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechosParaRender(ctx));
       }
       else {
         ctx.render("templates/paginas/mapa/mapaPagina", this.modelLayout(ctx));
@@ -107,8 +105,8 @@ public class Router implements WithSimplePersistenceUnit {
 
 
     // Metamapa API
-    app.get("/api/colecciones/{id}/hechos", ctx -> ctx.json(coleccionesController.hechos(ctx).get("hechos")));
-    app.get("/api/hechos", ctx -> ctx.json(hechosController.todosLosHechos(ctx)));
+    app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
+    app.get("/api/hechos", hechosController::todosLosHechos);
     app.post("/api/solicitudes", solicitudesDeEliminacionController::subirSolicitud);
   }
 

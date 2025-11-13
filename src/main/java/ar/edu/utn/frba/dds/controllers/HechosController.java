@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.controllers.utils.JsonConverter;
 import ar.edu.utn.frba.dds.controllers.utils.YoutubeLinkParser;
 import ar.edu.utn.frba.dds.model.filtros.Filtro;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
@@ -7,7 +8,6 @@ import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
-import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
@@ -15,7 +15,6 @@ import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
-import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
@@ -137,7 +136,7 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
 
   Set<Hecho> hechos;
 
-  public Set<HechoDTO> todosLosHechos(Context ctx) {
+  public void todosLosHechos(Context ctx) {
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
     withTransaction(() -> {
       Set<Fuente> fuentes = new FuentesRepositoryJPA().obtenerFuentes();
@@ -146,6 +145,6 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
           .collect(Collectors.toSet());
     });
 
-    return hechos.stream().map(HechoDTO::new).collect(Collectors.toSet());
+    ctx.json(new JsonConverter().armarConvertor().toJson(hechos));
   }
 }

@@ -1,5 +1,5 @@
 package ar.edu.utn.frba.dds.controllers;
-import ar.edu.utn.frba.dds.model.filtros.Filtro;
+import ar.edu.utn.frba.dds.controllers.utils.JsonConverter;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
@@ -7,10 +7,6 @@ import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Agregador;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
-import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
-import ar.edu.utn.frba.dds.model.fuentes.FuenteEstatica;
-import ar.edu.utn.frba.dds.model.fuentes.demo.FuenteDemo;
-import ar.edu.utn.frba.dds.model.fuentes.metamapa.FuenteMetaMapa;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsenso;
@@ -27,14 +23,10 @@ import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import net.bytebuddy.asm.Advice;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,23 +45,35 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     return model;
   }
 
-  public Map <String, Object> hechos(Context ctx) {
+  Set<Hecho> hechos;
+
+  public Set<Hecho> obtenerHechosColeccion(Context ctx) {
     Long id = Long.parseLong(ctx.pathParam("id"));
-    Map<String, Object> model = new HashMap<>();
     ColeccionesRepository colecciones = new ColeccionesRepository();
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
 
     withTransaction(() -> {
       Coleccion coleccion = colecciones.find(id);
       coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
-      // coleccion.hechos(titulo, filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
+      // coleccion.hechosParaRender(titulo, filtro)
       // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
-      Set<HechoDTO> hechos = coleccion.hechos(filtro).stream().map(HechoDTO::new).collect(Collectors.toSet());
-      new Logger().info("Nashe " + hechos);
-      model.put("hechos", hechos);
+      hechos = coleccion.hechos(filtro);
     });
 
+    return hechos;
+  }
+
+  public Map <String, Object> hechosParaRender(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+
+    model.put("hechos", obtenerHechosColeccion(ctx).stream().map(HechoDTO::new).collect(Collectors.toSet()));
+
     return model;
+  }
+
+  public void hechosAPI(Context ctx) {
+    hechos = obtenerHechosColeccion(ctx);
+    ctx.json(new JsonConverter().armarConvertor().toJson(hechos));
   }
 
   public void subirColeccion(Context ctx){
