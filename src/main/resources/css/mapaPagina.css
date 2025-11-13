@@ -19,6 +19,9 @@
     align-items: center;
     justify-content: center;
     border-bottom: 0.08rem solid rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    font-weight: 550;
+    color:var(--color-texto);
 }
 
 .contenedor-hechos-mapaYcolecciones {
@@ -82,7 +85,14 @@
 
 .card-hecho p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 550;
+    color:var(--color-texto);
+}
+#titulo{
+    color:var(--color-texto-negrita);
+    border-bottom: solid 0.05rem var(--color-principal);
+    width: 90%;
 }
 
 .card-hecho-contenido {

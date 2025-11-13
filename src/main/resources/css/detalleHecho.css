@@ -3,8 +3,8 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
-    height: 90%;
-    width: 90%;
+    height: 85%;
+    width: 88%;
 }
 
 .contenedor.detalle-hecho{
@@ -171,6 +171,7 @@
 .controles img{
     width: auto;
     height: 2rem;
+    transition: 0.5s;
 }
 
 .controles img:hover{

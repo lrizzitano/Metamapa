@@ -52,11 +52,12 @@ p.bold {
     font-size: 1rem;
     box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
     align-content: center;
+    transition: 0.45s;
 }
 
 
 .boton:hover{
-    transform: scale(1.1,1.1);
+    transform: scale(1.08,1.08);
     color: var(--color-acento);
     background-color: white;
     border: 0.05rem solid var(--color-acento);

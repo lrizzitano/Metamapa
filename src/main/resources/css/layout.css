@@ -35,6 +35,8 @@ body{
 
 .contenedor.lateral.logo-titulo{
     animation: aparecer 1.3s ease-in-out;
+    transition: 0.5s;
+
 }
 
 .contenedor.lateral.logo-titulo:hover{
@@ -152,6 +154,7 @@ a:visited {
     height: auto;
     border: none;
     cursor: pointer;
+    transition: 0.45s;
 }
 
 
