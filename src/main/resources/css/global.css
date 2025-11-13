@@ -3,7 +3,7 @@
     --color-secundario: #f2f8f6;
     --color-acento: #249ee5;
     --color-texto: #5c5b5b;
-    --color-texto-negrita: #1E1E1E;
+    --color-texto-negrita: #404040;
 
     font: normal 1rem "Roboto Light", sans-serif;
 
@@ -63,7 +63,6 @@ p.bold {
 }
 
 .boton.secundario{
-    margin: 16px 0 0 0;
     background-color: var(--color-principal);
 }
 

@@ -6,26 +6,12 @@
 
             <div class="contenedor titulo-cerrar">
                 <h1 class="titulo"></h1>
-                <button type="button" class="boton secundario cerra" onclick="closeModal('detalleHecho')">X</button>
+                <button type="button" class="boton-cerrar-modal-hecho" onclick="closeModal('detalleHecho')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10728/10728089.png">
+                </button>
             </div>
 
             <section class="contenedor cuerpo-detalle-hecho">
-
-                <section class="contenedor descripcion-datos-solicitudes">
-                    <div class="contenedor descripcion">
-                        <p class="descripcion"></p>
-                    </div>
-                    <div class="contenedor datos-solicitudes">
-                        <p><b>Categoria:</b> <span class="categoria"></span> </p>
-                        <p><b>Provincia:</b> <span class="provincia"></span> </p>
-                        <p><b>Autor:</b> <span class="contribuyente"></span> </p>
-                        <a class="boton-solicitar-eliminacion">
-                            <button class="boton secundario">
-                                Solicitar eliminacion
-                            </button>
-                        </a>
-                    </div>
-                </section>
 
                 <section class="contenedor imagen-video-fechas">
 
@@ -43,13 +29,41 @@
                         </div>
                     </div>
 
-                    <div class="controles">
-                        <a href="#slide1">◀</a>
-                        <a href="#slide2">▶</a>
+                    <div class="contenedor controles-solicitud">
+                        <a class="boton-solicitar-eliminacion">
+                            <button class="boton terciario solicitud">
+                                Solicitar eliminacion
+                            </button>
+                        </a>
+
+                        <div class="controles">
+                            <a href="#slide1"><img src="https://cdn-icons-png.flaticon.com/128/8050/8050812.png"></a>
+                            <a href="#slide2"><img src="https://cdn-icons-png.flaticon.com/128/8050/8050813.png"></a>
+                        </div>
                     </div>
 
-                    <p ><b>Fecha publicada: </b> <span class="fechaCarga"></span> </p>
-                    <p><b>Fecha del suceso: </b> <span class="fechaAcontecimiento"></span> </p>
+
+
+                </section>
+
+                <section class="contenedor descripcion-datos-solicitudes">
+                    <div class="contenedor descripcion">
+                        <p class="descripcion"></p>
+                    </div>
+                    <div class="contenedor datos-solicitudes">
+                        <div>
+                            <p><b>Fecha publicada: </b> <span class="fechaCarga"></span> </p>
+                            <p><b>Fecha del suceso: </b> <span class="fechaAcontecimiento"></span> </p>
+                            <p><b>Categoria:</b> <span class="categoria"></span> </p>
+                            <p><b>Provincia:</b> <span class="provincia"></span> </p>
+                            <p><b>Autor:</b> <span class="contribuyente"></span> </p>
+                        </div>
+                        <div class="contenedor ver-mapa">
+                            <a>
+                                <button class="boton">Ver en mapa</button>
+                            </a>
+                        </div>
+                    </div>
                 </section>
 
             </section>
