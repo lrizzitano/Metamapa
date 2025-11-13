@@ -45,7 +45,7 @@ public class Hecho {
     private Usuario contribuyente;
     @Column(name = "fueRevisado")
     private Boolean fueRevisado;
-    @Column(name = "imagen")
+    @Column(name = "imagen", length = 500)
     private String imagen;
     @Column(name = "video")
     private String video;
