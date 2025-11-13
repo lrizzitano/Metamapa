@@ -15,8 +15,20 @@ import java.util.Map;
 
 public class SolicitudesDeEliminacionController implements WithSimplePersistenceUnit, TransactionalOps {
   public void subirSolicitud(Context ctx) {
-    String hecho = ctx.formParam("hecho");
-    String fundamentacion = ctx.formParam("fundamentacion");
+    String contentType = ctx.contentType(); // puede ser "application/json" o "application/x-www-form-urlencoded"
+    String hecho;
+    String fundamentacion;
+
+    if (contentType != null && contentType.contains("application/json")) {
+      // viene desde la api
+      Map<String, String> data = ctx.bodyAsClass(Map.class);
+      hecho = data.get("hecho");
+      fundamentacion = data.get("fundamentacion");
+    } else {
+      // Viene desde un form html
+      hecho = ctx.formParam("hecho");
+      fundamentacion = ctx.formParam("fundamentacion");
+    }
 
     if (hecho == null || hecho.isBlank() ||
         fundamentacion == null || fundamentacion.isBlank()) {
@@ -35,10 +47,11 @@ public class SolicitudesDeEliminacionController implements WithSimplePersistence
       ctx.header("HX-Redirect", "/");
 
     } catch (Exception e) {
-      new Logger().info("Error al crear solicitud de eliminacion: " + e.getMessage());
-      ctx.result("Error al crear solicitud de eliminacion");
-
-
+      new Logger().info("Error al crear solicitud de eliminación: " + e.getMessage());
+      ctx.status(500).json(Map.of(
+          "error", "Error al crear solicitud de eliminación",
+          "detalle", e.getMessage()
+      ));
     }
   }
 

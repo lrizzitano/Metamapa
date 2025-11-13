@@ -57,37 +57,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     Long id = Long.parseLong(ctx.pathParam("id"));
     Map<String, Object> model = new HashMap<>();
     ColeccionesRepository colecciones = new ColeccionesRepository();
-    FiltroCompuesto filtro = new FiltroCompuesto();
-
-    // obtenemos query params
-    String titulo = ctx.queryParam("titulo");
-    String categoria = ctx.queryParam("categoria");
-    String fechaDesdeStr = ctx.queryParam("fecha-desde");
-    String fechaHastaStr = ctx.queryParam("fecha-hasta");
-
-    if (categoria != null && !categoria.isEmpty()) {
-      new Logger().info("llegue a armar el filtro categoria".concat(categoria));
-      filtro.and(new FiltroCategoria(categoria));
-    }
-
-    LocalDate fechaDesde = null;
-    LocalDate fechaHasta = null;
-
-    try {
-      if (fechaDesdeStr != null && !fechaDesdeStr.isEmpty()) {
-        fechaDesde = LocalDate.parse(fechaDesdeStr);
-        filtro.and(new FiltroFechaDesde(fechaDesde.atStartOfDay()));
-      }
-      if (fechaHastaStr != null && !fechaHastaStr.isEmpty()) {
-        fechaHasta = LocalDate.parse(fechaHastaStr);
-        filtro.and(new FiltroFechaHasta(fechaHasta.atStartOfDay()));
-        new Logger().info("llegue a armar el filtro fechaHasta".concat(fechaHasta.toString()));
-      }
-    } catch (DateTimeParseException e) {
-      ctx.status(400).result("Fechas invalidas");
-      // aca capaz se podria meter un cartelito de error mas lindo
-    }
-
+    FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
 
     withTransaction(() -> {
       Coleccion coleccion = colecciones.find(id);
