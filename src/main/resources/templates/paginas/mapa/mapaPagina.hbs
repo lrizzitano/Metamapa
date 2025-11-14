@@ -9,10 +9,10 @@
 {{#partial "contenido" }}
     <div class="cuerpo-index">
         <section class="seccion-filtros">
-            <!-- si venis a la / no hay destino para los filtros, si venis por recargar sobre /colecciones/:id/hechos, si -->
+
             <form
                     class="form-filtros"
-                    hx-get="{{destinoInicialFiltros}}"
+                    hx-get="#"
                     hx-target=".contenedor-hechos"
                     hx-swap="innerHTML"
                     hx-push-url="true"
@@ -39,10 +39,10 @@
                     <input type="text" id="categoria" name="categoria" placeholder="Ej: Incendios">
                 </div>
 
-                <!-- si venis directo a la / esta disabled, si venis por recargar sobre un /colecciones/:id/hechos, no -->
-                <button class="boton" id="btn-filtro"
-                        {{#unless destinoInicialFiltros}}disabled{{/unless}}
-                type="submit">Filtrar</button>
+                <button class="boton" id="btn-filtro" disabled type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
+                    Filtrar
+                </button>
             </form>
         </section>
         <section class="contenedor-hechos-mapaYcolecciones">

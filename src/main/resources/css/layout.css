@@ -203,6 +203,18 @@ a:visited {
     box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
 }
 
+.boton.subir-hecho {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.boton.subir-hecho img {
+    max-height: 1.3rem;
+    max-width: 1.3rem;
+}
+
 
 /*
 

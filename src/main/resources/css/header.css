@@ -5,3 +5,15 @@
     align-items: end;
     gap: 16px;
 }
+
+.boton {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.boton img {
+    max-height: 1.3rem;
+    max-width: 1.3rem;
+}

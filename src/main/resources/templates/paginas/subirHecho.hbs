@@ -14,7 +14,8 @@
                 <div class="contenedor-titulo izq">
                     <a class="enlace" href="/">
                         <button class="boton volver">
-                            volver
+                            <img src="https://cdn-icons-png.flaticon.com/512/8213/8213500.png">
+                            Volver
                         </button>
                     </a>
                 </div>
@@ -82,21 +83,29 @@
 
                     <div class="form-mapa">
 
-                        <label for="ubicacion">Ubicación</label>
-                        <input type="hidden" name="latitud" id="latitud">
-                        <input type="hidden" name="longitud" id="longitud">
-                        <div class="contenedor-mapa">
-                            <div id="map"></div>
-                        </div>
+                        <div class="contenedor-mapa-subir-hecho">
+                            <label for="ubicacion">Ubicación</label>
+                            <input type="hidden" name="latitud" id="latitud">
+                            <input type="hidden" name="longitud" id="longitud">
+                            <div class="contenedor-mapa">
+                                <div id="map"></div>
+                            </div>
+
                         <p>Haga click sobre el mapa para seleccionar la ubicación del hecho</p>
+                        </div>
+
+                        <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
+
+                        <button class="boton subir" type="submit">
+                            <img src="https://cdn-icons-png.flaticon.com/512/10024/10024248.png">
+                            Subir
+                        </button>
 
                     </div>
 
+
                 </div>
 
-                <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
-
-                <button class="boton subir" type="submit">Subir</button>
             </form>
         </div>
     </section>

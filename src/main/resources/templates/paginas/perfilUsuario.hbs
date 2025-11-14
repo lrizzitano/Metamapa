@@ -1,0 +1,45 @@
+{{#partial "dependencias"}}
+    <link rel="stylesheet" href="/css/form.css">
+{{/partial}}
+
+{{#partial "contenido"}}
+    <div class="panel" style="padding:0">
+        <form class="form editar-perfil" hx-post="/usuarios/{{usuario.usuario}}" hx-target="#error-subir-hecho">
+            <div class="contenedor-titulo-volver">
+
+                <div class="contenedor-titulo izq">
+                    <a class="enlace" href="/">
+                        <button class="boton volver">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8213/8213500.png">
+                            volver
+                        </button>
+                    </a>
+                </div>
+
+                <h2>Perfil de usuario</h2>
+
+                <div class="contenedor-titulo der">
+                    <button class="boton-secundario relleno">Volver</button>
+                </div>
+            </div>
+
+                <label for="username"><b>Usuario</b></label>
+                <p>{{usuario.usuario}}</p>
+
+                <label for="nombre"><b>Nombre</b></label>
+                <input type="text" id="nombre" name="nombre" placeholder={{usuario.nombre}}>
+
+                <label for="apellido"><b>Apellido</b></label>
+                <input type="text" id="apellido" name="apellido" placeholder={{usuario.apellido}}>
+
+                <label for="nacimiento"><b>Fecha de nacimiento</b></label>
+                <input type="date" name="nacimiento" id="nacimiento">
+
+                <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
+
+                <button type="submit" style="margin-top: 0.65rem" class="boton">Editar</button>
+        </form>
+    </div>
+{{/partial}}
+
+{{> templates/layout}}

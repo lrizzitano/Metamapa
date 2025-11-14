@@ -2,8 +2,8 @@ package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.server.exceptions.CrearSesionException;
 import ar.edu.utn.frba.dds.server.exceptions.ErrorRenderizadoException;
-import ar.edu.utn.frba.dds.server.exceptions.SesionInvalidaException;
-import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
+import ar.edu.utn.frba.dds.server.exceptions.SesionException;
+import ar.edu.utn.frba.dds.server.exceptions.UsuarioException;
 import io.javalin.Javalin;
 import io.javalin.config.Key;
 
@@ -29,13 +29,13 @@ public class ExcepcionesHandler {
       ctx.result("Error del servidor");
     });
 
-    app.exception(SesionInvalidaException.class, (e, ctx) -> {
+    app.exception(SesionException.class, (e, ctx) -> {
       ctx.status(401);
       ctx.appData(AppKeys.LOGGER).error(e.getMessage(), e);
       ctx.redirect("/");
     });
 
-    app.exception(UsuarioExistenteException.class, (e, ctx) -> {
+    app.exception(UsuarioException.class, (e, ctx) -> {
       ctx.status(401);
       ctx.appData(AppKeys.LOGGER).error(e.getMessage(), e);
       ctx.redirect("/");

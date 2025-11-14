@@ -10,4 +10,6 @@ public class AppKeys {
   public static final String AUTENTICADO = "autenticado";
   public static final String ESADMIN = "esAdmin";
   public static final String MODEL = "model";
+  public static final String USUARIO = "usuario";
+  public static final String TOKEN = "token";
 }

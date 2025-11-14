@@ -9,7 +9,7 @@ import static ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol.*;
 
 public class Autorizador {
 
-  public static void validarPermisos(Context ctx) {
+  public static void validarPermisosDeRuta(Context ctx) {
 
     String path = ctx.path();
     if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")) {

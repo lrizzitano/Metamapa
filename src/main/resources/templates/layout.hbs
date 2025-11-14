@@ -33,6 +33,7 @@
 
         <a href="/hechos/nuevo">
             <button class="boton subir-hecho" >
+                <img src="https://cdn-icons-png.flaticon.com/512/10023/10023858.png">
                 Subir Hecho
             </button>
         </a>
@@ -46,6 +47,9 @@
                     <p><b>Apellido: </b>{{usuario.apellido}}</p>
                     <p><b>Usuario: </b>{{usuario.usuario}}</p>
                     <p><b>Nacimiento: </b>{{usuario.fechaDeNacimiento}}</p>
+                    <a href="/usuarios/{{usuario.usuario}}/perfil">
+                        <button class="boton terciario">Editar perfil</button>
+                    </a>
                     <a href="/usuarios/sinSesion">
                         <button class="boton terciario">Cerrar sesion</button>
                     </a>

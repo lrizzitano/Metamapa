@@ -28,7 +28,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
-    app.beforeMatched(Autorizador::validarPermisos);
+    app.beforeMatched(Autorizador::validarPermisosDeRuta);
 
     app.get("/", ctx ->
       {
@@ -96,10 +96,16 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/panelDeControl/crearColeccion",model);
     }, Rol.ADMINISTRADOR);
 
-    app.get("/panelDeControl/fuentes/nueva", ctx -> {
+    app.get("/panelDeControl/fuentes/nuevaProxy", ctx -> {
       Map<String,Object> model = new HashMap<>();
       model = mantenerSesion(ctx,model);
-      ctx.render("templates/paginas/panelDeControl/crearFuente",model);
+      ctx.render("templates/paginas/panelDeControl/crearFuenteProxy",model);
+    }, Rol.ADMINISTRADOR);
+
+    app.get("/panelDeControl/fuentes/nuevaEstatica", ctx -> {
+      Map<String,Object> model = new HashMap<>();
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/crearFuenteEstatica",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
@@ -119,6 +125,15 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMINISTRADOR);
 
     app.delete("/colecciones/{id}",coleccionesController::eliminarColeccion,Rol.ADMINISTRADOR);
+
+    app.get("/usuarios/{username}/perfil",ctx->{
+      Map<String,Object> model = usuarioController.usuario(ctx);
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/perfilUsuario",model);
+    },Rol.USUARIO);
+
+    app.post("/usuarios/{username}", usuarioController::editarPerfil,Rol.USUARIO);
+
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);

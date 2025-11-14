@@ -3,13 +3,13 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.AppKeys;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import ar.edu.utn.frba.dds.server.configuracion.autenticacion.Autenticador;
 import ar.edu.utn.frba.dds.server.configuracion.autenticacion.FactoryAutenticador;
-import ar.edu.utn.frba.dds.server.exceptions.FaltaAtributoDeUsuarioException;
-import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
+import ar.edu.utn.frba.dds.server.exceptions.UsuarioException;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
-import io.javalin.http.Cookie;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     );
     withTransaction(() -> {
       if (repoUsuarios.findByUsername(username) != null) {
-        throw new UsuarioExistenteException("Ya existe un usuario con ese nombre");
+        throw new UsuarioException("Ya existe un usuario con ese nombre");
       }
       repoUsuarios.save(usuario);
     });
@@ -76,5 +76,57 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     ctx.sessionAttribute("usuario", null);
     ctx.redirect("/");
 
+  }
+
+  public Map<String, Object> usuario(Context ctx){
+    Map<String, Object> model = new HashMap<>();
+    String username = ctx.pathParam("username");
+    Usuario usuario = repoUsuarios.findByUsername(username);
+    UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+    model.put("usuario", usuarioDTO);
+
+    return model;
+  }
+
+  public void editarPerfil(Context ctx){
+
+    ctx.appData(AppKeys.AUTENTICADOR).validarUsuario(ctx.pathParam("username"), ctx);
+
+    String nombre = ctx.formParam("nombre");
+    String apellido = ctx.formParam("apellido");
+    String nacimiento = ctx.formParam("nacimiento");
+
+    if( nombre.isBlank() && apellido.isBlank() && nacimiento.isBlank()) {
+      new Logger().info("Faltan campos por completar");
+      ctx.result("Campos incompletos");
+      return;
+    }
+
+    String username = ctx.pathParam("username");
+    Usuario usuario = repoUsuarios.findByUsername(username);
+
+    if(nombre!=null && !nombre.isBlank())
+    {
+      usuario.setNombre(nombre);
+    }
+    if(apellido!=null && !apellido.isBlank())
+    {
+      usuario.setApellido(apellido);
+    }
+    if(nacimiento!=null && !nacimiento.isBlank())
+    {
+      LocalDate fechaDeNacimiento = LocalDate.parse(nacimiento);
+      usuario.setNacimiento(fechaDeNacimiento);
+    }
+
+    RepoUsuarios repoUsuarios = new RepoUsuarios();
+    withTransaction(() -> {
+      repoUsuarios.update(usuario);
+    });
+
+    UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+    ctx.sessionAttribute("usuario", usuarioDTO);
+
+    ctx.header("HX-Redirect", "/");
   }
 }

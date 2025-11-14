@@ -179,8 +179,12 @@
     display: flex;
     flex-direction: row;
     justify-content: start;
-    align-items: center;
+    align-items: last baseline;
     height: 100%;
+}
+
+.form-filtros button {
+    height: 2rem;
 }
 
 .form-filtros label {
@@ -239,6 +243,8 @@
     border-radius: 0.8rem;
     margin: 2%;
     font-size: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .contenedor-colecciones button.activo{
