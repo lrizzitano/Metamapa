@@ -239,6 +239,8 @@
     border-radius: 0.8rem;
     margin: 2%;
     font-size: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .contenedor-colecciones button.activo{

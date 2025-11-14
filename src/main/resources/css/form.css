@@ -118,11 +118,43 @@
     justify-content: center;
 }
 
+.contenedor-mapa-subir-hecho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+}
+
 #map{
     border-radius: 32px;
 }
 
 .boton.volver{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
     height: auto;
     padding: 0.3rem;
+    margin: 0.3rem;
+    align-items: center;
+}
+
+.boton.volver img {
+    max-height: 1.3rem;
+    max-width: 1.3rem;
+}
+
+.boton.subir {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.boton.subir img{
+    max-height: 1.3rem;
+    max-width: 1.3rem;
 }

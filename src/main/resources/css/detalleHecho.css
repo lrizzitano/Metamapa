@@ -207,15 +207,30 @@
 
 
 .contenedor.ver-mapa img{
-    max-height: 2.2rem;
-    max-width: 2.2rem;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
     animation: subirYCaer 1.5s alternate-reverse ;
     animation-iteration-count: 2;
 }
 
+.contenedor.ver-mapa img{
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    animation: subirYCaer 1.5s alternate-reverse ;
+    animation-iteration-count: 2;
+}
+
+.contenedor.ver-mapa button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+}
+
 @keyframes subirYCaer {
     from {
-        transform: translateY(-10px);
+        transform: translateY(-7px);
     }
     to {
         transform: translateY(0px);

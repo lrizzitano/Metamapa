@@ -55,7 +55,7 @@ main {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content:center;
+    justify-content:flex-start;
     gap: 1rem;
     overflow: hidden;
 }
@@ -71,7 +71,6 @@ main {
     justify-content: space-between;
     padding: 0 8px 8px 8px;
     border-radius: 0.3rem;
-    margin-top: 1rem;
 }
 
 .contenedor.carta:hover{
@@ -81,6 +80,24 @@ main {
 
 .contenedor.carta p,h2,h1{
     font-size: small;
+}
+
+.contenedor.carta.solicitud{
+    gap: 2rem;
+    padding: 0 16px;
+}
+
+.contenedor.carta.solicitud .contenedor.lateral{
+    width: 100%;
+}
+
+.contenedor.carta.solicitud form{
+    width: 100%;
+}
+
+.contenedor.carta.solicitud .card-solicitud-botones{
+    justify-content: space-around;
+    width: 100%;
 }
 
 .card-solicitud-botones {
@@ -93,7 +110,8 @@ main {
 .contenedor.lateral.fuentes {
     display: flex;
     flex-wrap: wrap;
-    justify-content:center;
+    width: 70%;
+    justify-content:flex-start;
     gap: 0.3rem;
 }
 
@@ -101,14 +119,14 @@ main {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 25%;
-    gap: 0.4rem;
+    width: 24%;
 }
 
 .contenedor.fuente label {
     border: none;
     font-size: 0.95rem;
     margin: 0;
+    justify-content: flex-start;
 }
 
 .contenedor.fuente input[type="checkbox"] {
@@ -119,4 +137,10 @@ main {
 
 .contenedor.fuente input[type="checkbox"]:hover{
     cursor: pointer;
+}
+
+.mensaje-fondo {
+    width: 100%;
+    text-align: center;
+    color: var(--color-texto);
 }
