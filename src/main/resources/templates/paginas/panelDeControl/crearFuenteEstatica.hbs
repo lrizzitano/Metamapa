@@ -4,8 +4,17 @@
     <section class="contenedor-form">
         <div class="panel">
             <form class="form" style="width: 100%" hx-post="/fuentes" hx-target="#error-crear-fuente">
+                <input type="hidden" id="tipo-hidden" name="tipoFuente" value="metamapa">
 
-                aca falta el form
+                <div id="estatica-input">
+                    <input
+                            type="file"
+                            name="archivoEstatico"
+                            accept=".csv"
+                            style="width:100%;"/>
+                </div>
+                <span id="error-crear-fuente" class="contenedor-mensaje-error"></span>
+                <button class="boton subir" type="submit">Subir</button>
             </form>
         </div>
     </section>
