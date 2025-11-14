@@ -1,20 +1,26 @@
 <link rel="stylesheet" href="/css/form.css">
 
+
+
 {{#partial "seccion"}}
     <section class="contenedor-form">
         <div class="panel">
-            <form class="form" style="width: 100%" hx-post="/fuentes" hx-target="#error-crear-fuente">
+            <form class="form" style="width: 100%; height: fit-content" hx-post="/fuentes" hx-target="#error-crear-fuente">
                 <input type="hidden" id="tipo-hidden" name="tipoFuente" value="metamapa">
 
-                <div id="estatica-input">
-                    <input
-                            type="file"
-                            name="archivoEstatico"
-                            accept=".csv"
-                            style="width:100%;"/>
-                </div>
+                <label for="archivoEstatico">Archivo .csv de la fuente</label>
+
+                <input
+                        id="archivoEstatico"
+                        type="file"
+                        name="archivoEstatico"
+                        accept=".csv"
+                />
+
+                <p>Las fuentes estáticas se vinculan a un archivo CSV para cargar sus hechos</p>
+
                 <span id="error-crear-fuente" class="contenedor-mensaje-error"></span>
-                <button class="boton subir" type="submit">Subir</button>
+                <button class="boton subir" type="submit">Crear fuente</button>
             </form>
         </div>
     </section>
