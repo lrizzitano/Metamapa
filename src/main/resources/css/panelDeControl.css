@@ -78,13 +78,8 @@ main {
     cursor: auto;
 }
 
-.contenedor.carta p,h2,h1{
-    font-size: small;
-}
-
 .contenedor.carta.solicitud{
     gap: 2rem;
-    padding: 0 16px;
 }
 
 .contenedor.carta.solicitud .contenedor.lateral{
@@ -143,4 +138,8 @@ main {
     width: 100%;
     text-align: center;
     color: var(--color-texto);
+}
+
+.contenedor.lateral.logo-titulo{
+    animation: none;
 }
