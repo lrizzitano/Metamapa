@@ -152,6 +152,8 @@
     width: auto;
     align-items: center;
     gap: 0.5rem;
+    scale: 1.2;
+    margin-top: 1rem;
 }
 
 .boton.subir img{
