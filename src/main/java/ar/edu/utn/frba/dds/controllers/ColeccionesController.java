@@ -51,14 +51,14 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     Long id = Long.parseLong(ctx.pathParam("id"));
     ColeccionesRepository colecciones = new ColeccionesRepository();
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
+    String titulo = ctx.queryParam("titulo");
 
-    withTransaction(() -> {
-      Coleccion coleccion = colecciones.find(id);
-      coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
-      // coleccion.hechosParaRender(titulo, filtro)
+
+    Coleccion coleccion = colecciones.find(id);
+    coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
       // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
-      hechos = coleccion.hechos(filtro);
-    });
+      hechos = titulo == null ? coleccion.hechos(filtro) :
+          coleccion.hechos(titulo, filtro);
 
     return hechos;
   }
