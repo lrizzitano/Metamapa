@@ -82,7 +82,7 @@ public class Agregador extends Fuente implements Calendarizable  {
 
   @Override
   public String getNombre(){
-    return "Agregador"  + " - ID: " + id + " Conformada: " + fuentes.stream().map(Fuente::getNombre).collect(Collectors.joining(","));
+    return "Agregador"  + " - ID: " + id + " Conformada: #" + fuentes.stream().map(Fuente::getNombre).collect(Collectors.joining(" #"));
   }
 }
 
