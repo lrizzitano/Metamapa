@@ -1,17 +1,15 @@
 package ar.edu.utn.frba.dds.controllers;
 
-import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.AppKeys;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import ar.edu.utn.frba.dds.server.configuracion.autenticacion.Autenticador;
 import ar.edu.utn.frba.dds.server.configuracion.autenticacion.FactoryAutenticador;
-import ar.edu.utn.frba.dds.server.exceptions.FaltaAtributoDeUsuarioException;
-import ar.edu.utn.frba.dds.server.exceptions.UsuarioExistenteException;
+import ar.edu.utn.frba.dds.server.exceptions.UsuarioException;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
-import io.javalin.http.Cookie;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +44,7 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     );
     withTransaction(() -> {
       if (repoUsuarios.findByUsername(username) != null) {
-        throw new UsuarioExistenteException("Ya existe un usuario con ese nombre");
+        throw new UsuarioException("Ya existe un usuario con ese nombre");
       }
       repoUsuarios.save(usuario);
     });
@@ -91,6 +89,9 @@ public class UsuarioController implements WithSimplePersistenceUnit {
   }
 
   public void editarPerfil(Context ctx){
+
+    ctx.appData(AppKeys.AUTENTICADOR).validarUsuario("username", ctx);
+
     String nombre = ctx.formParam("nombre");
     String apellido = ctx.formParam("apellido");
     String nacimiento = ctx.formParam("nacimiento");

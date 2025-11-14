@@ -27,7 +27,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
-    app.beforeMatched(Autorizador::validarPermisos);
+    app.beforeMatched(Autorizador::validarPermisosDeRuta);
 
     app.get("/", ctx ->
       {

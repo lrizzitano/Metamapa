@@ -1,0 +1,20 @@
+<button class="boton principal" onclick="openModal('logoutModal')">
+    Cerrar sesión
+</button>
+
+<div class="modal" id="logoutModal">
+    <div class="backdrop" onclick="closeModal('logoutModal')"></div>
+    <div class="panel sign-in">
+        <h2>¿Seguro que querés cerrar sesión?</h2>
+        <div class="botones-form">
+            <button class="boton secundario" onclick="closeModal('logoutModal')">
+                No
+            </button>
+            <button
+                    hx-post="/logout"
+                    class="boton principal">
+                Sí
+            </button>
+        </div>
+    </div>
+</div>
