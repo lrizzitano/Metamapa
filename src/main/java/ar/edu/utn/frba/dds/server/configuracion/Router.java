@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.ColeccionesController;
+import ar.edu.utn.frba.dds.controllers.FuentesController;
 import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.controllers.UsuarioController;
@@ -20,11 +21,12 @@ import java.util.Objects;
 public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
-    //new SetupData().setup();
+    new SetupData().setup();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
     UsuarioController usuarioController = new UsuarioController();
+    FuentesController fuentesController = new FuentesController();
 
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
@@ -121,6 +123,8 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/solicitudesDeEliminacion/{id}", solicitudesDeEliminacionController::resolverSolicitud, Rol.ADMINISTRADOR);
 
     app.post("/colecciones",coleccionesController::subirColeccion,Rol.ADMINISTRADOR);
+
+    app.post("/fuentes", fuentesController::subirFuente, Rol.ADMINISTRADOR);
 
     app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMINISTRADOR);
 
