@@ -90,13 +90,11 @@ public class UsuarioController implements WithSimplePersistenceUnit {
 
   public void editarPerfil(Context ctx){
 
-    ctx.appData(AppKeys.AUTENTICADOR).validarUsuario("username", ctx);
+    ctx.appData(AppKeys.AUTENTICADOR).validarUsuario(ctx.pathParam("username"), ctx);
 
     String nombre = ctx.formParam("nombre");
     String apellido = ctx.formParam("apellido");
     String nacimiento = ctx.formParam("nacimiento");
-
-    new Logger().info("AMBUEGUESA" + nombre);
 
     if( nombre.isBlank() && apellido.isBlank() && nacimiento.isBlank()) {
       new Logger().info("Faltan campos por completar");
