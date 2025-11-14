@@ -1,0 +1,18 @@
+
+{{#partial "seccion"}}
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- estoy usando los mismos estilos que las cards de colecciones, se pueden crear propios -->
+    <div class="contenedor cartas colecciones">
+        {{#each fuentes}}
+            <div class="contenedor carta coleccion">
+                <div class="contenedor vertical" style="align-items: start">
+                    <h2>{{nombre}}</h2>
+                    <p>ID: {{id}}</p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{/partial}}
+
+{{> templates/paginas/panelDeControl/panel}}
+{{> templates/modals/modificarColeccion}}

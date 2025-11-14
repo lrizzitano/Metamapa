@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="/css/form.css">
+
+{{#partial "seccion"}}
+    <section class="contenedor-form">
+        <div class="panel">
+            <form class="form" style="width: 100%" hx-post="/fuentes" hx-target="#error-crear-fuente">
+
+
+                <button class="boton subir" type="submit">Subir</button>
+
+            </form>
+        </div>
+    </section>
+{{/partial}}
+
+{{> templates/paginas/panelDeControl/panel}}

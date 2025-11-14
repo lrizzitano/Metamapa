@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.controllers.HechosController;
 import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
 import ar.edu.utn.frba.dds.controllers.UsuarioController;
 import ar.edu.utn.frba.dds.controllers.UsuarioDTO;
+import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
@@ -19,7 +20,7 @@ import java.util.Objects;
 public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
-    new SetupData().setup();
+    //new SetupData().setup();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
@@ -82,10 +83,23 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/panelDeControl/verColecciones",model);
     }, Rol.ADMINISTRADOR);
 
+    app.get("/panelDeControl/fuentes", ctx -> {
+      Map<String,Object> model = coleccionesController.fuentes();
+      model = mantenerSesion(ctx,model);
+
+      ctx.render("templates/paginas/panelDeControl/verFuentes",model);
+    }, Rol.ADMINISTRADOR);
+
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
       Map<String,Object> model = coleccionesController.fuentes();
       model = mantenerSesion(ctx,model);
       ctx.render("templates/paginas/panelDeControl/crearColeccion",model);
+    }, Rol.ADMINISTRADOR);
+
+    app.get("/panelDeControl/fuentes/nueva", ctx -> {
+      Map<String,Object> model = new HashMap<>();
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/crearFuente",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/solicitudesDeEliminacion", ctx -> {
@@ -105,7 +119,6 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/colecciones/{id}",coleccionesController::modificarColeccion,Rol.ADMINISTRADOR);
 
     app.delete("/colecciones/{id}",coleccionesController::eliminarColeccion,Rol.ADMINISTRADOR);
-
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
