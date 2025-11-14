@@ -271,7 +271,7 @@
               <archive>
                 <manifest>
                   <mainClass>
-                    ar.edu.utn.frba.dds.calendarizables.ActualizadorCalendarizables
+                    ar.edu.utn.frba.dds.server.Server
                   </mainClass>
                 </manifest>
               </archive>
