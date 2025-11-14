@@ -50,6 +50,18 @@ public class Usuario {
     return "Sin fecha";
   }
 
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public void setApellido(String apellido) {
+    this.apellido = apellido;
+  }
+
+  public void setNacimiento(LocalDate fechaNacimiento) {
+    this.fechaNacimiento = fechaNacimiento;
+  }
+
   public String getNombre() {
     return nombre;
   }
