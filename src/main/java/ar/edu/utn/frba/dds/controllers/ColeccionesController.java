@@ -57,7 +57,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     Coleccion coleccion = colecciones.find(id);
     coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
       // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
-      hechos = titulo == null ? coleccion.hechos(filtro) :
+      hechos = titulo == null || titulo.isEmpty() ? coleccion.hechos(filtro) :
           coleccion.hechos(titulo, filtro);
 
     return hechos;
