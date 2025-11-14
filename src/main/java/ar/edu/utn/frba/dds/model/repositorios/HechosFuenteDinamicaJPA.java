@@ -74,9 +74,6 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @SuppressWarnings("unchecked")
   public Set<Hecho> fullTextSearch(String texto) {
-
-    entityManager().flush();
-
     return new HashSet<>(
         entityManager()
             .createNativeQuery(
