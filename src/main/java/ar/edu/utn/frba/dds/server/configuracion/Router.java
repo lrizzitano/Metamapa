@@ -39,7 +39,10 @@ public class Router implements WithSimplePersistenceUnit {
         ctx.render("templates/paginas/mapa/hechos", coleccionesController.hechosParaRender(ctx));
       }
       else {
-        ctx.render("templates/paginas/mapa/mapaPagina", this.modelLayout(ctx));
+        Map<String,Object> map = new HashMap<>();
+        map.putAll(this.modelLayout(ctx));
+        map.putAll(coleccionesController.hechosParaRender(ctx));
+        ctx.render("templates/paginas/mapa/mapaPagina", map);
       }
     }, Rol.USUARIO);
 

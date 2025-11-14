@@ -1,29 +1,37 @@
-<div class="hechos">
+{{#if hechos}}
+    <div class="hechos">
     {{#each hechos}}
-        <button class="card-hecho" type="button"
-                data-hecho='{{json this}}'
-                onclick="crearModalDetalleHecho(this)">
+            <button class="card-hecho" type="button"
+                    data-hecho='{{json this}}'
+                    onclick="crearModalDetalleHecho(this)">
 
-            <div class="card-hecho-contenido">
-                <div class="card-hecho-imagen-fecha">
-                    <div class="card-hecho-contenedor-imagen">
-                        <img src={{imagen}} alt="Imagen del hecho">
+                <div class="card-hecho-contenido">
+                    <div class="card-hecho-imagen-fecha">
+                        <div class="card-hecho-contenedor-imagen">
+                            <img src={{imagen}} alt="Imagen del hecho">
+                        </div>
+                        <p>{{fechaAcontecimiento}}</p>
                     </div>
-                    <p>{{fechaAcontecimiento}}</p>
+
+                    <div class="card-hecho-titulo-subtitulo">
+                        <p class="titulo-card-hecho" id="titulo"><b>{{titulo}}</b></p>
+                        <p>{{descripcion}}</p>
+                    </div>
                 </div>
 
-                <div class="card-hecho-titulo-subtitulo">
-                    <p class="titulo-card-hecho" id="titulo"><b>{{titulo}}</b></p>
-                    <p>{{descripcion}}</p>
+                <div class="card-hecho-categoria">
+                    <p><b>Categoría: </b></p>
+                    <p>{{categoria}}</p>
                 </div>
-            </div>
-
-            <div class="card-hecho-categoria">
-                <p><b>Categoría: </b></p>
-                <p>{{categoria}}</p>
-            </div>
-        </button>
-    {{/each}}
-</div>
+            </button>
+        {{/each}}
+    </div>
+{{else}}
+        <div class="contenedor vertical precarga">
+            <p>Selecciona una de las colecciones de abajo para comenzar a explorar el mapa!</p>
+            <img class="ping" src="https://cdn-icons-png.flaticon.com/128/9105/9105416.png">
+            <img class="mapita" src="https://cdn-icons-png.flaticon.com/128/9985/9985721.png">
+        </div>
+    {{/if}}
 
 {{> templates/modals/detalleHecho}}
