@@ -252,7 +252,11 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     Map<String, Object> model = new HashMap<>();
 
     withTransaction(() -> {
-      Set<Fuente> fuentes = repoFuentes.obtenerFuentes();
+      Set<Fuente> fuentes = repoFuentes.obtenerFuentes()
+          .stream()
+          .filter(f -> !(f instanceof Agregador))
+          .collect(Collectors.toSet());
+
       Set<FuenteDTO> fuentesDTO = fuentes.stream().map(FuenteDTO::new).collect(Collectors.toSet());
       model.put("fuentes", fuentesDTO);
     });
