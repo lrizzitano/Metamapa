@@ -1,17 +1,23 @@
 
 {{#partial "seccion"}}
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- estoy usando los mismos estilos que las cards de colecciones, se pueden crear propios -->
-    <div class="contenedor cartas colecciones">
-        {{#each fuentes}}
-            <div class="contenedor carta coleccion">
-                <div class="contenedor vertical" style="align-items: start">
-                    <h2 style="font-size: 1.1rem">{{nombre}}</h2>
-                    <p>ID: {{id}}</p>
-                </div>
-            </div>
-        {{/each}}
-    </div>
+
+    <table class="tabla fuentes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fuente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each fuentes}}
+            <tr>
+                <td><p>{{id}}</p></td>
+                <td><b style="font-size: 1.1rem">{{nombre}}</b></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 {{/partial}}
 
 {{> templates/paginas/panelDeControl/panel}}
