@@ -111,6 +111,6 @@ public class FuenteEstatica extends Fuente {
 
   @Override
   public String getNombre(){
-    return "Estatica" + " - ID: " + id;
+    return "Estatica";
   }
 }

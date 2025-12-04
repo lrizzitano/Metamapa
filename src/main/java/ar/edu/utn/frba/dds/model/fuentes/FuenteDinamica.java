@@ -79,6 +79,6 @@ public class FuenteDinamica extends Fuente {
 
   @Override
   public String getNombre(){
-    return "Dinamica" + " - ID: " + id;
+    return "Dinamica";
   };
 }

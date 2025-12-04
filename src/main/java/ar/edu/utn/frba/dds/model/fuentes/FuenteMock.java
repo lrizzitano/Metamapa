@@ -31,6 +31,6 @@ public class FuenteMock extends Fuente {
 
   @Override
   public String getNombre(){
-    return "Mock" + " - ID: " + id;
+    return "Mock";
   }
 }
