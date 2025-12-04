@@ -44,7 +44,8 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     );
     withTransaction(() -> {
       if (repoUsuarios.findByUsername(username) != null) {
-        throw new UsuarioException("Ya existe un usuario con ese nombre");
+        ctx.result("Ya existe un usuario con ese nombre");
+        return;
       }
       repoUsuarios.save(usuario);
     });
