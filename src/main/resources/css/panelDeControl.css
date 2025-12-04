@@ -175,3 +175,7 @@ thead {
 .fundamentacion.solicitud{
     width: 61%;
 }
+
+.columna.centrada{
+    text-align: center;
+}

@@ -16,13 +16,13 @@
         <tbody>
             {{#each colecciones}}
                 <tr>
-                    <td><b>{{id}}</b></td>
+                    <td class="columna centrada id"><b>{{id}}</b></td>
                     <td><b>{{titulo}}</b></td>
                     <td><p>{{descripcion}}</p></td>
                     <td><p>{{criterioPertenencia}}</p></td>
-                    <td><p>{{fuente}}</p></td>
+                    <td><p>{{fuente}} + {{fuenteID}}</p></td>
                     <td><p>{{consenso}}</p></td>
-                    <td><button class="boton principal" style="margin: 1rem 0 0.5rem 0"
+                    <td class="columna centrada acciones colecciones"><button class="boton principal" style="margin: 1rem 0 0.5rem 0"
                                 onclick="crearModalColeccion(this)"
                                 data-coleccion="{{json this}}"
 

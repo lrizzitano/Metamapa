@@ -12,10 +12,10 @@
             <tbody>
             {{#each solicitudes}}
                 <tr>
-                    <td>{{id}}</td>
+                    <td class="columna centrada id"><b>{{id}}</b></td>
                     <td><b>{{tituloHecho}}</b></td>
                     <td>{{fundamento}} </td>
-                    <td class="acciones solicitud">
+                    <td class="columna centrada acciones solicitud">
                             <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
                                 <div class="card-solicitud-botones">
                                     <input type="submit" class="boton terciario" value="Rechazar">
