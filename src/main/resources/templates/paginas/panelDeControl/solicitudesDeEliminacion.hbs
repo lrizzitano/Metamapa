@@ -1,32 +1,32 @@
 {{#partial "seccion"}}
     {{#if solicitudes}}
-        <div class="contenedor cartas solicitudes">
-
+        <table class="tabla solicitudes">
+            <tead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th class="fundamentacion solicitud">Fundamentacion</th>
+                    <th>Acciones</th>
+                </tr>
+            </tead>
+            <tbody>
             {{#each solicitudes}}
-
-                <div class="contenedor carta solicitud">
-                    <div class="card-solicitud-detalles">
-                        <h2>
-                            {{tituloHecho}}
-                        </h2>
-
-                        <p><b>Fundamentacion:</b> {{fundamento}} </p>
-
-                    </div>
-
-                    <!--            Not so restfull of me, pero no se como diferenciar los dos posts si no-->
-                    <div class="contenedor lateral">
-                        <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
-                            <div class="card-solicitud-botones">
-                                <input type="submit" class="boton terciario" value="Rechazar">
-                                <input type="submit" class="boton" name="Aceptar" value="Aceptar">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+                <tr>
+                    <td>{{id}}</td>
+                    <td><b>{{tituloHecho}}</b></td>
+                    <td>{{fundamento}} </td>
+                    <td class="acciones solicitud">
+                            <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
+                                <div class="card-solicitud-botones">
+                                    <input type="submit" class="boton terciario" value="Rechazar">
+                                    <input type="submit" class="boton" name="Aceptar" value="Aceptar">
+                                </div>
+                            </form>
+                    </td>
+                </tr>
             {{/each}}
-        </div>
+            </tbody>
+        </table>
 
     {{else}}
         <h1 class="mensaje-fondo">No hay solicitudes de eliminación pendientes</h1>

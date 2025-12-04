@@ -4,6 +4,7 @@
     <table class="tabla colecciones">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>Criterios</th>
@@ -15,6 +16,7 @@
         <tbody>
             {{#each colecciones}}
                 <tr>
+                    <td><b>{{id}}</b></td>
                     <td><b>{{titulo}}</b></td>
                     <td><p>{{descripcion}}</p></td>
                     <td><p>{{criterioPertenencia}}</p></td>
