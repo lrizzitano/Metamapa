@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
-    new SetupData().setup();
+    //new SetupData().setup();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();

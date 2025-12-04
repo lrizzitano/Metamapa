@@ -1,24 +1,34 @@
 
 {{#partial "seccion"}}
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <div class="contenedor cartas colecciones">
-    {{#each colecciones}}
-        <div class="contenedor carta coleccion">
-            <div class="contenedor vertical" style="align-items: start">
-                <h2>{{titulo}}</h2>
-                <p>{{descripcion}}</p>
-                <p><b>Criterios de pertenencia:</b> {{criterioPertenencia}}</p>
-                <p><b>Fuente:</b> {{fuente}}</p>
-                <p><b>Consenso:</b> {{consenso}}</p>
-                <button class="boton principal" style="margin: 1rem 0 0.5rem 0"
-                        onclick="crearModalColeccion(this)"
-                        data-coleccion="{{json this}}"
+    <table class="tabla colecciones">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Criterios</th>
+                <th>Fuentes</th>
+                <th>Consenso</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each colecciones}}
+                <tr>
+                    <td><b>{{titulo}}</b></td>
+                    <td><p>{{descripcion}}</p></td>
+                    <td><p>{{criterioPertenencia}}</p></td>
+                    <td><p>{{fuente}}</p></td>
+                    <td><p>{{consenso}}</p></td>
+                    <td><button class="boton principal" style="margin: 1rem 0 0.5rem 0"
+                                onclick="crearModalColeccion(this)"
+                                data-coleccion="{{json this}}"
 
-                >Editar</button>
-            </div>
-        </div>
-    {{/each}}
-    </div>
+                        >Editar</button></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 {{/partial}}
 
 {{> templates/paginas/panelDeControl/panel}}
