@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Rol;
+import ar.edu.utn.frba.dds.server.exceptions.UsuarioNoAutorizadoException;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -31,6 +32,11 @@ public class Router implements WithSimplePersistenceUnit {
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
     app.beforeMatched(Autorizador::validarPermisosDeRuta);
+
+    app.error(404, ctx -> ctx.redirect("/"));
+
+    app.exception(UsuarioNoAutorizadoException.class, (e, ctx) ->
+        ctx.redirect("/"));
 
     app.get("/", ctx ->
       {
