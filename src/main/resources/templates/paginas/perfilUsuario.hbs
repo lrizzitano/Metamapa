@@ -25,20 +25,20 @@
         <form class="form editar-perfil" hx-post="/usuarios/{{usuario.usuario}}" hx-target="#error-subir-hecho">
 
                 <label for="username"><b>Usuario</b></label>
-                <p>{{usuario.usuario}}</p>
+                <b>{{usuario.usuario}}</b>
 
                 <label for="nombre"><b>Nombre</b></label>
-                <input type="text" id="nombre" name="nombre" placeholder={{usuario.nombre}}>
+                <input type="text" id="nombre" name="nombre" value={{usuario.nombre}}>
 
                 <label for="apellido"><b>Apellido</b></label>
-                <input type="text" id="apellido" name="apellido" placeholder={{usuario.apellido}}>
+                <input type="text" id="apellido" name="apellido" value="{{usuario.apellido}}">
 
                 <label for="nacimiento"><b>Fecha de nacimiento</b></label>
-                <input type="date" name="nacimiento" id="nacimiento">
+                <input type="date" name="nacimiento" id="nacimiento" value="{{usuario.fechaDeNacimiento}}">
 
                 <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
 
-                <button type="submit" style="margin-top: 0.65rem" class="boton">Editar</button>
+                <button type="submit" style="margin-top: 0.65rem" class="boton">Guardar cambios</button>
         </form>
     </div>
 {{/partial}}
