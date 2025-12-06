@@ -35,7 +35,6 @@
     font-size: 2.7rem;
     padding: 1rem;
     color:var(--color-texto-negrita);
-    text-shadow: 0.12rem 0.17rem rgb(0,0,0,0.15);;
 }
 
 .boton-cerrar-modal-hecho:hover{
@@ -53,8 +52,8 @@
 }
 
 .boton-cerrar-modal-hecho img{
-    width: 3rem;
-    height: 3rem;
+    width: 1.3rem;
+    height: 1.3rem;
 }
 
 .contenedor.cuerpo-detalle-hecho{
