@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HechoDTO {
@@ -32,7 +31,7 @@ public class HechoDTO {
     this.origen = hecho.origen().name();
     this.video = hecho.video();
     this.imagen = hecho.imagen();
-    this.provincia=hecho.getProvincia().toString();
+    this.provincia=hecho.getProvincia().getNombreFormateado();
 
     if(hecho.contribuyente()==null){
       this.contribuyente = "Anonimo";
