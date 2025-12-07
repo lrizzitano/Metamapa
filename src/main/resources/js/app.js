@@ -5,9 +5,36 @@ function closeModal(id) {
   document.getElementById(id).classList.remove('active')
 }
 
-function switchModal(currentModalID, nextModalID) {
-  if (currentModalID) closeModal(currentModalID);
-  openModal(nextModalID);
+function closeDetalleHecho() {
+  closeModal("detalleHecho");
+  const url = new URL(window.location.href);
+  if (!url.searchParams.get("hecho")) {
+    return;
+  }
+  url.searchParams.delete("hecho");
+  history.replaceState({}, "", url.toString());
+}
+function compartirHecho() {
+  const titulo = document.querySelector("#detalleHecho .titulo").textContent.trim();
+
+  const url = new URL(window.location.href);
+  url.search = new URLSearchParams().toString();
+  url.searchParams.set("hecho", titulo);
+
+  console.log(url);
+  if (navigator.share) {
+    navigator.share({
+      title: titulo,
+      url: url.toString()
+    })
+      .catch(_ => alert("Error al compartir el link"));
+    return;
+  }
+
+  // Fallback: copy to clipboard
+  navigator.clipboard.writeText(url.toString())
+    .then(() => alert("Link copiado al portapapeles"))
+    .catch(() => alert("Error al copiar el link"));
 }
 
 function crearModalColeccion(boton) {
@@ -33,7 +60,7 @@ function crearModalColeccion(boton) {
 
 }
 
-function crearModalDetalleHecho(boton) {
+function crearModalDetalleHecho(boton, replace = false) {
   openModal('detalleHecho');
   const modal = document.getElementById('detalleHecho');
   const hecho = JSON.parse(boton.dataset.hecho);
@@ -65,6 +92,13 @@ function crearModalDetalleHecho(boton) {
 
   modal.querySelector('.boton-solicitar-eliminacion')
     .href = "/solicitudesDeEliminacion/nueva?hecho=" + encodeURIComponent(hecho.titulo);
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("hecho", hecho.titulo);
+  if (replace)
+    history.replaceState({}, "", url.toString());
+  else
+    history.pushState({}, "", url.toString())
 }
 
 function actualizarRutaFormFiltros(id) {

@@ -1,11 +1,11 @@
 <div class="modal" id="detalleHecho">
-    <div class="backdrop" onclick="closeModal('detalleHecho')"></div>
+    <div class="backdrop" onclick="closeDetalleHecho()"></div>
     <div class="contenedor detalle-hecho">
         <div class="contenedor principal">
 
             <div class="contenedor titulo-cerrar">
                 <h1 class="titulo"></h1>
-                <button type="button" class="boton-cerrar-modal-hecho" onclick="closeModal('detalleHecho')">
+                <button type="button" class="boton-cerrar-modal-hecho" onclick="closeDetalleHecho()">
                     <img src="https://cdn-icons-png.flaticon.com/128/10728/10728089.png">
                 </button>
             </div>
@@ -36,6 +36,10 @@
                             </button>
                         </a>
 
+                        <button class="boton terciario compartir" onclick="compartirHecho()">
+                            <img src="https://cdn-icons-png.flaticon.com/128/1358/1358023.png" alt="share icon">
+                        </button>
+
                         <div class="controles">
                             <a href="#slide1"><img src="https://cdn-icons-png.flaticon.com/128/8050/8050812.png"></a>
                             <a href="#slide2"><img src="https://cdn-icons-png.flaticon.com/128/8050/8050813.png"></a>
@@ -61,7 +65,7 @@
                         </div>
                         <div class="contenedor ver-mapa">
                             <a>
-                                <button class="boton ver-mapa" onclick="zoomHecho();closeModal('detalleHecho')">
+                                <button class="boton ver-mapa" onclick="zoomHecho();closeDetalleHecho()">
                                     <img src="https://cdn-icons-png.flaticon.com/512/18158/18158316.png">
                                     Ver en mapa
                                 </button>

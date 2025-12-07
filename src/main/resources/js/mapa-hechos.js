@@ -21,8 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("htmx:historyRestore", (_) => {
     initMap();
   });
-  
+
+  window.addEventListener("DOMContentLoaded", checkUrlForHecho);
+  window.addEventListener("popstate", checkUrlForHecho);
 });
+
+
+
 
 function zoomHecho(){
 
@@ -119,7 +124,28 @@ function updateMarkers(container) {
     markers.push(marker);
   });
 
+}
 
+function checkUrlForHecho() {
+  const titulo = new URLSearchParams(window.location.search).get("hecho");
+  if (!titulo) {
+    closeDetalleHecho()
+    return;
+  }
 
+  const botones = document.querySelectorAll(".card-hecho");
 
+  for (const btn of botones) {
+    try {
+      const hecho = JSON.parse(btn.dataset.hecho);
+      if (hecho.titulo === titulo) {
+        crearModalDetalleHecho(btn, true);
+        return;
+      }
+    } catch (_) {}
+  }
+  closeDetalleHecho();
+  const url = new URL(window.location.href);
+  url.searchParams.delete("hecho");
+  history.replaceState({}, "", url.toString());
 }
