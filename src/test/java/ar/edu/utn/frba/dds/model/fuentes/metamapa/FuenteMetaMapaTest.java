@@ -50,7 +50,7 @@ public class FuenteMetaMapaTest {
   @Test
   public void respuestaExitosaConBodyVacioRetornaSetVacio() {
 
-    stubFor(get(urlPathEqualTo("/hechos"))
+    stubFor(get(urlPathEqualTo("/api/hechos"))
         .willReturn(aResponse()
             .withStatus(204)));
 
@@ -60,7 +60,7 @@ public class FuenteMetaMapaTest {
   @Test
   public void respuestaConErrorLanzaExcepcion() {
 
-    stubFor(get(urlPathEqualTo("/hechos"))
+    stubFor(get(urlPathEqualTo("/api/hechos"))
         .willReturn(aResponse()
             .withStatus(404)));
 
@@ -82,7 +82,7 @@ public class FuenteMetaMapaTest {
         Origen.CONTRIBUYENTE
     ));
 
-    stubFor(get(urlPathEqualTo("/hechos"))
+    stubFor(get(urlPathEqualTo("/api/hechos"))
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "application/json")
@@ -98,11 +98,11 @@ public class FuenteMetaMapaTest {
   public void seEnviaElFiltro() {
     Filtro filtro = new FiltroCategoria("hola");
 
-    stubFor(get(urlPathEqualTo("/hechos"))
+    stubFor(get(urlPathEqualTo("/api/hechos"))
         .willReturn(aResponse()
             .withStatus(204)));
     fuente.obtenerHechos(filtro);
-    verify(getRequestedFor(urlPathEqualTo("/hechos"))
+    verify(getRequestedFor(urlPathEqualTo("/api/hechos"))
         .withQueryParam("categoria", equalTo("hola")));
   }
 
@@ -110,12 +110,12 @@ public class FuenteMetaMapaTest {
   public void seEnviaCorrectamenteIdColeccion() {
     String idEsperado = "hola";
 
-    stubFor(get(urlPathMatching("/colecciones/[^/]+/hechos"))
+    stubFor(get(urlPathMatching("/api/colecciones/[^/]+/hechos"))
         .willReturn(aResponse().withStatus(204)));
 
     fuente.obtenerHechosDeColeccion(new NullFiltro(), idEsperado);
 
-    verify(getRequestedFor(urlPathEqualTo("/colecciones/" + idEsperado + "/hechos")));
+    verify(getRequestedFor(urlPathEqualTo("/api/colecciones/" + idEsperado + "/hechos")));
   }
 
 
