@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.model.usuarios;
 
+import java.time.format.DateTimeFormatter;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -44,10 +45,8 @@ public class Usuario {
   }
 
   public String getFechaDeNacimiento() {
-    if (fechaNacimiento != null) {
-      return fechaNacimiento.toString();
-    }
-    return "Sin fecha";
+    return fechaNacimiento == null ? "Sin fecha"
+        : DateTimeFormatter.ofPattern("dd/MM/yy").format(fechaNacimiento);
   }
 
   public void setNombre(String nombre) {
