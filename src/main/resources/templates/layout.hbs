@@ -43,16 +43,22 @@
                     <img src="https://cdn-icons-png.flaticon.com/128/3034/3034577.png">
                 </button>
                 <div class="contenedor vertical infoUsuario">
-                    <p><b>Nombre: </b>{{usuario.nombre}} </p>
-                    <p><b>Apellido: </b>{{usuario.apellido}}</p>
-                    <p><b>Usuario: </b>{{usuario.usuario}}</p>
-                    <p><b>Nacimiento: </b>{{usuario.fechaDeNacimiento}}</p>
-                    <a href="/usuarios/{{usuario.usuario}}/perfil">
-                        <button class="boton terciario">Editar perfil</button>
-                    </a>
-                    <a href="/usuarios/sinSesion">
-                        <button class="boton terciario">Cerrar sesion</button>
-                    </a>
+                    <div class="contenedor lateral info-usuario">
+                        <img class="img-perfil-deplegable" src="https://cdn-icons-png.flaticon.com/128/3034/3034577.png">
+                        <a href="/usuarios/{{usuario.usuario}}/perfil">
+                        <p >Perfil</p>
+                            <img class="img-perfil-deplegable"  src="https://cdn-icons-png.flaticon.com/128/13660/13660237.png">
+                        </a>
+                    </div>
+
+                    <div class="contenedor lateral info-usuario">
+                        <a href="/usuarios/sinSesion">
+                            <img class="img-perfil-deplegable"  src="https://cdn-icons-png.flaticon.com/128/8212/8212701.png">
+
+                        <p >Cerrar sesion</p>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         {{/if}}
