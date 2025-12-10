@@ -86,20 +86,19 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/panelDeControl/colecciones", ctx -> {
       Map<String,Object> model = coleccionesController.colecciones(ctx);
       model = mantenerSesion(ctx,model);
-      model.putAll(coleccionesController.fuentes());
 
       ctx.render("templates/paginas/panelDeControl/verColecciones",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/fuentes", ctx -> {
-      Map<String,Object> model = coleccionesController.fuentes();
+      Map<String,Object> model = fuentesController.fuentes();
       model = mantenerSesion(ctx,model);
 
       ctx.render("templates/paginas/panelDeControl/verFuentes",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones/nueva", ctx -> {
-      Map<String,Object> model = coleccionesController.fuentes();
+      Map<String,Object> model = fuentesController.fuentes();
       model = mantenerSesion(ctx,model);
       ctx.render("templates/paginas/panelDeControl/crearColeccion",model);
     }, Rol.ADMINISTRADOR);
@@ -141,6 +140,13 @@ public class Router implements WithSimplePersistenceUnit {
       model = mantenerSesion(ctx,model);
       ctx.render("templates/paginas/perfilUsuario",model);
     },Rol.USUARIO);
+
+    app.get("/colecciones/{id}",ctx->{
+      Map<String,Object> model = coleccionesController.encontrarColeccionPorId(ctx);
+      model.putAll(fuentesController.fuentes());
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/detalleColeccion",model);
+    },Rol.ADMINISTRADOR);
 
     app.post("/usuarios/{username}", usuarioController::editarPerfil,Rol.USUARIO);
 

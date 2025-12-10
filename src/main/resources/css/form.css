@@ -154,3 +154,11 @@
 #input-ubicacion{
     justify-content: center;
 }
+
+.panel.modificar-coleccion p {
+    text-align: start;
+    color: var(--color-texto);
+    font-size: 1rem;
+    font-weight: 500;
+    width: 60%;
+}

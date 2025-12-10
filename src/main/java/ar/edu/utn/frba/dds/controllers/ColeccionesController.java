@@ -35,6 +35,17 @@ import java.util.stream.Collectors;
 
 public class ColeccionesController implements WithSimplePersistenceUnit, TransactionalOps {
 
+  public  Map <String, Object> encontrarColeccionPorId(Context ctx){
+    Map<String, Object> model = new HashMap<>();
+    Long id = Long.parseLong(ctx.pathParam("id"));
+
+    Coleccion coleccion = new RepoColecciones().find(id);
+
+    ColeccionDTO coleccionDTO = new ColeccionDTO(coleccion);
+    model.put("coleccion",coleccionDTO);
+    return model;
+  }
+
   public Map <String, Object> colecciones(Context ctx) {
     Map<String, Object> model = new HashMap<>();
 
@@ -245,23 +256,6 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     ctx.header("HX-Redirect", "/panelDeControl/colecciones");
     ctx.status(204);
-  }
-
-  public Map<String, Object> fuentes() {
-    FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
-    Map<String, Object> model = new HashMap<>();
-
-    withTransaction(() -> {
-      Set<Fuente> fuentes = repoFuentes.obtenerFuentes()
-          .stream()
-          .filter(f -> !(f instanceof Agregador))
-          .collect(Collectors.toSet());
-
-      Set<FuenteDTO> fuentesDTO = fuentes.stream().map(FuenteDTO::new).collect(Collectors.toSet());
-      model.put("fuentes", fuentesDTO);
-    });
-
-    return model;
   }
 
   private Fuente getFuente(List<Long> idfuentes) {

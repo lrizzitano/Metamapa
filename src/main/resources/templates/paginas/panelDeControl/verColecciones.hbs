@@ -24,8 +24,7 @@
                     <td><p>{{consenso}}</p></td>
                     <td class="columna centrada acciones colecciones">
                         <a  style="margin: 1rem 0 0.5rem 0"
-                                onclick="crearModalColeccion(this)"
-                                data-coleccion="{{json this}}">
+                        href="/colecciones/{{id}}">
                             <img class="editar" src="https://cdn-icons-png.flaticon.com/128/10336/10336461.png">
                         </a>
                     </td>
@@ -36,4 +35,3 @@
 {{/partial}}
 
 {{> templates/paginas/panelDeControl/panel}}
-{{> templates/modals/modificarColeccion}}

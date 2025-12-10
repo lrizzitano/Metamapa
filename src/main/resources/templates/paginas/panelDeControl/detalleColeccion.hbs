@@ -1,29 +1,32 @@
-<div class="modal" id="modificarColeccion">
-    <div class="backdrop" onclick="closeModal('modificarColeccion')"></div>
-    <div class="panel modificar-coleccion" style="height: auto">
-        <h2>Modificar Coleccion</h2>
 
-        <form class="form editar coleccion" id="modificar" hx-target="#error-modificar-coleccion">
+{{#partial "seccion"}}
+    <link rel="stylesheet" href="/css/form.css">
+    <section class="contenedor-form">
+    <div class="panel modificar-coleccion" >
+        <h2 style="height: auto;width: 80%">Modificando Coleccion {{coleccion.id}}</h2>
+
+        <form class="form " style="width: 100%; height: 100%" id="modificar" hx-target="#error-modificar-coleccion">
 
             <label class="titulo-label" for="titulo"><b>Titulo</b></label>
-            <p  class="titulo" ></p>
+            <p  class="titulo" > {{coleccion.titulo}}</p>
 
             <label for="descripcion"><b>Descripcion</b></label>
-            <p  class="descripcion" ></p>
+            <p  class="descripcion" >{{coleccion.descripcion}}</p>
 
             <label for="criterios"><b>Criterio de pertenencia</b></label>
             <div class="contenedor lateral">
-                <p class="criterioPertenencia"></p>
+                <p class="criterioPertenencia">{{coleccion.criterioDePertenencia}}</p>
             </div>
 
             <label><b>Fuentes</b></label>
             <div class="contenedor lateral fuentes">
-                {{> templates/paginas/panelDeControl/fuentes}}
+                {{>templates/paginas/panelDeControl/fuentes}}
             </div>
 
             <label for="consenso"><b>Criterio de consenso</b></label>
             <select class="consenso" name="consenso" id="consenso">
-                <option value="sinConsenso" selected>Sin Consenso</option>
+                <option value={{coleccion.consenso}} selected>{{coleccion.consenso}}</option>
+                <option value="sinConsenso">Consenso nulo</option>
                 <option value="absoluto">Absoluto</option>
                 <option value="mayoriaSimple">Mayoría Simple</option>
                 <option value="multiplesMenciones">Multiples Menciones</option>
@@ -31,17 +34,20 @@
 
             <span id="error-modificar-coleccion" class="contenedor-mensaje-error"></span>
 
-            <div class="botones-form" style="justify-content: space-around">
+            <div class="botones-form" >
                 <button
                         hx-target="body"
                         hx-swap="none"
                         class="boton  terciario eliminar"
                         type="button"
                 >
-                    Eliminar
+                    Eliminar coleccion
                 </button>
-                <button class="boton " type="submit">Modificar</button>
+                <button class="boton " type="submit">Guardar cambios</button>
             </div>
         </form>
     </div>
-</div>
+    </section>
+{{/partial}}
+
+{{> templates/paginas/panelDeControl/panel}}
