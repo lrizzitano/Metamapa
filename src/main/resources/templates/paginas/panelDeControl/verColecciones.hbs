@@ -22,11 +22,13 @@
                     <td><p>{{criterioPertenencia}}</p></td>
                     <td><p>{{fuente}} + {{fuenteID}}</p></td>
                     <td><p>{{consenso}}</p></td>
-                    <td class="columna centrada acciones colecciones"><button class="boton principal" style="margin: 1rem 0 0.5rem 0"
+                    <td class="columna centrada acciones colecciones">
+                        <a  style="margin: 1rem 0 0.5rem 0"
                                 onclick="crearModalColeccion(this)"
-                                data-coleccion="{{json this}}"
-
-                        >Editar</button></td>
+                                data-coleccion="{{json this}}">
+                            <img class="editar" src="https://cdn-icons-png.flaticon.com/128/10336/10336461.png">
+                        </a>
+                    </td>
                 </tr>
             {{/each}}
         </tbody>
