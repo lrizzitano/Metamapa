@@ -6,7 +6,9 @@
     height: 100%;
 
 }
-
+.form label{
+    color: var(--color-texto-negrita);
+}
 .form{
     display: flex;
     flex-direction: column;
@@ -163,3 +165,9 @@
     width: 60%;
     margin: 0;
 }
+
+.botones-form.coleccion{
+    justify-content: space-around;
+    align-items: start;
+}
+
