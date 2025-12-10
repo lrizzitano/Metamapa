@@ -1,7 +1,11 @@
 
 {{#each fuentes}}
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    {{#esIgual id coleccion.fuenteID}}
+    {{else}}
     <div class="contenedor fuente">
         <input id="fuente-{{id}}" type="checkbox" value="{{id}}" name="fuente"></input>
         <label for="fuente-{{id}}" >{{nombre}} ID: {{id}}</label>
     </div>
+    {{/esIgual}}
 {{/each}}

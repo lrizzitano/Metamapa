@@ -207,7 +207,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     Consenso consensoNuevo;
 
-    if(consenso.equals("sinConsenso")){
+    if(consenso.equals("Consenso Nulo")){
       consensoNuevo = new ConsensoNull();
     }
     else{
@@ -216,13 +216,13 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
       AlgoritmoConsenso algoritmo = new AlgoritmoConsensoAbsoluto();
 
-      if(consenso.equals("absoluto")){
+      if(consenso.equals("Absoluto")){
         algoritmo = new AlgoritmoConsensoAbsoluto();
       }
-      if(consenso.equals("mayoriaSimple")){
+      if(consenso.equals("Mayoria Simple")){
         algoritmo = new AlgoritmoMayoriaSimple();
       }
-      if(consenso.equals("multiplesMenciones")){
+      if(consenso.equals("Multiples Menciones")){
         algoritmo = new AlgoritmoMultiplesMenciones();
       }
 

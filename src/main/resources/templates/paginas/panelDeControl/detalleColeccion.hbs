@@ -1,5 +1,6 @@
 
 {{#partial "seccion"}}
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <link rel="stylesheet" href="/css/form.css">
     <section class="contenedor-form">
     <div class="panel modificar-coleccion" >
@@ -20,16 +21,37 @@
 
             <label><b>Fuentes</b></label>
             <div class="contenedor lateral fuentes">
+                <div class="contenedor fuente">
+                    <input id="fuente-{{coleccion.fuenteID}}" type="checkbox" checked value="{{coleccion.fuenteID}}" name="fuente"></input>
+                    <label for="fuente-{{coleccion.fuenteID}}" >{{coleccion.fuente}} ID: {{coleccion.fuenteID}}</label>
+                </div>
                 {{>templates/paginas/panelDeControl/fuentes}}
             </div>
 
             <label for="consenso"><b>Criterio de consenso</b></label>
             <select class="consenso" name="consenso" id="consenso">
                 <option value={{coleccion.consenso}} selected>{{coleccion.consenso}}</option>
-                <option value="sinConsenso">Consenso nulo</option>
-                <option value="absoluto">Absoluto</option>
-                <option value="mayoriaSimple">Mayoría Simple</option>
-                <option value="multiplesMenciones">Multiples Menciones</option>
+
+                 {{#esIgual coleccion.consenso 'Consenso Nulo'}}
+                 {{else}}
+                <option value="Consenso Nulo">Consenso Nulo</option>
+                 {{/esIgual}}
+
+                {{#esIgual coleccion.consenso 'Absoluto'}}
+                {{else}}
+                <option value="Absoluto">Absoluto</option>
+                {{/esIgual}}
+
+                {{#esIgual coleccion.consenso 'Mayoria Simple'}}
+                {{else}}
+                <option value="Mayoria Simple">Mayoria Simple</option>
+                {{/esIgual}}
+
+                {{#esIgual coleccion.consenso 'Multiples Menciones'}}
+                {{else}}
+                <option value="Multiples Menciones">Multiples Menciones</option>
+                {{/esIgual}}
+
             </select>
 
             <span id="error-modificar-coleccion" class="contenedor-mensaje-error"></span>

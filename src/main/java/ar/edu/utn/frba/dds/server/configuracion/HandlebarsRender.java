@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.server.exceptions.ErrorRenderizadoException;
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.google.gson.Gson;
@@ -9,6 +10,7 @@ import io.javalin.http.Context;
 import io.javalin.rendering.FileRenderer;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
+import com.github.jknack.handlebars.Options;
 
 public class HandlebarsRender implements FileRenderer {
 
@@ -21,6 +23,20 @@ public class HandlebarsRender implements FileRenderer {
     this.handlebars = new Handlebars(loader);
     this.handlebars.registerHelper("json", (context, options)
         -> new Gson().toJson(context));
+
+    this.handlebars.registerHelper("esIgual", new Helper<Object>() {
+      @Override
+      public CharSequence apply(Object context, Options options) throws java.io.IOException {
+        Object parametroComparacion = options.param(0);
+
+        if (context != null && context.equals(parametroComparacion)) {
+          return options.fn();
+        }
+        else{
+          return options.inverse();
+        }
+      }
+    });
   }
 
   @NotNull

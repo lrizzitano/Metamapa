@@ -27,6 +27,6 @@ public class ConsensoNull extends Consenso {
   }
 
   public String getNombre(){
-    return "Consenso nulo";
+    return "Consenso Nulo";
   }
 }
