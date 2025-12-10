@@ -194,7 +194,9 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
       withTransaction(() -> {
         repoColecciones.update(coleccion);
       });
-      ctx.header("HX-Redirect", "/panelDeControl/colecciones");
+
+      ctx.header("HX-Redirect", "/colecciones/" +coleccion.getId());
+      ctx.status(204);
     }
     catch (Exception e) {
       new Logger().info("Error al Mofidicar la coleccion: " + e.getMessage());

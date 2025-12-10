@@ -37,28 +37,6 @@ function compartirHecho() {
     .catch(() => alert("Error al copiar el link"));
 }
 
-function crearModalColeccion(boton) {
-  openModal('modificarColeccion')
-  const modal = document.getElementById('modificarColeccion')
-
-  const coleccion = JSON.parse(boton.dataset.coleccion);
-  const id = coleccion.id
-
-  modal.querySelector('.titulo').textContent = coleccion.titulo
-  modal.querySelector('.descripcion').textContent = coleccion.descripcion
-
-  modal.querySelector('.criterioPertenencia').textContent = coleccion.criterioPertenencia
-
-  const form = modal.querySelector('form.form.editar.coleccion');
-  form.setAttribute('hx-post', `/colecciones/${encodeURIComponent(coleccion.id)}`);
-  htmx.process(form);
-
-  const deleteButton = modal.querySelector('.boton.terciario.eliminar');
-  deleteButton.setAttribute('hx-delete', `/colecciones/${encodeURIComponent(coleccion.id)}`);
-  htmx.process(deleteButton);
-
-
-}
 
 function crearModalDetalleHecho(boton, replace = false) {
   openModal('detalleHecho');

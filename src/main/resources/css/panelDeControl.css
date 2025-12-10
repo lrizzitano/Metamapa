@@ -41,6 +41,7 @@ main {
     background: var(--color-secundario);
     height: auto;
     width: 100%;
+    overflow-y: auto;
 }
 
 .link-seccion {

@@ -6,7 +6,7 @@
     <div class="panel modificar-coleccion" >
         <h2 style="height: auto;width: 80%">Modificando Coleccion {{coleccion.id}}</h2>
 
-        <form class="form " style="width: 100%; height: 100%" id="modificar" hx-target="#error-modificar-coleccion">
+        <form class="form " hx-post="/colecciones/{{coleccion.id}}"  style="width: 100%; height: 100%" id="modificar" hx-target="#error-modificar-coleccion">
 
             <label class="titulo-label" for="titulo"><b>Titulo</b></label>
             <p  class="titulo" > {{coleccion.titulo}}</p>
@@ -62,10 +62,11 @@
                         hx-swap="none"
                         class="boton  terciario eliminar"
                         type="button"
+                        hx-delete="/colecciones/{{coleccion.id}}"
                 >
                     Eliminar coleccion
                 </button>
-                <button class="boton " type="submit">Guardar cambios</button>
+                <button class="boton" type="submit">Guardar cambios</button>
             </div>
         </form>
     </div>
