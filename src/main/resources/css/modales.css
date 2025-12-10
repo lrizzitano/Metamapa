@@ -27,12 +27,13 @@
     align-items: center;
     justify-content: center;
     background-color: var(--color-secundario);
-    padding: 2rem;
+    padding: 0 0 3rem 0 ;
     border-radius: 8px;
     width: 40%;
     height: fit-content;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1001;
+    overflow: hidden;
 }
 
 .backdrop {
@@ -53,10 +54,6 @@
     height: 95%;
     justify-content: space-around;
     align-items: center;
-}
-
-.panel.sign-in{
-
 }
 
 .panel.sign-up label{
@@ -80,3 +77,8 @@
     background-color: var(--color-secundario);
 }
 
+#iniciar-sesion{
+    padding: 0.6rem;
+    color: white;
+    background-color: var(--color-principal);
+}

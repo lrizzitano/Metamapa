@@ -106,18 +106,16 @@ form label{
     height: 25%;
     margin-top: 3%;
 }
-
-.panel h2 {
-    margin-top: 0;
-    background-color: var(--color-principal);
-    width: 80%;
-    border-radius: 0.5rem;
-    color: var(--color-secundario);
-    display: flex;
-    justify-content: center;
+.panel h2{
+    margin:0;
+    width: 100%;
     align-items: center;
-    margin-left: 1rem;
-    height: 3rem;
+    background-color: white;
+    color: var(--color-principal);
+    border-bottom: 0.1rem solid var(--color-principal);
+    border-radius: 0;
+    height: 100%;
+    text-align: center;
 }
 
 a {

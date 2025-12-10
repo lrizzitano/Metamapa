@@ -43,16 +43,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 0;
 }
-.panel:not(.sign-in) h2{
-    margin:0;
-    width: 100%;
-    align-items: center;
-    background-color: white;
-    color: var(--color-principal);
-    border-bottom: 0.1rem solid var(--color-principal);
-    border-radius: 0;
-    height: 100%;
-}
+
 .contenedor-doble{
     display: flex;
     flex-direction: row;
