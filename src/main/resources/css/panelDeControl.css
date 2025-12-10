@@ -101,6 +101,7 @@ main {
     display: flex;
     flex-direction: row;
     gap: 16px;
+    justify-content: center;
 }
 
 .contenedor.lateral.fuentes {
@@ -238,6 +239,8 @@ thead {
 .boton-solicitud img{
     width: 2rem;
     height: 2rem;
+    box-shadow: 0.08rem 0.13rem rgb(0, 0, 0, 0.1);
+    border-radius: 50%;
 }
 
 .boton-solicitud:hover{
