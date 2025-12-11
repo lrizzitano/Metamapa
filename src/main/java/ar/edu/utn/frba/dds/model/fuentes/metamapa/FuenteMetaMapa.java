@@ -141,4 +141,9 @@ public class FuenteMetaMapa extends Fuente {
   public String getNombre(){
     return "MetaMapa";
   }
+
+  @Override
+  public String detalle() {
+    return this.urlAPI;
+  }
 }

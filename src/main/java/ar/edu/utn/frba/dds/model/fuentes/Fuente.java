@@ -59,5 +59,7 @@ public abstract class Fuente {
         .collect(Collectors.toSet());
   }
 
+  public String detalle() { return "-"; }
+
   public abstract String getNombre();
 }
