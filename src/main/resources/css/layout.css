@@ -251,6 +251,13 @@ a:visited {
     width: 100%;
 }
 
+.contenedor.lateral.info-usuario a:hover{
+    transform: scale(1.01,1.01);
+}
+.contenedor.lateral.info-usuario p:hover{
+    color: var(--color-principal);
+}
+
 /*
 
 .boton.subir-hecho{
