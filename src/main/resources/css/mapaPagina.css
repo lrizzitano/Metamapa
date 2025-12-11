@@ -199,6 +199,7 @@
     height: 100%;
     background-color: var(--color-secundario);
     align-items: center;
+    overflow: hidden;
     justify-content: center;
 }
 
@@ -360,4 +361,42 @@
 
 #coleccionSeleccionada:hover{
     transform: scale(1,1);
+}
+
+#seleccionar-coleccion{
+    position: absolute;
+    display: flex;
+    width: 30%;
+    height: 30%;
+    background-color: var(--color-secundario);
+    z-index: 1000;
+    border-radius: 1rem;
+    border: 3px solid var(--color-principal);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: var(--color-acento);
+    font-size: 32px;
+    font-weight: 600;
+    box-shadow: 0.2rem 0.2rem rgb(0,0,0,0.1);
+    animation: movimiento 1s alternate-reverse infinite ;
+}
+
+@keyframes movimiento {
+    from {
+        transform: translateY(7px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+#seleccionar-coleccion p{
+    color: var(--color-acento);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
 }
