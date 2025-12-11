@@ -17,11 +17,12 @@
     width: 100%;
     height: fit-content;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     border-bottom: 0.08rem solid rgba(0, 0, 0, 0.15);
     font-size: 14px;
     font-weight: 550;
     color:var(--color-texto);
+    gap: 8.5rem;
 }
 
 .contenedor-hechos-mapaYcolecciones {
@@ -103,6 +104,33 @@
     width: 100%;
 }
 
+.contenedor.vertical.colecciones.desplegable{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 100%;
+}
+.contenedor.vertical.infoADesplegarse.colecciones{
+    display: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    z-index: 1000;
+    top: 86%;
+    left: 100%;
+    min-width: 15rem;
+    background-color: var(--color-secundario);
+    transform: translateX(-71%);
+    padding: 0.8rem;
+    border-radius: 1rem;
+    box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
+    border: 1px solid var(--color-principal);
+    max-height: 15rem;
+    overflow-y: auto;
+}
 .card-hecho-imagen-fecha {
     display: flex;
     flex-direction: column;
@@ -175,11 +203,11 @@
 }
 
 .form-filtros {
-    width: 100%;
+    width: 60%;
     display: flex;
     flex-direction: row;
-    justify-content: start;
-    align-items: last baseline;
+    justify-content: space-around;
+    align-items: center;
     height: 100%;
 }
 
@@ -305,4 +333,20 @@
     color: var(--color-acento);
     background-color: white;
     border: 0.05rem solid var(--color-acento);
+}
+
+.coleccion-desplegada{
+    border: none;
+    background-color: var(--color-secundario);
+    color: var(--color-acento);
+    border-bottom: 0.6px solid var(--color-texto);
+    width: 100%;
+    cursor: pointer;
+    text-align: start;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 20px;
+}
+.coleccion-desplegada:hover{
+    color: var(--color-principal);
+    transform:scale(1.01,1.01);
 }
