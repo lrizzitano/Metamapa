@@ -1,11 +1,6 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
-import ar.edu.utn.frba.dds.controllers.ColeccionesController;
-import ar.edu.utn.frba.dds.controllers.FuentesController;
-import ar.edu.utn.frba.dds.controllers.HechosController;
-import ar.edu.utn.frba.dds.controllers.SolicitudesDeEliminacionController;
-import ar.edu.utn.frba.dds.controllers.UsuarioController;
-import ar.edu.utn.frba.dds.controllers.UsuarioDTO;
+import ar.edu.utn.frba.dds.controllers.*;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
@@ -22,7 +17,7 @@ import java.util.Objects;
 public class Router implements WithSimplePersistenceUnit {
 
   public void routearApp(Javalin app) {
-    //new SetupData().setup();
+    new SetupData().setup();
     ColeccionesController coleccionesController = new ColeccionesController();
     HechosController hechosController = new HechosController();
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
@@ -150,6 +145,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/usuarios/{username}", usuarioController::editarPerfil,Rol.USUARIO);
 
+    app.get("/estadisticas", ctx -> {ctx.render("/templates/paginas/estadisticas/sinEstadisticas");}, Rol.USUARIO);
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
