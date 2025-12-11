@@ -1,0 +1,52 @@
+{{#partial "dependencias"}}
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+{{/partial}}
+
+{{#partial "contenido-estadistico"}}
+
+    <script>crearGraficoBarras({{objetoDeEstudioJSON}});</script>
+    <div id="chartdiv"></div>
+
+    <form method="GET" action="/estadisticas/{{objetoDeEstudioJSON.tipo}}">
+
+        {{#block "inputs-variables"}}{{/block}} <!--Para filtrar por coleccion o categoria-->
+        <!--La idea es que sean dos contenedores diferentes-->
+        <section>
+            <h4>Fechas</h4>
+            <label for="fecha-desde">Desde</label>
+            <input id="fecha-desde" name="fechaDesde" type="date">
+
+            <label for="fecha-hasta">Hasta</label>
+            <input id="fecha-hasta" name="fechaHasta" type="date">
+            <!--ocultar labels, la idea que el fehcas actue de label-->
+            <!--hover con mensaje que te diga que solo podes buscar entre dos semanas-->
+            <input type="submit" hidden />
+        </section>
+    </form>
+
+    {{#block "contenedores-informacion"}}{{/block}}
+
+{{/partial}}
+
+{{> layout/templates/paginas/estadisticas/paginaEstadisticasLayout}}
+
+<!--
+{
+  "tipo": "categoria"
+  "desde": "xx/xx/xx"
+  "hasta": "xx/xx/xx"
+  //los que hagan falta
+  "ejeX": "fecha",
+  "columnas": [
+    { "nombre": "Solicitudes", "campo": "cantidadDeSolicitudes" },
+    { "nombre": "Spam",        "campo": "cantidadDeSolicitudesSpam" }
+  ],
+  "datos": [
+    { "fecha": "2025-01-01", "cantidadDeSolicitudes": 12, "cantidadDeSolicitudesSpam": 3 },
+    { "fecha": "2025-01-02", "cantidadDeSolicitudes": 20, "cantidadDeSolicitudesSpam": 5 },
+    { "fecha": "2025-01-03", "cantidadDeSolicitudes": 15, "cantidadDeSolicitudesSpam": 2 }
+  ]
+}
+-->
