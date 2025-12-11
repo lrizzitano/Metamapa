@@ -46,8 +46,12 @@
                 </button>
             </form>
             <div class="contenedor vertical colecciones desplegable">
-            <button class="boton">
-                COLECCION de turno
+            <button id="coleccionSeleccionada" class="boton">
+                {{#if coleccionSeleccionada}}
+                    {{coleccionSeleccionada}}
+                {{else}}
+                    Colecciones
+                {{/if}}
             </button>
             <div class="contenedor vertical infoADesplegarse colecciones">
                 {{#each colecciones}}
@@ -59,7 +63,8 @@
                                 hx-target=".contenedor-hechos"
                                 hx-swap="innerHTML"
                                 hx-push-url="true"
-                                onclick=actualizarRutaFormFiltros({{id}})>
+                                onclick="actualizarRutaFormFiltros({{id}});
+                                actualizarBotonColeccion('{{titulo}}')">
                             {{titulo}}
                         </button>
 

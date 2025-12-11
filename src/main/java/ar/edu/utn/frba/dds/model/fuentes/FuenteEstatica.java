@@ -113,4 +113,9 @@ public class FuenteEstatica extends Fuente {
   public String getNombre(){
     return "Estatica";
   }
+
+  @Override
+  public String detalle() {
+    return path.getFileName().toString();
+  }
 }
