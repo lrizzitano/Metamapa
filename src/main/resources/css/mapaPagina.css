@@ -121,9 +121,9 @@
     z-index: 1000;
     top: 86%;
     left: 100%;
-    min-width: 15rem;
+    min-width: 13rem;
     background-color: var(--color-secundario);
-    transform: translateX(-71%);
+    transform: translateX(-94%);
     padding: 0.8rem;
     border-radius: 1rem;
     box-shadow: 0.09rem 0.15rem rgb(0,0,0,0.1);
@@ -339,7 +339,6 @@
     border: none;
     background-color: var(--color-secundario);
     color: var(--color-acento);
-    border-bottom: 0.6px solid var(--color-texto);
     width: 100%;
     cursor: pointer;
     text-align: start;
@@ -349,4 +348,15 @@
 .coleccion-desplegada:hover{
     color: var(--color-principal);
     transform:scale(1.01,1.01);
+}
+
+#coleccionSeleccionada{
+    min-width: 13rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+#coleccionSeleccionada:hover{
+    transform: scale(1,1);
 }

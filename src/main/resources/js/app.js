@@ -91,6 +91,6 @@ function actualizarRutaFormFiltros(id) {
 }
 
 function actualizarBotonColeccion(nombre) {
-  const btn = document.getElementById("coleccionSeleccionada");
+  const btn = document.getElementById("spanColeccion");
   btn.textContent = nombre;
 }
