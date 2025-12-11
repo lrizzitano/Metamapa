@@ -144,6 +144,6 @@ public class FuenteMetaMapa extends Fuente {
 
   @Override
   public String detalle() {
-    return this.urlAPI;
+   return "Url de origen: " + this.urlAPI;
   }
 }

@@ -216,7 +216,10 @@ thead {
 }
 
 .fundamentacion.solicitud{
-    width: 61%;
+    width: 60%;
+}
+.titulo.solicitud{
+    width: 20%;
 }
 
 .columna.centrada{

@@ -116,6 +116,6 @@ public class FuenteEstatica extends Fuente {
 
   @Override
   public String detalle() {
-    return path.getFileName().toString();
+    return "Path de archivo de origen: " + path.getFileName().toString();
   }
 }
