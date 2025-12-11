@@ -3,6 +3,7 @@
     <script src="https://unpkg.com/maplibre-gl@v5.6.0/dist/maplibre-gl.js"></script>
     <link rel="stylesheet" href="/css/mapa.css">
     <link rel="stylesheet" href="/css/mapaPagina.css">
+    <link rel="stylesheet" href="/css/header.css">
     <script src="/js/mapa-hechos.js"></script>
 {{/partial}}
 
@@ -44,17 +45,13 @@
                     Filtrar
                 </button>
             </form>
-        </section>
-        <section class="contenedor-hechos-mapaYcolecciones">
-            <div class="contenedor-hechos">
-                {{> templates/paginas/mapa/hechos}}
-            </div>
-            <div class="contenedor-mapa-colecciones">
-                <div class="contenedor-mapa">
-                    <div id="map"></div>
-                </div>
-                <div class="contenedor-colecciones">
-                    {{#each colecciones}}
+            <div class="contenedor vertical colecciones desplegable">
+            <button class="boton">
+                COLECCION de turno
+            </button>
+            <div class="contenedor vertical infoADesplegarse colecciones">
+                {{#each colecciones}}
+
                         <button
                                 class="boton "
                                 id="boton-{{id}}"
@@ -65,7 +62,18 @@
                                 onclick=actualizarRutaFormFiltros({{id}})>
                             {{titulo}}
                         </button>
-                    {{/each}}
+
+                {{/each}}
+            </div>
+            </div>
+        </section>
+        <section class="contenedor-hechos-mapaYcolecciones">
+            <div class="contenedor-hechos">
+                {{> templates/paginas/mapa/hechos}}
+            </div>
+            <div class="contenedor-mapa-colecciones">
+                <div class="contenedor-mapa">
+                    <div id="map"></div>
                 </div>
             </div>
         </section>
