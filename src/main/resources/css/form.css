@@ -6,9 +6,6 @@
     height: 100%;
 
 }
-.form label{
-    color: var(--color-texto-negrita);
-}
 .form{
     display: flex;
     flex-direction: column;

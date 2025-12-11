@@ -96,6 +96,7 @@ form label{
     display: flex;
     justify-content: flex-start;
     margin: 16px 0 8px 0;
+    color: var(--color-texto-negrita);
 }
 .botones-form{
     display: flex;
