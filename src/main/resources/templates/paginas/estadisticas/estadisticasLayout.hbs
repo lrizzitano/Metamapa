@@ -1,0 +1,21 @@
+{{#partial "dependencias"}}
+
+{{/partial}}
+
+{{#partial "contenido" }}
+    <div class="cuerpo-index" style="justify-content: flex-start">
+        <nav class="seccion-filtros">
+            <a href="/estadisticas/exportar">Exportar</a>
+            <a href="/estadisticas/colecciones">Colecciones</a>
+            <a href="/estadisticas/categoria">Categoria</a>
+            {{#if esAdmin}}
+                <a href="/estadisticas/spam">Spam</a>
+            {{/if}}
+        </nav>
+        <section class="contenedor-horizontal">
+            {{#block "contenido-estadistico"}}{{/block}}
+        </section>
+    </div>
+{{/partial}}
+
+{{> templates/layout}}
