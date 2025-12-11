@@ -89,3 +89,8 @@ function actualizarRutaFormFiltros(id) {
   }
   document.getElementById(`boton-${id}`).classList.add('activo');
 }
+
+function actualizarBotonColeccion(nombre) {
+  const btn = document.getElementById("coleccionSeleccionada");
+  btn.textContent = nombre;
+}
