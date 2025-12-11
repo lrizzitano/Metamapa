@@ -64,8 +64,8 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: end;
-    gap: 16px;
-    width: 60%;
+    gap: 20px;
+    width: 70%;
     height: auto;
     align-items: center;
 }
@@ -161,6 +161,7 @@ a:visited {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 25px;
 }
 
 
