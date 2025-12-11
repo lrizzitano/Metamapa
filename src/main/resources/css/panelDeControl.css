@@ -258,3 +258,16 @@ thead {
     transform: scale(1.1,1.1);
     cursor:pointer;
 }
+
+.panel.tabla h2{
+    width: auto;
+    border-top:1px solid black;
+    border-right:1px solid black;
+    border-left:1px solid black;
+    border-bottom: 0;
+}
+
+.panel.panelControl h2{
+    color: white;
+    background-color:var(--color-principal);
+}
