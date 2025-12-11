@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.*;
+import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.server.SetupData;
 import ar.edu.utn.frba.dds.server.configuracion.autorizacion.Autorizador;
@@ -46,6 +47,9 @@ public class Router implements WithSimplePersistenceUnit {
         Map<String,Object> map = new HashMap<>();
         map.putAll(this.modelLayout(ctx));
         map.putAll(coleccionesController.hechosParaRender(ctx));
+        map.put("coleccionSeleccionada", new ColeccionesRepository()
+            .find(Long.parseLong(ctx.pathParam("id")))
+            .getTitulo());
         ctx.render("templates/paginas/mapa/mapaPagina", map);
       }
     }, Rol.USUARIO);
