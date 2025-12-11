@@ -65,7 +65,7 @@ body{
     flex-direction: row;
     justify-content: end;
     gap: 20px;
-    width: 70%;
+    width: 65%;
     height: auto;
     align-items: center;
 }
@@ -199,7 +199,7 @@ a:visited {
     z-index: 1000;
     top: 107%;
     left: 100%;
-    min-width: 9.5rem;
+    min-width: 9rem;
     background-color: white;
     transform: translateX(-63%);
     padding: 0.8rem;
