@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HechosController implements WithSimplePersistenceUnit, TransactionalOps {
   static FiltroCompuesto filtroDesdeRequest(Context ctx) {
@@ -141,7 +142,13 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
     Set<Hecho> hechos;
     Set<Fuente> fuentes = new FuentesRepositoryJPA().obtenerFuentes();
     hechos = fuentes.stream()
-        .flatMap(f -> f.obtenerHechos(filtro).stream())
+        .flatMap((f) -> {
+          try {
+            return f.obtenerHechos(filtro).stream();
+          } catch (Exception e) {
+            return Stream.empty();
+          }
+        })
         .collect(Collectors.toSet());
     return hechos;
   }

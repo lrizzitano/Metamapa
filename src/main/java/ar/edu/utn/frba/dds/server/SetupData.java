@@ -88,7 +88,7 @@ public class SetupData implements WithSimplePersistenceUnit {
   private final Fuente fuenteEstatica1 = crearFuenteEstatica("incendios.csv");
   private final Fuente fuenteEstatica2 = crearFuenteEstatica("manifestaciones.csv");
   private final Fuente fuenteEstatica3 = crearFuenteEstatica("recitales.csv");
-  //private final Fuente fuenteProxy = new FuenteMetaMapa("http://localhost:8081");
+  private final Fuente fuenteProxy = new FuenteMetaMapa("http://localhost:8081");
   // aca asumimos que hay otra instancia en ese puerto, despues habria q cambiar a otro deploy
 
 
@@ -100,8 +100,8 @@ public class SetupData implements WithSimplePersistenceUnit {
       new NullFiltro(), fuenteEstatica2, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
   private final Coleccion collecion4 = new Coleccion("Recitales", "Coleccion con recitales",
       new NullFiltro(), fuenteEstatica3, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
-  //private final Coleccion coleccionProxy = new Coleccion("Proxy", "coleccion con todos los hechos del otro sistema",
-      //new NullFiltro(), fuenteProxy, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
+  private final Coleccion coleccionProxy = new Coleccion("Proxy", "coleccion con todos los hechos del otro sistema",
+      new NullFiltro(), fuenteProxy, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
 
   public void setup()  {
     // estos son los "iniciales" de la dinamica, podrian eliminarse y solo tener los subidos a mano
@@ -122,14 +122,14 @@ public class SetupData implements WithSimplePersistenceUnit {
       fuenteRepo.persist(fuenteEstatica1);
       fuenteRepo.persist(fuenteEstatica2);
       fuenteRepo.persist(fuenteEstatica3);
-      //fuenteRepo.persist(fuenteProxy);
+      fuenteRepo.persist(fuenteProxy);
 
       ColeccionesRepository colecRepo = new ColeccionesRepository();
       colecRepo.persist(collecion1);
       colecRepo.persist(collecion2);
       colecRepo.persist(collecion3);
       colecRepo.persist(collecion4);
-      //colecRepo.persist(coleccionProxy);
+      colecRepo.persist(coleccionProxy);
 
       new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });
