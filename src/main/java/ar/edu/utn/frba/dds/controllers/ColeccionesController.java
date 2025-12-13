@@ -61,8 +61,8 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     ColeccionesRepository colecciones = new ColeccionesRepository();
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
     String titulo = ctx.queryParam("titulo");
-    var paramConsenso = ctx.queryParam("consensuado");
-    boolean consensuado = paramConsenso != null && paramConsenso.equals("true");
+    String paramConsenso = ctx.queryParam("consenso");
+    boolean consensuado = paramConsenso != null && paramConsenso.equals("on");
 
     Coleccion coleccion = colecciones.find(id);
     coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
