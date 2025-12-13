@@ -1,0 +1,54 @@
+{{#partial "contenido-estadistico"}}
+    <div class="contenedor-estadisticas-categoria">
+        <div class="filtro-estadistico">
+            <form
+                    class="form-filtros"
+            >
+                <!-- Este form deberia ir a un controller que trae los resultados -->
+                <div class="filtro fecha-desde">
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="date" id="fecha-desde" name="fecha-desde">
+                </div>
+
+                <div class="filtro fecha-hasta">
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="date" id="fecha-hasta" name="fecha-hasta">
+                </div>
+
+                <div class="filtro categoria">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" placeholder="Ej: Incendios">
+                </div>
+
+                <button class="boton" id="btn-filtro" disabled type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
+                    Filtrar
+                </button>
+            </form>
+        </div>
+        <!-- Solo mostrar la tabla si se realizo una busqueda-->
+        <table class="tabla colecciones">
+            <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Total de hechos</th>
+                <th>Hora pico</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Aca parsear los resultados -->
+            {{#each colecciones}}
+                <tr>
+                    <td><b>{{titulo}}</b></td>
+                    <td><p>{{descripcion}}</p></td>
+                    <td><p>{{criterioPertenencia}}</p></td>
+                    <td><p>{{fuente}} ID:{{fuenteID}}</p></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/partial}}
+
+{{> templates/paginas/estadisticas/paginaEstadisticasLayout}}

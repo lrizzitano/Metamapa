@@ -157,7 +157,25 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/usuarios/{username}", usuarioController::editarPerfil,Rol.USUARIO);
 
-    app.get("/estadisticas", ctx -> {ctx.render("/templates/paginas/estadisticas/sinEstadisticas");}, Rol.USUARIO);
+    app.get("/estadisticas", ctx -> {
+      Map<String,Object> model = mantenerSesion(ctx,null);
+      ctx.render("/templates/paginas/estadisticas/sinEstadisticas",model);
+      }, Rol.USUARIO);
+
+    app.get("/estadisticas/categorias",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/categorias",model);
+    },Rol.USUARIO);
+
+    app.get("/estadisticas/colecciones",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/colecciones",model);
+    },Rol.USUARIO);
+
+    app.get("/estadisticas/spam",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/spam",model);
+    },Rol.USUARIO);
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
