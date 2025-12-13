@@ -1,4 +1,5 @@
 package ar.edu.utn.frba.dds.controllers;
+
 import ar.edu.utn.frba.dds.controllers.utils.JsonConverter;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
@@ -9,12 +10,7 @@ import ar.edu.utn.frba.dds.model.fuentes.Agregador;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
-import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsenso;
-import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsensoAbsoluto;
-import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMayoriaSimple;
-import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMultiplesMenciones;
 import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
-import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull;
 import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensosRepository;
 import ar.edu.utn.frba.dds.model.hechos.consenso.TipoConsenso;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
@@ -65,15 +61,20 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     ColeccionesRepository colecciones = new ColeccionesRepository();
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
     String titulo = ctx.queryParam("titulo");
-
+    var paramConsenso = ctx.queryParam("consensuado");
+    boolean consensuado = paramConsenso != null && paramConsenso.equals("true");
 
     Coleccion coleccion = colecciones.find(id);
     coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
-      // TODO: usar este cuando pasemos a mariaDB/mySQL que tienen FullTextSearch, la base esta no tiene entonces rompe
-      hechos = titulo == null || titulo.isEmpty() ? coleccion.hechos(filtro) :
-          coleccion.hechos(titulo, filtro);
+    boolean busquedaVacia = titulo == null || titulo.isEmpty();
 
-    return hechos;
+    return consensuado
+        ? busquedaVacia
+          ? coleccion.hechosConsensuados(filtro)
+          : coleccion.hechosConsensuados(titulo, filtro)
+        : busquedaVacia
+          ? coleccion.hechos(filtro)
+          : coleccion.hechos(titulo, filtro);
   }
 
   public Map <String, Object> hechosParaRender(Context ctx) {
@@ -100,7 +101,6 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     if (titulo == null || titulo.isBlank()
     || descripcion == null || descripcion.isBlank()
-    || idfuentes == null
     || consenso == null || consenso.isBlank()) {
       new Logger().info("Faltan campos por completar");
       ctx.result("Campos incompletos");
@@ -129,7 +129,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
           fechaPosterior != null || !fechaPosterior.isEmpty()){
 
 
-        if (categoria != null && !categoria.isEmpty()) {
+        if (!categoria.isEmpty()) {
           criterioPertenencia.and(new FiltroCategoria(categoria));
 
         }
