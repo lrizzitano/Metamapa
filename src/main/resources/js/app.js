@@ -94,3 +94,8 @@ function actualizarBotonColeccion(nombre) {
   const btn = document.getElementById("spanColeccion");
   btn.textContent = nombre;
 }
+
+function eliminarOverlayMapa() {
+  const overlay = document.querySelector('#overlay-mapa');
+  overlay.style.display = "none";
+}

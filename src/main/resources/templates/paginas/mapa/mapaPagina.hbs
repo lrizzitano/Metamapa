@@ -46,7 +46,7 @@
                 </button>
             </form>
             <div class="contenedor vertical colecciones desplegable">
-            <button id="coleccionSeleccionada" class="boton">
+                <button id="coleccionSeleccionada" class="boton">
                 <span id="spanColeccion">
                     {{#if coleccionSeleccionada}}
                         {{coleccionSeleccionada}}
@@ -54,10 +54,10 @@
                         Colecciones
                     {{/if}}
                 </span>
-                <img src="https://cdn-icons-png.flaticon.com/128/8213/8213476.png">
-            </button>
-            <div class="contenedor vertical infoADesplegarse colecciones">
-                {{#each colecciones}}
+                    <img src="https://cdn-icons-png.flaticon.com/128/8213/8213476.png">
+                </button>
+                <div class="contenedor vertical infoADesplegarse colecciones">
+                    {{#each colecciones}}
 
                         <button
                                 class="coleccion-desplegada "
@@ -67,12 +67,13 @@
                                 hx-swap="innerHTML"
                                 hx-push-url="true"
                                 onclick="actualizarRutaFormFiltros({{id}});
-                                actualizarBotonColeccion('{{titulo}}')">
+                                        actualizarBotonColeccion('{{titulo}}');
+                                        eliminarOverlayMapa();">
                             {{titulo}}
                         </button>
 
-                {{/each}}
-            </div>
+                    {{/each}}
+                </div>
             </div>
         </section>
         <section class="contenedor-hechos-mapaYcolecciones">
@@ -83,11 +84,11 @@
                 <div class="contenedor-mapa">
                     {{#if coleccionSeleccionada}}
                     {{else}}
-
+                        <div id="overlay-mapa">
                             <div id="seleccionar-coleccion">
                                 <p>Selecciona una de las colecciones de arriba para comenzar a explorar el mapa!</p>
                             </div>
-
+                        </div>
                     {{/if}}
                     <div id="map"></div>
                 </div>
