@@ -29,16 +29,14 @@
                     </div>
 
                     <div class="contenedor controles-solicitud">
-                        <a class="boton-solicitar-eliminacion">
-                            <button class="boton terciario solicitud">
-                                <img src="https://cdn-icons-png.flaticon.com/128/17522/17522336.png">
-                                Solicitar eliminacion
+                        <div class="contenedor compartir-eliminar">
+                            <a class="boton-solicitar-eliminacion">
+                                    Reportar
+                            </a>
+                            <button id="compartirboton" class="compartir" onclick="compartirHecho()">
+                                <img src="https://cdn-icons-png.flaticon.com/128/3139/3139163.png" alt="share icon">
                             </button>
-                        </a>
-
-                        <button class="boton terciario compartir" onclick="compartirHecho()">
-                            <img src="https://cdn-icons-png.flaticon.com/128/1358/1358023.png" alt="share icon">
-                        </button>
+                        </div>
 
                         <div class="controles">
                             <a href="#slide1"><img src="https://cdn-icons-png.flaticon.com/128/8050/8050812.png"></a>
@@ -54,7 +52,7 @@
                         <p class="descripcion"></p>
                     </div>
                     <div class="contenedor datos-solicitudes">
-                        <div>
+                        <div class="infoDescriptiva">
                             <p><b>Fecha publicada: </b> <span class="fechaCarga"></span></p>
                             <p><b>Fecha del suceso: </b> <span class="fechaAcontecimiento"></span></p>
                             <p><b>Categoria:</b> <span class="categoria"></span></p>
