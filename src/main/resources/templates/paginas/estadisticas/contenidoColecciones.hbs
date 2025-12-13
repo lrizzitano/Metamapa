@@ -1,0 +1,13 @@
+{{#partial "inputs-variables"}}
+    <h4>Coleccion</h4>
+    <label for="coleccion">Coleccion</label>
+    <input id="categoria" name="fechaHasta" type="date">
+{{/partial}}
+
+{{#partial "contenedores-informacion"}}
+    <div>
+        <h5>Provincia con más hechos subidos {{obejetoDeEstudio.categoria}}: {{objetoDeEstudio.horaPico}}</h5>
+    </div>
+{{/partial}}
+
+{{>templates/paginas/estadisticas/contenidoEstadisticoLayout.hbs}}
