@@ -9,6 +9,8 @@ import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;

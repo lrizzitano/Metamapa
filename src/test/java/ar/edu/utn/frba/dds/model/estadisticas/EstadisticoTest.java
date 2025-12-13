@@ -15,6 +15,8 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeEliminacion;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
