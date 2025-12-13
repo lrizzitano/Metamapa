@@ -54,6 +54,11 @@ public class Router implements WithSimplePersistenceUnit {
       }
     }, Rol.USUARIO);
 
+    app.get("/hechos/nuevo", ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx,null);
+      ctx.render("templates/paginas/subirHecho",model);
+    }, Rol.USUARIO);
+
     app.get("/hechos/{titulo}", ctx -> {
       Map<String,Object> map = new HashMap<>();
       map.putAll(this.modelLayout(ctx));
@@ -61,11 +66,6 @@ public class Router implements WithSimplePersistenceUnit {
       map.put("hechos", hechosController.findHecho(ctx.pathParam("titulo")));
       ctx.render("templates/paginas/mapa/mapaPagina", map);
     }, Rol.ADMINISTRADOR);
-
-    app.get("/hechos/nuevo", ctx -> {
-      Map<String, Object> model = mantenerSesion(ctx,null);
-      ctx.render("templates/paginas/subirHecho",model);
-    }, Rol.USUARIO);
 
     app.get("/solicitudesDeEliminacion/nueva", ctx -> {
       String paramHecho = ctx.queryParam("hecho");
@@ -157,7 +157,25 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/usuarios/{username}", usuarioController::editarPerfil,Rol.USUARIO);
 
-    app.get("/estadisticas", ctx -> {ctx.render("/templates/paginas/estadisticas/sinEstadisticas");}, Rol.USUARIO);
+    app.get("/estadisticas", ctx -> {
+      Map<String,Object> model = mantenerSesion(ctx,null);
+      ctx.render("/templates/paginas/estadisticas/sinEstadisticas",model);
+      }, Rol.USUARIO);
+
+    app.get("/estadisticas/categorias",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/categorias",model);
+    },Rol.USUARIO);
+
+    app.get("/estadisticas/colecciones",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/colecciones",model);
+    },Rol.USUARIO);
+
+    app.get("/estadisticas/spam",ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      ctx.render("/templates/paginas/estadisticas/spam",model);
+    },Rol.USUARIO);
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
