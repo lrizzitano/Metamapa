@@ -5,7 +5,6 @@ import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstu
 import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
-import ar.edu.utn.frba.dds.model.solicitudes.deteccionSpam.Categoria;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import java.time.LocalDateTime;
@@ -32,24 +31,26 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .getResultList();
   }
 
-  public Provincia provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime fecha) {
+  public Provincia provinciaConMayorCantidadDeHechosReportadosDeColeccion(Coleccion coleccion, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select r.provincia " +
                 "from ResultadoEstudioColeccion e " +
                 "join e.hechosPorProvincia r " +
-                "where e.fecha = :fechaP and e.coleccion = :coleccion " +
+                "where e.fecha between :desde and :hasta " +
+                "and e.coleccion = :coleccion " +
                 "group by r.provincia " +
                 "order by sum(r.cant_hechos) desc",
             Provincia.class
         )
-        .setParameter("fechaP", fecha)
+        .setParameter("desde", desde)
+        .setParameter("hasta", hasta)
         .setParameter("coleccion", coleccion)
         .setMaxResults(1)
         .getSingleResult();
   }
 
   // Categoria
-  public List<ResultadoEstudioCategoria> resultadosEstudioCategoria(Categoria categoria, LocalDateTime desde, LocalDateTime hasta) {
+  public List<ResultadoEstudioCategoria> resultadosEstudioCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select e " +
                 "from ResultadoEstudioCategoria e " +
@@ -64,32 +65,35 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .getResultList();
   }
 
-  public Provincia provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime fecha) {
+  public Provincia provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select h.provincia " +
                 "from ResultadoEstudioCategoria e " +
                 "join e.hechosPorProvincia h " +
-                "where e.fecha = :fecha and e.categoria = :categoria " +
+                "where e.fecha between :desde and :hasta " +
+                "and e.categoria = :categoria " +
                 "group by h.provincia " +
                 "order by sum(h.cant_hechos) desc",
             Provincia.class
         )
-        .setParameter("fecha", fecha)
+        .setParameter("desde", desde)
+        .setParameter("hasta", hasta)
         .setParameter("categoria", categoria)
         .setMaxResults(1)
         .getSingleResult();
   }
 
-  public String categoriaConMasHechosReportados(LocalDateTime fecha) {
+  public String categoriaConMasHechosReportados(LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select e.categoria " +
                 "from ResultadoEstudioCategoria e " +
-                "where e.fecha = :fecha " +
+                "where e.fecha between :desde and :hasta " +
                 "group by e.categoria " +
                 "order by sum(e.total_hechos) desc",
             String.class
         )
-        .setParameter("fecha", fecha)
+        .setParameter("desde", desde)
+        .setParameter("hasta", hasta)
         .setMaxResults(1)
         .getSingleResult();
   }
