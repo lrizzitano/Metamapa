@@ -15,6 +15,8 @@ import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMayoriaSimple;
 import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMultiplesMenciones;
 import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull;
+import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensosRepository;
+import ar.edu.utn.frba.dds.model.hechos.consenso.TipoConsenso;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
@@ -207,32 +209,14 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
   public Consenso obtenerConsenso(String consenso) {
 
-    Consenso consensoNuevo;
+    TipoConsenso tipoConsenso = switch (consenso) {
+      case "Absoluto" -> TipoConsenso.ABSOLUTO;
+      case "Mayoria Simple" -> TipoConsenso.MAYORIA_SIMPLE;
+      case "Multiples Menciones" -> TipoConsenso.MULTIPLES_MENCIONES;
+      default -> TipoConsenso.NULO;
+    };
 
-    if(consenso.equals("Consenso Nulo")){
-      consensoNuevo = new ConsensoNull();
-    }
-    else{
-
-      LocalDateTime proximaActualizacion = LocalDateTime.now().plusDays(1);
-      FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
-      AlgoritmoConsenso algoritmo = new AlgoritmoConsensoAbsoluto();
-
-      if(consenso.equals("Absoluto")){
-        algoritmo = new AlgoritmoConsensoAbsoluto();
-      }
-      if(consenso.equals("Mayoria Simple")){
-        algoritmo = new AlgoritmoMayoriaSimple();
-      }
-      if(consenso.equals("Multiples Menciones")){
-        algoritmo = new AlgoritmoMultiplesMenciones();
-      }
-
-      consensoNuevo = new Consenso(algoritmo,proximaActualizacion,repoFuentes);
-
-    }
-
-    return consensoNuevo;
+    return new ConsensosRepository().getConsenso(tipoConsenso);
   }
 
   public Fuente obtenerfuente(Long id ){
