@@ -81,7 +81,7 @@ public class EstadisticoTest implements SimplePersistenceTest {
     entityManager().persist(estudioColeccion);
     entityManager().flush();
 
-    Provincia provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux, fecha);
+    Provincia provincia = estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccionAux, fecha,fecha);
 
     Assertions.assertEquals(Provincia.LA_PAMPA, provincia);
     System.out.println(provincia);
@@ -93,7 +93,7 @@ public class EstadisticoTest implements SimplePersistenceTest {
     entityManager().persist(estudioCategoria);
     entityManager().flush();
 
-    String categoria = estadistico.categoriaConMasHechosReportados(fecha);
+    String categoria = estadistico.categoriaConMasHechosReportados(fecha,fecha);
 
     System.out.println(categoria);
 
@@ -118,7 +118,7 @@ public class EstadisticoTest implements SimplePersistenceTest {
     entityManager().persist(estudioCategoria);
     entityManager().flush();
 
-    Provincia provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio", fecha);
+    Provincia provincia = estadistico.provinciaConMasHechosReportadosDeUnaCategoria("Incendio", fecha, fecha);
 
     Assertions.assertEquals(Provincia.LA_PAMPA, provincia);
 
