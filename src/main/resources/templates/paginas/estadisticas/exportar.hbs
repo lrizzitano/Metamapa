@@ -1,0 +1,29 @@
+{{#partial "contenido-estadistico"}}
+    <form method="GET" action="/exportar">
+        <label for="tipo">Tipo</label>
+        <select id="tipo" name="tipo">
+            <option value="categoria">Categoria</option>
+            <option value="colecciones">Colecciones</option>
+        </select>
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Nombre">
+
+        <label for="fecha-desde">Desde</label>
+        <input id="fecha-desde" name="fechaDesde" type="date">
+
+        <label for="fecha-hasta">Hasta</label>
+        <input id="fecha-hasta" name="fechaHasta" type="date">
+
+        <label for="formato">Formato</label>
+        <select id="formato" name="formato">
+            <option value="JSON">JSON</option>
+            <option value="CSV">CSV</option>
+        </select>
+
+        <input type="submit" value="Exportar">
+    </form>
+
+{{/partial}}
+
+{{> templates/paginas/estadisticas/paginaEstadisticasLayout}}
