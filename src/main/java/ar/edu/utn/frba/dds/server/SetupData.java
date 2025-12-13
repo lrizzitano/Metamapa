@@ -10,7 +10,12 @@ import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.hechos.Ubicacion;
+import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoConsensoAbsoluto;
+import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMayoriaSimple;
+import ar.edu.utn.frba.dds.model.hechos.consenso.AlgoritmoMultiplesMenciones;
+import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensoNull;
+import ar.edu.utn.frba.dds.model.hechos.consenso.ConsensosRepository;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
@@ -22,7 +27,6 @@ import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 public class SetupData implements WithSimplePersistenceUnit {
   static private final Ubicacion laPampa = new Ubicacion(-25.8666139, -60.5564475, Provincia.LA_PAMPA, null);
@@ -130,6 +134,13 @@ public class SetupData implements WithSimplePersistenceUnit {
       colecRepo.persist(collecion3);
       colecRepo.persist(collecion4);
       colecRepo.persist(coleccionProxy);
+
+      ConsensosRepository consensosRepo = new ConsensosRepository();
+      LocalDateTime next = LocalDate.now().plusDays(1).atStartOfDay().plusHours(1);
+      consensosRepo.save(new Consenso(new AlgoritmoConsensoAbsoluto(), next, fuenteRepo));
+      consensosRepo.save(new Consenso(new AlgoritmoMayoriaSimple(), next, fuenteRepo));
+      consensosRepo.save(new Consenso(new AlgoritmoMultiplesMenciones(), next, fuenteRepo));
+
 
       new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });
