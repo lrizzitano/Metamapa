@@ -1,22 +1,35 @@
 package ar.edu.utn.frba.dds.model.calendarizables;
 
-import ar.edu.utn.frba.dds.model.repositorios.CalendarizablesRepository;
+import ar.edu.utn.frba.dds.model.estadisticas.RecolectorDeInformacion;
+import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.EstudioDeCategoria;
+import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.EstudioDeColeccion;
+import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.EstudioDeSolicitudes;
+import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.ObjetoDeEstudio;
+import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorDeResultados;
+import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorDeResultadosJPA;
+import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
+import java.util.List;
 
-public class ActualizadorCalendarizables {
+public class ActualizadorEstadisticas {
   public static void main(String[] args) {
-    System.out.println("Voy a actualizar!");
-    CalendarizablesRepository repo = CalendarizablesRepository.instance();
-    repo.getPendientesDeActualizar().forEach(c -> {
-      try {
-        c.actualizar();
-      }
-      catch (Exception e) {
-        reportarExcepcion(e);
-      }
-    });
-  }
+    try {
+      PublicadorDeResultados publicadorBaseDeDatos = new PublicadorDeResultadosJPA();
 
-  private static void reportarExcepcion(Exception e) {
-    e.printStackTrace();
+      List<ObjetoDeEstudio> objetosDeEstudio = List.of(
+          new EstudioDeCategoria(new RepoColecciones()),
+          new EstudioDeColeccion(new RepoColecciones()),
+          new EstudioDeSolicitudes(new SolicitudesDeEliminacionJPA())
+      );
+
+      RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
+          publicadorBaseDeDatos);
+
+      recolectorDeInformacion.actualizar();
+    }
+    catch (Exception e) {
+      new Logger().info("Error actualizando estadisticas: " + e.getMessage());
+    }
   }
 }

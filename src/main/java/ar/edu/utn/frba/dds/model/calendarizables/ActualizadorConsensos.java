@@ -12,6 +12,7 @@ public class ActualizadorConsensos {
       consensos.findAll().forEach(c-> {
         c.setFuentesRepository(new FuentesRepositoryJPA());
         c.actualizar();
+        consensos.update(c);
       });
     }
     catch (Exception e) {
