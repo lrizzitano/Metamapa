@@ -6,10 +6,12 @@ import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,8 +38,8 @@ public class Consenso implements Calendarizable {
   @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
   private AlgoritmoConsenso algoritmoConsenso;
 
-  @Transient //Es cache
-  private Set<Hecho> hechosConsensuados = new HashSet<>();
+  @ElementCollection
+  private Set<String> hechosConsensuados = new HashSet<>();
 
   @Column(name = "proximaActualizacion")
   @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
@@ -65,16 +67,27 @@ public class Consenso implements Calendarizable {
 
   @Override
   public void actualizar() {
-    this.hechosConsensuados = algoritmoConsenso.getHechosConsensuados(fuentes.obtenerFuentes());
+    this.hechosConsensuados = algoritmoConsenso
+        .getHechosConsensuados(fuentes.obtenerFuentes())
+        .stream().map(Hecho::titulo).collect(Collectors.toSet());
+
     this.proximaActualizacion = LocalDateTime.now().plusDays(1);
   }
 
-  public Set<Hecho> getHechosConsensuados() {
+  public void setFuentesRepository(FuentesRepository repo) {
+    this.fuentes = repo;
+  }
+
+  public Set<String> getHechosConsensuados() {
     return this.hechosConsensuados;
   }
 
+  public AlgoritmoConsenso getAlgoritmoConsenso() {
+    return algoritmoConsenso;
+  }
+
   public boolean esConsensuado(Hecho hecho) {
-    return this.hechosConsensuados.contains(hecho);
+    return this.hechosConsensuados.contains(hecho.titulo());
   }
 
   public String getNombre(){
