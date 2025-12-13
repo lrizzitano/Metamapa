@@ -54,6 +54,14 @@ public class Router implements WithSimplePersistenceUnit {
       }
     }, Rol.USUARIO);
 
+    app.get("/hechos/{titulo}", ctx -> {
+      Map<String,Object> map = new HashMap<>();
+      map.putAll(this.modelLayout(ctx));
+      map.put("coleccionSeleccionada", "Hecho particular");
+      map.put("hechos", hechosController.findHecho(ctx.pathParam("titulo")));
+      ctx.render("templates/paginas/mapa/mapaPagina", map);
+    }, Rol.ADMINISTRADOR);
+
     app.get("/hechos/nuevo", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx,null);
       ctx.render("templates/paginas/subirHecho",model);

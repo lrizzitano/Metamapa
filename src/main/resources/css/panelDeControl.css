@@ -37,6 +37,16 @@ main {
     width: fit-content;
 }
 
+.link{
+    color: var(--color-acento);
+    display: inline-block;
+    width: max-content;
+}
+
+.link:hover{
+    color: var(--color-texto);
+}
+
 .contenido{
     background: var(--color-secundario);
     height: auto;

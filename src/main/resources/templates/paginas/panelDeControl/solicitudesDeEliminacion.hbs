@@ -5,30 +5,34 @@
         </div>
         <table class="tabla solicitudes">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th class="titulo solicitud">Titulo</th>
-                    <th class="fundamentacion solicitud">Fundamentacion</th>
-                    <th>Aceptar solicitud</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th class="titulo solicitud">Titulo</th>
+                <th class="fundamentacion solicitud">Fundamentacion</th>
+                <th>Aceptar solicitud</th>
+            </tr>
             </thead>
             <tbody>
             {{#each solicitudes}}
                 <tr>
                     <td class="columna centrada id"><b>{{id}}</b></td>
-                    <td><b>{{tituloHecho}}</b></td>
+                    <td>
+                        <a href="/hechos/{{tituloHecho}}" class="link">
+                            <b>{{tituloHecho}}</b>
+                        </a>
+                    </td>
                     <td>{{fundamento}} </td>
                     <td class="columna centrada acciones solicitud">
-                            <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
-                                <div class="card-solicitud-botones">
-                                    <button type="submit" class="boton-solicitud rechazar" value="Rechazar" >
-                                        <img src="https://cdn-icons-png.flaticon.com/128/399/399274.png">
-                                    </button>
-                                    <button type="submit" class="boton-solicitud aceptar" value="Aceptar" name="Aceptar">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png">
-                                    </button>
-                                </div>
-                            </form>
+                        <form action="/solicitudesDeEliminacion/{{id}}" method="POST">
+                            <div class="card-solicitud-botones">
+                                <button type="submit" class="boton-solicitud rechazar" value="Rechazar">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/399/399274.png">
+                                </button>
+                                <button type="submit" class="boton-solicitud aceptar" value="Aceptar" name="Aceptar">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png">
+                                </button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             {{/each}}

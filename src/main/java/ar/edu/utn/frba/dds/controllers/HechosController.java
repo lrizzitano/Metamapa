@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
+import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Origen;
@@ -23,6 +24,8 @@ import io.javalin.http.Context;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -111,7 +114,7 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
       UsuarioDTO usuarioDTO = ctx.sessionAttribute("usuario");
 
       if (usuarioDTO != null) {
-        String username =  usuarioDTO.usuario();
+        String username = usuarioDTO.usuario();
         Usuario usuario = new RepoUsuarios().findByUsername(username);
         hecho.setContribuyente(usuario);
       }
@@ -134,17 +137,32 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
     }
   }
 
-  Set<Hecho> hechos;
+  private Set<Hecho> getAllHechos(Filtro filtro) {
+    Set<Hecho> hechos;
+    Set<Fuente> fuentes = new FuentesRepositoryJPA().obtenerFuentes();
+    hechos = fuentes.stream()
+        .flatMap(f -> f.obtenerHechos(filtro).stream())
+        .collect(Collectors.toSet());
+    return hechos;
+  }
 
   public void todosLosHechos(Context ctx) {
     FiltroCompuesto filtro = HechosController.filtroDesdeRequest(ctx);
-    withTransaction(() -> {
-      Set<Fuente> fuentes = new FuentesRepositoryJPA().obtenerFuentes();
-      hechos = fuentes.stream()
-          .flatMap(f -> f.obtenerHechos(filtro).stream())
-          .collect(Collectors.toSet());
-    });
-
+    Set<Hecho> hechos = getAllHechos(filtro);
     ctx.json(new JsonConverter().armarConvertor().toJson(hechos));
+  }
+
+  public Map<String, Object> findHecho(String titulo) {
+    FuentesRepositoryJPA repoFuentes = new FuentesRepositoryJPA();
+    Map<String, Object> model = new HashMap<>();
+
+    Set<Hecho> hechos = getAllHechos(new NullFiltro());
+    Hecho hechoEncontrado = hechos.stream()
+        .filter(hecho -> {
+          return hecho.titulo().equals(titulo);
+        }).findFirst().get();
+
+    model.put("hechoEncontrado", new HechoDTO(hechoEncontrado));
+    return model;
   }
 }

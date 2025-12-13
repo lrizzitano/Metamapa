@@ -124,11 +124,6 @@ a {
     text-decoration: none;
 }
 
-a:visited {
-    color: inherit;
-    text-decoration: underline;
-}
-
 .contenedor-mensaje-error{
     min-height: 21px;
     color: red;
