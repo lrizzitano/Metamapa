@@ -3,25 +3,23 @@
         <thead>
         <tr>
             <th>Fecha</th>
-            <th>Categoria</th>
+            <th>Coleccion</th>
             <th>Total de hechos</th>
-            <th>Hora pico</th>
         </tr>
         </thead>
         <tbody>
         {{#each resultadoEstadistico}}
             <tr>
-                <td><b>{{fecha}}</b></td>
-                <td><p>{{categoria}}</p></td>
+                <td><p>{{fecha}}</p></td>
+                <td><p>{{coleccionTitulo}}</p></td>
                 <td><p>{{total_hechos}}</p></td>
-                <td><p>{{hora_pico}}</p></td>
             </tr>
         {{/each}}
         </tbody>
     </table>
 {{else}}
     <div class="sin-contenido-estadistico" >
-      <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
+        <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
         <p><b>Realice una busqueda para ver las estaditicas</b></p>
     </div>
 {{/if}}

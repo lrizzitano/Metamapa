@@ -175,7 +175,12 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/estadisticas/colecciones",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
-      ctx.render("/templates/paginas/estadisticas/colecciones",model);
+      if(ctx.header("HX-Request") != null) {
+        ctx.render("/templates/paginas/estadisticas/resultadosColecciones",estadisticasController.estadisticasColecciones(ctx,model));
+      }
+      else{
+        ctx.render("/templates/paginas/estadisticas/colecciones",model);
+      }
     },Rol.USUARIO);
 
     app.get("/estadisticas/spam",ctx -> {

@@ -1,9 +1,13 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import static java.lang.Long.parseLong;
+
 import ar.edu.utn.frba.dds.model.estadisticas.Estadistico;
 import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
+import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import io.javalin.http.Context;
 
 import java.time.LocalDate;
@@ -15,18 +19,48 @@ import java.util.Objects;
 
 public class EstadisticasController {
 
-  public static void estadisticasColecciones(Context ctx,Map<String,Object> model) {
+  public static Map<String,Object> estadisticasColecciones(Context ctx,Map<String,Object> model) {
     Estadistico estadistico = new Estadistico();
 
-    Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.formParam("coleccion"))));
-    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
-    LocalDateTime hasta = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
+    Long coleccionId = Long.parseLong(ctx.queryParam("coleccion")) ;
+    String fechaDesdeStr = ctx.queryParam("fecha-desde");
+    String fechaHastaStr = ctx.queryParam("fecha-hasta");
 
-    model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
+    if (coleccionId != null &&
+        fechaDesdeStr != null && !fechaDesdeStr.isEmpty() &&
+        fechaHastaStr != null && !fechaHastaStr.isEmpty()) {
 
-    model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
+      try {
 
-    ctx.render("/templates/paginas/estadisticas/contenidoColecciones", model);
+        LocalDate desde = LocalDate.parse(fechaDesdeStr);
+        LocalDate hasta = LocalDate.parse(fechaHastaStr);
+
+
+        //model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
+        //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
+
+        Coleccion coleccion = new RepoColecciones().find(coleccionId);
+
+        ResultadoEstudioColeccion resultadoEstudioColeccion =
+            new ResultadoEstudioColeccion(LocalDateTime.now().minusDays(3),coleccion
+                ,Long.parseLong("20"),null);
+
+        List<ResultadoEstudioColeccion> listaResultados = new ArrayList<>();
+        listaResultados.add(resultadoEstudioColeccion);
+
+        model.put("resultadoEstadistico", listaResultados);
+
+      } catch (java.time.format.DateTimeParseException e) {
+
+        System.err.println("Error de formato de fecha: " + e.getMessage());
+        model.put("error", "Las fechas no tienen un formato válido ");
+      }
+
+    } else {
+      model.put("mensaje", "Por favor, complete la Categoría, Fecha Desde y Fecha Hasta para ver las estadísticas.");
+    }
+
+    return model;
   }
 
   public static Map<String ,Object> estadisticasCategorias(Context ctx, Map<String,Object> model) {
