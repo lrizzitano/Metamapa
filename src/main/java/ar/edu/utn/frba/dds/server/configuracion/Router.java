@@ -24,6 +24,7 @@ public class Router implements WithSimplePersistenceUnit {
     SolicitudesDeEliminacionController solicitudesDeEliminacionController = new SolicitudesDeEliminacionController();
     UsuarioController usuarioController = new UsuarioController();
     FuentesController fuentesController = new FuentesController();
+    EstadisticasController estadisticasController = new EstadisticasController();
 
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
@@ -162,9 +163,14 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("/templates/paginas/estadisticas/sinEstadisticas",model);
       }, Rol.USUARIO);
 
-    app.get("/estadisticas/categorias",ctx -> {
+    app.get("/estadisticas/categorias", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
-      ctx.render("/templates/paginas/estadisticas/categorias",model);
+      if(ctx.header("HX-Request") != null) {
+        ctx.render("templates/paginas/estadisticas/resultadosCategorias", estadisticasController.estadisticasCategorias(ctx,model));
+      }
+      else{
+        ctx.render("/templates/paginas/estadisticas/categorias",model);
+      }
     },Rol.USUARIO);
 
     app.get("estadisticas/categorias/exportar", ctx -> {
@@ -174,7 +180,12 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/estadisticas/colecciones",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
-      ctx.render("/templates/paginas/estadisticas/colecciones",model);
+      if(ctx.header("HX-Request") != null) {
+        ctx.render("/templates/paginas/estadisticas/resultadosColecciones",estadisticasController.estadisticasColecciones(ctx,model));
+      }
+      else{
+        ctx.render("/templates/paginas/estadisticas/colecciones",model);
+      }
     },Rol.USUARIO);
 
     app.get("estadisticas/coleciones/exportar", ctx -> {
@@ -184,6 +195,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/estadisticas/spam",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
+
       ctx.render("/templates/paginas/estadisticas/spam",model);
     },Rol.USUARIO);
 

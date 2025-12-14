@@ -1,7 +1,13 @@
 {{#partial "contenido-estadistico"}}
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <div class="contenedor-estadisticas-categoria">
         <div class="filtro-estadistico">
             <form
+
+                    hx-get="#"
+                    hx-target=".resultados-busqueda"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
                     class="form-filtros"
             >
                 <!-- Este form deberia ir a un controller que trae los resultados -->
@@ -20,7 +26,7 @@
                     <input type="text" id="categoria" name="categoria" placeholder="Ej: Incendios">
                 </div>
 
-                <button class="boton" id="btn-filtro" disabled type="submit">
+                <button class="boton" type="submit">
                     <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
                     Filtrar
                 </button>
@@ -30,27 +36,9 @@
             </form>
         </div>
         <!-- Solo mostrar la tabla si se realizo una busqueda-->
-        <table class="tabla colecciones">
-            <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Categoria</th>
-                <th>Total de hechos</th>
-                <th>Hora pico</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Aca parsear los resultados -->
-            {{#each colecciones}}
-                <tr>
-                    <td><b>{{titulo}}</b></td>
-                    <td><p>{{descripcion}}</p></td>
-                    <td><p>{{criterioPertenencia}}</p></td>
-                    <td><p>{{fuente}} ID:{{fuenteID}}</p></td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
+        <div class="resultados-busqueda">
+            {{> templates/paginas/estadisticas/resultadosCategorias}}
+        </div>
     </div>
 {{/partial}}
 
