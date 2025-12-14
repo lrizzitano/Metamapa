@@ -1,4 +1,16 @@
 {{#if resultadoEstadistico}}
+    <div class="datos-extra">
+        <h2>Informacion relevante</h2>
+        <div class="extra provinciaConMasHechosReportados">
+            <p><b>La pronvica con mas hechos reportados de esta categoria es:</b> {{provinciaConMasHechosReportados}}</p>
+        </div>
+
+        <div class="extra categoriaConMasHechosReportados">
+            <p><b>La categoria con mas hechos rportados en estas fechas es:</b> {{categoriaConMasHechosReportados}}</p>
+        </div>
+            <p>Para ver informacion mas detallada considere <a class="descargar">descargar</a> este informe</p>
+
+    </div>
     <table class="tabla colecciones">
         <thead>
         <tr>
@@ -11,7 +23,7 @@
         <tbody>
         {{#each resultadoEstadistico}}
             <tr>
-                <td><b>{{fecha}}</b></td>
+                <td><p>{{fecha}}</p></td>
                 <td><p>{{categoria}}</p></td>
                 <td><p>{{total_hechos}}</p></td>
                 <td><p>{{hora_pico}}</p></td>

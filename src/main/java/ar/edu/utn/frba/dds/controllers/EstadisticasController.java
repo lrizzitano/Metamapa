@@ -84,10 +84,15 @@ public class EstadisticasController {
         //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde.atStartOfDay(), hasta.atStartOfDay()));
         //model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde.atStartOfDay(), hasta.atStartOfDay()));
 
+        model.put("provinciaConMasHechosReportados","Chaco");
+        model.put("categoriaConMasHechosReportados","Desastre natural");
+
         ResultadoEstudioCategoria resultadoEstudioCategoria =
             new ResultadoEstudioCategoria(LocalDateTime.now().minusDays(3), "Milagro", 28, 22.20, null);
 
         List<ResultadoEstudioCategoria> listaResultados = new ArrayList<>();
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
         listaResultados.add(resultadoEstudioCategoria);
 
         model.put("resultadoEstadistico", listaResultados);
