@@ -173,7 +173,7 @@ public class Router implements WithSimplePersistenceUnit {
       }
     },Rol.USUARIO);
 
-    app.get("estadisticas/categorias/exportar", ctx -> {
+    app.get("/estadisticas/categorias/exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       EstadisticasController.exportarCategoria(ctx,model);
     });
@@ -188,7 +188,7 @@ public class Router implements WithSimplePersistenceUnit {
       }
     },Rol.USUARIO);
 
-    app.get("estadisticas/coleciones/exportar", ctx -> {
+    app.get("/estadisticas/colecciones/exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       EstadisticasController.exportarColecion(ctx,model);
     });
