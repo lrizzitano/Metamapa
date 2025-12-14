@@ -39,7 +39,7 @@ public class EstadisticasController {
 
         //model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
         //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
-
+        model.put("provinciaConMasHechosReportados","La Pampa");
         Coleccion coleccion = new RepoColecciones().find(coleccionId);
 
         ResultadoEstudioColeccion resultadoEstudioColeccion =
@@ -47,6 +47,8 @@ public class EstadisticasController {
                 ,Long.parseLong("20"),null);
 
         List<ResultadoEstudioColeccion> listaResultados = new ArrayList<>();
+        listaResultados.add(resultadoEstudioColeccion);
+        listaResultados.add(resultadoEstudioColeccion);
         listaResultados.add(resultadoEstudioColeccion);
 
         model.put("resultadoEstadistico", listaResultados);
