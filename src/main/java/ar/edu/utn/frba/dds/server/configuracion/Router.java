@@ -167,15 +167,30 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("/templates/paginas/estadisticas/categorias",model);
     },Rol.USUARIO);
 
+    app.get("estadisticas/categorias/exportar", ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      EstadisticasController.exportarCategoria(ctx,model);
+    });
+
     app.get("/estadisticas/colecciones",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       ctx.render("/templates/paginas/estadisticas/colecciones",model);
     },Rol.USUARIO);
 
+    app.get("estadisticas/coleciones/exportar", ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      EstadisticasController.exportarColecion(ctx,model);
+    });
+
     app.get("/estadisticas/spam",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       ctx.render("/templates/paginas/estadisticas/spam",model);
     },Rol.USUARIO);
+
+    app.get("estadisticas/spam/exportar", ctx -> {
+      Map<String, Object> model = mantenerSesion(ctx, null);
+      EstadisticasController.exportarSpam(ctx,model);
+    });
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);

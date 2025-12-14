@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="/css/header.css">
 {{/partial}}
 
-{{#partial "contenido" }}
+{{#partial "contenido"}}
     <div class="cuerpo-index-estadisticas">
         <nav class="seccion-estadisticas-header">
             <h2>Seccion de Estadisticas</h2>
             <div class="links-estadisticas">
+                <a href="/exportar">Colecciones</a>
                 <a href="/estadisticas/colecciones">Colecciones</a>
                 <a href="/estadisticas/categorias">Categoria</a>
                 {{#if esAdmin}}
                     <a href="/estadisticas/spam">Spam</a>
                 {{/if}}
-
             </div>
         </nav>
         <section class="contenedor-estadisticas-especificas">
