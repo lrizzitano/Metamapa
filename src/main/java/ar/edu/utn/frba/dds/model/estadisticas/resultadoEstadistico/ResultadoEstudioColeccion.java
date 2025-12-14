@@ -56,7 +56,7 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     return coleccion;
   }
 
-  public String coleccionTitulo() {
+  public String titulo() {
     return this.coleccion.getTitulo();
   }
 
