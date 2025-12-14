@@ -51,19 +51,19 @@ public class ResultadoEstudioCategoria implements ResultadoEstadistico {
 
   }
 
-  public LocalDateTime getFecha() {
+  public LocalDateTime fecha() {
     return fecha;
   }
 
-  public String getCategoria() {
+  public String categoria() {
     return categoria;
   }
 
-  public int getTotal_hechos() {
+  public int total_hechos() {
     return total_hechos;
   }
 
-  public LocalTime getHora_pico() {
+  public LocalTime hora_pico() {
     return hora_pico;
   }
 

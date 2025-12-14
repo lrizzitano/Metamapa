@@ -67,7 +67,11 @@
 .contenedor-estadisticas-categoria{
     display: flex;
     width: 100%;
-    height: 100%;
     gap:2rem;
     flex-direction: column;
+}
+.resultados-busqueda{
+    display: flex;
+    width: 100%;
+    height: auto;
 }

@@ -1,11 +1,15 @@
 package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.model.estadisticas.Estadistico;
+import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioCategoria;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import io.javalin.http.Context;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,19 +29,45 @@ public class EstadisticasController {
     ctx.render("/templates/paginas/estadisticas/contenidoColecciones", model);
   }
 
-  public static void estadisticasCategorias(Context ctx, Map<String,Object> model) {
+  public static Map<String ,Object> estadisticasCategorias(Context ctx, Map<String,Object> model) {
     Estadistico estadistico = new Estadistico();
 
-    String categoria = ctx.formParam("categoria");
-    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
-    LocalDateTime hasta = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
+    String categoria = ctx.queryParam("categoria");
+    String fechaDesdeStr = ctx.queryParam("fecha-desde");
+    String fechaHastaStr = ctx.queryParam("fecha-hasta");
 
-    model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria,desde,hasta));
+    if (categoria != null && !categoria.isEmpty() &&
+        fechaDesdeStr != null && !fechaDesdeStr.isEmpty() &&
+        fechaHastaStr != null && !fechaHastaStr.isEmpty()) {
 
-    model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
+      try {
 
-    model.put("categoriaConMasHechosReportados",estadistico.categoriaConMasHechosReportados(desde,hasta));
+        LocalDate desde = LocalDate.parse(fechaDesdeStr);
+        LocalDate hasta = LocalDate.parse(fechaHastaStr);
 
-    ctx.render("/templates/paginas/estadisticas/contenidoCategorias", model);
+
+        //model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria, desde.atStartOfDay(), hasta.atStartOfDay()));
+        //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde.atStartOfDay(), hasta.atStartOfDay()));
+        //model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde.atStartOfDay(), hasta.atStartOfDay()));
+
+        ResultadoEstudioCategoria resultadoEstudioCategoria =
+            new ResultadoEstudioCategoria(LocalDateTime.now().minusDays(3), "Milagro", 28, 22.20, null);
+
+        List<ResultadoEstudioCategoria> listaResultados = new ArrayList<>();
+        listaResultados.add(resultadoEstudioCategoria);
+
+        model.put("resultadoEstadistico", listaResultados);
+
+      } catch (java.time.format.DateTimeParseException e) {
+
+        System.err.println("Error de formato de fecha: " + e.getMessage());
+        model.put("error", "Las fechas no tienen un formato válido ");
+      }
+
+    } else {
+      model.put("mensaje", "Por favor, complete la Categoría, Fecha Desde y Fecha Hasta para ver las estadísticas.");
+    }
+
+    return model;
   }
 }
