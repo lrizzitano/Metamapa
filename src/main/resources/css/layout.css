@@ -111,7 +111,7 @@ form label{
     margin:0;
     width: 100%;
     align-items: center;
-    background-color: white;
+    background-color: var(--color-secundario);
     color: var(--color-principal);
     border-bottom: 0.1rem solid var(--color-principal);
     border-radius: 0;
@@ -121,6 +121,16 @@ form label{
 
 a {
     text-decoration: none;
+}
+
+.link{
+    color: var(--color-acento);
+    display: inline-block;
+    width: max-content;
+}
+
+.link:hover{
+    color: var(--color-texto);
 }
 
 .contenedor-mensaje-error{
@@ -256,7 +266,7 @@ a {
 
 .breadcrumbs {
     display: flex;
-    width:100%;
+    width:70%;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 1rem;

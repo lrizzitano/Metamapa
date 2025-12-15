@@ -1,10 +1,27 @@
-main {
+.contenido-panel{
     display: flex;
     flex-direction: row;
+    width: 100%;
+    gap: 32px;
+}
+
+.contenedor-cuerpo-index {
+    padding-top: 0;
+    gap: 0;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
     height: auto;
     width: auto;
     padding: 32px;
     gap: 32px;
+}
+
+.breadcrumbs {
+    width: 100%;
 }
 
 .navegacion {
@@ -35,16 +52,6 @@ main {
 .navegacion a{
     display: inline-block;
     width: fit-content;
-}
-
-.link{
-    color: var(--color-acento);
-    display: inline-block;
-    width: max-content;
-}
-
-.link:hover{
-    color: var(--color-texto);
 }
 
 .contenido{

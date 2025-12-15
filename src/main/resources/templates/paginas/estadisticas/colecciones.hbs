@@ -1,3 +1,12 @@
+{{#partial "breadcrumbs"}}
+    <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png">
+
+    <a href="/estadisticas/colecciones">
+        Colecciones
+    </a>
+
+{{/partial}}
+
 {{#partial "contenido-estadistico"}}
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <div class="contenedor-estadisticas-categoria">
@@ -26,7 +35,7 @@
                     <input type="text" id="coleccion" name="coleccion" placeholder="Id: 1">
                 </div>
 
-                <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones" />
+                <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones"/>
 
                 <button class="boton" type="submit">
                     <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">

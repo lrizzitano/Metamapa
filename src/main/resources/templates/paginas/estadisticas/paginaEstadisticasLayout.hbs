@@ -1,23 +1,49 @@
 {{#block "dependencias"}}{{/block}}
 {{#partial "dependencias"}}
     <link rel="stylesheet" href="/css/estadisticas.css">
-    <link rel="stylesheet" href="/css/panelDeControl.css">
     <link rel="stylesheet" href="/css/mapaPagina.css">
+    <link rel="stylesheet" href="/css/panelDeControl.css">
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 {{/partial}}
 
 {{#partial "contenido"}}
     <div class="cuerpo-index-estadisticas">
+
         <nav class="seccion-estadisticas-header">
-            <h2>Seccion de Estadisticas</h2>
+
+            <div class="breadcrumbs">
+                <a href="/">
+                    Inicio
+                </a>
+
+                <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png ">
+
+                <a href="/estadisticas">
+                    Estadisticas
+                </a>
+
+                {{#block "breadcrumbs"}}{{/block}}
+            </div>
+
+
+            <div class="panel">
+                <h2>Seccion de Estadisticas</h2>
+            </div>
             <div class="links-estadisticas">
-                <a href="/estadisticas/colecciones">Colecciones</a>
-                <a href="/estadisticas/categorias">Categoria</a>
+                <a class="link" href="/estadisticas/colecciones">
+                    <b>Colecciones</b>
+                </a>
+                <a class="link" href="/estadisticas/categorias">
+                    <b>Categorias</b>
+                </a>
                 {{#if esAdmin}}
-                    <a href="/estadisticas/spam">Spam</a>
+                    <a class="link" href="/estadisticas/spam">
+                        <b>Spam</b>
+                    </a>
                 {{/if}}
             </div>
+
         </nav>
         <section class="contenedor-estadisticas-especificas">
             {{#block "contenido-estadistico"}}

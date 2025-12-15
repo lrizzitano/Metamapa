@@ -1,3 +1,11 @@
+{{#partial "breadcrumbs"}}
+    <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png">
+
+    <a href="/panelDeControl/colecciones">
+        Ver colecciones
+    </a>
+
+{{/partial}}
 
 {{#partial "seccion"}}
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -27,7 +35,7 @@
                     <td><p>{{consenso}}</p></td>
                     <td class="columna centrada acciones colecciones">
                         <a  style="margin: 1rem 0 0.5rem 0"
-                        href="/colecciones/{{id}}">
+                        href="/panelDeControl/colecciones/{{id}}">
                             <img class="editar" src="https://cdn-icons-png.flaticon.com/128/10336/10336461.png">
                         </a>
                     </td>
@@ -37,4 +45,4 @@
     </table>
 {{/partial}}
 
-{{> templates/paginas/panelDeControl/panel}}
+{{> templates/paginas/panelDeControl/panelDeControlLayout}}

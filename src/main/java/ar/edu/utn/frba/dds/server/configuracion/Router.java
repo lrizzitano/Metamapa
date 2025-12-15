@@ -88,7 +88,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/panelDeControl", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx,null);
-      ctx.render("templates/paginas/panelDeControl/panel",model);
+      ctx.render("templates/paginas/panelDeControl/panelDeControlLayout",model);
     }, Rol.ADMINISTRADOR);
 
     app.get("/panelDeControl/colecciones", ctx -> {
@@ -149,7 +149,7 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/perfilUsuario",model);
     },Rol.USUARIO);
 
-    app.get("/colecciones/{id}",ctx->{
+    app.get("/panelDeControl/colecciones/{id}",ctx->{
       Map<String,Object> model = coleccionesController.encontrarColeccionPorId(ctx);
       model.putAll(fuentesController.fuentes());
       model = mantenerSesion(ctx,model);
