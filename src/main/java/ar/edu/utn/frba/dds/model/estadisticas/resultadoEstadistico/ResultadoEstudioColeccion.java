@@ -48,7 +48,7 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     this.hechosPorProvincia = hechosPorProvincia;
   }
 
-  public LocalDateTime getFecha() {
+  public LocalDateTime fecha() {
     return fecha;
   }
 
@@ -56,7 +56,11 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     return coleccion;
   }
 
-  public Long getTotal_hechos() {
+  public String titulo() {
+    return this.coleccion.getTitulo();
+  }
+
+  public Long total_hechos() {
     return total_hechos;
   }
 

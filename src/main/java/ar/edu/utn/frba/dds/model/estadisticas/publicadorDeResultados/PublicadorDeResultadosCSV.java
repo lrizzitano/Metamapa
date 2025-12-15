@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class PublicadorDeResultadosCSV implements PublicadorDeResultados {
+public class PublicadorDeResultadosCSV implements PublicadorDeResultados{
   public String nombreArchivo;
 
   public PublicadorDeResultadosCSV(String nombreArchivo) {

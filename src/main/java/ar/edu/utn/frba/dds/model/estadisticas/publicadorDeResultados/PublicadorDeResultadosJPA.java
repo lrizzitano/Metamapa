@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PublicadorDeResultadosJPA implements PublicadorDeResultados, WithSimplePersistenceUnit {
 
-  PublicadorDeResultadosJPA() {}
+  public PublicadorDeResultadosJPA() {}
 
   @Override
   public void comunicarResultados(List<ResultadoEstadistico> resultado) {

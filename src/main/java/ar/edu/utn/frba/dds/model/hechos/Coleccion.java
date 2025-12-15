@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.model.hechos.consenso.Consenso;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import java.util.Collections;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.persistence.Column;
@@ -95,27 +96,31 @@ public class Coleccion{
   }
 
   public Set<Hecho> hechos(Filtro filtro) {
-    return this.streamFiltradaBase(filtro).collect(Collectors.toSet());
+    return hechos(null, filtro, hecho -> true);
   }
 
   public Set<Hecho> hechos(String busqueda, Filtro filtro) {
-    return this.streamFiltradaBase(busqueda, filtro).collect(Collectors.toSet());
+    return hechos(busqueda, filtro, hecho -> true);
   }
 
   public Set<Hecho> hechosConsensuados(Filtro filtro) {
-    return this.streamFiltradaBase(filtro)
-        .filter(criterioConsenso::esConsensuado)
-        .collect(Collectors.toSet());
+    return hechos(null, filtro, criterioConsenso::esConsensuado);
+  }
+
+  public Set<Hecho> hechosConsensuados(String busqueda, Filtro filtro) {
+    return hechos(busqueda, filtro, criterioConsenso::esConsensuado);
+  }
+
+  private Set<Hecho> hechos(String busqueda, Filtro filtro, Predicate<Hecho> consenso) {
+    Stream<Hecho> stream = (busqueda == null || busqueda.isEmpty())
+        ? this.streamFiltradaBase(filtro)
+        : this.streamFiltradaBase(busqueda, filtro);
+
+    return stream.filter(consenso).collect(Collectors.toSet());
   }
 
   private Stream<Hecho> streamFiltradaBase(Filtro filtro) {
-    Set<String> eliminados = solicitudes.hechosEliminados();
-
-    FiltroCompuesto filtroCompuesto =
-        new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
-
-    return fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
-        .filter(h -> !eliminados.contains(h.titulo()));
+    return streamFiltradaBase(null, filtro);
   }
 
   private Stream<Hecho> streamFiltradaBase(String busqueda, Filtro filtro) {
@@ -124,9 +129,12 @@ public class Coleccion{
     FiltroCompuesto filtroCompuesto =
         new FiltroCompuesto(Collections.singletonList(criterioDePertenencia));
 
-    return fuente.obtenerHechos(busqueda, filtroCompuesto.and(filtro)).stream()
+    return (busqueda == null
+        ? fuente.obtenerHechos(filtroCompuesto.and(filtro)).stream()
+        : fuente.obtenerHechos(busqueda, filtroCompuesto.and(filtro)).stream())
         .filter(h -> !eliminados.contains(h.titulo()));
   }
+
   public Fuente getFuente(){
     return this.fuente;
   }

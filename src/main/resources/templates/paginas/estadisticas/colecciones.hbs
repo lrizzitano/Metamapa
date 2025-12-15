@@ -1,0 +1,48 @@
+{{#partial "contenido-estadistico"}}
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <div class="contenedor-estadisticas-categoria">
+        <div class="filtro-estadistico">
+            <form
+
+                    hx-get="#"
+                    hx-target=".resultados-busqueda"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                    class="form-filtros"
+            >
+                <!-- Este form deberia ir a un controller que trae los resultados -->
+                <div class="filtro fecha-desde">
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="date" id="fecha-desde" name="fecha-desde">
+                </div>
+
+                <div class="filtro fecha-hasta">
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="date" id="fecha-hasta" name="fecha-hasta">
+                </div>
+
+                <div class="filtro categoria">
+                    <label for="coleccion">Coleccion</label>
+                    <input type="text" id="coleccion" name="coleccion" placeholder="Id: 1">
+                </div>
+
+                <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones" />
+
+                <button class="boton" type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
+                    Filtrar
+                </button>
+                <button class="boton" type="submit" formaction="/exportar" formmethod="get"
+                        hx-disable="true">
+                    Exportar
+                </button>
+            </form>
+        </div>
+        <!-- Solo mostrar la tabla si se realizo una busqueda-->
+        <div class="resultados-busqueda">
+            {{> templates/paginas/estadisticas/resultadosColecciones}}
+        </div>
+    </div>
+{{/partial}}
+
+{{> templates/paginas/estadisticas/paginaEstadisticasLayout}}
