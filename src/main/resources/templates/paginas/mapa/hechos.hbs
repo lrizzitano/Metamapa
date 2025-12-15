@@ -3,6 +3,7 @@
     {{#each hechos}}
             <button class="card-hecho" type="button"
                     data-hecho='{{json this}}'
+                    data-usuario='{{usuario.usuario}}'
                     onclick="crearModalDetalleHecho(this)">
 
                 <div class="card-hecho-contenido">
