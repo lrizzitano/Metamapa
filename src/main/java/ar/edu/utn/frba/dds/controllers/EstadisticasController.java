@@ -116,21 +116,21 @@ public class EstadisticasController {
     Estadistico estadistico = new Estadistico();
     String nombreArchivo;
     List<? extends ResultadoEstadistico> resultados;
-    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));;
-    LocalDateTime hasta = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("hasta")));
+    LocalDateTime desde = LocalDate.parse(Objects.requireNonNull(ctx.queryParam("fecha-desde"))).atStartOfDay();
+    LocalDateTime hasta = LocalDate.parse(Objects.requireNonNull(ctx.queryParam("fecha-hasta"))).atStartOfDay();
 
-    switch (ctx.formParam("tipoEstadistica")) {
+    switch (ctx.queryParam("tipoEstadistica")) {
       case "categorias":
-        String categoria = ctx.formParam("categoria");
+        String categoria = ctx.queryParam("categoria");
 
-        nombreArchivo = "categoria-"+categoria+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
+        nombreArchivo = "categoria-"+categoria+".csv";
 
         resultados = estadistico.resultadosEstudioCategoria(categoria,desde,hasta);
         break;
       case "colecciones":
-        Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.formParam("coleccion"))));
+        Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.queryParam("coleccion"))));
 
-        nombreArchivo = "coleccion-"+coleccion.getTitulo()+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
+        nombreArchivo = "coleccion-"+coleccion.getTitulo()+".csv";
 
         resultados = estadistico.resultadosEstudioColeccion(coleccion,desde,hasta);
         break;
