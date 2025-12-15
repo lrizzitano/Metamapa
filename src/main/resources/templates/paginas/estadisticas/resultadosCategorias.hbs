@@ -2,38 +2,41 @@
     <div class="datos-extra">
         <h2>Informacion relevante</h2>
         <div class="extra provinciaConMasHechosReportados">
-            <p><b>La pronvica con mas hechos reportados de esta categoria es:</b> {{provinciaConMasHechosReportados}}</p>
+            <p><b>La pronvica con mas hechos reportados de esta categoria es:</b> {{provinciaConMasHechosReportados}}
+            </p>
         </div>
 
         <div class="extra categoriaConMasHechosReportados">
             <p><b>La categoria con mas hechos rportados en estas fechas es:</b> {{categoriaConMasHechosReportados}}</p>
         </div>
-            <p>Para ver informacion mas detallada considere <a class="descargar">descargar</a> este informe</p>
+        <p>Para ver informacion mas detallada considere <a class="descargar">descargar</a> este informe</p>
 
     </div>
-    <table class="tabla colecciones">
-        <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Categoria</th>
-            <th>Total de hechos</th>
-            <th>Hora pico</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each resultadoEstadistico}}
+    <div class="wrapper-tabla">
+        <table class="tabla colecciones">
+            <thead>
             <tr>
-                <td><p>{{fecha}}</p></td>
-                <td><p>{{categoria}}</p></td>
-                <td><p>{{total_hechos}}</p></td>
-                <td><p>{{hora_pico}}</p></td>
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Total de hechos</th>
+                <th>Hora pico</th>
             </tr>
-        {{/each}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {{#each resultadoEstadistico}}
+                <tr>
+                    <td><p>{{fecha}}</p></td>
+                    <td><p>{{categoria}}</p></td>
+                    <td><p>{{total_hechos}}</p></td>
+                    <td><p>{{hora_pico}}</p></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
 {{else}}
-    <div class="sin-contenido-estadistico" >
-      <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
+    <div class="sin-contenido-estadistico">
+        <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
         <p><b>Realice una busqueda para ver las estadisticas</b></p>
     </div>
 {{/if}}

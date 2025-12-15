@@ -9,27 +9,29 @@
 
 {{#partial "seccion"}}
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <div class="panel tabla">
+    <div class="panel">
         <h2>Tabla de Fuentes</h2>
     </div>
-    <table class="tabla fuentes">
-        <thead>
+    <div class="wrapper-tabla">
+        <table class="tabla fuentes">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Fuente</th>
                 <th>Detalle</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {{#each fuentes}}
-            <tr>
-                <td class="columna centrada id"><p><b>{{id}}</b></p></td>
-                <td><p style="font-size: 1.1rem">{{nombre}}</p></td>
-                <td><p style="font-size: 1.1rem ">{{detalle}}</p></td>
-            </tr>
+                <tr>
+                    <td class="columna centrada id"><p><b>{{id}}</b></p></td>
+                    <td><p style="font-size: 1.1rem">{{nombre}}</p></td>
+                    <td><p style="font-size: 1.1rem ">{{detalle}}</p></td>
+                </tr>
             {{/each}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {{/partial}}
 
 {{> templates/paginas/panelDeControl/panelDeControlLayout}}
