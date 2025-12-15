@@ -24,18 +24,29 @@ function initMap() {
     zoom: 3
   });
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      map.setCenter([lng, lat]);
-      map.setZoom(15);
-      updateMarker(lat, lng);
-      }, (_) => {},
-      { enableHighAccuracy: true }
-    );
-  } else {
-  }
+    let latitud = document.getElementById("latitud");
+    let longitud = document.getElementById("longitud");
+
+    if(parseFloat(latitud.value)  && parseFloat(longitud.value) ){
+        console.log("HAMBURGUESA" + parseFloat(latitud.value) + parseFloat(longitud.value))
+        updateMarker(parseFloat(latitud.value),parseFloat(longitud.value));
+    }else{
+        console.log("localizando");
+        if (navigator.geolocation) {
+            console.log("obteniendo localizacion")
+            navigator.geolocation.getCurrentPosition((pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    map.setCenter([lng, lat]);
+                    map.setZoom(15);
+                    console.log( "longitud actual:" + lng)
+                    updateMarker(lat, lng);
+                }, (_) => {},
+                { enableHighAccuracy: true }
+            );
+        } else {
+        }
+    }
 
   map.on("click", ({lngLat}) => updateMarker(lngLat.lat, lngLat.lng));
 

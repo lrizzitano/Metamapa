@@ -43,7 +43,6 @@ function crearModalDetalleHecho(boton, replace = false) {
   const modal = document.getElementById('detalleHecho');
   const hecho = JSON.parse(boton.dataset.hecho);
   const usuario = (boton.dataset.usuario).toString();
-  console.log(usuario );
 
   const slideVideo = document.querySelector('.slide-video');
   // probe ocultando el div de controles pero parece que el display:flex tiene prioridad sobre el hidden
@@ -78,11 +77,12 @@ function crearModalDetalleHecho(boton, replace = false) {
     console.log(usuario + " SON IGUALES " + hecho.contribuyente)
     contenedorBoton.innerHTML='';
 
-    const botonNuevo = document.createElement('a')
-    botonNuevo.textContent ='Modificar'
-    botonNuevo.className= 'boton-solicitar-eliminacion'
+    const anchorNuevo = document.createElement('a')
+    anchorNuevo.textContent ='Modificar'
+    anchorNuevo.className= 'boton-solicitar-eliminacion'
+    anchorNuevo.href= '/solicitudesDeCambio/nueva?hecho=' + encodeURIComponent(hecho.titulo);
 
-    contenedorBoton.appendChild(botonNuevo);
+    contenedorBoton.appendChild(anchorNuevo);
   }else{
     contenedorBoton.innerHTML=' ';
   }
