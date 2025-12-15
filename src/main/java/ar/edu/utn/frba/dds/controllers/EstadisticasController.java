@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.model.execpciones.ExportarEstadisticasException;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,25 +35,13 @@ public class EstadisticasController {
 
       try {
 
-        LocalDate desde = LocalDate.parse(fechaDesdeStr);
-        LocalDate hasta = LocalDate.parse(fechaHastaStr);
+        LocalDateTime desde = LocalDate.parse(fechaDesdeStr).atStartOfDay();
+        LocalDateTime hasta = LocalDate.parse(fechaHastaStr).atStartOfDay();
 
-
-        //model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
-        //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
-        model.put("provinciaConMasHechosReportados","La Pampa");
         Coleccion coleccion = new RepoColecciones().find(coleccionId);
 
-        ResultadoEstudioColeccion resultadoEstudioColeccion =
-            new ResultadoEstudioColeccion(LocalDateTime.now().minusDays(3),coleccion
-                ,Long.parseLong("20"),null);
-
-        List<ResultadoEstudioColeccion> listaResultados = new ArrayList<>();
-        listaResultados.add(resultadoEstudioColeccion);
-        listaResultados.add(resultadoEstudioColeccion);
-        listaResultados.add(resultadoEstudioColeccion);
-
-        model.put("resultadoEstadistico", listaResultados);
+        model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
+        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
 
       } catch (java.time.format.DateTimeParseException e) {
 
@@ -80,13 +69,15 @@ public class EstadisticasController {
 
       try {
 
-        LocalDate desde = LocalDate.parse(fechaDesdeStr);
-        LocalDate hasta = LocalDate.parse(fechaHastaStr);
+        LocalDateTime desde = LocalDate.parse(fechaDesdeStr).atStartOfDay();
+        LocalDateTime hasta = LocalDate.parse(fechaHastaStr).atStartOfDay();
 
+        model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria, desde, hasta));
+        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
+        model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
 
-        //model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria, desde.atStartOfDay(), hasta.atStartOfDay()));
-        //model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde.atStartOfDay(), hasta.atStartOfDay()));
-        //model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde.atStartOfDay(), hasta.atStartOfDay()));
+        /*
+        EJEMPLO HARDCODEADO
 
         model.put("provinciaConMasHechosReportados","Chaco");
         model.put("categoriaConMasHechosReportados","Desastre natural");
@@ -106,7 +97,7 @@ public class EstadisticasController {
         listaResultados.add(resultadoEstudioCategoria);
 
         model.put("resultadoEstadistico", listaResultados);
-
+        */
       } catch (java.time.format.DateTimeParseException e) {
 
         System.err.println("Error de formato de fecha: " + e.getMessage());

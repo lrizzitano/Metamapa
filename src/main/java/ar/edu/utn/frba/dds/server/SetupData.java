@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.server;
 
+import ar.edu.utn.frba.dds.model.calendarizables.ActualizadorEstadisticas;
 import ar.edu.utn.frba.dds.model.filtros.NullFiltro;
 import ar.edu.utn.frba.dds.model.fuentes.Fuente;
 import ar.edu.utn.frba.dds.model.fuentes.FuenteDinamica;
@@ -39,7 +40,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "Desastre Natural",
       laPampa,
       LocalDateTime.now(),
-      LocalDateTime.of(2024, 3, 15, 22, 14),
+      LocalDateTime.of(2024, 3, 12, 22, 14),
       Origen.CONTRIBUYENTE
   );
 
@@ -50,7 +51,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "Desastre Natural",
       laPampa,
       LocalDateTime.now(),
-      LocalDateTime.of(2024, 3, 15, 23, 59),
+      LocalDateTime.of(2024, 3, 13, 23, 59),
       Origen.CONTRIBUYENTE
   );
 
@@ -61,7 +62,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       "Desastre Natural",
       laPampa,
       LocalDateTime.now(),
-      LocalDateTime.of(2024, 3, 15, 14, 30),
+      LocalDateTime.of(2024, 3, 14, 14, 30),
       Origen.CONTRIBUYENTE
   );
 
@@ -141,6 +142,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       consensosRepo.save(new Consenso(new AlgoritmoMayoriaSimple(), next, fuenteRepo));
       consensosRepo.save(new Consenso(new AlgoritmoMultiplesMenciones(), next, fuenteRepo));
 
+      ActualizadorEstadisticas.main(new String[] {});
 
       new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });

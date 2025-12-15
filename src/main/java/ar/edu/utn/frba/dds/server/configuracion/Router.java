@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.server.configuracion;
 
 import ar.edu.utn.frba.dds.controllers.*;
+import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepository;
 import ar.edu.utn.frba.dds.server.SetupData;
@@ -192,6 +193,14 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       estadisticasController.exportar(ctx,model);
+    });
+
+    app.get( "/solicitudesDeCambio/nueva", ctx -> {
+      String paramHecho = ctx.queryParam("hecho");
+      Map<String, Object> model = new HashMap<>();
+      model = hechosController.findHecho(paramHecho);
+      model = mantenerSesion(ctx,model);
+      ctx.render("/templates/paginas/nuevaSolicitudDeCambio",model);
     });
 
     // Metamapa API

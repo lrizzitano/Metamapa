@@ -1,13 +1,12 @@
 package ar.edu.utn.frba.dds.model.estadisticas;
 
-import ar.edu.utn.frba.dds.model.calendarizables.Calendarizable;
 import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.ObjetoDeEstudio;
 import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorDeResultados;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class RecolectorDeInformacion implements Calendarizable {
+public class RecolectorDeInformacion {
 
   private List<ObjetoDeEstudio> objetosDeEstudio;
   private PublicadorDeResultados publicador;
@@ -19,14 +18,14 @@ public class RecolectorDeInformacion implements Calendarizable {
     this.fecha = LocalDate.now().plusDays(1).atStartOfDay();
   }
 
-  @Override
   public LocalDateTime proximaActualizacion() {
     return fecha;
   }
 
-  @Override
-  public void actualizar() {
-    objetosDeEstudio.forEach(objetoDeEstudio -> {publicador.comunicarResultados(objetoDeEstudio.estudiar(LocalDateTime.now().minusDays(1)));});
+  public void actualizar(LocalDateTime desde) {
+    objetosDeEstudio.forEach(objetoDeEstudio -> {
+      publicador.comunicarResultados(objetoDeEstudio.estudiar(desde));
+    });
     this.fecha = fecha.plusDays(1);
   }
 }

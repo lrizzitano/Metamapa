@@ -1,0 +1,132 @@
+{{#partial "dependencias"}}
+    <link rel="stylesheet" href="/css/form.css">
+    <link href="https://unpkg.com/maplibre-gl@v5.6.0/dist/maplibre-gl.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/maplibre-gl@v5.6.0/dist/maplibre-gl.js"></script>
+    <link rel="stylesheet" href="/css/mapa.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="/js/mapa-subir-hecho.js"></script>
+{{/partial}}
+
+{{#partial "contenido"}}
+    <section class="contenedor-form">
+        <div class="panel">
+
+            <div class="breadcrumbs">
+
+                <a href="/">
+                    Inicio
+                </a>
+
+                <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png ">
+
+                <a href="/solicitudesDeCambio/nueva?hecho={{hechoEncontrado.titulo}}">
+                    Nueva solicitud cambio
+                </a>
+
+            </div>
+
+            <div class="contenedor-titulo-volver">
+
+
+                <div class="contenedor-titulo izq">
+
+                </div>
+
+                <h2>Crear Solicitud de Cambio</h2>
+
+                <div class="contenedor-titulo der">
+                    <button class="boton-secundario relleno">volver</button>
+                </div>
+            </div>
+            <form class="form subir-hecho" hx-post="/solicitudesDeCambio" hx-target="#error-subir-hecho">
+
+                <div class="form-subir-hecho-contenido">
+
+                    <div class="form-campos-texto">
+
+                        <label style="display: none"  for="tituloOriginal">TituloAnterior</label>
+                        <input style="display: none"  id="tituloOriginal" placeholder="Elija un titulo" type="text" name="tituloOriginal"
+                               value="{{hechoEncontrado.titulo}}">
+
+                        <label for="titulo">Titulo</label>
+                        <input id="titulo" placeholder="Elija un titulo" type="text" name="titulo"
+                        value="{{hechoEncontrado.titulo}}">
+
+                        <label for="categoria">Categoria</label>
+                        <input id="categoria"  placeholder="Elija una categoria" type="text" value="{{hechoEncontrado.categoria}}" name="categoria">
+
+                        <label for="fecha_hecho">Fecha</label>
+                        <input id="fecha_hecho" name="fecha_hecho" type="datetime-local" value="{{hechoEncontrado.fechaAcontecimiento}}">
+
+                        <label for="descripcion">Descripcion</label>
+                        <input id="descripcion" type="text" value="{{hechoEncontrado.descripcion}}" placeholder="Describa el hecho" name="descripcion">
+
+                        <label for="provincia">Provincia:</label>
+                        <select id="provincia" name="provincia" required>
+                            <option value="{{hechoEncontrado.provincia}}" selected>{{hechoEncontrado.provincia}}</option>
+                            <option value="PROVINCIA_DESCONOCIDA">Provincia desconocida</option>
+                            <option value="CABA">CABA</option>
+                            <option value="BUENOS_AIRES">Buenos Aires</option>
+                            <option value="ENTRE_RIOS">Entre Ríos</option>
+                            <option value="SANTA_FE">Santa Fe</option>
+                            <option value="CORRIENTES">Corrientes</option>
+                            <option value="MISIONES">Misiones</option>
+                            <option value="FORMOSA">Formosa</option>
+                            <option value="CHACO">Chaco</option>
+                            <option value="SANTIAGO_DEL_ESTERO">Santiago del Estero</option>
+                            <option value="TUCUMAN">Tucumán</option>
+                            <option value="SALTA">Salta</option>
+                            <option value="JUJUY">Jujuy</option>
+                            <option value="CATAMARCA">Catamarca</option>
+                            <option value="LA_RIOJA">La Rioja</option>
+                            <option value="SAN_JUAN">San Juan</option>
+                            <option value="SAN_LUIS">San Luis</option>
+                            <option value="MENDOZA">Mendoza</option>
+                            <option value="CORDOBA">Córdoba</option>
+                            <option value="LA_PAMPA">La Pampa</option>
+                            <option value="NEUQUEN">Neuquén</option>
+                            <option value="RIO_NEGRO">Río Negro</option>
+                            <option value="CHUBUT">Chubut</option>
+                            <option value="SANTA_CRUZ">Santa Cruz</option>
+                            <option value="TIERRA_DEL_FUEGO">Tierra del Fuego</option>
+                        </select>
+
+                        <label for="imagen">Imagen</label>
+                        <input id="imagen" type="text" placeholder="Link a imagen" value="{{hechoEncontrado.imagen}}" name="imagen"/>
+
+                        <label for="video">Video</label>
+                        <input id="video" type="text" placeholder="Link a video en youtube (opcional)" value="{{hechoEncontrado.video}}" name="video"/>
+
+                    </div>
+
+                    <div class="form-mapa">
+
+                        <div class="contenedor-mapa-subir-hecho">
+                            <label id="input-ubicacion" for="ubicacion">Ubicación</label>
+                            <input type="hidden" name="latitud" id="latitud" value="{{hechoEncontrado.latitud}}">
+                            <input type="hidden" name="longitud" id="longitud" value="{{hechoEncontrado.longitud}}">
+                            <div class="contenedor-mapa">
+                                <div id="map"></div>
+                            </div>
+
+                            <p>Haga click sobre el mapa para seleccionar la ubicación del hecho</p>
+                        </div>
+
+                        <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
+
+                        <button class="boton subir" type="submit">
+                            <img src="https://cdn-icons-png.flaticon.com/512/10024/10024248.png">
+                            Solicitar cambio
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </form>
+        </div>
+    </section>
+{{/partial}}
+
+{{> templates/layout}}

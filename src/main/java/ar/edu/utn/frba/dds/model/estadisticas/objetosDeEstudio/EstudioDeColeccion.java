@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.server.configuracion.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -55,9 +56,9 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
         ));
 
     if(provinciasXcantHechos.isEmpty()) {
-      throw new NoExisteInformacionException(
+      new Logger().loggearExcepcion(new NoExisteInformacionException(
           "al buscar los hechos de la coleccion " + coleccion.getTitulo() + " no se encontraron datos"
-      );
+      ));
     }
 
     List<HechosPorProvincia> lista = provinciasXcantHechos.entrySet()
