@@ -27,7 +27,7 @@ public class ActualizadorEstadisticas {
       RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
           publicadorBaseDeDatos);
 
-      recolectorDeInformacion.actualizar(LocalDateTime.now().minusYears(1));
+      recolectorDeInformacion.actualizar(LocalDateTime.now().minusYears(1000));
     }
     catch (Exception e) {
       new Logger().info("Error actualizando estadisticas: " + e.getMessage());
