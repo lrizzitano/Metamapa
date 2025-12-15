@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstu
 import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.model.estadisticas.ExportarEstadisticasCSV;
 import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstadistico;
+import ar.edu.utn.frba.dds.model.execpciones.ExportarEstadisticasException;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
@@ -20,7 +21,7 @@ import java.util.Objects;
 
 public class EstadisticasController {
 
-  public static Map<String,Object> estadisticasColecciones(Context ctx,Map<String,Object> model) {
+  public Map<String,Object> estadisticasColecciones(Context ctx,Map<String,Object> model) {
     Estadistico estadistico = new Estadistico();
 
     Long coleccionId = Long.parseLong(ctx.queryParam("coleccion")) ;
@@ -66,7 +67,7 @@ public class EstadisticasController {
     return model;
   }
 
-  public static Map<String ,Object> estadisticasCategorias(Context ctx, Map<String,Object> model) {
+  public Map<String ,Object> estadisticasCategorias(Context ctx, Map<String,Object> model) {
     Estadistico estadistico = new Estadistico();
 
     String categoria = ctx.queryParam("categoria");
@@ -113,38 +114,40 @@ public class EstadisticasController {
     return model;
   }
 
-  public static void exportarCategoria(@NotNull Context ctx, Map<String, Object> model) {
-    Estadistico estadistico = new Estadistico();
+  public void exportar(Context ctx, Map<String, Object> model) {
 
-    String categoria = ctx.formParam("categoria");
-    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
+    Estadistico estadistico = new Estadistico();
+    String nombreArchivo;
+    List<? extends ResultadoEstadistico> resultados;
+    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));;
     LocalDateTime hasta = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("hasta")));
 
-    String nombreArchivo = "categoria-"+categoria+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
+    switch (ctx.formParam("tipoEstadistica")) {
+      case "categorias":
+        String categoria = ctx.formParam("categoria");
 
-    List<? extends ResultadoEstadistico> resultados = estadistico.resultadosEstudioCategoria(categoria,desde,hasta);
+        nombreArchivo = "categoria-"+categoria+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
+
+        resultados = estadistico.resultadosEstudioCategoria(categoria,desde,hasta);
+        break;
+      case "colecciones":
+        Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.formParam("coleccion"))));
+
+        nombreArchivo = "coleccion-"+coleccion.getTitulo()+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
+
+        resultados = estadistico.resultadosEstudioColeccion(coleccion,desde,hasta);
+        break;
+      case "spam":
+      default:
+        throw new ExportarEstadisticasException("No se especifica el tipo de estadistica que se desea obtener");
+
+    }
 
     enviarCSVAlCliente(ctx,model,nombreArchivo, (List<ResultadoEstadistico>) resultados);
+
   }
 
-  public static void exportarColecion(@NotNull Context ctx, Map<String, Object> model) {
-    Estadistico estadistico = new Estadistico();
-
-    Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.formParam("coleccion"))));
-    LocalDateTime desde = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("desde")));
-    LocalDateTime hasta = LocalDateTime.parse(Objects.requireNonNull(ctx.formParam("hasta")));
-
-    String nombreArchivo = "coleccion-"+coleccion.getTitulo()+"-"+ctx.formParam("desde")+"-"+ctx.formParam("hasta")+".csv";
-
-    List<? extends ResultadoEstadistico> resultados = estadistico.resultadosEstudioColeccion(coleccion,desde,hasta);
-
-    enviarCSVAlCliente(ctx,model,nombreArchivo, (List<ResultadoEstadistico>) resultados);
-  }
-
-  public static void exportarSpam(@NotNull Context ctx, Map<String, Object> model) {
-  }
-
-  public static void enviarCSVAlCliente(@NotNull Context ctx, Map<String, Object> model, String nombreArchivo, List<ResultadoEstadistico> resultados) {
+  private void enviarCSVAlCliente(@NotNull Context ctx, Map<String, Object> model, String nombreArchivo, List<ResultadoEstadistico> resultados) {
 
     ctx.header("Content-Type", "text/csv; charset=utf-8");
     ctx.header("Content-Disposition","attachment; filename="+nombreArchivo);

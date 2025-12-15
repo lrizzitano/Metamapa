@@ -26,11 +26,13 @@
                     <input type="text" id="coleccion" name="coleccion" placeholder="Id: 1">
                 </div>
 
+                <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones" />
+
                 <button class="boton" type="submit">
                     <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
                     Filtrar
                 </button>
-                <button class="boton" type="submit" formaction="/estadisticas/colecciones/exportar" formmethod="get"
+                <button class="boton" type="submit" formaction="/exportar" formmethod="get"
                         hx-disable="true">
                     Exportar
                 </button>

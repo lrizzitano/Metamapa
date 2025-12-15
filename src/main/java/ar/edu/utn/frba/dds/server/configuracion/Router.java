@@ -173,11 +173,6 @@ public class Router implements WithSimplePersistenceUnit {
       }
     },Rol.USUARIO);
 
-    app.get("/estadisticas/categorias/exportar", ctx -> {
-      Map<String, Object> model = mantenerSesion(ctx, null);
-      EstadisticasController.exportarCategoria(ctx,model);
-    });
-
     app.get("/estadisticas/colecciones",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
       if(ctx.header("HX-Request") != null) {
@@ -188,20 +183,15 @@ public class Router implements WithSimplePersistenceUnit {
       }
     },Rol.USUARIO);
 
-    app.get("/estadisticas/colecciones/exportar", ctx -> {
-      Map<String, Object> model = mantenerSesion(ctx, null);
-      EstadisticasController.exportarColecion(ctx,model);
-    });
-
     app.get("/estadisticas/spam",ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
 
       ctx.render("/templates/paginas/estadisticas/spam",model);
     },Rol.USUARIO);
 
-    app.get("estadisticas/spam/exportar", ctx -> {
+    app.get("exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
-      EstadisticasController.exportarSpam(ctx,model);
+      EstadisticasController.exportar(ctx,model);
     });
 
     // Metamapa API
