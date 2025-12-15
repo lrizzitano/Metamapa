@@ -71,7 +71,10 @@ public class FuenteMetaMapa extends Fuente {
       new Logger().info(">>> Request ejecutado - Código: " + response.code());
     } catch (IOException e) {
       new Logger().info(">>> Error en execute: " + e.getMessage());
-      throw new AccesoRecursoFallidoException("Error al obtener hechos de la API: " + this.urlAPI);
+      new Logger().loggearExcepcion(
+          new AccesoRecursoFallidoException("Error al obtener hechos de la API: " + this.urlAPI)
+      );
+      return new HashSet<>();
     }
 
     evaluarCodigoHTTP(response);
