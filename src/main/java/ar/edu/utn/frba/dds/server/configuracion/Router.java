@@ -200,7 +200,7 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/api/solicitudes", solicitudesDeEliminacionController::subirSolicitud);
   }
 
-  private static Map<String, Object> mantenerSesion(Context ctx, Map<String, Object> model) {
+  public static Map<String, Object> mantenerSesion(Context ctx, Map<String, Object> model) {
 
     if(model == null){
        model = Objects.requireNonNull(ctx.attribute(AppKeys.MODEL));

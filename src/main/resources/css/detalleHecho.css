@@ -262,6 +262,7 @@
 
 .boton-solicitar-eliminacion{
     color: var(--color-acento);
+    cursor: pointer;
 }
 
 .boton-solicitar-eliminacion:hover{
