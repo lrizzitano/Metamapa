@@ -189,9 +189,9 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("/templates/paginas/estadisticas/spam",model);
     },Rol.USUARIO);
 
-    app.get("exportar", ctx -> {
+    app.get("/exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
-      EstadisticasController.exportar(ctx,model);
+      estadisticasController.exportar(ctx,model);
     });
 
     // Metamapa API
