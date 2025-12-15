@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import static ar.edu.utn.frba.dds.server.configuracion.Router.mantenerSesion;
+
 import ar.edu.utn.frba.dds.controllers.utils.JsonConverter;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
@@ -81,7 +83,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
     Map<String, Object> model = new HashMap<>();
 
     model.put("hechos", obtenerHechosColeccion(ctx).stream().map(HechoDTO::new).collect(Collectors.toSet()));
-
+    model = mantenerSesion(ctx,model);
     return model;
   }
 

@@ -89,6 +89,12 @@ public class EstadisticasController {
         listaResultados.add(resultadoEstudioCategoria);
         listaResultados.add(resultadoEstudioCategoria);
         listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
+        listaResultados.add(resultadoEstudioCategoria);
 
         model.put("resultadoEstadistico", listaResultados);
         */
