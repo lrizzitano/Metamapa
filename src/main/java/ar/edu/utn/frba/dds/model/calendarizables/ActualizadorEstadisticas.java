@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorD
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ActualizadorEstadisticas {
@@ -26,7 +27,7 @@ public class ActualizadorEstadisticas {
       RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
           publicadorBaseDeDatos);
 
-      recolectorDeInformacion.actualizar();
+      recolectorDeInformacion.actualizar(LocalDateTime.now().minusYears(1));
     }
     catch (Exception e) {
       new Logger().info("Error actualizando estadisticas: " + e.getMessage());
