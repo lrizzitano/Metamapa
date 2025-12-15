@@ -26,6 +26,7 @@ public class Router implements WithSimplePersistenceUnit {
     UsuarioController usuarioController = new UsuarioController();
     FuentesController fuentesController = new FuentesController();
     EstadisticasController estadisticasController = new EstadisticasController();
+    SolicitudesDeCambioController solicitudesDeCambioController = new SolicitudesDeCambioController();
 
     app.before(ctx -> new Middleware().orquestarBefore(ctx));
 
@@ -130,6 +131,12 @@ public class Router implements WithSimplePersistenceUnit {
       ctx.render("templates/paginas/panelDeControl/solicitudesDeEliminacion", model);
     }, Rol.ADMINISTRADOR);
 
+    app.get("/panelDeControl/solicitudesDeCambio",ctx->{
+      Map<String,Object> model = solicitudesDeCambioController.verSolicitudes(ctx);
+      model = mantenerSesion(ctx,model);
+      ctx.render("templates/paginas/panelDeControl/solicitudesDeCambio", model);
+    },Rol.ADMINISTRADOR);
+
     app.post("/hechos", hechosController::subirHecho, Rol.USUARIO);
 
     app.post("/solicitudesDeEliminacion", solicitudesDeEliminacionController::subirSolicitud, Rol.USUARIO);
@@ -202,6 +209,9 @@ public class Router implements WithSimplePersistenceUnit {
       model = mantenerSesion(ctx,model);
       ctx.render("/templates/paginas/nuevaSolicitudDeCambio",model);
     });
+
+    app.post("/solicitudesDeCambio", solicitudesDeCambioController::subirSolicitud, Rol.USUARIO);
+
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);

@@ -44,18 +44,17 @@
 
                     <div class="form-campos-texto">
 
-                        <label style="display: none"  for="tituloOriginal">TituloAnterior</label>
-                        <input style="display: none"  id="tituloOriginal" placeholder="Elija un titulo" type="text" name="tituloOriginal"
+                        <label style="display: none"  for="titulo">TituloAnterior</label>
+                        <input style="display: none"  id="titulo" placeholder="Elija un titulo" type="text" name="titulo"
                                value="{{hechoEncontrado.titulo}}">
 
-                        <label for="titulo">Titulo</label>
-                        <input id="titulo" placeholder="Elija un titulo" type="text" name="titulo"
-                        value="{{hechoEncontrado.titulo}}">
+                        <label for="tituloNoModificable">Titulo</label>
+                        <p id="tituloNoModificable">{{hechoEncontrado.titulo}}</p>
 
                         <label for="categoria">Categoria</label>
                         <input id="categoria"  placeholder="Elija una categoria" type="text" value="{{hechoEncontrado.categoria}}" name="categoria">
 
-                        <label for="fecha_hecho">Fecha</label>
+                        <label for="fecha_hecho">Fecha {{hechoEncontrado.fechaAcontecimiento}}</label>
                         <input id="fecha_hecho" name="fecha_hecho" type="datetime-local" value="{{hechoEncontrado.fechaAcontecimiento}}">
 
                         <label for="descripcion">Descripcion</label>

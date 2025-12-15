@@ -1,0 +1,28 @@
+{{#partial "breadcrumbs"}}
+    <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png">
+
+    <a href="/panelDeControl/solicitudesDeCambio">
+        Ver solicitudes de Cambio
+    </a>
+
+{{/partial}}
+
+{{#partial "seccion"}}
+    {{#if solicitudes}}
+        <div class="panel">
+            <h2>Tabla de Solicitudes de Cambio</h2>
+        </div>
+                {{#each solicitudes}}
+                    <!--Provisional para probar -->
+                    <div class="contenedor-solicitudes-cambio" style="border: 1px solid black">
+                        <p>Hecho anterior {{descripcionAnterior}}</p>
+                        <p>Hecho nuevo {{descripcionNueva}}</p>
+                    </div>
+
+                {{/each}}
+    {{else}}
+        <h1 class="mensaje-fondo">No hay solicitudes de eliminación pendientes</h1>
+    {{/if}}
+{{/partial}}
+
+{{> templates/paginas/panelDeControl/panelDeControlLayout}}

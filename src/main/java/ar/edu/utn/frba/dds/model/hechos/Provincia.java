@@ -37,6 +37,23 @@ public String getNombreFormateado() {
   return nombreFormateado;
 }
 
+  public static Provincia desdeNombre(String texto) {
+
+    if (texto == null) {
+      return PROVINCIA_DESCONOCIDA;
+    }
+
+
+    for (Provincia p : Provincia.values()) {
+
+      if (p.nombreFormateado.equalsIgnoreCase(texto)) {
+        return p;
+      }
+    }
+
+    return PROVINCIA_DESCONOCIDA;
+  }
+
 @Override
 public String toString() {
   return nombreFormateado;

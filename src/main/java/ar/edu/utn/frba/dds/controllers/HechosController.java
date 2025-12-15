@@ -138,7 +138,7 @@ public class HechosController implements WithSimplePersistenceUnit, Transactiona
     }
   }
 
-  private Set<Hecho> getAllHechos(Filtro filtro) {
+  public Set<Hecho> getAllHechos(Filtro filtro) {
     Set<Hecho> hechos;
     Set<Fuente> fuentes = new FuentesRepositoryJPA().obtenerFuentes();
     hechos = fuentes.stream()

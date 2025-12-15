@@ -143,6 +143,16 @@ public class SetupData implements WithSimplePersistenceUnit {
       consensosRepo.save(new Consenso(new AlgoritmoMultiplesMenciones(), next, fuenteRepo));
 
       ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
+      ActualizadorEstadisticas.main(new String[] {});
 
       new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });

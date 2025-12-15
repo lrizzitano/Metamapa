@@ -29,6 +29,12 @@ public class SolicitudDeCambio {
   @JoinColumn(name = "hechoACambiar")
   private  Hecho hechoParacambiar;
 
+  @Column
+  private String descripcionAnterior;
+
+  @Column
+  private String descripcionNueva;
+
   @ManyToOne
   @JoinColumn(name = "hechoModificado")
   private  Hecho hechoModificado;
@@ -65,9 +71,13 @@ public class SolicitudDeCambio {
           "El usuario que solicita el cambio no es quien subio el hecho");
     }
     this.hechoParacambiar = hechoParacambiar;
-    this.hechoModificado = hechoModificado;
     this.usuario = usuario;
     this.fueAceptada = false;
+
+    this.hechoModificado = hechoModificado;
+
+    this.descripcionAnterior = hechoParacambiar.descripcion();
+    this.descripcionNueva = hechoModificado.descripcion();
   }
 
   public Hecho getHechoParacambiar() {
@@ -80,6 +90,13 @@ public class SolicitudDeCambio {
 
   public Administrador getResponsable() {
     return responsable;
+  }
+
+  public String descripcionAnterior() {
+    return descripcionAnterior;
+  }
+  public String descripcionNueva() {
+    return descripcionNueva;
   }
 
   public Usuario getUsuario() {
