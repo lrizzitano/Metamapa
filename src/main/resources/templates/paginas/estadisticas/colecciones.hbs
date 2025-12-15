@@ -12,11 +12,6 @@
     <div class="contenedor-estadisticas-categoria">
         <div class="filtro-estadistico">
             <form
-
-                    hx-get="#"
-                    hx-target=".resultados-busqueda"
-                    hx-swap="innerHTML"
-                    hx-push-url="true"
                     class="form-filtros"
             >
                 <!-- Este form deberia ir a un controller que trae los resultados -->
@@ -37,12 +32,21 @@
 
                 <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones"/>
 
-                <button class="boton" type="submit">
+                <button class="boton"
+                        type="submit"
+                        hx-get="#"
+                        hx-target=".resultados-busqueda"
+                        hx-swap="innerHTML"
+                        hx-include="closest form"
+                        hx-push-url="true">
                     <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
                     Filtrar
                 </button>
-                <button class="boton" type="submit" formaction="/exportar" formmethod="get"
-                        hx-disable="true">
+
+                <button class="boton"
+                        type="submit"
+                        formaction="/exportar"
+                        formmethod="get">
                     Exportar
                 </button>
             </form>
