@@ -162,3 +162,7 @@
     transform: scale(1.01,1.01);
     color: var(--color-principal);
 }
+
+.wrapper-tabla{
+    margin: 0;
+}
