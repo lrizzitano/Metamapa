@@ -125,11 +125,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
   links.forEach(link => {
 
-    if (link.getAttribute('href') === rutaActual) {
+    if ((link.getAttribute('href') === rutaActual) ) {
       const elemento = link.querySelector('.link');
       if (elemento) {
         elemento.classList.add('activada');
       }
     }
+
+    if (estoyEditandoColeccion()){
+      const element =link.querySelector('.verColecciones ');
+      const verColecciones = document.getElementById('verColecciones')
+      if(element && verColecciones){
+        element.classList.add('activada')
+      }
+
+    }
+
   });
 });
+
+function estoyEditandoColeccion(){
+  const estoyModificando = document.getElementById('modificandoColeccion');
+  if(
+      estoyModificando
+  ){
+    return true;
+  }else{
+    return false;
+  }
+
+}

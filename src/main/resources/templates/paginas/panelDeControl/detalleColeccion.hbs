@@ -7,7 +7,7 @@
 
     <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png">
 
-    <a href="/panelDeControl/colecciones/{{coleccion.id}}">
+    <a id="modificandoColeccion" href="/panelDeControl/colecciones/{{coleccion.id}}">
         Modificar coleccion
     </a>
 
@@ -34,7 +34,8 @@
             </div>
 
             <label>Fuentes</label>
-            <div class="contenedor lateral fuentes">
+            <!-- No tengo idea como hacer esto mejor se ve mal-->
+            <div class="contenedor lateral fuentes" style="min-height: 4rem">
                 <div class="contenedor fuente">
                     <input id="fuente-{{coleccion.fuenteID}}" type="checkbox" checked value="{{coleccion.fuenteID}}" name="fuente"></input>
                     <label for="fuente-{{coleccion.fuenteID}}" >{{coleccion.fuente}} ID: {{coleccion.fuenteID}}</label>
