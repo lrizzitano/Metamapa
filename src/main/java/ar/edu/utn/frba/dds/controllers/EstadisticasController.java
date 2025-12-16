@@ -93,7 +93,7 @@ public class EstadisticasController {
     Estadistico estadistico = new Estadistico();
     Long rechazosTotal = estadistico.cantidadRechazosTotal();
     Long spamTotal = estadistico.cantidadDeRechazosSpam();
-    Long porcentaje = (spamTotal / rechazosTotal) * 100;
+    Double porcentaje = (((double) spamTotal / (double)rechazosTotal) * 100);
 
     model.put("resultadoEstadistico", estadistico.resultadosEstudioSpam());
     model.put("hechoMasSpameado",estadistico.hechoMasSpameado());
@@ -116,7 +116,7 @@ public class EstadisticasController {
 
     if (desdeString == null || desdeString.isBlank() ||
         hastaString == null || hastaString.isBlank() ||
-        tipo == null || tipo.isBlank()) {
+        tipo == null || tipo.isBlank() && !tipo.equals("spam")) {
       ctx.result("Complete los filtros para generar las estadisticas");
       return;
     }
