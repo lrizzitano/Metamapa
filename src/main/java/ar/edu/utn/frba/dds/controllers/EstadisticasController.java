@@ -116,10 +116,22 @@ public class EstadisticasController {
     Estadistico estadistico = new Estadistico();
     String nombreArchivo;
     List<? extends ResultadoEstadistico> resultados;
-    LocalDateTime desde = LocalDate.parse(Objects.requireNonNull(ctx.queryParam("fecha-desde"))).atStartOfDay();
-    LocalDateTime hasta = LocalDate.parse(Objects.requireNonNull(ctx.queryParam("fecha-hasta"))).atStartOfDay();
 
-    switch (ctx.queryParam("tipoEstadistica")) {
+    String desdeString = ctx.queryParam("fecha-desde");
+    String hastaString = ctx.queryParam("fecha-hasta");
+    String tipo = ctx.queryParam("tipoEstadistica");
+
+    if (desdeString == null || desdeString.isBlank() ||
+        hastaString == null || hastaString.isBlank() ||
+        tipo == null || tipo.isBlank()) {
+      ctx.result("Complete los filtros para generar las estadisticas");
+      return;
+    }
+
+    LocalDateTime desde = LocalDate.parse(Objects.requireNonNull(desdeString)).atStartOfDay();
+    LocalDateTime hasta = LocalDate.parse(Objects.requireNonNull(hastaString)).atStartOfDay();
+
+    switch (tipo) {
       case "categorias":
         String categoria = ctx.queryParam("categoria");
 
