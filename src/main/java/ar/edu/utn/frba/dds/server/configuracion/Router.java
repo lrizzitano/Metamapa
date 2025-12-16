@@ -212,6 +212,7 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.post("/solicitudesDeCambio", solicitudesDeCambioController::subirSolicitud, Rol.USUARIO);
 
+    app.post("/solicitudesDeCambio/{id}", solicitudesDeCambioController::resolverSolicitud, Rol.ADMINISTRADOR);
 
     // Metamapa API
     app.get("/api/colecciones/{id}/hechos", coleccionesController::hechosAPI);
