@@ -76,28 +76,6 @@ public class EstadisticasController {
         model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
         model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
 
-        /*
-        EJEMPLO HARDCODEADO
-
-        model.put("provinciaConMasHechosReportados","Chaco");
-        model.put("categoriaConMasHechosReportados","Desastre natural");
-
-        ResultadoEstudioCategoria resultadoEstudioCategoria =
-            new ResultadoEstudioCategoria(LocalDateTime.now().minusDays(3), "Milagro", 28, 22.20, null);
-
-        List<ResultadoEstudioCategoria> listaResultados = new ArrayList<>();
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-        listaResultados.add(resultadoEstudioCategoria);
-
-        model.put("resultadoEstadistico", listaResultados);
-        */
       } catch (java.time.format.DateTimeParseException e) {
 
         System.err.println("Error de formato de fecha: " + e.getMessage());
@@ -112,7 +90,17 @@ public class EstadisticasController {
   }
 
   public Map<String, Object> estadisticasSpam(Context ctx, Map<String,Object> model) {
-    //TODO todo
+    Estadistico estadistico = new Estadistico();
+    Long rechazosTotal = estadistico.cantidadRechazosTotal();
+    Long spamTotal = estadistico.cantidadDeRechazosSpam();
+    Long porcentaje = (spamTotal / rechazosTotal) * 100;
+
+    model.put("resultadoEstadistico", estadistico.resultadosEstudioSpam());
+    model.put("hechoMasSpameado",estadistico.hechoMasSpameado());
+    model.put("rechazosTotal", rechazosTotal);
+    model.put("rechazosSpam", spamTotal);
+    model.put("porcentaje", porcentaje);
+
     return model;
   }
 

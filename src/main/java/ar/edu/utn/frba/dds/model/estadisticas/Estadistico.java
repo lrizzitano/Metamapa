@@ -5,6 +5,8 @@ import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstu
 import ar.edu.utn.frba.dds.model.estadisticas.resultadoEstadistico.ResultadoEstudioColeccion;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeCambio;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeEliminacion;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import java.time.LocalDateTime;
@@ -63,6 +65,41 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .setParameter("hasta", hasta)
         .setParameter("categoria", categoria)
         .getResultList();
+  }
+
+  // Spam
+  public List<RechazosDeEliminacion> resultadosEstudioSpam() {
+    return entityManager().createQuery(
+        "select e " +
+            "from RechazosDeEliminacion e ",
+        RechazosDeEliminacion.class
+    ).getResultList();
+  }
+
+  public String hechoMasSpameado() {
+    return entityManager().createQuery(
+            "select e.tituloHecho " +
+                "from RechazosDeEliminacion e " +
+                "order by e.cantidadSpam desc", String.class
+        )
+        .setMaxResults(1)
+        .getSingleResult();
+  }
+
+  public Long cantidadRechazosTotal() {
+    return entityManager().createQuery(
+        "select sum(e.cantidadRechazadas) " +
+            "from RechazosDeEliminacion e",
+        Long.class
+    ).getSingleResult();
+  }
+
+  public Long cantidadDeRechazosSpam() {
+    return entityManager().createQuery(
+        "select sum(e.cantidadSpam) " +
+            "from RechazosDeEliminacion e",
+        Long.class
+    ).getSingleResult();
   }
 
   public Provincia provinciaConMasHechosReportadosDeUnaCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
