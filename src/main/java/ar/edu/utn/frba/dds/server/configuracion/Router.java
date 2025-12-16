@@ -200,7 +200,7 @@ public class Router implements WithSimplePersistenceUnit {
 
       ctx.render("/templates/paginas/estadisticas/spam", estadisticasController.estadisticasSpam(ctx, model));
 
-    }, Rol.USUARIO);
+    }, Rol.ADMINISTRADOR);
 
     app.get("/exportar", ctx -> {
       Map<String, Object> model = mantenerSesion(ctx, null);
