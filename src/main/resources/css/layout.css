@@ -134,7 +134,7 @@ a {
 }
 
 .link.activada {
-    color: var(--color-principal);
+    color: var(--color-texto);
     font-weight: bold;
     text-decoration: underline;
     transform: scale(1.1,1.1);
