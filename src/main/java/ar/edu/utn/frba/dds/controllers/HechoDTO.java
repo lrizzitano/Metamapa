@@ -17,6 +17,7 @@ public class HechoDTO {
   private final String imagen;
   private final String provincia;
   private final String contribuyente;
+  private final String fechaAcontecimientoSinFormatear;
 
   public HechoDTO(Hecho hecho) {
     this.id = hecho.id();
@@ -32,6 +33,7 @@ public class HechoDTO {
     this.video = hecho.video();
     this.imagen = hecho.imagen();
     this.provincia=hecho.getProvincia().getNombreFormateado();
+    this.fechaAcontecimientoSinFormatear = String.valueOf(hecho.fechaAcontecimiento());
 
     if(hecho.contribuyente()==null){
       this.contribuyente = "Anonimo";
@@ -75,4 +77,5 @@ public class HechoDTO {
   public String getContribuyente() {
     return this.contribuyente;
   }
+  public String getFechaAcontecimientoSinFormatear() {return this.fechaAcontecimientoSinFormatear;}
 }
