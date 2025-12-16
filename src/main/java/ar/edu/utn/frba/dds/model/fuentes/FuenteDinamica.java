@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.repositorios.HechoRepository;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class FuenteDinamica extends Fuente {
   private HechoRepository repositorioDeHechos = new HechosFuenteDinamicaJPA(); // hardcodeado por ahora
 
   @Transient
-  private SolicitudDeCambioRepository repositorioDeSolicitudes;
+  private SolicitudDeCambioRepository repositorioDeSolicitudes = new SolicitudesFuenteDinamicaJPA();
 
   // inyecto por setter porque es singleton (no puedo inyectar en constructor)
   // -> podria dejar de serlo e inyecto por constructor
