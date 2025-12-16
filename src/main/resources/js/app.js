@@ -116,3 +116,20 @@ function eliminarOverlayMapa() {
   const overlay = document.querySelector('#overlay-mapa');
   overlay.style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const rutaActual = window.location.pathname;
+
+  const links = document.querySelectorAll('.links a');
+
+  links.forEach(link => {
+
+    if (link.getAttribute('href') === rutaActual) {
+      const elemento = link.querySelector('.link');
+      if (elemento) {
+        elemento.classList.add('activada');
+      }
+    }
+  });
+});

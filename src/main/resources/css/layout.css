@@ -133,6 +133,13 @@ a {
     color: var(--color-texto);
 }
 
+.link.activada {
+    color: var(--color-principal);
+    font-weight: bold;
+    text-decoration: underline;
+    transform: scale(1.1,1.1);
+}
+
 .contenedor-mensaje-error{
     min-height: 21px;
     color: red;
