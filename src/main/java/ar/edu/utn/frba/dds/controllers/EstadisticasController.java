@@ -90,6 +90,9 @@ public class EstadisticasController {
   }
 
   public Map<String, Object> estadisticasSpam(Context ctx, Map<String,Object> model) {
+    // esto asume que hay algunas solic de rechazo asi sean iniciales, sino habria q meter un try catch
+    // pues la query al no encontrar nada rompe
+
     Estadistico estadistico = new Estadistico();
     Long rechazosTotal = estadistico.cantidadRechazosTotal();
     Long spamTotal = estadistico.cantidadDeRechazosSpam();
