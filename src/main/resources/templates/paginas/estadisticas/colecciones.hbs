@@ -27,7 +27,11 @@
 
                 <div class="filtro categoria">
                     <label for="coleccion">Coleccion</label>
-                    <input type="text" id="coleccion" name="coleccion" placeholder="Id: 1">
+                    <select type="text" id="coleccion" name="coleccion">
+                        {{#each colecciones}}
+                            <option value="{{id}}">{{titulo}}</option>
+                        {{/each}}
+                    </select>
                 </div>
 
                 <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="colecciones"/>

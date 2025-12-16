@@ -187,6 +187,8 @@ public class Router implements WithSimplePersistenceUnit {
         ctx.render("/templates/paginas/estadisticas/resultadosColecciones",estadisticasController.estadisticasColecciones(ctx,model));
       }
       else{
+        model = coleccionesController.colecciones(ctx);
+        model = mantenerSesion(ctx,model);
         ctx.render("/templates/paginas/estadisticas/colecciones",model);
       }
     },Rol.USUARIO);
