@@ -133,4 +133,12 @@ public class Estadistico implements WithSimplePersistenceUnit {
         )
         .getSingleResult();
   }
+
+  public void eliminarEstadisticasDeColeccion(Coleccion coleccion) {
+    entityManager().createQuery(
+        "delete from ResultadoEstudioColeccion ec" +
+            " where ec.coleccion = :coleccion "
+    ).setParameter("coleccion", coleccion)
+        .executeUpdate();
+  }
 }

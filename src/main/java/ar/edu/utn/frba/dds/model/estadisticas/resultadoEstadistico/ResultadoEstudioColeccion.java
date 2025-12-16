@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "EstudioColeccion")
@@ -33,6 +35,8 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
   @Column(name = "total_hechos")
   private Long total_hechos;
   @ElementCollection(fetch = FetchType.EAGER)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JoinColumn(name = "resultadoEstadistico_id")
   private List<HechosPorProvincia> hechosPorProvincia;
 
   public ResultadoEstudioColeccion() {

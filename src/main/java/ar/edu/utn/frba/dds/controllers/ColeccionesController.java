@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.controllers;
 import static ar.edu.utn.frba.dds.server.configuracion.Router.mantenerSesion;
 
 import ar.edu.utn.frba.dds.controllers.utils.JsonConverter;
+import ar.edu.utn.frba.dds.model.estadisticas.Estadistico;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCategoria;
 import ar.edu.utn.frba.dds.model.filtros.FiltroCompuesto;
 import ar.edu.utn.frba.dds.model.filtros.FiltroFechaDesde;
@@ -239,6 +240,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     withTransaction(() -> {
       Coleccion coleccion = repoColecciones.find(id);
+      new Estadistico().eliminarEstadisticasDeColeccion(coleccion);
       repoColecciones.delete(coleccion);
     });
 
