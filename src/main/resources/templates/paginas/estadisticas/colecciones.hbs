@@ -17,17 +17,17 @@
                 <!-- Este form deberia ir a un controller que trae los resultados -->
                 <div class="filtro fecha-desde">
                     <label for="fecha-desde">Fecha desde</label>
-                    <input type="date" id="fecha-desde" name="fecha-desde">
+                    <input type="date" id="fecha-desde" name="fecha-desde" required>
                 </div>
 
                 <div class="filtro fecha-hasta">
                     <label for="fecha-hasta">Fecha hasta</label>
-                    <input type="date" id="fecha-hasta" name="fecha-hasta">
+                    <input type="date" id="fecha-hasta" name="fecha-hasta" required>
                 </div>
 
                 <div class="filtro categoria">
                     <label for="coleccion">Coleccion</label>
-                    <select type="text" id="coleccion" name="coleccion">
+                    <select type="text" id="coleccion" name="coleccion" required>
                         {{#each colecciones}}
                             <option value="{{id}}">{{titulo}}</option>
                         {{/each}}

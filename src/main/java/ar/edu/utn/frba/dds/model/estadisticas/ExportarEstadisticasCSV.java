@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ExportarEstadisticasCSV {
-
+  // para archivos mas grandes come mucha ram, se podria pasar a hacer streaming de datos en vez de buffering
   public InputStream exportar(List<ResultadoEstadistico> resultados) {
-    if (resultados == null || resultados.isEmpty()) return null;
+    if (resultados == null || resultados.isEmpty()) return InputStream.nullInputStream();;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
