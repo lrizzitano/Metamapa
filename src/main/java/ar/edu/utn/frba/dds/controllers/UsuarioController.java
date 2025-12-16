@@ -126,6 +126,7 @@ public class UsuarioController implements WithSimplePersistenceUnit {
     });
 
     UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+    new Logger().info("queso" + usuarioDTO.nombre());
     ctx.sessionAttribute("usuario", usuarioDTO);
 
     ctx.header("HX-Redirect", "/");

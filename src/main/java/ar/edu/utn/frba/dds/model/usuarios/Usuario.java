@@ -49,6 +49,10 @@ public class Usuario {
         : DateTimeFormatter.ofPattern("dd/MM/yy").format(fechaNacimiento);
   }
 
+  public LocalDate getFechaNacimientoSinFormatear() {
+    return fechaNacimiento;
+  }
+
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
