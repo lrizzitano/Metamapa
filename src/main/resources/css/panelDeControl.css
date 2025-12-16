@@ -329,3 +329,14 @@ thead {
     color: white;
     background-color:var(--color-principal);
 }
+
+.contenedor-hecho{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.contenedor-info-hecho{
+    display: flex;
+    flex-direction: column;
+}

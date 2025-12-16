@@ -7,21 +7,68 @@
 
 {{/partial}}
 
+
 {{#partial "seccion"}}
     {{#if solicitudes}}
         <div class="panel">
             <h2>Tabla de Solicitudes de Cambio</h2>
         </div>
+        <div class="wrapper-tabla">
+            <table class="tabla solicitudes">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th class="titulo solicitud">Hecho actual</th>
+                    <th class="fundamentacion solicitud">Hecho nuevo</th>
+                    <th>Aceptar solicitud</th>
+                </tr>
+                </thead>
+                <tbody>
                 {{#each solicitudes}}
-                    <!--Provisional para probar -->
-                    <div class="contenedor-solicitudes-cambio" style="border: 1px solid black">
-                        <p>Hecho anterior {{hechoActual.descripcion}}</p>
-                        <p>Hecho nuevo {{hechoNuevo.descripcion}}</p>
-                    </div>
-
+                    <tr>
+                        <td class="columna centrada id"><b>{{id}}</b></td>
+                        <td>
+                            <a href="/hechos/{{hechoActual.titulo}}"
+                               target="_blank"
+                               class="link">
+                                <b>{{hechoActual.titulo}}</b>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="contenedor-hecho">
+                                <div class="contenedor-info-hecho">
+                                    <p><b>Titulo: </b>{{hechoNuevo.titulo}}</p>
+                                    <p><b>Descripcion: </b>{{hechoNuevo.descripcion}}</p>
+                                    <p><b>Categoria: </b>{{hechoNuevo.categoria}}</p>
+                                    <p><b>Latitud: </b>{{hechoNuevo.latitud}}</p>
+                                    <p><b>Longitud: </b>{{hechoNuevo.longitud}}</p>
+                                    <p><b>Fecha Acontecimiento: </b>{{hechoNuevo.fechaAcontecimiento}}</p>
+                                    <p><b>Imagen: </b>{{hechoNuevo.imagen}}</p>
+                                    <p><b>Video: </b>{{hechoNuevo.video}}</p>
+                                    <p><b>Provincia: </b>{{hechoNuevo.provincia}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="columna centrada acciones solicitud">
+                            <form action="/solicitudesDeCambio/{{id}}" method="POST">
+                                <div class="card-solicitud-botones">
+                                    <button type="submit" class="boton-solicitud rechazar" value="Rechazar">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/399/399274.png">
+                                    </button>
+                                    <button type="submit" class="boton-solicitud aceptar" value="Aceptar"
+                                            name="Aceptar">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png">
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
                 {{/each}}
+                </tbody>
+            </table>
+        </div>
     {{else}}
-        <h1 class="mensaje-fondo">No hay solicitudes de eliminación pendientes</h1>
+        <h1 class="mensaje-fondo">No hay solicitudes de cambio pendientes</h1>
     {{/if}}
 {{/partial}}
 
