@@ -36,7 +36,8 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.beforeMatched(Autorizador::validarPermisosDeRuta);
 
-    app.error(404, ctx -> ctx.redirect("/"));
+    app.error(404, ctx ->
+        ctx.render("templates/paginas/paginaNoEncontrada"));
 
     app.exception(UsuarioNoAutorizadoException.class, (e, ctx) ->
         ctx.redirect("/"));
