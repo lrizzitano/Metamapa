@@ -18,8 +18,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th class="titulo solicitud">Hecho actual</th>
-                    <th class="fundamentacion solicitud">Hecho nuevo</th>
+                    <th class="titulo solicitud">Hecho</th>
+                    <th>Actual</th>
+                    <th>Cambios</th>
                     <th>Aceptar solicitud</th>
                 </tr>
                 </thead>
@@ -35,17 +36,88 @@
                             </a>
                         </td>
                         <td>
+                            {{#esIgual hechoNuevo.descripcion hechoActual.descripcion }}
+                            {{else}}
+                                <p><b>Descripcion actual: </b>{{hechoActual.descripcion}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.categoria hechoActual.categoria }}
+                            {{else}}
+                                <p><b>Categoria actual: </b>{{hechoActual.categoria}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.latitud hechoActual.latitud }}
+                            {{else}}
+                                <p><b>Latitud actual: </b>{{hechoActual.latitud}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.longitud hechoActual.longitud }}
+                            {{else}}
+                                <p><b>Longitud actual: </b>{{hechoActual.longitud}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.fechaAcontecimiento hechoActual.fechaAcontecimiento }}
+                            {{else}}
+                                <p><b>Fecha Acontecimiento actual: </b>{{hechoActual.fechaAcontecimiento}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.imagen hechoActual.imagen }}
+                            {{else}}
+                                <p><b>Imagen actual: </b>{{hechoActual.imagen}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.video hechoActual.video }}
+                            {{else}}
+                                <p><b>Video actual: </b>{{hechoActual.video}}</p>
+                            {{/esIgual}}
+
+                            {{#esIgual hechoNuevo.provincia hechoActual.provincia }}
+                            {{else}}
+                                <p><b>Provincia actual: </b>{{hechoActual.provincia}}</p>
+                            {{/esIgual}}
+                        </td>
+                        <td>
                             <div class="contenedor-hecho">
                                 <div class="contenedor-info-hecho">
-                                    <p><b>Titulo: </b>{{hechoNuevo.titulo}}</p>
-                                    <p><b>Descripcion: </b>{{hechoNuevo.descripcion}}</p>
-                                    <p><b>Categoria: </b>{{hechoNuevo.categoria}}</p>
-                                    <p><b>Latitud: </b>{{hechoNuevo.latitud}}</p>
-                                    <p><b>Longitud: </b>{{hechoNuevo.longitud}}</p>
-                                    <p><b>Fecha Acontecimiento: </b>{{hechoNuevo.fechaAcontecimiento}}</p>
-                                    <p><b>Imagen: </b>{{hechoNuevo.imagen}}</p>
-                                    <p><b>Video: </b>{{hechoNuevo.video}}</p>
-                                    <p><b>Provincia: </b>{{hechoNuevo.provincia}}</p>
+                                    {{#esIgual hechoNuevo.descripcion hechoActual.descripcion }}
+                                    {{else}}
+                                        <p><b>Descripcion nueva: </b>{{hechoNuevo.descripcion}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.categoria hechoActual.categoria }}
+                                    {{else}}
+                                        <p><b>Categoria nueva: </b>{{hechoNuevo.categoria}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.latitud hechoActual.latitud }}
+                                    {{else}}
+                                        <p><b>Latitud nueva: </b>{{hechoNuevo.latitud}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.longitud hechoActual.longitud }}
+                                    {{else}}
+                                        <p><b>Longitud nueva: </b>{{hechoNuevo.longitud}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.fechaAcontecimiento hechoActual.fechaAcontecimiento }}
+                                    {{else}}
+                                        <p><b>Fecha Acontecimiento nueva: </b>{{hechoNuevo.fechaAcontecimiento}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.imagen hechoActual.imagen }}
+                                    {{else}}
+                                        <p><b>Imagen nueva: </b>{{hechoNuevo.imagen}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.video hechoActual.video }}
+                                    {{else}}
+                                        <p><b>Video nuevo: </b>{{hechoNuevo.video}}</p>
+                                    {{/esIgual}}
+
+                                    {{#esIgual hechoNuevo.provincia hechoActual.provincia }}
+                                    {{else}}
+                                        <p><b>Provincia nueva: </b>{{hechoNuevo.provincia}}</p>
+                                    {{/esIgual}}
                                 </div>
                             </div>
                         </td>
