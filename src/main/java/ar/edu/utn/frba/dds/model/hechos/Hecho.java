@@ -167,4 +167,80 @@ public class Hecho {
         map.put("longitud", String.valueOf(ubicacion.getLongitud()));
         return map;
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public LocalDateTime getFechaCarga() {
+        return fechaCarga;
+    }
+
+    public void setFechaCarga(LocalDateTime fechaCarga) {
+        this.fechaCarga = fechaCarga;
+    }
+
+    public LocalDateTime getFechaAcontecimiento() {
+        return fechaAcontecimiento;
+    }
+
+    public void setFechaAcontecimiento(LocalDateTime fechaAcontecimiento) {
+        this.fechaAcontecimiento = fechaAcontecimiento;
+    }
+
+    public Origen getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(Origen origen) {
+        this.origen = origen;
+    }
+
+    public Usuario getContribuyente() {
+        return contribuyente;
+    }
+
+    public Boolean getFueRevisado() {
+        return fueRevisado;
+    }
+
+    public void setFueRevisado(Boolean fueRevisado) {
+        this.fueRevisado = fueRevisado;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public String getVideo() {
+        return video;
+    }
 }
