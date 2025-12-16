@@ -54,6 +54,7 @@ public class FuenteDinamica extends Fuente {
 
   public void rechazarSolicitudDeCambio(SolicitudDeCambio solicitudDeCambio) {
     this.repositorioDeSolicitudes.rechazarSolicitud(solicitudDeCambio);
+    this.eliminarHecho(solicitudDeCambio.getHechoModificado());
   }
 
   @Override
