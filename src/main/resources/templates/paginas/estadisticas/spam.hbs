@@ -14,30 +14,9 @@
             <form
                     class="form-filtros"
             >
-                <div class="filtro fecha-desde">
-                    <label for="fecha-desde">Fecha desde</label>
-                    <input type="date" id="fecha-desde" name="fecha-desde" required>
-                </div>
-
-                <div class="filtro fecha-hasta">
-                    <label for="fecha-hasta">Fecha hasta</label>
-                    <input type="date" id="fecha-hasta" name="fecha-hasta" required>
-                </div>
-
                 <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="spam"/>
 
-                <button class="boton"
-                        type="submit"
-                        hx-get="#"
-                        hx-target=".resultados-busqueda"
-                        hx-swap="innerHTML"
-                        hx-include="closest form"
-                        hx-push-url="true">
-                    <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
-                    Filtrar
-                </button>
-
-                <button class="boton"
+                <button class="boton exportar"
                         type="submit"
                         formaction="/exportar"
                         formmethod="get">
@@ -47,7 +26,45 @@
         </div>
         <!-- Solo mostrar la tabla si se realizo una busqueda-->
         <div class="resultados-busqueda">
-            {{> templates/paginas/estadisticas/resultadosSpam}}
+            {{#if resultadoEstadistico}}
+                <div class="datos-extra">
+                    <h2>Información relevante</h2>
+                    <div class="extra totalRechazadas">
+                        <p><b>Cantidad total de solicitudes rechazadas: </b> {{rechazosTotal}}</p>
+                    </div>
+                    <div class="extra totalSpam">
+                        <p><b>Cantidad total de solicitudes rechazadas por spam: </b> {{rechazosSpam}}</p>
+                    </div>
+                    <div class="extra porcentajeSpam">
+                        <p><b>Porcentaje total de solicitudes con spam: </b> {{porcentajeSpam}}</p>
+                    </div>
+                </div>
+                <div class="wrapper-tabla">
+                    <table class="tabla colecciones">
+                        <thead>
+                        <tr>
+                            <th>Hecho</th>
+                            <th>N° de rechazos totales</th>
+                            <th>N° de rechazos por spam</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each resultadoEstadistico}}
+                            <tr>
+                                <td><p>{{tituloHecho}}</p></td>
+                                <td><p>{{cantidadRechazadas}}</p></td>
+                                <td><p>{{cantidadSpam}}</p></td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{else}}
+                <div class="sin-contenido-estadistico">
+                    <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
+                    <p><b>Realice una busqueda para ver las estadisticas</b></p>
+                </div>
+            {{/if}}
         </div>
     </div>
 

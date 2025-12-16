@@ -114,6 +114,10 @@
 
 }
 
+.exportar{
+    margin: 18px;
+}
+
 .sin-contenido-estadistico{
     padding: 2rem;
     display: flex;
