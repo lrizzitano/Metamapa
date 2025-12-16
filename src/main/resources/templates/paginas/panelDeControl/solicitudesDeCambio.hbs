@@ -36,6 +36,7 @@
                             </a>
                         </td>
                         <td>
+                            <div class="contenedor-soli-hechos">
                             {{#esIgual hechoNuevo.descripcion hechoActual.descripcion }}
                             {{else}}
                                 <p><b>Descripcion actual: </b>{{hechoActual.descripcion}}</p>
@@ -63,22 +64,23 @@
 
                             {{#esIgual hechoNuevo.imagen hechoActual.imagen }}
                             {{else}}
-                                <p><b>Imagen actual: </b>{{hechoActual.imagen}}</p>
+                                <p><b>Imagen actual: </b><a class="link" target="_blank" href="{{hechoActual.imagen}}">Ver</a></p>
                             {{/esIgual}}
 
                             {{#esIgual hechoNuevo.video hechoActual.video }}
                             {{else}}
-                                <p><b>Video actual: </b>{{hechoActual.video}}</p>
+                                <p><b>Video actual: </b><a class="link" target="_blank" href="{{hechoActual.video}}">Ver</a></p>
                             {{/esIgual}}
 
                             {{#esIgual hechoNuevo.provincia hechoActual.provincia }}
                             {{else}}
                                 <p><b>Provincia actual: </b>{{hechoActual.provincia}}</p>
                             {{/esIgual}}
+                            </div>
                         </td>
                         <td>
                             <div class="contenedor-hecho">
-                                <div class="contenedor-info-hecho">
+                                <div class="contenedor-soli-hechos">
                                     {{#esIgual hechoNuevo.descripcion hechoActual.descripcion }}
                                     {{else}}
                                         <p><b>Descripcion nueva: </b>{{hechoNuevo.descripcion}}</p>
@@ -106,12 +108,12 @@
 
                                     {{#esIgual hechoNuevo.imagen hechoActual.imagen }}
                                     {{else}}
-                                        <p><b>Imagen nueva: </b>{{hechoNuevo.imagen}}</p>
+                                        <p><b>Imagen nueva: </b><a class="link" target="_blank" href="{{hechoNuevo.imagen}}">Ver</a></p>
                                     {{/esIgual}}
 
                                     {{#esIgual hechoNuevo.video hechoActual.video }}
                                     {{else}}
-                                        <p><b>Video nuevo: </b>{{hechoNuevo.video}}</p>
+                                        <p><b>Video nuevo: </b><a class="link" target="_blank" href="{{hechoNuevo.video}}">Ver</a></p>
                                     {{/esIgual}}
 
                                     {{#esIgual hechoNuevo.provincia hechoActual.provincia }}

@@ -340,3 +340,7 @@ thead {
     display: flex;
     flex-direction: column;
 }
+
+.contenedor-soli-hechos p,b{
+    margin-top: 0;
+}
