@@ -111,6 +111,11 @@ public class EstadisticasController {
     return model;
   }
 
+  public Map<String, Object> estadisticasSpam(Context ctx, Map<String,Object> model) {
+    //TODO todo
+    return model;
+  }
+
   public void exportar(Context ctx, Map<String, Object> model) {
 
     Estadistico estadistico = new Estadistico();
