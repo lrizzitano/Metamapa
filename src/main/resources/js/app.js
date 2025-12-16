@@ -73,9 +73,12 @@ function crearModalDetalleHecho(boton, replace = false) {
     .href = "/solicitudesDeEliminacion/nueva?hecho=" + encodeURIComponent(hecho.titulo);
 
   const contenedorBoton = modal.querySelector('.boton-cambio');
+  const pipeCambio = modal.querySelector('.pipe-cambio')
   if(usuario === hecho.contribuyente){
     console.log(usuario + " SON IGUALES " + hecho.contribuyente)
     contenedorBoton.innerHTML='';
+    pipeCambio.innerHTML='';
+    pipeCambio.innerHTML='|';
 
     const anchorNuevo = document.createElement('a')
     anchorNuevo.textContent ='Modificar'
@@ -85,6 +88,7 @@ function crearModalDetalleHecho(boton, replace = false) {
     contenedorBoton.appendChild(anchorNuevo);
   }else{
     contenedorBoton.innerHTML=' ';
+    pipeCambio.innerHTML=' ';
   }
 
 
