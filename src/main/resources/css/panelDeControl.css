@@ -140,6 +140,9 @@ main {
     width: 60%;
     justify-content:flex-start;
     gap: 1.6rem;
+    max-height: 5rem;
+    overflow-y: auto;
+    row-gap: 0;
 }
 
 .contenedor.fuente {
@@ -343,4 +346,12 @@ thead {
 
 .contenedor-soli-hechos p,b{
     margin-top: 0;
+}
+
+.boton.subir{
+    margin: 0;
+}
+
+.form.crear-coleccion label{
+    margin: 10px 0 6px 0;
 }
