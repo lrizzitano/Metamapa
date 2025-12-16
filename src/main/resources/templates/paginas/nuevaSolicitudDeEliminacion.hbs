@@ -5,21 +5,23 @@
 {{#partial "contenido"}}
     <section class="contenedor-form">
         <div class="panel" style="justify-content: flex-start">
+
+            <div class="breadcrumbs">
+
+                <a href="/">
+                    Inicio
+                </a>
+
+                <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png ">
+
+                <a href="/solicitudesDeEliminacion/nueva?hecho={{hecho}}">
+                    Nueva solicitud de eliminación
+                </a>
+
+            </div>
+
             <div class="contenedor-titulo-volver">
-
-                <div class="contenedor-titulo izq">
-                    <a class="enlace" href="/">
-                        <button class="boton volver">
-                            Volver
-                        </button>
-                    </a>
-                </div>
-
-                <h2>Crear Solicitud de Eliminación</h2>
-
-                <div class="contenedor-titulo der">
-                    <button class="boton-secundario relleno">volver</button>
-                </div>
+                <h2 style="width: 70%">Crear Solicitud de Eliminación</h2>
             </div>
             <form class="form" hx-post="/solicitudesDeEliminacion" hx-target="#error-solicitud-eliminacion" style="height: 50%">
 
