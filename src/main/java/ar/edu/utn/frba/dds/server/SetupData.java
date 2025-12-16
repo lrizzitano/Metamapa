@@ -21,7 +21,11 @@ import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.FuentesRepositoryJPA;
 import ar.edu.utn.frba.dds.model.repositorios.HechosFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeEliminacion;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeCambioRepository;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudDeEliminacionRepository;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
+import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
 import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.io.FileNotFoundException;
@@ -108,6 +112,17 @@ public class SetupData implements WithSimplePersistenceUnit {
   private final Coleccion coleccionProxy = new Coleccion("Proxy", "coleccion con todos los hechos del otro sistema",
       new NullFiltro(), fuenteProxy, new ConsensoNull(), new SolicitudesDeEliminacionJPA());
 
+
+  SolicitudDeEliminacion solicitudDeEliminacion1 = new SolicitudDeEliminacion("banquete", "muy malo1");
+  SolicitudDeEliminacion solicitudDeEliminacion2 = new SolicitudDeEliminacion("banquete", "muy malo2");
+  SolicitudDeEliminacion solicitudDeEliminacion3 = new SolicitudDeEliminacion("banquete", "muy malo3");
+  SolicitudDeEliminacion solicitudDeEliminacion4 = new SolicitudDeEliminacion("recital ricotero", "muy malo4");
+  SolicitudDeEliminacion solicitudDeEliminacion5 = new SolicitudDeEliminacion("recital ricotero", "muy malo5");
+
+  SolicitudDeEliminacionRepository repoSolis = new SolicitudesDeEliminacionJPA();
+
+
+
   public void setup()  {
     // estos son los "iniciales" de la dinamica, podrian eliminarse y solo tener los subidos a mano
     hecho1.setImagen("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.prensalibre.com%2Fwp-content%2Fuploads%2F2022%2F06%2FLluvia-12-2.jpg%3Fquality%3D52&f=1&nofb=1&ipt=31f7daa0a83e74837d4f3c1765b3ca5c424d62fe004a2aea6a806cc0ac235e4c");
@@ -116,12 +131,14 @@ public class SetupData implements WithSimplePersistenceUnit {
     hecho4.setImagen("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd.newsweek.com%2Fen%2Ffull%2F2247380%2Ff-3-tornado.jpg&f=1&nofb=1&ipt=1810131d106a694d37ed01d9a5f89da881c7c371d0ccc6cde0ca97035a9f0fda");
 
     withTransaction(() -> {
+      // setup de hechos dinamicos iniciales
       HechosFuenteDinamicaJPA repoHechos =new HechosFuenteDinamicaJPA();
       repoHechos.persist(hecho1);
       repoHechos.persist(hecho2);
       repoHechos.persist(hecho3);
       repoHechos.persist(hecho4);
 
+      // setup de fuentes iniciales
       FuentesRepositoryJPA fuenteRepo = new FuentesRepositoryJPA();
       fuenteRepo.persist(fuenteDinamica);
       fuenteRepo.persist(fuenteEstatica1);
@@ -129,6 +146,7 @@ public class SetupData implements WithSimplePersistenceUnit {
       fuenteRepo.persist(fuenteEstatica3);
       fuenteRepo.persist(fuenteProxy);
 
+      // colecciones iniciales
       ColeccionesRepository colecRepo = new ColeccionesRepository();
       colecRepo.persist(collecion1);
       colecRepo.persist(collecion2);
@@ -136,24 +154,42 @@ public class SetupData implements WithSimplePersistenceUnit {
       colecRepo.persist(collecion4);
       colecRepo.persist(coleccionProxy);
 
+      // setup de rechazos para demo estadisticas
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion1);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion2);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion3);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion4);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion5);
+
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion1);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion2);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion3);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion4);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion5);
+
+      RechazosDeEliminacion rechazoRecitalRicotero = entityManager().createQuery(
+              "FROM RechazosDeEliminacion r WHERE r.tituloHecho = :hecho", RechazosDeEliminacion.class)
+          .setParameter("hecho", "recital ricotero")
+          .getResultStream()
+          .findFirst()
+          .orElse(null);
+
+      if (rechazoRecitalRicotero != null) {
+        rechazoRecitalRicotero.sumarSpam();
+        rechazoRecitalRicotero.sumarSpam();
+      }
+
+      // los 3 tipos de consenso que seran siempre los mismos y actualizados con CRON
       ConsensosRepository consensosRepo = new ConsensosRepository();
       LocalDateTime next = LocalDate.now().plusDays(1).atStartOfDay().plusHours(1);
       consensosRepo.save(new Consenso(new AlgoritmoConsensoAbsoluto(), next, fuenteRepo));
       consensosRepo.save(new Consenso(new AlgoritmoMayoriaSimple(), next, fuenteRepo));
       consensosRepo.save(new Consenso(new AlgoritmoMultiplesMenciones(), next, fuenteRepo));
 
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
-      ActualizadorEstadisticas.main(new String[] {});
+      // primer corrida de las estadisticas, las proximas serian CRONEADAS
       ActualizadorEstadisticas.main(new String[] {});
 
+      // registro del usuario admin
       new RepoUsuarios().persist(new Administrador("Ad","Pablo", "Gabarini", LocalDate.now(), "contrasenia"));
     });
   }
