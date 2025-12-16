@@ -52,8 +52,9 @@ public class ResultadoEstudioColeccion implements ResultadoEstadistico {
     this.hechosPorProvincia = hechosPorProvincia;
   }
 
-  public LocalDateTime fecha() {
-    return fecha;
+  public String getFecha() {
+    return fecha == null ? "Sin fecha"
+        : DateTimeFormatter.ofPattern("dd/MM/yy").format(fecha);
   }
 
   public Coleccion getColeccion() {

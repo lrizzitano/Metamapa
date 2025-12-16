@@ -51,9 +51,12 @@ public class ResultadoEstudioCategoria implements ResultadoEstadistico {
 
   }
 
-  public LocalDateTime getFecha() {
-    return fecha;
+  public String getFecha() {
+    return fecha == null ? "Sin fecha"
+        : DateTimeFormatter.ofPattern("dd/MM/yy").format(fecha);
   }
+
+
 
   public String getCategoria() {
     return categoria;
