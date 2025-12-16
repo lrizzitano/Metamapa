@@ -1,10 +1,14 @@
 {{#if resultadoEstadistico}}
     <div class="datos-extra">
         <h2>Información relevante</h2>
+        <div class="extra totalRechazadas">
+            <p><b>Cantidad total de solicitudes rechazadas: </b> {{rechazosTotal}}</p>
+        </div>
+        <div class="extra totalSpam">
+            <p><b>Cantidad total de solicitudes rechazadas por spam: </b> {{rechazosSpam}}</p>
+        </div>
         <div class="extra porcentajeSpam">
-            <p><b>La cantidad total de solicitudes rechazadas es: </b> {{rechazosTotal}}</p>
-            <p><b>La cantidad total de solicitudes rechazadas por spam: </b> {{rechazosSpam}}</p>
-            <p><b>El porcentaje total de solicitudes con spam es: </b> {{porcentaje}}</p>
+            <p><b>Porcentaje total de solicitudes con spam: </b> {{porcentajeSpam}}</p>
         </div>
     </div>
     <div class="wrapper-tabla">

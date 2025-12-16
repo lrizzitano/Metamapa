@@ -114,6 +114,10 @@
 
 }
 
+.exportar{
+    margin: 18px;
+}
+
 .sin-contenido-estadistico{
     padding: 2rem;
     display: flex;
@@ -150,7 +154,7 @@
 .extra{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .descargar{
