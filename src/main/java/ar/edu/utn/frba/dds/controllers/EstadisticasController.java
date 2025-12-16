@@ -140,6 +140,10 @@ public class EstadisticasController {
         resultados = estadistico.resultadosEstudioColeccion(coleccion,desde,hasta);
         break;
       case "spam":
+        nombreArchivo = "spam.csv";
+
+        resultados = estadistico.resultadosEstudioSpam();
+        break;
       default:
         throw new ExportarEstadisticasException("No se especifica el tipo de estadistica que se desea obtener");
 
