@@ -19,8 +19,10 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SolicitudesDeCambioController implements WithSimplePersistenceUnit, TransactionalOps {
   public void subirSolicitud(Context ctx) {
@@ -109,7 +111,12 @@ public class SolicitudesDeCambioController implements WithSimplePersistenceUnit,
     Map<String, Object> model = new HashMap<>();
     SolicitudesFuenteDinamicaJPA solicitudes = new SolicitudesFuenteDinamicaJPA();
 
-    model.put("solicitudes", solicitudes.getPendientes());
+    Set<SolicitudDeCambio> solicitudesDeCambios =  solicitudes.getPendientes();
+
+    Set<SolicitudDeCambioDTO> solicitudesDeCambioDTOs = solicitudesDeCambios.stream().
+        map(SolicitudDeCambioDTO::new).collect(Collectors.toSet());
+
+    model.put("solicitudes",solicitudesDeCambioDTOs);
     return model;
   }
 
