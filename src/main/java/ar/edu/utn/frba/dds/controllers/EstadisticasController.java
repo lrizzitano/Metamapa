@@ -113,19 +113,26 @@ public class EstadisticasController {
     String desdeString = ctx.queryParam("fecha-desde");
     String hastaString = ctx.queryParam("fecha-hasta");
     String tipo = ctx.queryParam("tipoEstadistica");
-
-    if (desdeString == null || desdeString.isBlank() ||
-        hastaString == null || hastaString.isBlank() ||
-        tipo == null || tipo.isBlank() && !tipo.equals("spam")) {
-      ctx.result("Complete los filtros para generar las estadisticas");
+    LocalDateTime desde;
+    LocalDateTime hasta;
+    // tipo requieren todos pero spam no requiere fechas
+    if (tipo == null || tipo.isBlank()) {
+      ctx.result("Falta tipo de estadistica");
+      return;
+    } else if (!tipo.equals("spam") && (desdeString == null ||
+        desdeString.isBlank() ||
+        hastaString == null ||
+        hastaString.isBlank()))
+    {
+      ctx.result("Falta tipo de estadistica");
       return;
     }
 
-    LocalDateTime desde = LocalDate.parse(Objects.requireNonNull(desdeString)).atStartOfDay();
-    LocalDateTime hasta = LocalDate.parse(Objects.requireNonNull(hastaString)).atStartOfDay();
-
     switch (tipo) {
+
       case "categorias":
+        desde = LocalDate.parse(Objects.requireNonNull(desdeString)).atStartOfDay();
+        hasta = LocalDate.parse(Objects.requireNonNull(hastaString)).atStartOfDay();
         String categoria = ctx.queryParam("categoria");
 
         nombreArchivo = "categoria-"+categoria+".csv";
@@ -133,6 +140,9 @@ public class EstadisticasController {
         resultados = estadistico.resultadosEstudioCategoria(categoria,desde,hasta);
         break;
       case "colecciones":
+        desde = LocalDate.parse(Objects.requireNonNull(desdeString)).atStartOfDay();
+        hasta = LocalDate.parse(Objects.requireNonNull(hastaString)).atStartOfDay();
+
         Coleccion coleccion = new ColeccionesRepository().find(Long.parseLong(Objects.requireNonNull(ctx.queryParam("coleccion"))));
 
         nombreArchivo = "coleccion-"+coleccion.getTitulo()+".csv";
