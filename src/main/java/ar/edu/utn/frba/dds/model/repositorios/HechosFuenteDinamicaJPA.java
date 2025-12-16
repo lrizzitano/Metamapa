@@ -16,8 +16,18 @@ public class HechosFuenteDinamicaJPA implements HechoRepository, WithSimplePersi
 
   @Override
   public void actualizar(Hecho hechoParaCambiar, Hecho hechoModificado) {
-    hechoModificado.setId(hechoParaCambiar.id()); // reutiliza el id
-    entityManager().merge(hechoModificado);
+    hechoParaCambiar.setDescripcion(hechoModificado.getDescripcion());
+    hechoParaCambiar.setCategoria(hechoModificado.getCategoria());
+    hechoParaCambiar.setUbicacion(hechoModificado.getUbicacion());
+    hechoParaCambiar.setFechaCarga(hechoModificado.getFechaCarga());
+    hechoParaCambiar.setFechaAcontecimiento(hechoModificado.getFechaAcontecimiento());
+    hechoParaCambiar.setOrigen(hechoModificado.getOrigen());
+    hechoParaCambiar.setContribuyente(hechoModificado.getContribuyente());
+    hechoParaCambiar.setFueRevisado(hechoModificado.getFueRevisado());
+    hechoParaCambiar.setImagen(hechoModificado.getImagen());
+    hechoParaCambiar.setVideo(hechoModificado.getVideo());
+
+    entityManager().merge(hechoParaCambiar);
   }
 
   @Override

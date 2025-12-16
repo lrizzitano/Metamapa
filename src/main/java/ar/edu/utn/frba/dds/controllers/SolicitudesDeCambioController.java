@@ -12,6 +12,7 @@ import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminaci
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesFuenteDinamicaJPA;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeCambio;
 import ar.edu.utn.frba.dds.model.solicitudes.SolicitudDeEliminacion;
+import ar.edu.utn.frba.dds.model.usuarios.Administrador;
 import ar.edu.utn.frba.dds.model.usuarios.Usuario;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.github.flbulgarelli.jpa.extras.TransactionalOps;
@@ -120,5 +121,35 @@ public class SolicitudesDeCambioController implements WithSimplePersistenceUnit,
     return model;
   }
 
+  public void resolverSolicitud(Context ctx) {
+    Long id = Long.parseLong(ctx.pathParam("id"));
 
+    UsuarioDTO usuario = ctx.sessionAttribute("usuario");
+    String nombreDeUsuario;
+
+    if (usuario != null) {
+      nombreDeUsuario = usuario.usuario();
+    } else {
+      ctx.result("Sesion no valida");
+      return;
+    }
+
+    SolicitudesFuenteDinamicaJPA solicitudes = new SolicitudesFuenteDinamicaJPA();
+
+    SolicitudDeCambio solicitud = solicitudes.find(id);
+
+    Administrador admin = (Administrador) new RepoUsuarios().findByUsername(nombreDeUsuario);
+
+    if (ctx.formParam("Aceptar") != null) {
+      withTransaction(() -> {
+        solicitud.aceptarCambio(admin, "");
+      });
+    } else {
+      withTransaction(() -> {
+        solicitud.rechazarCambio(admin);
+      });
+    }
+
+    ctx.redirect("/panelDeControl/solicitudesDeCambio");
+  }
 }
