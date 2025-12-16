@@ -1,5 +1,55 @@
-{{#partial "inputs-variables"}}{{/partial}}
+{{#partial "breadcrumbs"}}
+    <img src="https://cdn-icons-png.flaticon.com/512/2985/2985179.png">
 
-{{#partial "contenedores-informacion"}}{{/partial}}
+    <a href="/estadisticas/spam">
+        Spam
+    </a>
+{{/partial}}
 
+{{#partial "contenido-estadistico"}}
+
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <div class="contenedor-estadisticas-categoria">
+        <div class="filtro-estadistico">
+            <form
+                    class="form-filtros"
+            >
+                <div class="filtro fecha-desde">
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="date" id="fecha-desde" name="fecha-desde" required>
+                </div>
+
+                <div class="filtro fecha-hasta">
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="date" id="fecha-hasta" name="fecha-hasta" required>
+                </div>
+
+                <input id="tipoEstadistica" name="tipoEstadistica" type="hidden" value="spam"/>
+
+                <button class="boton"
+                        type="submit"
+                        hx-get="#"
+                        hx-target=".resultados-busqueda"
+                        hx-swap="innerHTML"
+                        hx-include="closest form"
+                        hx-push-url="true">
+                    <img src="https://cdn-icons-png.flaticon.com/512/12518/12518242.png">
+                    Filtrar
+                </button>
+
+                <button class="boton"
+                        type="submit"
+                        formaction="/exportar"
+                        formmethod="get">
+                    Exportar
+                </button>
+            </form>
+        </div>
+        <!-- Solo mostrar la tabla si se realizo una busqueda-->
+        <div class="resultados-busqueda">
+            {{> templates/paginas/estadisticas/resultadosSpam}}
+        </div>
+    </div>
+
+{{/partial}}
 {{>templates/paginas/estadisticas/contenidoEstadisticoLayout.hbs}}
