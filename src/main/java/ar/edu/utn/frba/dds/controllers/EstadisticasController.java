@@ -72,8 +72,8 @@ public class EstadisticasController {
         LocalDateTime desde = LocalDate.parse(fechaDesdeStr).atStartOfDay();
         LocalDateTime hasta = LocalDate.parse(fechaHastaStr).atStartOfDay();
 
-        model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria, desde, hasta));
-        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
+        model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria.toLowerCase(), desde, hasta));
+        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria.toLowerCase(), desde, hasta));
         model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
 
       } catch (java.time.format.DateTimeParseException e) {
