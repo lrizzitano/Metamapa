@@ -57,8 +57,10 @@ body{
     width: 100%;
     height: auto;
     align-items: center;
-    border-bottom: 3px solid #14591d;
+    box-shadow: 0 7px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
 }
+
 
 .botones-header{
     display: flex;
