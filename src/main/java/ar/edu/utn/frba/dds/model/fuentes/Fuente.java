@@ -55,7 +55,7 @@ public abstract class Fuente {
   }
 
   protected Set<Hecho> fullTextSearch(String busqueda, Set<Hecho> hechos) {
-    return hechos.stream().filter(h -> (h.titulo()+h.descripcion()).contains(busqueda))
+    return hechos.stream().filter(h -> (h.titulo()+h.descripcion()).toLowerCase().contains(busqueda.toLowerCase()))
         .collect(Collectors.toSet());
   }
 

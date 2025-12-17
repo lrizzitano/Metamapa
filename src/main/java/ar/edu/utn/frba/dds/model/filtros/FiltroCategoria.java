@@ -24,7 +24,7 @@ public class FiltroCategoria extends Filtro {
 
   @Override
   public Predicate<Hecho> getAsPredicate() {
-    return hecho -> hecho.categoria().equals(categoria);
+    return hecho -> hecho.categoria().equalsIgnoreCase(categoria);
   }
 
   @Override
