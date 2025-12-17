@@ -29,17 +29,18 @@
             <p  class="descripcion" >{{coleccion.descripcion}}</p>
 
             <label for="criterios">Criterio de pertenencia</label>
-            <div class="contenedor lateral">
-                <p class="criterioPertenencia">{{coleccion.criterioDePertenencia}}</p>
-            </div>
+            <p class="criterioPertenencia">{{coleccion.criterioPertenencia}}</p>
+
 
             <label>Fuentes</label>
             <!-- No tengo idea como hacer esto mejor se ve mal-->
             <div class="contenedor lateral fuentes" style="min-height: 4rem">
-                <div class="contenedor fuente">
-                    <input id="fuente-{{coleccion.fuenteID}}" type="checkbox" checked value="{{coleccion.fuenteID}}" name="fuente"></input>
-                    <label for="fuente-{{coleccion.fuenteID}}" >{{coleccion.fuente}} ID: {{coleccion.fuenteID}}</label>
-                </div>
+                    {{#each coleccion.fuentes}}
+                        <div class="contenedor fuente">
+                            <input id="fuente-{{id}}" type="checkbox" checked value="{{id}}" name="fuente">
+                            <label for="fuente-{{id}}" >{{nombre}} ID: {{id}}</label>
+                        </div>
+                    {{/each}}
                 {{>templates/paginas/panelDeControl/fuentes}}
             </div>
 

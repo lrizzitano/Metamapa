@@ -38,12 +38,26 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
   public  Map <String, Object> encontrarColeccionPorId(Context ctx){
     Map<String, Object> model = new HashMap<>();
+    FuentesController fuentesController = new FuentesController();
+
     Long id = Long.parseLong(ctx.pathParam("id"));
 
     Coleccion coleccion = new RepoColecciones().find(id);
 
     ColeccionDTO coleccionDTO = new ColeccionDTO(coleccion);
-    model.put("coleccion",coleccionDTO);
+
+    model.put("coleccion", coleccionDTO);
+
+    Set<FuenteDTO> todasLasFuentes = (Set<FuenteDTO>) fuentesController.fuentes().get("fuentes");
+
+    todasLasFuentes = todasLasFuentes.stream().filter(f -> coleccionDTO
+        .fuentes()
+        .stream()
+        .noneMatch(fuenteColeccion -> fuenteColeccion.id().equals(f.id()))).collect(Collectors.toSet());
+
+    // solo le paso las que no pertecen ya a esta coleccion
+    model.put("fuentes", todasLasFuentes);
+
     return model;
   }
 

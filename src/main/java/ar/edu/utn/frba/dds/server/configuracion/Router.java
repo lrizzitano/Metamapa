@@ -163,7 +163,6 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.get("/panelDeControl/colecciones/{id}", ctx -> {
       Map<String, Object> model = coleccionesController.encontrarColeccionPorId(ctx);
-      model.putAll(fuentesController.fuentes());
       model = mantenerSesion(ctx, model);
       ctx.render("templates/paginas/panelDeControl/detalleColeccion", model);
     }, Rol.ADMINISTRADOR);

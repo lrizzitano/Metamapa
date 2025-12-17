@@ -24,7 +24,7 @@ public class Agregador extends Fuente implements Calendarizable  {
 
   @ManyToMany
   @JoinColumn(name = "fuentes_agregador")
-  private Set<Fuente> fuentes;
+  public Set<Fuente> fuentes;
 
   //@OneToMany
   //@JoinColumn(name = "hechos_agregador")

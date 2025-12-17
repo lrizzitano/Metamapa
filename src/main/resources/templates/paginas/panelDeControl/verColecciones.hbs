@@ -32,8 +32,12 @@
                     <td><b>{{titulo}}</b></td>
                     <td><p>{{descripcion}}</p></td>
                     <td><p>{{criterioPertenencia}}</p></td>
-                    <td><p>{{fuente}} ID:{{fuenteID}}</p></td>
-                    <td><p>{{consenso}}</p></td>
+                    <td>
+                        {{#each fuentes}}
+                            <p>{{nombre}} ID:{{id}}</p>
+                        {{/each}}
+                    </td>
+                        <td><p>{{consenso}}</p></td>
                     <td class="columna centrada acciones colecciones">
                         <a style="margin: 1rem 0 0.5rem 0"
                            href="/panelDeControl/colecciones/{{id}}">
