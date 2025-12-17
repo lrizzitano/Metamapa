@@ -200,7 +200,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         repoColecciones.update(coleccion);
       });
 
-      ctx.header("HX-Redirect", "/colecciones/" +coleccion.getId());
+      ctx.header("HX-Redirect", "/panelDeControl/colecciones/" + coleccion.getId());
       ctx.status(204);
     }
     catch (Exception e) {
