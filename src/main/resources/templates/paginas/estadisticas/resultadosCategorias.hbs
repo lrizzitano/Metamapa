@@ -34,14 +34,18 @@
     </div>
 {{else}}
     <div class="contenedor-sin-estadisticas">
-        <!-- se podria poner condicionalmente otra imagen segun si no hay resultados o no hubo busqueda !-->
-        <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
-        <p><b>
-            {{#if noHayResultados}}
-                No hay resultados para esta busqueda
-            {{else}}
+
+        {{#if noHayResultados}}
+            <img src="https://cdn-icons-png.flaticon.com/128/6146/6146689.png">
+            <p><b>
+                    No hay resultados para esta busqueda
+            </b></p>
+        {{else}}
+            <img src="https://cdn-icons-png.flaticon.com/128/4500/4500139.png">
+            <p><b>
                 Realice una busqueda para ver las estadisticas
-            {{/if}}
-        </b></p>
+            </b></p>
+        {{/if}}
+
     </div>
 {{/if}}
