@@ -9,13 +9,11 @@ import ar.edu.utn.frba.dds.model.execpciones.ExportarEstadisticasException;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
 import ar.edu.utn.frba.dds.model.repositorios.ColeccionesRepository;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
-import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -40,8 +38,14 @@ public class EstadisticasController {
 
         Coleccion coleccion = new RepoColecciones().find(coleccionId);
 
-        model.put("resultadoEstadistico", estadistico.resultadosEstudioColeccion(coleccion,desde,hasta));
-        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
+        List<ResultadoEstudioColeccion> resultados = estadistico.resultadosEstudioColeccion(coleccion,desde,hasta);
+
+        if (resultados.isEmpty()) {
+          model.put("noHayResultados", true);
+        } else {
+          model.put("resultadoEstadistico", resultados);
+          model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
+        }
 
       } catch (java.time.format.DateTimeParseException e) {
 
@@ -72,9 +76,15 @@ public class EstadisticasController {
         LocalDateTime desde = LocalDate.parse(fechaDesdeStr).atStartOfDay();
         LocalDateTime hasta = LocalDate.parse(fechaHastaStr).atStartOfDay();
 
-        model.put("resultadoEstadistico", estadistico.resultadosEstudioCategoria(categoria, desde, hasta));
-        model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
-        model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
+        List<ResultadoEstudioCategoria> resultados = estadistico.resultadosEstudioCategoria(categoria, desde, hasta);
+
+        if (resultados.isEmpty()) {
+          model.put("noHayResultados", true);
+        } else {
+          model.put("resultadoEstadistico", resultados);
+          model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
+          model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
+        }
 
       } catch (java.time.format.DateTimeParseException e) {
 
