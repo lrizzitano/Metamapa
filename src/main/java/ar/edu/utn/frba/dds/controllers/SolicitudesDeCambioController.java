@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,9 +40,6 @@ public class SolicitudesDeCambioController implements WithSimplePersistenceUnit,
 
     Set<Hecho> hechos = new HechosController().getAllHechos(new NullFiltro());
 
-    new Logger().info( titulo + descripcion + categoria + provinciaStr
-        + latStr + lngStr + fechaStr + imagen + video);
-    new Logger().info("fecha" + fechaStr);
 
     if (
         titulo == null || titulo.isBlank() ||
@@ -96,6 +94,27 @@ public class SolicitudesDeCambioController implements WithSimplePersistenceUnit,
           .filter(hecho -> {
             return hecho.titulo().equals(titulo);
           }).findFirst().get();
+
+      HechoDTO hechoAnteriorDTO = new HechoDTO(hechoAnterior);
+      HechoDTO hechoNuevoDTO = new HechoDTO(hechoNUEVO);
+    if (Objects.equals(hechoAnteriorDTO.getTitulo(), hechoNuevoDTO.getTitulo())
+        && Objects.equals(hechoAnteriorDTO.getDescripcion(), hechoNuevoDTO.getDescripcion())
+        && Objects.equals(hechoAnteriorDTO.getCategoria(), hechoNuevoDTO.getCategoria())
+        && hechoAnteriorDTO.getLatitud() == hechoNuevoDTO.getLatitud()
+        && hechoAnteriorDTO.getLongitud() == hechoNuevoDTO.getLongitud()
+        && Objects.equals(hechoAnteriorDTO.getFechaAcontecimiento(), hechoNuevoDTO.getFechaAcontecimiento())
+        && Objects.equals(hechoAnteriorDTO.getFechaCarga(), hechoNuevoDTO.getFechaCarga())
+        && Objects.equals(hechoAnteriorDTO.getOrigen(), hechoNuevoDTO.getOrigen())
+        && Objects.equals(hechoAnteriorDTO.getProvincia(), hechoNuevoDTO.getProvincia())
+        && Objects.equals(hechoAnteriorDTO.getVideo(), hechoNuevoDTO.getVideo())
+        && Objects.equals(hechoAnteriorDTO.getImagen(), hechoNuevoDTO.getImagen())
+        && Objects.equals(hechoAnteriorDTO.getContribuyente(), hechoNuevoDTO.getContribuyente())
+        && Objects.equals(hechoAnteriorDTO.getFechaAcontecimientoSinFormatear(), hechoNuevoDTO.getFechaAcontecimientoSinFormatear())
+    ) {
+      new Logger().info("Campos sin cambiar");
+      ctx.result("Se debe cambiar por lo menos un campo");
+      return;
+    }
 
       SolicitudDeCambio solicitudDeCambio = new SolicitudDeCambio(hechoAnterior,hechoNUEVO,hechoNUEVO.contribuyente());
       SolicitudesFuenteDinamicaJPA solicitudesFuenteDinamicaJPA = new SolicitudesFuenteDinamicaJPA();
