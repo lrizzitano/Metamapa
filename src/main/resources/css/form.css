@@ -18,6 +18,7 @@
 
 .form.subir-hecho {
     width: 80%;
+    height: 80%;
 }
 
 .form-subir-hecho-contenido{
@@ -25,7 +26,9 @@
     flex-direction: row;
     height: 100%;
     width: 100%;
-    margin: 0 0 16px 0;
+    overflow-y: scroll;
+    scrollbar-color: var(--color-principal) var(--color-secundario);
+    scrollbar-width: thin;
 }
 
 
