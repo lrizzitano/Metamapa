@@ -83,6 +83,7 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
 
     Coleccion coleccion = colecciones.find(id);
     coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA());
+
     boolean busquedaVacia = titulo == null || titulo.isEmpty();
 
     return consensuado

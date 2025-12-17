@@ -12,6 +12,8 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -76,13 +78,13 @@ public class EstadisticasController {
         LocalDateTime desde = LocalDate.parse(fechaDesdeStr).atStartOfDay();
         LocalDateTime hasta = LocalDate.parse(fechaHastaStr).atStartOfDay();
 
-        List<ResultadoEstudioCategoria> resultados = estadistico.resultadosEstudioCategoria(categoria, desde, hasta);
+        List<ResultadoEstudioCategoria> resultados = estadistico.resultadosEstudioCategoria(categoria.toLowerCase(), desde, hasta);
 
         if (resultados.isEmpty()) {
           model.put("noHayResultados", true);
         } else {
           model.put("resultadoEstadistico", resultados);
-          model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria, desde, hasta));
+          model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria.toLowerCase(), desde, hasta));
           model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
         }
 
@@ -106,7 +108,9 @@ public class EstadisticasController {
     Estadistico estadistico = new Estadistico();
     Long rechazosTotal = estadistico.cantidadRechazosTotal();
     Long spamTotal = estadistico.cantidadDeRechazosSpam();
-    Double porcentaje = (((double) spamTotal / (double)rechazosTotal) * 100);
+    BigDecimal bd = BigDecimal.valueOf(((double) spamTotal / (double) rechazosTotal) * 100);
+    bd = bd.setScale(2, RoundingMode.HALF_UP);
+    double porcentaje = bd.doubleValue();
 
     model.put("resultadoEstadistico", estadistico.resultadosEstudioSpam());
     model.put("hechoMasSpameado",estadistico.hechoMasSpameado());

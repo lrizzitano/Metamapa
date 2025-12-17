@@ -78,10 +78,12 @@ body{
     overflow:hidden;
 }
 
-form input,select{
+form input, form select{
     width: 60%;
     height: auto;
-    padding: 8px 3px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    padding-left: 0.25rem;
     border-radius: 0.3rem;
     border: 0.05rem var(--color-principal) solid;
     margin: 0 0 auto 0;
@@ -97,9 +99,19 @@ form label{
     width: 60%;
     display: flex;
     justify-content: flex-start;
-    margin: 16px 0 8px 0;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     color: var(--color-texto-negrita);
+    padding-bottom: 0.5rem;
 }
+
+form input{
+    margin-bottom: 1rem;
+}
+form b{
+    margin-bottom: 1rem;
+}
+
 .botones-form{
     display: flex;
     flex-direction: row;
