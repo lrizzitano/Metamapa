@@ -32,16 +32,16 @@
             </div>
         <form class="form editar-perfil" hx-post="/usuarios/{{usuario.usuario}}" hx-target="#error-subir-hecho">
 
-                <label for="username"><b>Usuario</b></label>
+                <label for="username">Usuario</label>
                 <b style="width: 60%;">{{usuario.usuario}}</b>
 
-                <label for="nombre"><b>Nombre</b></label>
+                <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" value="{{usuario.nombre}}">
 
-                <label for="apellido"><b>Apellido</b></label>
+                <label for="apellido">Apellido</label>
                 <input type="text" id="apellido" name="apellido" value="{{usuario.apellido}}">
 
-                <label for="nacimiento"><b>Fecha de nacimiento</b></label>
+                <label for="nacimiento">Fecha de nacimiento</label>
                 <input type="date" name="nacimiento" id="nacimiento" value="{{usuario.fechaDeNacimientoSinFormatear}}">
 
                 <span id="error-subir-hecho" class="contenedor-mensaje-error"></span>
