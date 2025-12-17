@@ -118,7 +118,8 @@ public class SetupData implements WithSimplePersistenceUnit {
   SolicitudDeEliminacion solicitudDeEliminacion3 = new SolicitudDeEliminacion("banquete", "muy malo3");
   SolicitudDeEliminacion solicitudDeEliminacion4 = new SolicitudDeEliminacion("recital ricotero", "muy malo4");
   SolicitudDeEliminacion solicitudDeEliminacion5 = new SolicitudDeEliminacion("recital ricotero", "muy malo5");
-
+  SolicitudDeEliminacion solicitudDeEliminacion6 = new SolicitudDeEliminacion("recital ricotero", "muy malo6");
+  SolicitudDeEliminacion solicitudDeEliminacion7 = new SolicitudDeEliminacion("recital ricotero", "muy malo7");
   SolicitudDeEliminacionRepository repoSolis = new SolicitudesDeEliminacionJPA();
 
 
@@ -160,12 +161,16 @@ public class SetupData implements WithSimplePersistenceUnit {
       repoSolis.nuevaSolicitud(solicitudDeEliminacion3);
       repoSolis.nuevaSolicitud(solicitudDeEliminacion4);
       repoSolis.nuevaSolicitud(solicitudDeEliminacion5);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion6);
+      repoSolis.nuevaSolicitud(solicitudDeEliminacion7);
 
       repoSolis.rechazarSolicitud(solicitudDeEliminacion1);
       repoSolis.rechazarSolicitud(solicitudDeEliminacion2);
       repoSolis.rechazarSolicitud(solicitudDeEliminacion3);
       repoSolis.rechazarSolicitud(solicitudDeEliminacion4);
       repoSolis.rechazarSolicitud(solicitudDeEliminacion5);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion6);
+      repoSolis.rechazarSolicitud(solicitudDeEliminacion7);
 
       RechazosDeEliminacion rechazoRecitalRicotero = entityManager().createQuery(
               "FROM RechazosDeEliminacion r WHERE r.tituloHecho = :hecho", RechazosDeEliminacion.class)

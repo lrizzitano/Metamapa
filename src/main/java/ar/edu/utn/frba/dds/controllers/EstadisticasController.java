@@ -13,6 +13,8 @@ import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -96,7 +98,9 @@ public class EstadisticasController {
     Estadistico estadistico = new Estadistico();
     Long rechazosTotal = estadistico.cantidadRechazosTotal();
     Long spamTotal = estadistico.cantidadDeRechazosSpam();
-    Double porcentaje = (((double) spamTotal / (double)rechazosTotal) * 100);
+    BigDecimal bd = BigDecimal.valueOf(((double) spamTotal / (double) rechazosTotal) * 100);
+    bd = bd.setScale(2, RoundingMode.HALF_UP);
+    double porcentaje = bd.doubleValue();
 
     model.put("resultadoEstadistico", estadistico.resultadosEstudioSpam());
     model.put("hechoMasSpameado",estadistico.hechoMasSpameado());
