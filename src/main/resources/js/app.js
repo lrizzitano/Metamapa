@@ -159,3 +159,38 @@ function estoyEditandoColeccion(){
   }
 
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const fechaDesde = document.getElementById('fecha-desde');
+  const fechaHasta = document.getElementById('fecha-hasta');
+
+  if(fechaDesde && fechaHasta){
+    fechaDesde.addEventListener('change', function() {
+      const valorDesde = this.value;
+
+      if (valorDesde) {
+
+        fechaHasta.min = valorDesde;
+        console.log("desde");
+
+        if (fechaHasta.value && fechaHasta.value < valorDesde) {
+          fechaHasta.value = "";
+        }
+      }
+    });
+
+    fechaHasta.addEventListener('change', function() {
+      const valorHasta = this.value;
+      if (valorHasta) {
+        console.log("hasta");
+        fechaDesde.max = valorHasta;
+      }
+    });
+
+  }
+
+
+
+});
+
+
