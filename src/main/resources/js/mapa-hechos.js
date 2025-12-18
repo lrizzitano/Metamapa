@@ -95,8 +95,9 @@ function updateMarkers(container) {
 
   container.querySelectorAll(".card-hecho").forEach(btn => {
     const hecho = btn.hecho;
-    const { latitud, longitud, titulo, imagen } = hecho;
+    const usuario = btn.dataset.usuario;
 
+    const { latitud, longitud, titulo, imagen } = hecho;
     const puntoMapa = document.createElement('div')
     puntoMapa.className = 'punto-mapa'
 
@@ -118,7 +119,7 @@ function updateMarkers(container) {
     element.addEventListener("mouseleave", () => popup.remove());
 
     element.addEventListener("click", () => {
-      crearModalDetalleHecho({ dataset: { hecho: JSON.stringify(hecho) } });
+      crearModalDetalleHecho({ dataset: { hecho: JSON.stringify(hecho), usuario: usuario} });
     });
 
     markers.push(marker);
