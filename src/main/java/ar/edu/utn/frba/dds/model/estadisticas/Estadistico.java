@@ -56,6 +56,22 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .orElse(null);
   }
 
+  public Integer cantidadDeHechosReportadosEnUnaColeccion(Coleccion coleccion, LocalDateTime desde, LocalDateTime hasta) {
+    return entityManager().createQuery(
+            "select sum(e.total_hechos) " +
+                "from ResultadoEstudioColeccion e " +
+                "where e.fecha between :desde and :hasta " +
+                "and e.coleccion = :coleccion ",
+            Integer.class
+        )
+        .setParameter("desde", desde)
+        .setParameter("hasta", hasta)
+        .setParameter("coleccion", coleccion)
+        .getResultStream()
+        .findFirst()
+        .orElse(0);
+  }
+
   // Categoria
   public List<ResultadoEstudioCategoria> resultadosEstudioCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
@@ -70,6 +86,22 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .setParameter("hasta", hasta)
         .setParameter("categoria", categoria)
         .getResultList();
+  }
+
+  public Integer cantidadDeHechosReportadosEnUnaCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
+    return entityManager().createQuery(
+            "select sum(e.total_hechos) " +
+                "from ResultadoEstudioCategoria e " +
+                "where e.fecha between :desde and :hasta " +
+                "and e.categoria = :categoria ",
+            Integer.class
+        )
+        .setParameter("desde", desde)
+        .setParameter("hasta", hasta)
+        .setParameter("categoria", categoria)
+        .getResultStream()
+        .findFirst()
+        .orElse(0);
   }
 
   // Spam
