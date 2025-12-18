@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.model.fuentes.Agregador;
 import ar.edu.utn.frba.dds.model.hechos.Coleccion;
+import java.util.Arrays;
 import java.util.List;
 
 public class ColeccionDTO {
@@ -10,7 +11,7 @@ public class ColeccionDTO {
   private final String descripcion;
   private final String fuente;
   private final String consenso;
-  private final String criterioPertenencia;
+  private final List<String> criterioPertenencia;
   private final long fuenteID;
   private final boolean tieneAgregador;
   private final List<FuenteDTO> fuentes;
@@ -21,7 +22,7 @@ public class ColeccionDTO {
     this.descripcion = coleccion.getDescripcion();
     this.fuente = coleccion.getFuente().getNombre();
     this.consenso = coleccion.getConsenso().getNombre();
-    this.criterioPertenencia = coleccion.getCriterioDePertenencia().getNombre();
+    this.criterioPertenencia = desglosarNombres(coleccion.getCriterioDePertenencia().getNombre());
     this.fuenteID = coleccion.getFuente().getId();
 
     this.tieneAgregador = coleccion.getFuente() instanceof Agregador;
@@ -37,8 +38,13 @@ public class ColeccionDTO {
   public String descripcion(){return descripcion;}
   public String fuente(){return fuente;}
   public String consenso(){return consenso;}
-  public String criterioPertenencia(){return criterioPertenencia;}
+  public List<String> criterioPertenencia(){return criterioPertenencia;}
   public long fuenteID(){return fuenteID;}
   public List<FuenteDTO> fuentes() { return this.fuentes; }
   public boolean tieneAgregador() { return this.tieneAgregador; }
+
+  public List<String> desglosarNombres(String nombreCompuesto) {
+    String[] partes = nombreCompuesto.split(" \\$ ");
+    return Arrays.asList(partes);
+  }
 }

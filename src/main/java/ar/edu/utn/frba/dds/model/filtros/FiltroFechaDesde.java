@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.model.filtros;
 
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.function.Predicate;
 import javax.persistence.Column;
@@ -41,6 +42,8 @@ public class FiltroFechaDesde extends Filtro {
 
   @Override
   public String getNombre() {
-    return " Fecha desde: " + fecha.toString();
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    return " Fecha desde: " + fecha.format(formatter);
   }
 }

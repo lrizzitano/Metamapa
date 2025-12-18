@@ -167,12 +167,15 @@ public class ColeccionesController implements WithSimplePersistenceUnit, Transac
         }
 
       }
-      else{
+
+      if(criterioPertenencia.filtros().isEmpty()){
         criterioPertenencia.and(new NullFiltro());
       }
 
+
       Coleccion coleccion =
           new Coleccion(titulo,descripcion,criterioPertenencia,fuenteNueva,consensoNuevo,repoSolicitudesDeEliminacion);
+
 
       withTransaction(() -> {
         new RepoColecciones().save(coleccion);

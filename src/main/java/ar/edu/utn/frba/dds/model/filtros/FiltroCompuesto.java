@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -56,6 +57,12 @@ public class FiltroCompuesto extends Filtro {
 
   @Override
   public String getNombre() {
-    return filtros.stream().map(Filtro::getNombre).reduce(String::concat).orElse("");
+    return filtros.stream()
+        .map(Filtro::getNombre)
+        .collect(Collectors.joining(" $ "));
+  }
+
+  public List<Filtro> filtros() {
+    return filtros;
   }
 }

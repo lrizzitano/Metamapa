@@ -31,7 +31,11 @@
                     <td class="columna centrada id"><b>{{id}}</b></td>
                     <td><b>{{titulo}}</b></td>
                     <td><p>{{descripcion}}</p></td>
-                    <td><p>{{criterioPertenencia}}</p></td>
+                    <td>
+                        {{#each criterioPertenencia}}
+                            <p>{{this}}</p>
+                        {{/each}}
+                    </td>
                     <td>
                         {{#each fuentes}}
                             <p>{{nombre}} ID:{{id}}</p>

@@ -29,7 +29,10 @@
             <p  class="descripcion" >{{coleccion.descripcion}}</p>
 
             <label for="criterios">Criterio de pertenencia</label>
-            <p class="criterioPertenencia">{{coleccion.criterioPertenencia}}</p>
+            {{#each coleccion.criterioPertenencia}}
+                <p class="criterioPertenencia">{{this}}</p>
+            {{/each}}
+
 
 
             <label>Fuentes</label>
