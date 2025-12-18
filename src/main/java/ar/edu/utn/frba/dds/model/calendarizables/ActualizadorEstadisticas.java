@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.model.calendarizables;
 
+import ar.edu.utn.frba.dds.model.estadisticas.Estadistico;
 import ar.edu.utn.frba.dds.model.estadisticas.RecolectorDeInformacion;
 import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.EstudioDeCategoria;
 import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.EstudioDeColeccion;
@@ -10,6 +11,7 @@ import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorD
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,8 +28,9 @@ public class ActualizadorEstadisticas {
 
       RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
           publicadorBaseDeDatos);
-
-      recolectorDeInformacion.actualizar(LocalDateTime.now().minusYears(1000));
+      LocalDate fecha = new Estadistico().ultimaConsulta().orElse(LocalDate.of(2020, 1, 1));
+      System.out.println(fecha);
+      recolectorDeInformacion.actualizar(fecha);
     }
     catch (Exception e) {
       new Logger().info("Error actualizando estadisticas: " + e.getMessage());

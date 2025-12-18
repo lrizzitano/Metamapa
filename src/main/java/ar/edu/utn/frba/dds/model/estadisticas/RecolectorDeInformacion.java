@@ -3,29 +3,23 @@ package ar.edu.utn.frba.dds.model.estadisticas;
 import ar.edu.utn.frba.dds.model.estadisticas.objetosDeEstudio.ObjetoDeEstudio;
 import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorDeResultados;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class RecolectorDeInformacion {
+public class RecolectorDeInformacion  {
 
-  private List<ObjetoDeEstudio> objetosDeEstudio;
-  private PublicadorDeResultados publicador;
-  private LocalDateTime fecha;
+  private final List<ObjetoDeEstudio> objetosDeEstudio;
+  private final PublicadorDeResultados publicador;
 
   public RecolectorDeInformacion(List<ObjetoDeEstudio> objetosDeEstudio, PublicadorDeResultados publicadorDeResultados) {
     this.objetosDeEstudio = objetosDeEstudio;
     this.publicador = publicadorDeResultados;
-    this.fecha = LocalDate.now().plusDays(1).atStartOfDay();
   }
 
-  public LocalDateTime proximaActualizacion() {
-    return fecha;
-  }
-
-  public void actualizar(LocalDateTime desde) {
+  public void actualizar(LocalDate ultima) {
     objetosDeEstudio.forEach(objetoDeEstudio -> {
-      publicador.comunicarResultados(objetoDeEstudio.estudiar(desde));
+      for(var step = ultima; !step.equals(LocalDate.now()); step = step.plusDays(1)) {
+        publicador.comunicarResultados(objetoDeEstudio.estudiar(step.atStartOfDay()));
+      }
     });
-    this.fecha = fecha.plusDays(1);
   }
 }
