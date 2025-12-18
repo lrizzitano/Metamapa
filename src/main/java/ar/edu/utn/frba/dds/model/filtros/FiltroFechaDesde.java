@@ -25,7 +25,8 @@ public class FiltroFechaDesde extends Filtro {
 
   @Override
   public Predicate<Hecho> getAsPredicate() {
-    return hecho -> hecho.fechaAcontecimiento().isAfter(fecha);
+    return hecho -> hecho.fechaAcontecimiento().isAfter(fecha)
+        || hecho.fechaAcontecimiento().isEqual(fecha);
   }
 
   @Override
