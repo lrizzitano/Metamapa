@@ -9,9 +9,12 @@ import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeCambio;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.RechazosDeEliminacion;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Estadistico implements WithSimplePersistenceUnit {
 
@@ -48,7 +51,9 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .setParameter("hasta", hasta)
         .setParameter("coleccion", coleccion)
         .setMaxResults(1)
-        .getSingleResult();
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
   }
 
   // Categoria
@@ -117,7 +122,9 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .setParameter("hasta", hasta)
         .setParameter("categoria", categoria)
         .setMaxResults(1)
-        .getSingleResult();
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
   }
 
   public String categoriaConMasHechosReportados(LocalDateTime desde, LocalDateTime hasta) {
@@ -132,7 +139,21 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .setParameter("desde", desde)
         .setParameter("hasta", hasta)
         .setMaxResults(1)
-        .getSingleResult();
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
+  }
+
+  public Optional<LocalDate> ultimaConsulta() {
+    return entityManager().createQuery(
+            "select max(fecha) from ResultadoEstudioColeccion",
+            LocalDateTime.class
+        )
+        .getResultList()
+        .stream()
+        .filter(Objects::nonNull)
+        .findFirst()
+        .map(LocalDateTime::toLocalDate);
   }
 
   // Spam
@@ -159,7 +180,9 @@ public class Estadistico implements WithSimplePersistenceUnit {
         )
         .setParameter("fecha", fecha)
         .setParameter("categoria", categoria)
-        .getSingleResult();
+        .getResultStream()
+        .findFirst()
+        .orElse(null);
   }
 
   public long cantidadDeSpamEnSolicitudesDeEliminacion() {
