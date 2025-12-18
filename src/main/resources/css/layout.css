@@ -78,7 +78,7 @@ body{
     overflow:hidden;
 }
 
-form input,select{
+form input,select,textarea{
     width: 60%;
     height: auto;
     padding-bottom: 8px;
@@ -87,6 +87,13 @@ form input,select{
     border-radius: 0.3rem;
     border: 0.05rem var(--color-principal) solid;
     margin: 0 0 auto 0;
+}
+
+form textarea{
+    padding-bottom: 3.3rem;
+    height: 0;
+    text-align: start;
+    overflow-y: hidden;
 }
 
 form input.largo {
@@ -105,7 +112,7 @@ form label{
     padding-bottom: 0.5rem;
 }
 
-form input,select{
+form input,select,textarea{
     margin-bottom: 1rem;
 }
 form b{

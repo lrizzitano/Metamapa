@@ -58,7 +58,7 @@
                         <input id="fecha_hecho" name="fecha_hecho" type="datetime-local" value="{{hechoEncontrado.fechaAcontecimientoSinFormatear}}">
 
                         <label for="descripcion">Descripcion</label>
-                        <input id="descripcion" type="text" value="{{hechoEncontrado.descripcion}}" placeholder="Describa el hecho" name="descripcion">
+                        <textarea id="descripcion" type="text" name="descripcion">{{hechoEncontrado.descripcion}}</textarea>
 
                         <label for="provincia">Provincia:</label>
                         <select id="provincia" name="provincia" required>
