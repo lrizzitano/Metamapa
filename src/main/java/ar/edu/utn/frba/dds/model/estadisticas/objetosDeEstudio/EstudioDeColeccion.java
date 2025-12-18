@@ -50,6 +50,7 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
     var filtro = new FiltroCompuesto(List.of(
         new FiltroFechaDesde(desde.withHour(0)),
         new FiltroFechaHasta(desde.plusDays(1).withHour(0))));
+
     Map<Provincia,Long> provinciasXcantHechos = coleccion.hechos(filtro).stream()
         .filter(h -> h.getProvincia() != null)
         .collect(Collectors.groupingBy(
@@ -59,6 +60,7 @@ public class EstudioDeColeccion implements ObjetoDeEstudio {
 
     if (!provinciasXcantHechos.isEmpty()) {
       new Logger().info("Encontre algo");
+
     }
 
     List<HechosPorProvincia> lista = provinciasXcantHechos.entrySet()

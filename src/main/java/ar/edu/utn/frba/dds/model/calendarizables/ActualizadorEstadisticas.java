@@ -12,7 +12,6 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ActualizadorEstadisticas {
@@ -29,7 +28,6 @@ public class ActualizadorEstadisticas {
       RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
           publicadorBaseDeDatos);
       LocalDate fecha = new Estadistico().ultimaConsulta().orElse(LocalDate.of(2020, 1, 1));
-      System.out.println(fecha);
       recolectorDeInformacion.actualizar(fecha);
     }
     catch (Exception e) {
