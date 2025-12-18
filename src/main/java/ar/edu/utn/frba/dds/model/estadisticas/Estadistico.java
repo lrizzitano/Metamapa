@@ -56,20 +56,20 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .orElse(null);
   }
 
-  public Integer cantidadDeHechosReportadosEnUnaColeccion(Coleccion coleccion, LocalDateTime desde, LocalDateTime hasta) {
+  public Long cantidadDeHechosReportadosEnUnaColeccion(Coleccion coleccion, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select sum(e.total_hechos) " +
                 "from ResultadoEstudioColeccion e " +
                 "where e.fecha between :desde and :hasta " +
                 "and e.coleccion = :coleccion ",
-            Integer.class
+            Long.class
         )
         .setParameter("desde", desde)
         .setParameter("hasta", hasta)
         .setParameter("coleccion", coleccion)
         .getResultStream()
         .findFirst()
-        .orElse(0);
+        .orElse(0L);
   }
 
   // Categoria
@@ -88,20 +88,20 @@ public class Estadistico implements WithSimplePersistenceUnit {
         .getResultList();
   }
 
-  public Integer cantidadDeHechosReportadosEnUnaCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
+  public Long cantidadDeHechosReportadosEnUnaCategoria(String categoria, LocalDateTime desde, LocalDateTime hasta) {
     return entityManager().createQuery(
             "select sum(e.total_hechos) " +
                 "from ResultadoEstudioCategoria e " +
                 "where e.fecha between :desde and :hasta " +
                 "and e.categoria = :categoria ",
-            Integer.class
+            Long.class
         )
         .setParameter("desde", desde)
         .setParameter("hasta", hasta)
         .setParameter("categoria", categoria)
         .getResultStream()
         .findFirst()
-        .orElse(0);
+        .orElse(0L);
   }
 
   // Spam

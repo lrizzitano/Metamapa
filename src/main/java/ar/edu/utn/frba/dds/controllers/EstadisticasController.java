@@ -47,6 +47,7 @@ public class EstadisticasController {
         } else {
           model.put("resultadoEstadistico", resultados);
           model.put("provinciaConMasHechosReportados", estadistico.provinciaConMayorCantidadDeHechosReportadosDeColeccion(coleccion, desde, hasta));
+          model.put("totalHechosColeccion", estadistico.cantidadDeHechosReportadosEnUnaColeccion(coleccion, desde, hasta));
         }
 
       } catch (java.time.format.DateTimeParseException e) {
@@ -85,6 +86,7 @@ public class EstadisticasController {
         } else {
           model.put("resultadoEstadistico", resultados);
           model.put("provinciaConMasHechosReportados", estadistico.provinciaConMasHechosReportadosDeUnaCategoria(categoria.toLowerCase(), desde, hasta));
+          model.put("totalHechosCategoria", estadistico.cantidadDeHechosReportadosEnUnaCategoria(categoria, desde, hasta));
           model.put("categoriaConMasHechosReportados", estadistico.categoriaConMasHechosReportados(desde, hasta));
         }
 
