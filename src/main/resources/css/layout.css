@@ -78,7 +78,7 @@ body{
     overflow:hidden;
 }
 
-form input, form select{
+form input,select{
     width: 60%;
     height: auto;
     padding-bottom: 8px;
@@ -105,7 +105,7 @@ form label{
     padding-bottom: 0.5rem;
 }
 
-form input{
+form input,select{
     margin-bottom: 1rem;
 }
 form b{
