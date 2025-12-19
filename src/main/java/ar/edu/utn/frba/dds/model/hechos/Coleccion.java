@@ -83,8 +83,9 @@ public class Coleccion{
 
   public Consenso getConsenso() {return criterioConsenso;}
 
-  public void setSolicitudes(SolicitudDeEliminacionRepository solicitudes) {
+  public Coleccion setSolicitudes(SolicitudDeEliminacionRepository solicitudes) {
     this.solicitudes = solicitudes;
+    return this;
   }
 
   public void setCriterioConsenso(Consenso criterioConsenso) {

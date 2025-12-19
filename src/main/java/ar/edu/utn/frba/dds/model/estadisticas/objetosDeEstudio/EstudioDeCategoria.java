@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.model.filtros.FiltroFechaHasta;
 import ar.edu.utn.frba.dds.model.hechos.Hecho;
 import ar.edu.utn.frba.dds.model.hechos.Provincia;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
+import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class EstudioDeCategoria implements ObjetoDeEstudio {
         new FiltroFechaDesde(desde.withHour(0)),
         new FiltroFechaHasta(desde.plusDays(1).withHour(0))));
     List<Hecho> informacion = coleccionesRepository.findAll().stream()
+        .map(coleccion -> coleccion.setSolicitudes(new SolicitudesDeEliminacionJPA()))
         .map(coleccion -> coleccion.hechos(filtro))
         .flatMap(Collection::stream)
         .toList();

@@ -11,27 +11,28 @@ import ar.edu.utn.frba.dds.model.estadisticas.publicadorDeResultados.PublicadorD
 import ar.edu.utn.frba.dds.model.repositorios.RepoColecciones;
 import ar.edu.utn.frba.dds.model.repositorios.solicitudes.SolicitudesDeEliminacionJPA;
 import ar.edu.utn.frba.dds.server.configuracion.Logger;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ActualizadorEstadisticas {
+public class ActualizadorEstadisticas implements WithSimplePersistenceUnit {
   public static void main(String[] args) {
-    try {
+    new ActualizadorEstadisticas().actualizarEstadisticas();
+  }
+
+  private void actualizarEstadisticas() {
       PublicadorDeResultados publicadorBaseDeDatos = new PublicadorDeResultadosJPA();
 
       List<ObjetoDeEstudio> objetosDeEstudio = List.of(
           new EstudioDeCategoria(new RepoColecciones()),
-          new EstudioDeColeccion(new RepoColecciones()),
-          new EstudioDeSolicitudes(new SolicitudesDeEliminacionJPA())
+          new EstudioDeColeccion(new RepoColecciones())
       );
 
       RecolectorDeInformacion recolectorDeInformacion = new RecolectorDeInformacion(objetosDeEstudio,
           publicadorBaseDeDatos);
       LocalDate fecha = new Estadistico().ultimaConsulta().orElse(LocalDate.of(2020, 1, 1));
+      withTransaction(() -> recolectorDeInformacion.actualizar(fecha));
       recolectorDeInformacion.actualizar(fecha);
     }
-    catch (Exception e) {
-      new Logger().info("Error actualizando estadisticas: " + e.getMessage());
-    }
-  }
+
 }
