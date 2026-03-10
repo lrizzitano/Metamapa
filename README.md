@@ -1,80 +1,77 @@
-# java-base-project
+# Metamapa: Sistema de gestión de mapeos colaborativos
+Este proyecto grupal se realizó en el contexto de un trabajo práctico para la materia Diseño de Sistemas de Información de la UTN FRBA.
 
-Esta es una plantilla de proyecto diseñada para: 
+### Integrantes
+- Juan Manuel Rama
+- Pablo Gabarini
+- Lautaro Melchiori
+- Tadeo Vazquez Cañoto
+- Lautaro Rizzitano
 
-* Java 17. :warning: Si bien el proyecto no lo limita explícitamente, el comando `mvn verify` no funcionará con versiones más antiguas de Java. 
-* JUnit 5. :warning: La versión 5 de JUnit es la más nueva del framework y presenta algunas diferencias respecto a la versión "clásica" (JUnit 4). Para mayores detalles, ver: 
-  *  [Apunte de herramientas](https://docs.google.com/document/d/1VYBey56M0UU6C0689hAClAvF9ILE6E7nKIuOqrRJnWQ/edit#heading=h.dnwhvummp994)
-  *  [Entrada de Blog (en inglés)](https://www.baeldung.com/junit-5-migration) 
-  *  [Entrada de Blog (en español)](https://www.paradigmadigital.com/dev/nos-espera-junit-5/)
-* Maven 3.8.1 o superior
+## Descripción
+Metamapa es un sistema descentralizado que permite la recopilación, visibilización y mapeo colaborativo de información, rindiendo cuentas a la sociedad toda, maximizando la disponibilidad y veracidad de la información y protegiendo la identidad de quienes lo visitan y suben información.
 
-## Ejecutar tests
+Este está diseñado para que diferentes ONG, universidades u organismos estatales puedan instalarlo en sus servidores, gestionarlo y ofrecerlo para sus comunidades, en forma de instancias particulares.
 
-```
-mvn test
-```
+Cada instancia de MetaMapa puede contar con una o más fuentes de datos, servidas desde diferentes nodos, en las que se almacenará la información disponible en sí. Esta información puede ser redundante, por lo que posee herramientas de etiquetado que permitan vincular la información y generar consenso sobre la misma.
 
-## Validar el proyecto de forma exahustiva
+Algunas de estas fuentes de datos son estáticas, es decir, proveerán información obtenida directamente de datasets conocidos. Sin embargo, MetaMapa también permite que cualquier persona mayor de edad pueda subir piezas de información (llamadas hechos), ya sean descripciones textuales, imágenes o videos. Para esto, también existen fuentes de datos dinámicas, que permitirán que las personas carguen colaborativamente nuevas piezas de información. Además, existen otro tipo de fuentes llamadas proxy, encargadas de vincularse con servicios externos u otras instancias de Metamapa para exponer los hechos que estas proveen a través de una API.
 
-```
-mvn clean verify
-```
+También se generan periódicamente estadísticas sobre el uso del sistema. Cada cierto intervalo de tiempo, se recalculan estas estadísticas y se actualizan sus resultados en la interfaz. Algunas de estas estadísticas son visibles para el público en general, y otras sólo para las personas administradoras.
 
-Este comando hará lo siguiente:
+## Deploy
+Para la entrega del TP se realizó un deploy usando Amazon Web Services.
 
- 1. Ejecutará los tests
- 2. Validará las convenciones de formato mediante checkstyle
- 3. Detectará la presencia de (ciertos) code smells
- 4. Validará la cobertura del proyecto
+Actualmente solo se puede acceder a otro deploy realizado sobre un Home Server en [metamapa.lrizzitano.com.ar](https://metamapa.lrizzitano.com.ar)
 
-## Entrega del proyecto
+## Tecnologías Utilizadas
+### Backend
 
-Para entregar el proyecto, crear un tag llamado `entrega-final`. Es importante que antes de realizarlo se corra la validación
-explicada en el punto anterior. Se recomienda hacerlo de la siguiente forma:
+* **Java 17**
+* Javalin – framework web para manejo de rutas HTTP
+* Handlebars – renderizado de vistas server-side
+* java-jwt – autenticación basada en tokens
 
-```
-mvn clean verify && git tag entrega-final && git push origin HEAD --tags
-```
+### Persistencia
 
-## Configuración del IDE (IntelliJ)
+* **JPA**
+* HSQLDB – base embebida para desarrollo/testing
 
-### Usar el SDK de Java 17
+### APIs y procesamiento de datos
 
-1. En **File/Project Structure...**, ir a **Project Settings | Project**
-2. En **Project SDK** seleccionar la versión 17 y en **Project language level** seleccionar `17 - Sealed types, always-strict floating-point semantics`
+* Retrofit – consumo de APIs externas
+* Gson – serialización/deserialización JSON
+* OpenCSV – procesamiento de archivos CSV
 
-![image](https://user-images.githubusercontent.com/39303639/228126065-221b9851-fb96-4f7f-a8e1-010732dc7ef6.png)
+### Frontend
 
-### Usar fin de linea unix
-1. En **File/Settings...**, ir a **Editor | Code Style**.
-2. En la lista **Line separator**, seleccionar `Unix and OS X (\n)`.
+* **HTML / CSS / JAVASCRIPT**
+* **HTMX** – interacción dinámica con el backend sin SPA
 
-![image](https://user-images.githubusercontent.com/39303639/228126546-352289fa-8feb-4b39-99db-d8b860915fea.png)
+### Mapas
 
-### Tabular con dos espacios
+* MapLibre – visualización de mapas interactivos
+* MapTiler – estilos y tiles del mapa
 
-1. En **File/Settings...**, ir a **Editor | Code Style | Java | Tabs and Indents**.
-2. Cambiar **Tab size**, **Indent** y **Continuation indent** a 2, 2 y 4 respectivamente:
+### Testing
 
-![image](https://user-images.githubusercontent.com/39303639/228127009-8c84ea72-969b-4e05-b311-45e3688a4164.png)
+* JUnit
+* Mockito
+* WireMock – simulación de servicios HTTP
 
-### Ordenar los imports
+## Capturas de Pantalla
+<img width="1900" height="992" alt="Screenshot 2026-03-10 at 00-41-37 " src="https://github.com/user-attachments/assets/c4fe06fd-4b34-4ef8-8f1c-aa51034fa466" />
 
-1. En **File/Settings...**, ir a **Editor | Code Style | Java | Imports**.
-2. Cambiar **Class count to use import with '*'** y **Names count to use static import with '*'** a un número muy alto (ej: 99).
-3. En **Import Layout**, dejarlo como se muestra a continuación:
-    - `import static all other imports`
-    - `<blank line>`
-    - `import all other imports`
+<img width="1900" height="992" alt="Screenshot 2026-03-10 at 00-42-55 " src="https://github.com/user-attachments/assets/c33456c3-d638-4c5d-8947-8219a4036376" />
 
-![image](https://user-images.githubusercontent.com/39303639/228126787-36f9ecff-27f2-4b99-bf11-a6bd89f67087.png)
+<img width="1900" height="992" alt="Screenshot 2026-03-10 at 00-43-03 " src="https://github.com/user-attachments/assets/93a5a989-63af-497b-a68a-8e196840c66a" />
 
-### Instalar y configurar Checkstyle
+## Diagramas
+### Clases - Modelo de Dominio
+<img width="1698" height="954" alt="diagrama-clases" src="https://github.com/user-attachments/assets/48e9aef7-a666-4cea-8fe1-4f3d8549c390" />
 
-1. Instalar el plugin https://plugins.jetbrains.com/plugin/1065-checkstyle-idea:
-2. En **File/Settings...**, ir a **Tools | Checkstyle**.
-3. Configurarlo activando los Checks de Google y la versión de Checkstyle `== 9.0.1`:
+### Relacional - Modelo de Persistencia
+<img width="1340" height="918" alt="diagrama-relacional" src="https://github.com/user-attachments/assets/6b0388db-839a-4c12-aa91-77166747ee8f" />
 
-![image](https://github.com/dds-utn/java-base-project/assets/11719816/b1edc122-4675-4f8d-bffc-9e3d3366fac6)
-
+### Despliegue
+<img width="734" height="375" alt="diagrama-despliegue" src="https://github.com/user-attachments/assets/2868b401-e0e6-4efd-8937-a73a8bab1924" />
